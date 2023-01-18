@@ -1,5 +1,7 @@
 {
   "extends": ["airbnb", "plugin:prettier/recommended"],
+  // Parsing error: Unexpected token
+  "parser": "@typescript-eslint/parser",
   "rules": {
     "prettier/prettier": ["error"],
     // suppress errors for missing 'import React' in files
