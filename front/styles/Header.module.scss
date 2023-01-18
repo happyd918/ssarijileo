@@ -1,0 +1,26 @@
+@import 'color.scss';
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: none;
+
+  .pagesdiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  .pages {
+    text-decoration: none;
+    font-weight: bold;
+    color: $darkmode;
+    margin-left: 1rem;
+  }
+  .icon {
+    margin-left: 1rem;
+  }
+}
