@@ -24,6 +24,7 @@
     │   └── com
     │       └── ssafy
     │           └── ssarijileo
+    │               ├── SsarijileoApplication.java
     │               ├── config
     │               ├── exception
     │               ├── user /* user 관련 정의 */
