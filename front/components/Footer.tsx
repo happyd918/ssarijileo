@@ -6,19 +6,19 @@ function Footer() {
   const lightSocials = [
     {
       name: 'Facebook',
-      icon: 'icon/light_facebook_icon.svg',
+      icon: 'icon/footer/light/light_facebook_icon.svg',
     },
     {
       name: 'YouTube',
-      icon: '/icon/light_youtube_icon.svg',
+      icon: 'icon/footer/light/light_youtube_icon.svg',
     },
     {
       name: 'Instagram',
-      icon: '/icon/light_instagram_icon.svg',
+      icon: 'icon/footer/light/light_instagram_icon.svg',
     },
     {
       name: 'Google',
-      icon: '/icon/light_google_icon.svg',
+      icon: 'icon/footer/light/light_google_icon.svg',
     },
   ];
 
@@ -37,7 +37,7 @@ function Footer() {
       <div className={styles.footer_container}>
         <div className={styles.img_div}>
           <Image
-            src="icon/light_logo.svg"
+            src="icon/header/light/light_logo.svg"
             alt="home"
             width={300}
             height={200}
@@ -46,7 +46,7 @@ function Footer() {
         <div className={styles.item_div}>
           <div className={styles.footer_item_upper}>
             <Image
-              src="icon/light_place_icon.svg"
+              src="icon/footer/light/light_phone_icon.svg"
               alt="place"
               width={24}
               height={24}
@@ -55,7 +55,7 @@ function Footer() {
           </div>
           <div className={styles.footer_item_upper}>
             <Image
-              src="icon/light_phone_icon.svg"
+              src="icon/footer/light/light_place_icon.svg"
               alt="phone"
               width={24}
               height={24}
