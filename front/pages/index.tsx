@@ -1,10 +1,9 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import { Inter } from '@next/font/google';
 import styles from '@/styles/Home.module.scss';
 import Footer from '@/components/Footer';
 
-import Loading from '@/components/Loading';
+const inter = Inter({ subsets: ['latin'] });
 
 function Home() {
   return (
@@ -12,7 +11,7 @@ function Home() {
       <Head>
         <title>My App</title>
       </Head>
-      <main className={styles.main}>
+      <main className={`${styles.main} ${inter.className}`}>
         <Footer />
       </main>
     </>
