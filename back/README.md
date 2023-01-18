@@ -1,6 +1,6 @@
 ## 소개
 
-웹 기술 프로젝트의 Backend Sub PJT 1
+싸리질러 프로젝트 Backend
 
 <!-- 필수 항목 -->
 
@@ -30,14 +30,14 @@
     │               ├── controller
     │               │   └── UserController.java
     │               ├── dto
-    │               │    └── UserDto.java
+    │               │   └── UserDto.java
     │               ├── entity
-    │               │    └── User.java
+    │               │   └── User.java
     │               ├── repository
-    │               │    └── UserRepository.java
-    │               ├── service
-    │               ├── UserService.java
-    │               └── UserServiceImpl.java
+    │               │   └── UserRepository.java
+    │               └── service
+    │                   ├── UserService.java
+    │                   └── UserServiceImpl.java
     └── resources
         ├── application.yml /* 웹 리소스(서버 host/port, 디비 host/port/계정/패스워드) 관련 설정 정의 \*/
         ├── static
