@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "configure-husky": "yarn husky install && yarn husky add .husky/pre-commit \"yarn lint-staged\""
+    "lint": "next lint"
   },
   "dependencies": {
     "@next/font": "13.1.2",

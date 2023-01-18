@@ -1,20 +1,20 @@
 @import 'color.scss';
 
-.footer{
-  padding : 0 5rem;
+.footer {
+  padding: 0 5rem;
 }
 
-.footer_container{
+.footer_container {
   margin-top: 1rem;
   border-top: 3px solid rgba(31, 92, 125, 0.3);
   border-bottom: 3px solid rgba(31, 92, 125, 0.1);
-  padding : 3rem 5rem;
+  padding: 3rem 5rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 10%;
 }
 
-.footer_container > .img_div{
+.footer_container > .img_div {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,10 +24,10 @@
   margin-top: 1rem;
 }
 
-.footer_item_upper{
+.footer_item_upper {
   display: flex;
   align-items: center;
-  padding : 1rem 0;
+  padding: 1rem 0;
   font-size: 90%;
   color: $darkmode;
 }
@@ -37,7 +37,7 @@
   opacity: 0.8;
 }
 
-.footer_item_lower{
+.footer_item_lower {
   display: flex;
   align-items: center;
   margin-top: 2.5rem;
