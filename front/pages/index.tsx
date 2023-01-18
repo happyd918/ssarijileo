@@ -4,6 +4,8 @@ import { Inter } from '@next/font/google';
 import styles from '@/styles/Home.module.scss';
 import Footer from '@/components/Footer';
 
+import Loading from '@/components/Loading';
+
 function Home() {
   return (
     <>
