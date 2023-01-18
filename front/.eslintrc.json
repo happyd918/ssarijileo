@@ -12,6 +12,7 @@
     // allow prop-types
     "react/jsx-props-no-spreading": "off",
     // allow no-unresolved
-    "import/no-unresolved": "off"
+    "import/no-unresolved": "off",
+    "import/extensions": ["off"]
   }
 }
