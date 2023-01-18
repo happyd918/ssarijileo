@@ -17,6 +17,7 @@
 
 ---
 
+```
 .
 └── main
 ├── java
@@ -36,10 +37,11 @@
 │      ├── repository
 │      │ └── UserRepository.java
 │      └── service
-│      ├── UserService.java  
- │      └── UserServiceImpl.java
+│      ├── UserService.java
+│      └── UserServiceImpl.java
 └── resources
 ├── application.yml /* 웹 리소스(서버 host/port, 디비 host/port/계정/패스워드) 관련 설정 정의 \*/
 ├── static
 │ └── index.html
 └── tmplates
+```
