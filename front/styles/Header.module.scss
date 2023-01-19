@@ -1,26 +1,102 @@
-@import 'color.scss';
+@import 'global.scss';
 
 .header {
-  position: fixed;
-  top: 0;
   width: 100%;
+  height: 60px;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-around;
   background-color: none;
 
-  .pagesdiv {
+  .logo {
+    width: 20%;
+    margin-left: 10px;
+  }
+
+  .menu {
+    width: 30%;
     display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
+
+    .pages {
+      text-decoration: none;
+      font-weight: bold;
+      color: $darkmode;
+      margin-left: 1rem;
+    }
   }
-  .pages {
-    text-decoration: none;
-    font-weight: bold;
-    color: $darkmode;
-    margin-left: 1rem;
-  }
-  .icon {
-    margin-left: 1rem;
+
+  .icons {
+    width: 20%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .icon {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin: auto 20px;
+
+      #toggle:checked ~ .toggleSwitch .toggleButton {
+        left: calc(100% - 24px);
+        background: #fff;
+      }
+
+      .toggleSwitch {
+        width: 50px;
+        height: 25px;
+        display: block;
+        position: relative;
+        border-radius: 30px;
+        background-color: #fff;
+        box-shadow: 0 0 10px 1px rgba(0 0 0 / 15%);
+        cursor: pointer;
+        transition: all 0.2s ease-in;
+
+        /* 토글 버튼 */
+        .toggleButton {
+          all: unset;
+          /* 버튼은 토글보다 작아야함  */
+          width: 20px;
+          height: 20px;
+          position: absolute;
+          top: 50%;
+          left: 4px;
+          transform: translateY(-50%);
+          border-radius: 50%;
+          background: $darkmode;
+          cursor: pointer;
+          z-index: 99;
+          transition: all 0.2s ease-in;
+        }
+        .toggleButton:checked {
+          left: calc(100% - 24px);
+        }
+      }
+      img {
+        margin-left: 10px;
+      }
+    }
+
+    .profile {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: $line;
+      border-radius: 50%;
+      margin-left: 10px;
+
+      img {
+        margin-left: 0;
+      }
+    }
   }
 }
