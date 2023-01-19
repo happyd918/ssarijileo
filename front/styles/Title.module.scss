@@ -1,0 +1,17 @@
+@import 'global.scss';
+
+.title {
+  width: 520px;
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  display: flex;
+  flex-direction: row;
+}
+
+.point {
+  font-family: 'Miniver', cursive;
+  color: $main;
+}
