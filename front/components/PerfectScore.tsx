@@ -10,105 +10,78 @@ function PerfectScore() {
   }, []);
 
   const onUser = () => {
+    // 오디오 처리, 주파수 분석 인스턴스
     const audioContext = new AudioContext();
-    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-      const source = audioContext.createMediaStreamSource(stream);
-      const analyser = audioContext.createAnalyser();
-      const gainNode = audioContext.createGain();
+    const analyser = audioContext.createAnalyser();
 
-      source.connect(analyser);
-      analyser.connect(gainNode);
-      gainNode.connect(audioContext.destination);
+    // 음향 정보 가져오기
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then((stream: MediaStream) => {
+        // 오디오 소스 연결
+        const source = audioContext.createMediaStreamSource(stream);
+        source.connect(analyser);
+        //사운드 출력
+        analyser.connect(audioContext.destination);
+        // 주파수가 담긴 데이터 배열 생성
+        // analyser.fftSize = 2048;
+        // const bufferLength = analyser.frequencyBinCount;
+        // const dataArray = new Uint8Array(bufferLength);
+        const dataArray = new Float32Array(2048);
+        analyser.getFloatTimeDomainData(dataArray);
+        setInterval(() => {
+          const dataArray = new Float32Array(2048);
+          analyser.getFloatTimeDomainData(dataArray);
+          console.log(dataArray);
+        }, 1000);
 
-      analyser.fftSize = 2048;
-      const bufferLength = analyser.frequencyBinCount;
-      const dataArray = new Uint8Array(bufferLength);
-
-      if (canvas) {
-        const canvasCtx = canvas.getContext('2d');
-        if (canvasCtx) {
-          const draw = () => {
-            const drawVisual = requestAnimationFrame(draw);
-
-            analyser.getByteFrequencyData(dataArray);
-
-            canvasCtx.fillStyle = 'black';
-            canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
-
-            const barWidth = (canvas.width / bufferLength) * 2.5;
-            let barHeight;
-            let x = 0;
-
-            for (let i = 0; i < bufferLength; i++) {
-              barHeight = dataArray[i];
-              canvasCtx.fillStyle = `rgb(${barHeight + 100},${
-                barHeight + 100
-              },${barHeight + 100})`;
-              canvasCtx.fillRect(
-                x,
-                canvas.height - barHeight / 2,
-                barWidth,
-                barHeight / 2,
-              );
-              x += barWidth + 1;
-            }
-          };
-          draw();
-        }
-      }
-    });
-  };
-
-  const onSong = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-
-    const audioContext = new AudioContext();
-
-    fetch('sounds/test.mp3')
-      .then(response => response.arrayBuffer())
-      .then(downloadedBuffer => audioContext.decodeAudioData(downloadedBuffer))
-      .then((decodedBuffer: AudioBuffer) => {
-        const sourceNode = new AudioBufferSourceNode(audioContext, {
-          buffer: decodedBuffer,
-        });
-
-        const analyserNode = new AnalyserNode(audioContext);
-        const javascriptNode = audioContext.createScriptProcessor(1024, 1, 1);
-
-        sourceNode.connect(audioContext.destination);
-        sourceNode.connect(analyserNode);
-        analyserNode.connect(javascriptNode);
-        javascriptNode.connect(audioContext.destination);
-
-        sourceNode.start(0); // Play the sound now
-
-        // Set up the event handler that is triggered every time enough samples have been collected
-        // then trigger the audio analysis and draw the results
-        javascriptNode.onaudioprocess = () => {
-          // Read the frequency values
-          const amplitudeArray = new Uint8Array(analyserNode.frequencyBinCount);
-
-          // Get the time domain data for this sample
-          analyserNode.getByteTimeDomainData(amplitudeArray);
-          if (audioContext.state === 'running' && canvas) {
-            // Draw the time domain in the canvas
-            requestAnimationFrame(() => {
-              // Get the canvas 2d context
-              const canvasCTX = canvas.getContext('2d');
-              // Clear the canvas
-              if (canvasCTX) {
-                canvasCTX.clearRect(0, 0, canvas.width, canvas.height);
-
-                // Draw the amplitude inside the canvas
-                for (let i = 0; i < amplitudeArray.length; i++) {
-                  const value = amplitudeArray[i] / 256;
-                  const y = canvas.height - canvas.height * value;
-                  canvasCTX.fillStyle = 'white';
-                  canvasCTX.fillRect(i, y, 1, 1);
-                }
-              }
-            });
+        // FFT를 이용해 주파수를 음정으로 변환
+        const isSilentBuffer = (buffer: Float32Array) => {
+          let N = buffer.length,
+            ret = 0;
+          for (let i = 0; i < N; i++) {
+            ret += buffer[i] * buffer[i];
           }
+          return (ret = Math.sqrt(ret / N)) < 0.01;
+        };
+
+        const trimBuffer = (buffer: Float32Array, minFreq: number) => {
+          let N = buffer.length,
+            startIdx = 0,
+            endIdx = N - 1;
+          for (let i = 0; i < N / 2; i++) {
+            if (Math.abs(buffer[i]) < minFreq) {
+              startIdx = i;
+              break;
+            }
+          }
+          for (let i = endIdx; i > N / 2; i--) {
+            if (Math.abs(buffer[i]) < minFreq) {
+              endIdx = i;
+              break;
+            }
+          }
+          return buffer.slice(startIdx, endIdx);
+        };
+
+        const getPitch = (data: Float32Array, rate: number) => {
+          if (isSilentBuffer(data)) return 0;
+          let sound = trimBuffer(data, 0.2),
+            N = sound.length,
+            arr = new Array(N).fill(0);
+          for (let i = 0; i < N; i++) {
+            for (let j = 0; j < N; j++) {
+              arr[i] = arr[i] + sound[j] * Math.cos((2 * Math.PI * i * j) / N);
+            }
+          }
+          let downCnt = 0;
+          for (; arr[downCnt] > arr[downCnt + 1]; downCnt++);
+          let y = -1,
+            d = -1;
+          for (let i = downCnt; i < N; i++) {
+            arr[i] > y && ((y = arr[i]), (d = i));
+          }
+          return (d * rate) / N;
         };
       });
   };
