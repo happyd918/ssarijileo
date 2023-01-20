@@ -1,36 +1,37 @@
-import React, { createContext } from 'react';
-import type { AppProps } from 'next/app';
-import { Global } from '@emotion/react';
-import { lightTheme, darkTheme, ColorTheme } from '@/styles/theme';
+// import React, { createContext } from 'react';
+// // import { Global } from '@emotion/react';
+// import { lightTheme, darkTheme, ColorTheme } from '@/styles/theme';
+// import useDarkMode from '@/hooks/common/useDarkMode';
 
-// export default function App({ Component, pageProps }: AppProps) {
-//   return <Component {...pageProps} />;
+// import { useEffect } from 'react';
+import '@/styles/global.scss';
+import type { AppProps } from 'next/app';
+
+// // createContext 타입지정
+// interface ContextProps {
+//   colorTheme: ColorTheme;
+//   toggleColorTheme: () => void;
 // }
 
-// createContext 타입지정
-interface ContextProps {
-  colorTheme: ColorTheme;
-  toggleColorTheme: () => void;
-}
-
-// Context 생성
-export const ThemeContext = createContext<ContextProps>({
-  colorTheme: lightTheme, // 초기 값으로 lightTheme를 넣어줍니다.
-  toggleColorTheme: () => {
-    // light || dark mode를 토글합니다.
-    return null;
-  },
-});
+// // context 생성
+// export const ThemeContext = createContext<ContextProps>({
+//   // default 테마 설정
+//   colorTheme: lightTheme,
+//   // light||dark 토글
+//   toggleColorTheme: () => {
+//     return null;
+//   },
+// });
 
 function MyApp({ Component, pageProps }: AppProps) {
-  // ❗️useDarkMode hook을 통해 theme과 toggleTheme return;
-  const { theme, toggleTheme } = useDarkMode();
-
+  // const { theme, toggleTheme } = useDarkMode();
+  // useEffect(() => {
+  //   document.documentElement.setAttribute('data-theme', 'light');
+  // }, []);
   return (
-    // Provider은 context의 변화를 알리는 역할을 합니다.
-    // toggleTheme를 통해 theme이 변경되면 하위 컴포넌트들은 모두 리렌더링됩니다.
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <Component {...pageProps} />
-    </ThemeContext.Provider>
+    // 하위 컴포넌트에 전달,,, value는 필수 값
+    <Component {...pageProps} />
   );
 }
+
+export default MyApp;

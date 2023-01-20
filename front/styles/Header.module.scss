@@ -1,4 +1,5 @@
-@import 'global.scss';
+// @import 'color.scss';
+// @use './theme.scss';
 
 .header {
   width: 100%;
@@ -7,7 +8,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  background-color: none;
+  background-color: var(--color-background);
 
   .logo {
     width: 20%;
@@ -24,7 +25,7 @@
     .pages {
       text-decoration: none;
       font-weight: bold;
-      color: $darkmode;
+      color: var(--color-text);
       margin-left: 1rem;
     }
   }
@@ -44,7 +45,7 @@
 
       #toggle:checked ~ .toggleSwitch .toggleButton {
         left: calc(100% - 24px);
-        background: #fff;
+        background-color: var(--color-background);
       }
 
       .toggleSwitch {
@@ -53,7 +54,7 @@
         display: block;
         position: relative;
         border-radius: 30px;
-        background-color: #fff;
+        background-color: var(--color-background);
         box-shadow: 0 0 10px 1px rgba(0 0 0 / 15%);
         cursor: pointer;
         transition: all 0.2s ease-in;
@@ -69,7 +70,7 @@
           left: 4px;
           transform: translateY(-50%);
           border-radius: 50%;
-          background: $darkmode;
+          background-color: var(--color-text);
           cursor: pointer;
           z-index: 99;
           transition: all 0.2s ease-in;
@@ -90,7 +91,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-color: $line;
+      background-color: #e1e1e1;
       border-radius: 50%;
       margin-left: 10px;
 

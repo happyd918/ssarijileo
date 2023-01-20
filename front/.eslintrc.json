@@ -1,4 +1,7 @@
 {
+  "env": {
+    "browser": true
+  },
   "extends": ["airbnb", "plugin:prettier/recommended"],
   // Parsing error: Unexpected token
   "parser": "@typescript-eslint/parser",
