@@ -1,35 +1,20 @@
+import { useState, useEffect } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { ChangeEvent } from 'react';
-// import React, { useContext } from 'react';
-// import { ThemeContext } from '@/pages/_app';
-// import styled from '@emotion/react';
-// import { lightTheme, ColorTheme } from '@/styles/theme';
-
-// import { Inter } from '@next/font/google'
+import React from 'react';
 import styles from '@/styles/Header.module.scss';
 
-// const inter = Inter({ subsets: ['latin'] });
-
-// interface ToggleProps {
-//   colorTheme: ColorTheme;
-// }
-
 function Header() {
-  // const [switchState, setSwitchState] = useState(false);
+  const [themeMode, setThemeMode] = useState(false);
+  const changeMode = (e: any) => {
+    e.preventDefault();
+    setThemeMode(!themeMode);
+  };
 
-  // const { colorTheme, toggleColorTheme } = useContext(ThemeContext);
-
-  // eslint-disable-next-line no-undef
-  function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
-    console.log('---', e.target.checked);
-    if (e.target.checked) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-    }
-    // setSwitchState(!switchState);
-  }
+  useEffect(() => {
+    document.body.dataset.theme = themeMode ? 'dark' : 'light';
+  }, [themeMode]);
 
   // header에 들어갈 menu 리스트
   const headerMenu = [
@@ -51,9 +36,25 @@ function Header() {
     },
   ];
 
+  const LightIcons = {
+    logo: 'icon/header/light/light_logo.svg',
+    mode: 'icon/header/light/light_mode_icon.svg',
+    alarm: 'icon/header/light/light_alarm_icon.svg',
+    profile: 'icon/header/light/light_profile_icon.svg',
+  };
+
+  const DarkIcons = {
+    logo: 'icon/header/dark/dark_logo.svg',
+    mode: 'icon/header/dark/dark_mode_icon.svg',
+    alarm: 'icon/header/dark/dark_alarm_icon.svg',
+    profile: 'icon/header/dark/dark_profile_icon.svg',
+  };
+
+  const icons = themeMode ? DarkIcons : LightIcons;
+
   // menu 리스트 요소에 대한 태그 생성
   const headerMenus = headerMenu.map(item => (
-    <Link className={styles.pages} href={item.link}>
+    <Link key={item.name} className={styles.pages} href={item.link}>
       {item.name}
     </Link>
   ));
@@ -62,12 +63,7 @@ function Header() {
     <header className={styles.header}>
       <div className={styles.logo}>
         <Link href="/">
-          <Image
-            src="icon/header/light/light_logo.svg"
-            alt="logoFail"
-            width={70}
-            height={70}
-          />
+          <Image src={icons.logo} alt="logoFail" width={70} height={70} />
         </Link>
       </div>
       <div className={styles.menu}>{headerMenus}</div>
@@ -76,36 +72,25 @@ function Header() {
           <input
             type="checkbox"
             id="toggle"
-            // checked={switchState}
-            // colorTheme={colorTheme}
-            onChange={handleOnChange}
+            checked={themeMode}
+            onChange={changeMode}
             hidden
           />
           <label htmlFor="toggle" className={styles.toggleSwitch}>
             <input
               type="checkbox"
               className={styles.toggleButton}
-              // checked={switchState}
-              onChange={handleOnChange}
+              checked={themeMode}
+              onChange={changeMode}
             />
           </label>
-          <Image
-            src="icon/header/light/light_mode_icon.svg"
-            alt="mode"
-            width={20}
-            height={20}
-          />
+          <Image src={icons.mode} alt="mode" width={20} height={20} />
         </div>
         <div className={styles.icon}>
-          <Image
-            src="icon/header/light/light_alarm_icon.svg"
-            alt="alarm"
-            width={20}
-            height={20}
-          />
+          <Image src={icons.alarm} alt="alarm" width={20} height={20} />
           <div className={styles.profile}>
             <Image
-              src="icon/header/light/light_profile_icon.svg"
+              src={icons.profile}
               alt="prifile"
               // className={styles.profileIcon}
               width={25}
