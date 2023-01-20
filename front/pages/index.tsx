@@ -6,6 +6,7 @@ import Header from '@/components/common/Header';
 
 // import Loading from '@/components/Loading';
 // import Title from '@/components/common/Title';
+import SoundBar from '@/components/common/SoundBar';
 
 import Footer from '@/components/common/Footer';
 
@@ -24,6 +25,7 @@ function Home() {
         <Header />
         {/* <Loading /> */}
         {/* <Title /> */}
+        <SoundBar />
         <Footer />
       </main>
     </>
