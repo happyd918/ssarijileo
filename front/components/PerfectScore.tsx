@@ -29,11 +29,6 @@ function PerfectScore() {
         // const dataArray = new Uint8Array(bufferLength);
         const dataArray = new Float32Array(2048);
         analyser.getFloatTimeDomainData(dataArray);
-        setInterval(() => {
-          const dataArray = new Float32Array(2048);
-          analyser.getFloatTimeDomainData(dataArray);
-          console.log(dataArray);
-        }, 1000);
 
         // FFT를 이용해 주파수를 음정으로 변환
         const isSilentBuffer = (buffer: Float32Array) => {
@@ -76,13 +71,19 @@ function PerfectScore() {
           }
           let downCnt = 0;
           for (; arr[downCnt] > arr[downCnt + 1]; downCnt++);
-          let y = -1,
-            d = -1;
+          let maxV = -1,
+            maxIdx = -1;
           for (let i = downCnt; i < N; i++) {
-            arr[i] > y && ((y = arr[i]), (d = i));
+            arr[i] > maxV && ((maxV = arr[i]), (maxIdx = i));
           }
-          return (d * rate) / N;
+          let ret = (arr[maxIdx - 1] + arr[maxIdx + 1] - 2 * arr[maxIdx]) / 2,
+            avg = (arr[maxIdx - 1] + arr[maxIdx + 1]) / 2;
+          return (
+            (ret = ret && (maxIdx = maxIdx - avg / (2 * ret))), rate / maxIdx
+          );
         };
+
+        let pitch = getPitch(dataArray, audioContext.sampleRate);
       });
   };
 
