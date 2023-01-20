@@ -19,10 +19,6 @@ function Home() {
     <>
       <Head>
         <title>My App</title>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Miniver&display=swap"
-          rel="stylesheet"
-        />
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
         <Header />
