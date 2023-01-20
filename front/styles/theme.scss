@@ -1,0 +1,13 @@
+@use './color.scss' as *;
+
+html[data-theme='light'] {
+  --color-background: #{$white};
+  --color-text: #{$dark};
+  --color-btn: #{$dark};
+}
+
+html[data-theme='dark'] {
+  --color-background: #{$dark};
+  --color-text: #{$white};
+  --color-btn: #{$main};
+}

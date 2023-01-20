@@ -1,19 +1,34 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react';
+// import React, { useContext } from 'react';
+// import { ThemeContext } from '@/pages/_app';
+// import styled from '@emotion/react';
+// import { lightTheme, ColorTheme } from '@/styles/theme';
 
 // import { Inter } from '@next/font/google'
 import styles from '@/styles/Header.module.scss';
 
 // const inter = Inter({ subsets: ['latin'] });
 
+// interface ToggleProps {
+//   colorTheme: ColorTheme;
+// }
+
 function Header() {
-  // 다크모드, 라이트모드 변경
-  const [switchState, setSwitchState] = useState(false);
+  // const [switchState, setSwitchState] = useState(false);
+
+  // const { colorTheme, toggleColorTheme } = useContext(ThemeContext);
+
   // eslint-disable-next-line no-undef
   function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
     console.log('---', e.target.checked);
-    setSwitchState(!switchState);
+    if (e.target.checked) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+    // setSwitchState(!switchState);
   }
 
   // header에 들어갈 menu 리스트
@@ -61,7 +76,8 @@ function Header() {
           <input
             type="checkbox"
             id="toggle"
-            checked={switchState}
+            // checked={switchState}
+            // colorTheme={colorTheme}
             onChange={handleOnChange}
             hidden
           />
@@ -69,7 +85,7 @@ function Header() {
             <input
               type="checkbox"
               className={styles.toggleButton}
-              checked={switchState}
+              // checked={switchState}
               onChange={handleOnChange}
             />
           </label>
