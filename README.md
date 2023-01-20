@@ -14,4 +14,4 @@
 
 * 김명준 : 회원 로그인 및 관리
 * 김소윤 : Web RTC 기능 구현
-* 이수민 : CI / CD 구축
+* 이수민 : CI / CD 구축 (jenkins(fe, be), redis(session), redis(cache), MySQL, WebRTC)
