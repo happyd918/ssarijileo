@@ -11,7 +11,6 @@ import {
 } from 'constants/AudioSettings';
 
 import styles from '../styles/PerfectScore.module.scss';
-import { is } from 'immutable';
 
 function PerfectScore() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -32,13 +31,14 @@ function PerfectScore() {
   };
 
   useAnimationFrame(
-    (_: number) => {
+    (deltaTime: number) => {
       if (
         !canvasRef.current ||
         !dataArrayRef.current ||
         !pitchDetectorRef.current ||
         !analyserRef.current ||
-        !isStarted
+        !isStarted ||
+        deltaTime === undefined
       )
         return;
       const ctx = canvasRef.current.getContext('2d');
@@ -51,7 +51,7 @@ function PerfectScore() {
       const analyser = analyserRef.current;
 
       analyser.getFloatTimeDomainData(dataArray);
-      const [pitch, clarity] = pitchDetector.findPitch(
+      const [pitch] = pitchDetector.findPitch(
         dataArray,
         analyser.context.sampleRate,
       );
@@ -66,6 +66,7 @@ function PerfectScore() {
       if (noteWindow.length > NOTE_WINDOW_SIZE) {
         noteWindow.shift();
       }
+
       const noteCharactorTable = [
         'C',
         'C#',
@@ -83,14 +84,7 @@ function PerfectScore() {
       let x = 0;
       const barWidth = canvasRef.current.width / NOTE_WINDOW_SIZE;
       for (let i = 0; i < noteWindow.length; i++) {
-        if (noteWindow[i] === undefined) {
-          continue;
-        }
-
         const noteCharactor = noteCharactorTable[noteWindow[i] % 12];
-        if (noteCharactor === undefined) {
-          continue;
-        }
 
         const octave = Math.floor(noteWindow[i] / 12) - 1;
 

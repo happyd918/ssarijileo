@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 
 export const useAnimationFrame = (
-  callback: (_: number) => void,
+  callback: (deltaTime: number) => void,
   deps?: React.DependencyList | undefined,
 ) => {
   // Use useRef for mutable variables that we want to persist

@@ -15,7 +15,7 @@ function Home() {
       <Head>
         <title>My App</title>
       </Head>
-      <main className={`${styles.main} ${inter.className}`}>  
+      <main className={`${styles.main} ${inter.className}`}>
         <Header />
         <PerfectScore />
         <Footer />
