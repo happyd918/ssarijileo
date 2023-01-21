@@ -23,4 +23,3 @@
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
   }
 }
-
