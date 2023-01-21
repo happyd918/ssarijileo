@@ -1,4 +1,7 @@
 {
+  "env": {
+    "browser": true
+  },
   "extends": ["airbnb", "plugin:prettier/recommended"],
   // Parsing error: Unexpected token
   "parser": "@typescript-eslint/parser",
@@ -16,6 +19,8 @@
     "react/jsx-props-no-spreading": "off",
     // allow no-unresolved
     "import/no-unresolved": "off",
-    "import/extensions": ["off"]
+    "import/extensions": ["off"],
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
   }
 }
+
