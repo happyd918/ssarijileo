@@ -1,7 +1,8 @@
-@import 'color.scss';
+// @import 'color.scss';
 
 .footer {
   padding: 0 5rem;
+  background-color: var(--color-background);
 }
 
 .footer_container {
@@ -29,7 +30,7 @@
   align-items: center;
   padding: 1rem 0;
   font-size: 90%;
-  color: $darkmode;
+  color: var(--color-text);
 }
 
 .footer_item_upper > span {
@@ -42,7 +43,7 @@
   align-items: center;
   margin-top: 2.5rem;
   font-size: 100%;
-  color: $darkmode;
+  color: var(--color-text);
 }
 
 .footer_item_lower > span {
@@ -67,11 +68,11 @@
 
 .footer_lower > .footer_lower_left > span {
   margin-right: 2rem;
-  color: $darkmode;
+  color: var(--color-text);
   opacity: 0.8;
 }
 
 .footer_lower > span {
-  color: $darkmode;
+  color: var(--color-text);
   opacity: 0.5;
 }
