@@ -19,3 +19,6 @@ export const NOTE_CHARTER_TABLE = [
   'A#',
   'B',
 ];
+export const PARTICLE_WINDOW_SIZE = 100;
+export const PARTICLE_COLOR = `rgba(0, 0, 255, 0.5)`;
+export const WHITE = `rgba(255, 255, 255, 0.5)`;

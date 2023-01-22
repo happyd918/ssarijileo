@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from 'react';
 
 import { PitchDetector } from 'pitchy';
 import useAnimationFrame from '@/hooks/useAnimationFrame';
-
 import * as data from '@/constants/PerfectScoreData';
 
 import styles from '../styles/PerfectScore.module.scss';
@@ -17,6 +16,7 @@ function PerfectScore() {
   const noteWindowRef = useRef<number[]>(
     new Array(data.NOTE_WINDOW_SIZE / 2).fill(-1),
   );
+  const particleWindowRef = useRef<object[]>([]);
   const [isStarted, setIsStarted] = useState(false);
 
   const start = () => {
@@ -68,12 +68,31 @@ function PerfectScore() {
       };
       // 음정 분석 결과를 노트윈도우에 저장
       const note = freqToNote(pitch);
+      console.log(note);
       const noteWindow = noteWindowRef.current;
       noteWindow.push(note);
       if (noteWindow.length > data.NOTE_WINDOW_SIZE / 2) {
         noteWindow.shift();
       }
 
+      const speed = {
+        x: -5 + Math.random() * 10,
+        y: -5 + Math.random() * 10,
+      };
+      const radius = 5 + Math.random() * 5;
+      const life = 30 + Math.random() * 10;
+      const color = Number.isNaN(note) ? 'white' : data.PARTICLE_COLOR;
+      const particle = {
+        speed,
+        radius,
+        life,
+        color,
+      };
+      const particleWindow = particleWindowRef.current;
+      particleWindow.push(particle);
+      if (particleWindow.length > data.PARTICLE_WINDOW_SIZE) {
+        particleWindow.shift();
+      }
       // const noteCharactorTable = data.NOTE_CHARTER_TABLE;
 
       // 음정 출력
@@ -86,12 +105,22 @@ function PerfectScore() {
         ctx.fillRect(x, y, barWidth, 10);
         x += barWidth;
 
-        // const noteCharactor = noteCharactorTable[noteWindow[i] % 12];
-        // const octave = Math.floor(noteWindow[i] / 12) - 1;
-        // ctx.font = '8px serif';
-        // ctx.fillStyle = `white`;
-        // ctx.fillText(`${noteCharactor}${octave}`, x, 10);
+        ctx.arc(
+          canvasRef.current.width / 2,
+          y,
+          particle.radius,
+          0,
+          Math.PI * 2,
+        );
+        ctx.fillStyle = particle.color;
+        ctx.fill();
       }
+
+      // const noteCharactor = noteCharactorTable[noteWindow[i] % 12];
+      // const octave = Math.floor(noteWindow[i] / 12) - 1;
+      // ctx.font = '8px serif';
+      // ctx.fillStyle = `white`;
+      // ctx.fillText(`${noteCharactor}${octave}`, x, 10);
     },
     [canvasRef, dataArrayRef, pitchDetectorRef, analyserRef, isStarted],
   );
@@ -115,7 +144,6 @@ function PerfectScore() {
 
   return (
     <>
-      <h1>PerfectScore</h1>
       <canvas
         className={styles.canvas}
         width="800"

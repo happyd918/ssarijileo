@@ -17,23 +17,17 @@ function NoteParticle() {
   );
   return (
     <Particles
-      id="tsparticles"
+      id="particles"
+      width="800"
+      height="600"
       init={particlesInit}
       loaded={particlesLoaded}
       options={{
         fpsLimit: 120,
         interactivity: {
-          events: {
-            onClick: {
-              enable: true,
-              mode: 'push',
-            },
-            onHover: {
-              enable: true,
-              mode: 'repulse',
-            },
-            resize: true,
-          },
+          // events: {
+          //   resize: true,
+          // },
           modes: {
             push: {
               quantity: 4,
@@ -46,14 +40,7 @@ function NoteParticle() {
         },
         particles: {
           color: {
-            value: '#ffffff',
-          },
-          links: {
-            color: '#ffffff',
-            distance: 150,
-            enable: true,
-            opacity: 0.5,
-            width: 1,
+            value: '#0000ff',
           },
           collisions: {
             enable: true,
@@ -82,10 +69,10 @@ function NoteParticle() {
             type: 'circle',
           },
           size: {
-            value: { min: 1, max: 5 },
+            value: { min: 1, max: 3 },
           },
         },
-        detectRetina: true,
+        // detectRetina: true,
       }}
     />
   );
