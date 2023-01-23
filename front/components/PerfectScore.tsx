@@ -14,9 +14,8 @@ function PerfectScore() {
   );
   const analyserRef = useRef<AnalyserNode>();
   const noteWindowRef = useRef<number[]>(
-    new Array(data.NOTE_WINDOW_SIZE / 2).fill(-1),
+    new Array(data.NOTE_WINDOW_SIZE * data.DISPLAY_PERCENTAGE).fill(-1),
   );
-  const [isStarted, setIsStarted] = useState(false);
   const particles: {
     speed: {
       x: number;
@@ -28,6 +27,7 @@ function PerfectScore() {
     color: string;
     life: number;
   }[] = [];
+  const [isStarted, setIsStarted] = useState(false);
 
   const start = () => {
     setIsStarted(true);
@@ -60,13 +60,23 @@ function PerfectScore() {
       // 캔버스
       const ctx = canvasRef.current.getContext('2d');
       if (!ctx) return;
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-      ctx.beginPath();
-      ctx.moveTo(canvasRef.current.width / 2, 0);
-      ctx.lineTo(canvasRef.current.width / 2, canvasRef.current.height);
-      ctx.strokeStyle = '#ffffff';
-      ctx.stroke();
+      // ctx.fillStyle = '#000000';
+      // ctx.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+      // ctx.beginPath();
+      // ctx.moveTo(canvasRef.current.width / 2, 0);
+      // ctx.lineTo(canvasRef.current.width / 2, canvasRef.current.height);
+      // ctx.strokeStyle = '#ffffff';
+      // ctx.stroke();
+
+      const backgroudImage = new Image();
+      backgroudImage.src = 'img/perfectscore/backgound.jpeg';
+      ctx.drawImage(
+        backgroudImage,
+        0,
+        0,
+        canvasRef.current.width,
+        canvasRef.current.height,
+      );
 
       // 음정 분석
       const dataArray = dataArrayRef.current;
@@ -82,13 +92,19 @@ function PerfectScore() {
         return Math.round(12 * (Math.log(freq / 440.0) / Math.log(2))) + 69;
       };
       // 음정 분석 결과를 노트윈도우에 저장
-      const note = freqToNote(pitch);
+      let note = freqToNote(pitch);
+      if (note < 40 || note > 90) note = -1;
       const noteWindow = noteWindowRef.current;
       const flag = note === noteWindow[noteWindow.length - 1];
       noteWindow.push(note);
-      if (noteWindow.length > data.NOTE_WINDOW_SIZE / 2) {
+      if (noteWindow.length > data.NOTE_WINDOW_SIZE * data.DISPLAY_PERCENTAGE) {
         noteWindow.shift();
       }
+
+      // const noteCharactorTable = data.NOTE_CHARTER_TABLE;
+      // const noteCharactor = noteCharactorTable[note % 12];
+      // const octave = Math.floor(note / 12) - 1;
+      // console.log(noteCharactor, octave);
 
       const makeParticle = (particleNum: number) => {
         if (!canvasRef.current) return;
@@ -101,7 +117,10 @@ function PerfectScore() {
           };
           const radius = Math.random();
           const color = data.PARTICLE_COLOR;
-          const startX = Math.random() * 2 + canvasRef.current.width / 2 + 2;
+          const startX =
+            Math.random() * 2 +
+            canvasRef.current.width * data.DISPLAY_PERCENTAGE +
+            2;
           const startY = particleY + Math.random() * 10;
           const life = Math.random() * 3 + 3;
           particles.push({
@@ -146,16 +165,44 @@ function PerfectScore() {
         ctx.fill();
       }
 
-      // const noteCharactorTable = data.NOTE_CHARTER_TABLE;
-
       // 음정 출력
       let x = 0;
       const barWidth = canvasRef.current.width / data.NOTE_WINDOW_SIZE;
       for (let i = 0; i < noteWindow.length; i++) {
-        const barHeight = noteWindow[i] * 5;
-        const y = canvasRef.current.height - barHeight;
-        ctx.fillStyle = `blue`;
-        ctx.fillRect(x, y, barWidth, 10);
+        const barHeight = 10;
+        const y = canvasRef.current.height - noteWindow[i] * 5;
+        if (!Number.isNaN(y)) {
+          const gradient = ctx.createLinearGradient(
+            x,
+            y,
+            x + barWidth + 1,
+            y + barHeight,
+          );
+          gradient.addColorStop(0, data.NOTE_COLOR.skyblue);
+          gradient.addColorStop(1, '#fff5f5');
+          ctx.fillStyle = gradient;
+        }
+
+        console.log(x, y, barWidth, barHeight);
+        ctx.beginPath();
+        if (
+          i !== 0 &&
+          i !== noteWindow.length - 1 &&
+          noteWindow[i] !== noteWindow[i - 1] &&
+          noteWindow[i] !== noteWindow[i + 1]
+        ) {
+          ctx.roundRect(x, y, barWidth + 1, barHeight, [5, 5, 5, 5]);
+        } else if (i !== 0 && noteWindow[i] !== noteWindow[i - 1]) {
+          ctx.roundRect(x, y, barWidth + 1, barHeight, [5, 0, 0, 5]);
+        } else if (
+          i !== noteWindow.length - 1 &&
+          noteWindow[i] !== noteWindow[i + 1]
+        ) {
+          ctx.roundRect(x, y, barWidth + 1, barHeight, [0, 5, 5, 0]);
+        } else {
+          ctx.rect(x, y, barWidth + 1, barHeight);
+        }
+        ctx.fill();
         x += barWidth;
       }
 
@@ -189,8 +236,8 @@ function PerfectScore() {
     <>
       <canvas
         className={styles.canvas}
-        width="800"
-        height="600"
+        width={data.CANVAS_WIDTH}
+        height={data.CANVAS_HEIGHT}
         ref={canvasRef}
       />
       <div id="controls">
