@@ -106,6 +106,7 @@ function PerfectScore() {
       // const octave = Math.floor(note / 12) - 1;
       // console.log(noteCharactor, octave);
 
+      // 파티클 생성
       const makeParticle = (particleNum: number) => {
         if (!canvasRef.current) return;
         const particleY =
@@ -122,7 +123,7 @@ function PerfectScore() {
             canvasRef.current.width * data.DISPLAY_PERCENTAGE +
             2;
           const startY = particleY + Math.random() * 10;
-          const life = Math.random() * 3 + 3;
+          const life = Math.random() * 5 + 5;
           particles.push({
             speed,
             startX,
@@ -134,6 +135,7 @@ function PerfectScore() {
         }
       };
 
+      // 파티클 유지 여부
       if (!flag) {
         particles.splice(0, particles.length);
         makeParticle(data.PARTICLE_COUNT);
@@ -152,8 +154,10 @@ function PerfectScore() {
         }
       }
 
+      // 파티클 그리기
       for (let i = 0; i < particles.length; i++) {
         ctx.beginPath();
+        ctx.fillStyle = particles[i].color;
         ctx.arc(
           particles[i].startX,
           particles[i].startY,
@@ -161,7 +165,6 @@ function PerfectScore() {
           0,
           Math.PI * 2,
         );
-        ctx.fillStyle = particles[i].color;
         ctx.fill();
       }
 
@@ -183,7 +186,6 @@ function PerfectScore() {
           ctx.fillStyle = gradient;
         }
 
-        console.log(x, y, barWidth, barHeight);
         ctx.beginPath();
         if (
           i !== 0 &&

@@ -24,9 +24,7 @@
     "pitchy": "^4.0.7",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-tsparticles": "^2.8.0",
-    "sass": "^1.57.1",
-    "tsparticles": "^2.8.0"
+    "sass": "^1.57.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.48.2",

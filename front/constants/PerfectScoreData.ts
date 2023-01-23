@@ -25,7 +25,7 @@ export const NOTE_COLOR = {
   red: '#F68ADD',
 };
 export const PARTICLE_COUNT = 100;
-export const PARTICLE_COLOR = `rgba(255, 255, 255, 0.5)`;
+export const PARTICLE_COLOR = `rgba(255, 255, 255, ${Math.random()})`;
 export const DISPLAY_PERCENTAGE = 0.49;
 export const CANVAS_WIDTH = 800;
 export const CANVAS_HEIGHT = 600;
