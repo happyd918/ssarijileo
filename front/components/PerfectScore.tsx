@@ -16,8 +16,18 @@ function PerfectScore() {
   const noteWindowRef = useRef<number[]>(
     new Array(data.NOTE_WINDOW_SIZE / 2).fill(-1),
   );
-  const particleWindowRef = useRef<object[]>([]);
   const [isStarted, setIsStarted] = useState(false);
+  const particles: {
+    speed: {
+      x: number;
+      y: number;
+    };
+    startX: number;
+    startY: number;
+    radius: number;
+    color: string;
+    life: number;
+  }[] = [];
 
   const start = () => {
     setIsStarted(true);
@@ -52,6 +62,11 @@ function PerfectScore() {
       if (!ctx) return;
       ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+      ctx.beginPath();
+      ctx.moveTo(canvasRef.current.width / 2, 0);
+      ctx.lineTo(canvasRef.current.width / 2, canvasRef.current.height);
+      ctx.strokeStyle = '#ffffff';
+      ctx.stroke();
 
       // 음정 분석
       const dataArray = dataArrayRef.current;
@@ -68,31 +83,69 @@ function PerfectScore() {
       };
       // 음정 분석 결과를 노트윈도우에 저장
       const note = freqToNote(pitch);
-      console.log(note);
       const noteWindow = noteWindowRef.current;
+      const flag = note === noteWindow[noteWindow.length - 1];
       noteWindow.push(note);
       if (noteWindow.length > data.NOTE_WINDOW_SIZE / 2) {
         noteWindow.shift();
       }
 
-      const speed = {
-        x: -5 + Math.random() * 10,
-        y: -5 + Math.random() * 10,
+      const makeParticle = (particleNum: number) => {
+        if (!canvasRef.current) return;
+        const particleY =
+          canvasRef.current.height - noteWindow[noteWindow.length - 1] * 5;
+        for (let i = 0; i < particleNum; i++) {
+          const speed = {
+            x: Math.random() * 2,
+            y: Math.random() * 2 - 1,
+          };
+          const radius = Math.random();
+          const color = data.PARTICLE_COLOR;
+          const startX = Math.random() * 2 + canvasRef.current.width / 2 + 2;
+          const startY = particleY + Math.random() * 10;
+          const life = Math.random() * 3 + 3;
+          particles.push({
+            speed,
+            startX,
+            startY,
+            radius,
+            color,
+            life,
+          });
+        }
       };
-      const radius = 5 + Math.random() * 5;
-      const life = 30 + Math.random() * 10;
-      const color = Number.isNaN(note) ? 'white' : data.PARTICLE_COLOR;
-      const particle = {
-        speed,
-        radius,
-        life,
-        color,
-      };
-      const particleWindow = particleWindowRef.current;
-      particleWindow.push(particle);
-      if (particleWindow.length > data.PARTICLE_WINDOW_SIZE) {
-        particleWindow.shift();
+
+      if (!flag) {
+        particles.splice(0, particles.length);
+        makeParticle(data.PARTICLE_COUNT);
+      } else {
+        for (let i = 0; i < particles.length; i++) {
+          const particle = particles[i];
+          particle.startX += particle.speed.x;
+          particle.startY += particle.speed.y;
+          particle.life -= 1;
+          if (particle.life < 0) {
+            particles.splice(i, 1);
+          }
+        }
+        if (particles.length < data.PARTICLE_COUNT) {
+          makeParticle(data.PARTICLE_COUNT - particles.length);
+        }
       }
+
+      for (let i = 0; i < particles.length; i++) {
+        ctx.beginPath();
+        ctx.arc(
+          particles[i].startX,
+          particles[i].startY,
+          particles[i].radius,
+          0,
+          Math.PI * 2,
+        );
+        ctx.fillStyle = particles[i].color;
+        ctx.fill();
+      }
+
       // const noteCharactorTable = data.NOTE_CHARTER_TABLE;
 
       // 음정 출력
@@ -104,16 +157,6 @@ function PerfectScore() {
         ctx.fillStyle = `blue`;
         ctx.fillRect(x, y, barWidth, 10);
         x += barWidth;
-
-        ctx.arc(
-          canvasRef.current.width / 2,
-          y,
-          particle.radius,
-          0,
-          Math.PI * 2,
-        );
-        ctx.fillStyle = particle.color;
-        ctx.fill();
       }
 
       // const noteCharactor = noteCharactorTable[noteWindow[i] % 12];
