@@ -243,9 +243,21 @@ function PerfectScore() {
         ref={canvasRef}
       />
       <div id="controls">
-        <input type="button" id="start_button" value="Start" onClick={start} />
+        <input
+          type="button"
+          id="start_button"
+          className={styles.button}
+          value="Start"
+          onClick={start}
+        />
         &nbsp; &nbsp;
-        <input type="button" id="stop_button" value="Stop" onClick={stop} />
+        <input
+          type="button"
+          id="stop_button"
+          className={styles.button}
+          value="Stop"
+          onClick={stop}
+        />
         <br />
         <br />
         <output id="msg" />

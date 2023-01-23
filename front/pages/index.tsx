@@ -17,7 +17,9 @@ function Home() {
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
         <Header />
-        <PerfectScore />
+        <div className={styles.container}>
+          <PerfectScore />
+        </div>
         <Footer />
       </main>
     </>
