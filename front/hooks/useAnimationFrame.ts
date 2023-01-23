@@ -1,12 +1,9 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 
-export const useAnimationFrame = (
+const useAnimationFrame = (
   callback: (deltaTime: number) => void,
   deps?: React.DependencyList | undefined,
 ) => {
-  // Use useRef for mutable variables that we want to persist
-  // without triggering a re-render on their change
-  // Make sure the effect runs only once
   const requestRef = useRef<number>();
   const previousTimeRef = useRef<number>();
 
@@ -33,4 +30,4 @@ export const useAnimationFrame = (
   }, [requestRef, animate, ...depsArray]);
 };
 
-export const useEventListener = () => {};
+export default useAnimationFrame;
