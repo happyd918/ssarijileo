@@ -25,9 +25,20 @@ spring:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
 
+  # application-oauth
+  profiles:
+    include: oauth
+
 # log level setting
 logging:
   level:
     root: info
     com:
       ssafy: debug
+
+# jwt SsarijileoSecretKey 20 Fin
+#jwt:
+#  header: Authorization
+#  secret: U3NhcmlqaWxlb1NlY3JldEtleVNzYXJpamlsZW9TZWNyZXRLZXlTc2FyaWppbGVvU2VjcmV0S2V5U3NhcmlqaWxlb1NlY3JldEtleVNzYXJpamlsZW9TZWNyZXRLZXlTc2FyaWppbGVvU2VjcmV0S2V5U3NhcmlqaWxlb1NlY3JldEtleVNzYXJpamlsZW9TZWNyZXRLZXlTc2FyaWppbGVvU2VjcmV0S2V5U3NhcmlqaWxlb1NlY3JldEtleVNzYXJpamlsZW9TZWNyZXRLZXlTc2FyaWppbGVvU2VjcmV0S2V5U3NhcmlqaWxlb1NlY3JldEtleVNzYXJpamlsZW9TZWNyZXRLZXlTc2FyaWppbGVvU2VjcmV0S2V5U3NhcmlqaWxlb1NlY3JldEtleVNzYXJpamlsZW9TZWNyZXRLZXlTc2FyaWppbGVvU2VjcmV0S2V5U3NhcmlqaWxlb1NlY3JldEtleVNzYXJpamlsZW9TZWNyZXRLZXlGaW4=
+#  token-validity-in-seconds: 86400
+

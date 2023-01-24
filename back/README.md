@@ -9,7 +9,7 @@
 | Stack  | Version                      | Description |
 | ------ | ---------------------------- | ----------- |
 | Java   | 11<br> (build 11.0.17+8-LTS) |             |
-| Gradle | 6.7+                         | Build Tool  |
+| Gradle | 7.6+                         | Build Tool  |
 | MySQL  | 8.0.31                       | DB          |
 |        |                              |             |
 
