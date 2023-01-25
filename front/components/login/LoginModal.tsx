@@ -9,7 +9,7 @@ function LoginModal({ setModalOpen }: any) {
     <div className={styles.back}>
       <div className={styles.container}>
         <div className={styles.top}>
-          <button type='button' className={styles.close} onClick={closeModal}>
+          <button type="button" className={styles.close} onClick={closeModal}>
             <Image
               src="img/common/common_close_image.svg"
               alt="close"
@@ -37,7 +37,11 @@ function LoginModal({ setModalOpen }: any) {
           </div>
         </div>
         <div className={styles.bottom}>
-          <button type='button' className={styles.closeBtn} onClick={closeModal}>
+          <button
+            type="button"
+            className={styles.closeBtn}
+            onClick={closeModal}
+          >
             닫기
           </button>
         </div>
