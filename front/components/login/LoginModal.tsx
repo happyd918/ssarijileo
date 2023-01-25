@@ -5,6 +5,14 @@ function LoginModal({ setModalOpen }: any) {
   const closeModal = () => {
     setModalOpen(false);
   };
+
+  const loginFormWithKakao = () => {
+    console.log(process.env.NEXT_APP_KAKAO_REDIRECTURI);
+
+    window.Kakao.Auth.authorize({
+      redirectUri: process.env.NEXT_APP_KAKAO_REDIRECTURI,
+    });
+  };
   return (
     <div className={styles.back}>
       <div className={styles.container}>
@@ -21,13 +29,14 @@ function LoginModal({ setModalOpen }: any) {
         <div className={styles.main}>
           <div className={styles.title}>Log in</div>
           <div className={styles.icon}>
-            {/* 해당 div 클릭 시 onClick 이벤트로 소셜 로그인 연동 */}
+            {/* 해당 icon 클릭 시 onClick 이벤트로 소셜 로그인 연동 */}
             <Image
               src="img/login/login_kakao_image.svg"
               alt="kakao"
               width={80}
               height={80}
               className={styles.kakao}
+              onClick={loginFormWithKakao}
             />
             <div className={styles.iconName}>Kakako</div>
           </div>
