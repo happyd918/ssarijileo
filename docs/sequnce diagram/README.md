@@ -31,10 +31,25 @@
 
 ### - 방 생성
 
-![webRTC_방생성](./webRTC_%EB%B0%A9%EC%83%9D%EC%84%B1.png)
+![방 생성](./webRTC\_방 생성.png)
 <br><br>
 
 ### - 방 목록/방 입장
 
-![webRTC_방목록&방입장](./webRTC_%EB%B0%A9%EB%AA%A9%EB%A1%9D%26%EB%B0%A9%EC%9E%85%EC%9E%A5.png)
+![방 목록&방 입장](./webRTC\_방 목록&방 입장.png)
+<br><br>
+
+### - 친구 목록/친구 초대
+
+![친구 목록&친구 초대](./webRTC\_친구 목록&친구 초대.png)
+<br><br>
+
+### - 노래 검색/노래 예약
+
+![노래 검색&노래 예약](./webRTC\_노래 검색&노래 예약.png)
+<br><br>
+
+### - 녹화
+
+![녹화](./webRTC_녹화.png)
 <br><br>
