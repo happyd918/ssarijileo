@@ -74,7 +74,7 @@ function MakeSample() {
       let note = freqToNote(pitch);
       if (note < 40 || note > 90) note = NaN;
       const noteWindow = noteWindowRef.current;
-      const flag = note === noteWindow[noteWindow.length - 1];
+      // const flag = note === noteWindow[noteWindow.length - 1];
       noteWindow.push(note);
       console.log(note);
       // 음정 출력
