@@ -1,4 +1,4 @@
-export const FFT_SIZE = 2048;
+export const FFT_SIZE = 8192;
 export const BUFFER_SIZE = FFT_SIZE;
 export const MIN_DB = -90;
 export const MAX_DB = -10;
