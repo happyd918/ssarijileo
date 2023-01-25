@@ -3,6 +3,8 @@ package com.ssafy.ssarijileo.config.filter;
 import com.ssafy.ssarijileo.user.dto.UserDto;
 import com.ssafy.ssarijileo.user.service.TokenService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,15 +19,18 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
 
+@Slf4j
 @RequiredArgsConstructor
 public class JwtAuthFilter extends GenericFilterBean {
     private final TokenService tokenService;
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String token = ((HttpServletRequest)request).getHeader("Auth");
+        String token = ((HttpServletRequest)request).getHeader("Access");
+        log.info("filter, token = {}",token);
 
         if (token != null && tokenService.verifyToken(token)) {
             String email = tokenService.getUid(token);
+            log.info("email = {}",email);
 
             // DB연동 x
             UserDto userDto = UserDto.builder()

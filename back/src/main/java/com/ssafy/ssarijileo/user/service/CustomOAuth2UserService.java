@@ -22,6 +22,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         //	2번
         OAuth2User oAuth2User = oAuth2UserService.loadUser(userRequest);
+        log.info("oAuth2User = {}", oAuth2User);
 
         //	3번
         String registrationId = userRequest.getClientRegistration().getRegistrationId();

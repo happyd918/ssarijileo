@@ -39,9 +39,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         Token token = tokenService.generateToken(userDto.getEmail(), "USER");
         log.info("{}", token);
 
-//        writeTokenResponse(response, token);
+       // writeTokenResponse(response, token);
 
-        targetUrl = UriComponentsBuilder.fromUriString("/home")
+        targetUrl = UriComponentsBuilder.fromUriString("/")
                 .queryParam("token", "token")
                 .build().toUriString();
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
@@ -51,7 +51,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             throws IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        response.addHeader("Access", token.getToken());
+        response.addHeader("Access", token.getAccessToken());
         response.addHeader("Refresh", token.getRefreshToken());
         response.setContentType("application/json;charset=UTF-8");
 

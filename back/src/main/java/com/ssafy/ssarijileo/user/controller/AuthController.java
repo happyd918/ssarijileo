@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
 @RestController
-public class TokenController {
+public class AuthController {
     private final TokenService tokenService;
 
 
@@ -28,7 +28,7 @@ public class TokenController {
             String email = tokenService.getUid(token);
             Token newToken = tokenService.generateToken(email, "USER");
 
-            response.addHeader("Auth", newToken.getToken());
+            response.addHeader("Access", newToken.getAccessToken());
             response.addHeader("Refresh", newToken.getRefreshToken());
             response.setContentType("application/json;charset=UTF-8");
 

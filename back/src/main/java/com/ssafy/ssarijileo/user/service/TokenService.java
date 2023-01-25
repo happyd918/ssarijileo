@@ -30,7 +30,7 @@ public class TokenService {
 
         Date now = new Date();
         return new Token(
-                "token",
+                "accessToken",
                 "refreshToken");
     }
 
