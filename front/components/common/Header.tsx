@@ -13,7 +13,6 @@ function Header() {
     (e: any) => {
       e.preventDefault();
       setThemeMode(!themeMode);
-      console.log(e.target.checked);
     },
     [themeMode],
   );
@@ -105,8 +104,10 @@ function Header() {
           <Image src={icons.mode} alt="mode" width={20} height={20} />
         </div>
         {/* 로그아웃 상태 */}
-        <div className={styles.login} onClick={showModal}>
-          <button className={styles.loginBtn}>Login</button>
+        <div className={styles.login}>
+          <button className={styles.loginBtn} onClick={showModal}>
+            Login
+          </button>
         </div>
         {/* 로그인 상태 */}
         {/* <div className={styles.icon}>
