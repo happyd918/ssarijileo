@@ -1,7 +1,7 @@
 import styles from '@/styles/LoginModal.module.scss';
 import Image from 'next/image';
 
-function LoginModal({ setModalOpen }: PropsType) {
+function LoginModal({ setModalOpen }: any) {
   const closeModal = () => {
     setModalOpen(false);
   };
