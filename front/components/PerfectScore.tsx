@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 
 import { PitchDetector } from 'pitchy';
-import useAnimationFrame from '@/hooks/useAnimationFrame';
+import { useAnimationFrame } from '@/hooks/useAnimationFrame';
 import * as data from '@/constants/PerfectScoreData';
 
 import styles from '../styles/PerfectScore.module.scss';
@@ -13,6 +13,7 @@ function PerfectScore() {
     PitchDetector.forFloat32Array(data.BUFFER_SIZE),
   );
   const analyserRef = useRef<AnalyserNode>();
+  const sourceRef = useRef<AudioBufferSourceNode>();
   const noteWindowRef = useRef<number[]>(
     new Array(data.NOTE_WINDOW_SIZE * data.DISPLAY_PERCENTAGE).fill(-1),
   );
@@ -27,13 +28,16 @@ function PerfectScore() {
     color: string;
     life: number;
   }[] = [];
+  const [isReady, setIsReady] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
 
   const start = () => {
+    sourceRef.current?.start();
     setIsStarted(true);
   };
 
   const stop = () => {
+    sourceRef.current?.stop();
     setIsStarted(false);
   };
 
@@ -84,6 +88,7 @@ function PerfectScore() {
       const analyser = analyserRef.current;
 
       analyser.getFloatTimeDomainData(dataArray);
+
       const [pitch] = isSilentBuffer(dataArray)
         ? [-1, -1]
         : pitchDetector.findPitch(dataArray, analyser.context.sampleRate);
@@ -107,66 +112,69 @@ function PerfectScore() {
       // console.log(noteCharactor, octave);
 
       // 파티클 생성
-      const makeParticle = (particleNum: number) => {
-        if (!canvasRef.current) return;
-        const particleY =
-          canvasRef.current.height - noteWindow[noteWindow.length - 1] * 5;
-        for (let i = 0; i < particleNum; i++) {
-          const speed = {
-            x: Math.random() * 2,
-            y: Math.random() * 2 - 1,
-          };
-          const radius = Math.random();
-          const color = data.PARTICLE_COLOR;
-          const startX =
-            Math.random() * 2 +
-            canvasRef.current.width * data.DISPLAY_PERCENTAGE +
-            2;
-          const startY = particleY + Math.random() * 10;
-          const life = Math.random() * 5 + 5;
-          particles.push({
-            speed,
-            startX,
-            startY,
-            radius,
-            color,
-            life,
-          });
-        }
-      };
+      const drawParticle = () => {
+        const makeParticle = (particleNum: number) => {
+          if (!canvasRef.current) return;
+          const particleY =
+            canvasRef.current.height - noteWindow[noteWindow.length - 1] * 5;
+          for (let i = 0; i < particleNum; i++) {
+            const speed = {
+              x: Math.random() * 2,
+              y: Math.random() * 2 - 1,
+            };
+            const radius = Math.random();
+            const color = data.PARTICLE_COLOR;
+            const startX =
+              Math.random() * 2 +
+              canvasRef.current.width * data.DISPLAY_PERCENTAGE +
+              2;
+            const startY = particleY + Math.random() * 10;
+            const life = Math.random() * 5 + 5;
+            particles.push({
+              speed,
+              startX,
+              startY,
+              radius,
+              color,
+              life,
+            });
+          }
+        };
 
-      // 파티클 유지 여부
-      if (!flag) {
-        particles.splice(0, particles.length);
-        makeParticle(data.PARTICLE_COUNT);
-      } else {
-        for (let i = 0; i < particles.length; i++) {
-          const particle = particles[i];
-          particle.startX += particle.speed.x;
-          particle.startY += particle.speed.y;
-          particle.life -= 1;
-          if (particle.life < 0) {
-            particles.splice(i, 1);
+        // 파티클 유지 여부
+        if (!flag) {
+          particles.splice(0, particles.length);
+          makeParticle(data.PARTICLE_COUNT);
+        } else {
+          for (let i = 0; i < particles.length; i++) {
+            const particle = particles[i];
+            particle.startX += particle.speed.x;
+            particle.startY += particle.speed.y;
+            particle.life -= 1;
+            if (particle.life < 0) {
+              particles.splice(i, 1);
+            }
+          }
+          if (particles.length < data.PARTICLE_COUNT) {
+            makeParticle(data.PARTICLE_COUNT - particles.length);
           }
         }
-        if (particles.length < data.PARTICLE_COUNT) {
-          makeParticle(data.PARTICLE_COUNT - particles.length);
-        }
-      }
 
-      // 파티클 그리기
-      for (let i = 0; i < particles.length; i++) {
-        ctx.beginPath();
-        ctx.fillStyle = particles[i].color;
-        ctx.arc(
-          particles[i].startX,
-          particles[i].startY,
-          particles[i].radius,
-          0,
-          Math.PI * 2,
-        );
-        ctx.fill();
-      }
+        // 파티클 그리기
+        for (let i = 0; i < particles.length; i++) {
+          ctx.beginPath();
+          ctx.fillStyle = particles[i].color;
+          ctx.arc(
+            particles[i].startX,
+            particles[i].startY,
+            particles[i].radius,
+            0,
+            Math.PI * 2,
+          );
+          ctx.fill();
+        }
+      };
+      drawParticle();
 
       // 음정 출력
       let x = 0;
@@ -227,12 +235,24 @@ function PerfectScore() {
     analyser.smoothingTimeConstant = data.SMOOTHING_TIME_CONSTANT;
     analyser.fftSize = data.FFT_SIZE;
 
-    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-      const source = audioCtx.createMediaStreamSource(stream);
+    fetch('sounds/test.mp3')
+      .then(response => response.arrayBuffer())
+      .then(arrayBuffer => audioCtx.decodeAudioData(arrayBuffer))
+      .then(audioBuffer => {
+        const source = audioCtx.createBufferSource();
+        source.buffer = audioBuffer;
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+        sourceRef.current = source;
+        setIsReady(sourceRef.current !== undefined);
+      });
 
-      source.connect(analyser);
-    });
-  }, [analyserRef, isStarted]);
+    // navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+    //   const source = audioCtx.createMediaStreamSource(stream);
+    //
+    //   source.connect(analyser);
+    // });
+  }, []);
 
   return (
     <>
@@ -249,6 +269,7 @@ function PerfectScore() {
           className={styles.button}
           value="Start"
           onClick={start}
+          disabled={isStarted || !isReady}
         />
         &nbsp; &nbsp;
         <input
@@ -257,6 +278,7 @@ function PerfectScore() {
           className={styles.button}
           value="Stop"
           onClick={stop}
+          disabled={!isStarted}
         />
         <br />
         <br />
