@@ -22,6 +22,7 @@
     "lint-staged": "^13.1.0",
     "next": "13.1.2",
     "next-auth": "^4.18.10",
+    "next-images": "^1.8.4",
     "pitchy": "^4.0.7",
     "react": "18.2.0",
     "react-dom": "18.2.0",
