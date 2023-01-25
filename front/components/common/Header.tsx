@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,10 +6,20 @@ import styles from '@/styles/Header.module.scss';
 
 function Header() {
   const [themeMode, setThemeMode] = useState(false);
-  const changeMode = (e: any) => {
-    e.preventDefault();
-    setThemeMode(!themeMode);
-  };
+
+  const changeMode = useCallback(
+    (e: any) => {
+      e.preventDefault();
+      setThemeMode(!themeMode);
+      console.log(e.target.checked);
+    },
+    [themeMode],
+  );
+
+  // const changeMode = (e: any) => {
+  //   e.preventDefault();
+  //   setThemeMode(!themeMode);
+  // };
 
   useEffect(() => {
     document.body.dataset.theme = themeMode ? 'dark' : 'light';
@@ -78,6 +88,7 @@ function Header() {
           <label htmlFor="toggle" className={styles.toggleSwitch}>
             <input
               type="checkbox"
+              id="toggleBtn"
               className={styles.toggleButton}
               checked={themeMode}
               onChange={changeMode}
