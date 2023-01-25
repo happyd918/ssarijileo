@@ -3,7 +3,7 @@ import { Inter } from '@next/font/google';
 
 import Footer from '@/components/common/Footer';
 import Header from '@/components/common/Header';
-import PerfectScore from '@/components/room/PerfectScore';
+// import PerfectScore from '@/components/room/PerfectScore';
 import SoundBar from '@/components/common/SoundBar';
 
 import styles from '@/styles/Home.module.scss';
@@ -19,7 +19,7 @@ function Home() {
       <main className={`${styles.main} ${inter.className}`}>
         <Header />
         <div className={styles.container}>
-          <PerfectScore />
+          {/* <PerfectScore /> */}
           <SoundBar />
         </div>
         <Footer />
