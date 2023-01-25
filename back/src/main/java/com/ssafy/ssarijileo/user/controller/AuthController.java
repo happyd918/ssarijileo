@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 public class TokenController {
     private final TokenService tokenService;
 
+
     @GetMapping("/token/expired")
     public String auth() {
-//        throw new RuntimeException();
-        return "/";
+       throw new RuntimeException();
     }
 
     @GetMapping("/token/refresh")
