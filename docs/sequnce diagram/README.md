@@ -9,7 +9,7 @@
 
 ### - 회원정보 수정/탈퇴
 
-![수정&탈퇴](./%ED%9A%8C%EC%9B%90%EA%B4%80%EB%A6%AC_%EC%88%98%EC%A0%95%26%ED%83%88%ED%87%B4.png)
+![수정&탈퇴](./%ED%9A%8C%EC%9B%90%EA%B4%80%EB%A6%AC-%EC%88%98%EC%A0%95_%ED%83%88%ED%87%B4.png)
 <br><br>
 
 ### - 유저검색/친구추가
@@ -24,17 +24,17 @@
 
 ### - 노래자랑 등록
 
-![노래자랑 등록](./%ED%9A%8C%EC%9B%90%EA%B4%80%EB%A6%AC_%EB%85%B8%EB%9E%98%EC%9E%90%EB%9E%91%EB%93%B1%EB%A1%9D.png)
+![노래자랑 등록](./%ED%9A%8C%EC%9B%90%EA%B4%80%EB%A6%AC-%EB%85%B8%EB%9E%98%EC%9E%90%EB%9E%91%20%EB%93%B1%EB%A1%9D.png)
 <br><br>
 
 ## WebRTC
 
 ### - 방 생성
 
-<img src="./webRTC_방생성.png">
+![webRTC_방생성](./webRTC_%EB%B0%A9%EC%83%9D%EC%84%B1.png)
 <br><br>
 
 ### - 방 목록/방 입장
 
-<img src="./webRTC_방목록&방입장.png">
+![webRTC_방목록&방입장](./webRTC_%EB%B0%A9%EB%AA%A9%EB%A1%9D%26%EB%B0%A9%EC%9E%85%EC%9E%A5.png)
 <br><br>
