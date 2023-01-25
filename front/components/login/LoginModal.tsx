@@ -1,5 +1,5 @@
-import styles from '@/styles/LoginModal.module.scss';
 import Image from 'next/image';
+import styles from '@/styles/LoginModal.module.scss';
 
 function LoginModal({ setModalOpen }: any) {
   const closeModal = () => {
