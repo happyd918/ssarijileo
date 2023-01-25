@@ -43,10 +43,9 @@
       align-items: center;
       margin: auto 20px;
 
-      #toggle:checked ~ .toggleSwitch .toggleButton {
-        left: calc(100% - 24px);
-        background-color: var(--color-background);
-      }
+      // #toggle:checked + .toggleSwitch .toggleButton {
+      //   left: calc(100% - 24px) !important;
+      // }
 
       .toggleSwitch {
         width: 50px;
@@ -72,11 +71,10 @@
           border-radius: 50%;
           background-color: var(--color-text);
           cursor: pointer;
-          z-index: 99;
           transition: all 0.2s ease-in;
         }
         .toggleButton:checked {
-          left: calc(100% - 24px);
+          left: calc(100% - 24px) !important;
         }
       }
       img {
