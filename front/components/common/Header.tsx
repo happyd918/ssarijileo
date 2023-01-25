@@ -90,7 +90,7 @@ function Header() {
           <div className={styles.profile}>
             <Image
               src={icons.profile}
-              alt="prifile"
+              alt="profile"
               // className={styles.profileIcon}
               width={25}
               height={25}
