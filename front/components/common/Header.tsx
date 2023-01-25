@@ -105,7 +105,7 @@ function Header() {
         </div>
         {/* 로그아웃 상태 */}
         <div className={styles.login}>
-          <button className={styles.loginBtn} onClick={showModal}>
+          <button type="button" className={styles.loginBtn} onClick={showModal}>
             Login
           </button>
         </div>
