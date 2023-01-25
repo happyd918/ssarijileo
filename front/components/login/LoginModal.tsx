@@ -9,13 +9,13 @@ function LoginModal({ setModalOpen }: any) {
     <div className={styles.back}>
       <div className={styles.container}>
         <div className={styles.top}>
-          <button className={styles.close} onClick={closeModal}>
+          <button type='button' className={styles.close} onClick={closeModal}>
             <Image
               src="img/common/common_close_image.svg"
               alt="close"
               width={25}
               height={25}
-            ></Image>
+            />
           </button>
         </div>
         <div className={styles.main}>
@@ -28,7 +28,7 @@ function LoginModal({ setModalOpen }: any) {
               width={80}
               height={80}
               className={styles.kakao}
-            ></Image>
+            />
             <div className={styles.iconName}>Kakako</div>
           </div>
           <div className={styles.terms}>
@@ -37,7 +37,7 @@ function LoginModal({ setModalOpen }: any) {
           </div>
         </div>
         <div className={styles.bottom}>
-          <button className={styles.closeBtn} onClick={closeModal}>
+          <button type='button' className={styles.closeBtn} onClick={closeModal}>
             닫기
           </button>
         </div>
