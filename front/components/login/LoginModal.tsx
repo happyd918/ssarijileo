@@ -6,40 +6,41 @@ function LoginModal({ setModalOpen }: PropsType) {
     setModalOpen(false);
   };
   return (
-    <div className={styles.container}>
-      <div className={styles.top}>
-        <div>소셜 로그인</div>
-        <button className={styles.close} onClick={closeModal}>
-          <Image
-            src="img/common/common_close_image.svg"
-            alt="close"
-            width={25}
-            height={25}
-          ></Image>
-        </button>
-      </div>
-      <div className={styles.main}>
-        <div className={styles.title}>Log in</div>
-        <div className={styles.icon}>
-          {/* 해당 div 클릭 시 onClick 이벤트로 소셜 로그인 연동 */}
-          <Image
-            src="img/login/login_kakao_image.svg"
-            alt="kakao"
-            width={80}
-            height={80}
-            className={styles.kakao}
-          ></Image>
-          <div className={styles.iconName}>Kakako</div>
+    <div className={styles.back}>
+      <div className={styles.container}>
+        <div className={styles.top}>
+          <button className={styles.close} onClick={closeModal}>
+            <Image
+              src="img/common/common_close_image.svg"
+              alt="close"
+              width={25}
+              height={25}
+            ></Image>
+          </button>
         </div>
-        <div className={styles.terms}>
-          회원가입 없이 소셜 계정을 통해 바로 이용 가능하며 첫 로그인시 <br />
-          <b>이용약관</b>및 <b>개인정보처리방침</b> 동의로 간주됩니다.
+        <div className={styles.main}>
+          <div className={styles.title}>Log in</div>
+          <div className={styles.icon}>
+            {/* 해당 div 클릭 시 onClick 이벤트로 소셜 로그인 연동 */}
+            <Image
+              src="img/login/login_kakao_image.svg"
+              alt="kakao"
+              width={80}
+              height={80}
+              className={styles.kakao}
+            ></Image>
+            <div className={styles.iconName}>Kakako</div>
+          </div>
+          <div className={styles.terms}>
+            회원가입 없이 소셜 계정을 통해 바로 이용 가능하며 첫 로그인시 <br />
+            <b>이용약관</b>및 <b>개인정보처리방침</b> 동의로 간주됩니다.
+          </div>
         </div>
-      </div>
-      <div className={styles.bottom}>
-        <button className={styles.closeBtn} onClick={closeModal}>
-          닫기
-        </button>
+        <div className={styles.bottom}>
+          <button className={styles.closeBtn} onClick={closeModal}>
+            닫기
+          </button>
+        </div>
       </div>
     </div>
   );
