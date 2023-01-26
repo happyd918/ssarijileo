@@ -7,22 +7,25 @@ interface ResponseType {
   error?: any;
 }
 
-const Kakao: NextPage = () => {
+function Kakao() {
   const router = useRouter();
   const { code: authCode, error: kakaoServerError } = router.query;
 
   const loginHandler = useCallback(
     async (code: string | string[]) => {
-      const response: ResponseType = await fetch('', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response: ResponseType = await fetch(
+        'http://192.168.31.64:8090/oauth2/authorization/kakao',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            //   인가 코드
+            authCode: code,
+          }),
         },
-        body: JSON.stringify({
-          //   인가 코드
-          authCode: code,
-        }),
-      }).then(res => res.json());
+      ).then(res => res.json());
       if (response.ok) {
         router.push('/');
       } else {
@@ -41,6 +44,6 @@ const Kakao: NextPage = () => {
   }, [loginHandler, authCode, kakaoServerError, router]);
 
   return <h2>로그인 중입니다..</h2>;
-};
+}
 
 export default Kakao;
