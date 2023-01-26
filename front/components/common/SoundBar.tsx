@@ -66,7 +66,12 @@ function SoundBar() {
 
   return (
     <div className={styles.soundBar}>
-      <canvas width={data.WIDTH} height={data.HEIGHT} ref={canvasRef} className={styles.canvas}/>
+      <canvas
+        width={data.WIDTH}
+        height={data.HEIGHT}
+        ref={canvasRef}
+        className={styles.canvas}
+      />
     </div>
   );
 }
