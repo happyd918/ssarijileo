@@ -11,6 +11,7 @@ function Header() {
   const [themeMode, setThemeMode] = useState('');
   const [checked, setChecked] = useState(false);
   const dispatch = useDispatch();
+
   const changeMode = () => {
     if (themeMode === 'light') {
       setThemeMode('dark');
@@ -71,9 +72,9 @@ function Header() {
   };
 
   // menu 리스트 요소에 대한 태그 생성
-  const headerMenus = headerMenu.map(item => (
-    <Link key={item.name} className={styles.pages} href={item.link}>
-      {item.name}
+  const headerMenus = headerMenu.map(menu => (
+    <Link href={menu.link} key={menu.name} className={styles.pages}>
+      {menu.name}
     </Link>
   ));
 
