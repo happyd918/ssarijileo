@@ -8,6 +8,9 @@ body[data-theme='light'] {
   --color-black: #{$black};
   --color-white: #{$white};
   --color-placeHolder: #{$placeholder};
+  --color-linearA: rgba(25, 155, 223, 0.21);
+  --color-linearB: rgba(187, 135, 229, 0.21);
+  --color-linearC: rgba(246, 138, 221, 0.08);
 }
 
 body[data-theme='dark'] {
@@ -18,6 +21,9 @@ body[data-theme='dark'] {
   --color-black: #{$white};
   --color-white: #{$black};
   --color-placeHolder: #{$white};
+  --color-linearA: rgba(104, 225, 147, 0.5);
+  --color-linearB: rgba(56, 205, 200, 0.5);
+  --color-linearC: rgba(31, 92, 125, 0.5);
 }
 
 body {
