@@ -2,15 +2,15 @@ import Image from 'next/image';
 import styles from '@/styles/LoginModal.module.scss';
 
 function LoginModal({ setModalOpen }: any) {
+  // 모달창 open 여부
   const closeModal = () => {
     setModalOpen(false);
   };
 
+  // 카카오 로그인 함수 .. 간편 로그인 요청
   const loginFormWithKakao = () => {
-    console.log(process.env.NEXT_APP_KAKAO_REDIRECTURI);
-
     window.Kakao.Auth.authorize({
-      redirectUri: process.env.NEXT_APP_KAKAO_REDIRECTURI,
+      redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECTURI,
     });
   };
   return (
@@ -29,7 +29,6 @@ function LoginModal({ setModalOpen }: any) {
         <div className={styles.main}>
           <div className={styles.title}>Log in</div>
           <div className={styles.icon}>
-            {/* 해당 icon 클릭 시 onClick 이벤트로 소셜 로그인 연동 */}
             <Image
               src="img/login/login_kakao_image.svg"
               alt="kakao"
