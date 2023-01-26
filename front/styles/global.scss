@@ -1,0 +1,17 @@
+@use './color.scss' as *;
+
+body[data-theme='light'] {
+  --color-background: #{$white};
+  --color-text: #{$dark};
+  --color-btn: #{$dark};
+}
+
+body[data-theme='dark'] {
+  --color-background: #{$dark};
+  --color-text: #{$white};
+  --color-btn: #{$main};
+}
+
+body {
+  margin: 0;
+}

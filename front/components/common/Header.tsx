@@ -1,31 +1,36 @@
-import { useState, useEffect, useCallback } from 'react';
-
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import { useDispatch } from 'react-redux';
+import { setTheme } from '@/redux/store';
+
 import styles from '@/styles/Header.module.scss';
 
 function Header() {
-  const [themeMode, setThemeMode] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const dispatch = useDispatch();
+  const themeMode = document.body.dataset.theme;
 
-  const changeMode = useCallback(
-    (e: any) => {
-      e.preventDefault();
-      setThemeMode(!themeMode);
-      console.log(e.target.checked);
-    },
-    [themeMode],
-  );
-
-  // const changeMode = (e: any) => {
-  //   e.preventDefault();
-  //   setThemeMode(!themeMode);
-  // };
+  const changeMode = () => {
+    console.log(themeMode);
+    dispatch(setTheme(themeMode === 'dark' ? 'light' : 'dark'));
+    localStorage.setItem('theme', themeMode === 'dark' ? 'light' : 'dark');
+    setChecked(themeMode === 'dark');
+  };
 
   useEffect(() => {
-    document.body.dataset.theme = themeMode ? 'dark' : 'light';
-  }, [themeMode]);
+    localStorage.getItem('theme') === 'dark'
+      ? setChecked(true)
+      : setChecked(false);
+  }, []);
 
-  // header에 들어갈 menu 리스트
+  useEffect(() => {
+    if (typeof themeMode === 'string') {
+      document.body.dataset.theme = themeMode;
+    }
+  }, [themeMode]);
+  // header 에 들어갈 menu 리스트
   const headerMenu = [
     {
       name: '노래방',
@@ -59,7 +64,7 @@ function Header() {
     profile: 'icon/header/dark/dark_profile_icon.svg',
   };
 
-  const icons = themeMode ? DarkIcons : LightIcons;
+  const icons = themeMode === 'dark' ? DarkIcons : LightIcons;
 
   // menu 리스트 요소에 대한 태그 생성
   const headerMenus = headerMenu.map(item => (
@@ -78,20 +83,13 @@ function Header() {
       <div className={styles.menu}>{headerMenus}</div>
       <div className={styles.icons}>
         <div className={styles.icon}>
-          <input
-            type="checkbox"
-            id="toggle"
-            checked={themeMode}
-            onChange={changeMode}
-            hidden
-          />
-          <label htmlFor="toggle" className={styles.toggleSwitch}>
+          <label className={styles.switch}>
             <input
               type="checkbox"
-              id="toggleBtn"
-              className={styles.toggleButton}
-              checked={themeMode}
               onChange={changeMode}
+              className={styles.checkbox}
+              checked={checked}
+              id="toggleSwitch"
             />
           </label>
           <Image src={icons.mode} alt="mode" width={20} height={20} />
@@ -99,13 +97,7 @@ function Header() {
         <div className={styles.icon}>
           <Image src={icons.alarm} alt="alarm" width={20} height={20} />
           <div className={styles.profile}>
-            <Image
-              src={icons.profile}
-              alt="profile"
-              // className={styles.profileIcon}
-              width={25}
-              height={25}
-            />
+            <Image src={icons.profile} alt="profile" width={25} height={25} />
           </div>
         </div>
       </div>
