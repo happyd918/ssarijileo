@@ -1,12 +1,13 @@
 .footer {
-  padding: 0 5rem;
+  width: 80%;
+  margin: auto;
   background-color: var(--color-background);
 }
 
 .footer_container {
   margin-top: 1rem;
-  border-top: 3px solid rgba(31, 92, 125, 0.3);
-  border-bottom: 3px solid rgba(31, 92, 125, 0.1);
+  border-top: 1px solid var(--color-linearB);
+  border-bottom: 1px solid var(--color-linearB);
   padding: 3rem 5rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
