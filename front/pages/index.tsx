@@ -6,6 +6,7 @@ import Header from '@/components/common/Header';
 // import PerfectScore from '@/components/room/PerfectScore';
 // import SoundBar from '@/components/common/SoundBar';
 // import ErrorComp from '@/components/error/ErrorComp';
+import Main from '@/pages/main/main';
 
 import styles from '@/styles/Home.module.scss';
 
@@ -23,6 +24,7 @@ function Home() {
           {/* <PerfectScore /> */}
           {/* <SoundBar /> */}
           {/* <ErrorComp /> */}
+          <Main />
         </div>
         <Footer />
       </main>

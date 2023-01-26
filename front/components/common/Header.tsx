@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '@/styles/Header.module.scss';
-import LoginModal from '../login/LoginModal';
+import LoginModal from '@/components/login/LoginModal';
 
 function Header() {
   const [themeMode, setThemeMode] = useState(false);
