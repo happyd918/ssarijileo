@@ -1,7 +1,14 @@
 import React, { useEffect } from 'react';
-
-import '@/styles/theme.scss';
 import type { AppProps } from 'next/app';
+import { Provider } from 'react-redux';
+
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
+import store from '@/redux/store';
+
+import '@/styles/global.scss';
+
+export const persistor = persistStore(store);
 
 // 카카오 전역 객체 선언
 declare global {
@@ -11,6 +18,7 @@ declare global {
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
+
   useEffect(() => {
     // 카카오 SDK 초기화
     if (!window.Kakao.isInitialized()) {
@@ -18,7 +26,19 @@ function MyApp({ Component, pageProps }: AppProps) {
       console.log(window.Kakao.isInitialized());
     }
   }, []);
-  return <Component {...pageProps} />;
+
+  useEffect(() => {
+    // 다크모드 설정
+    document.body.dataset.theme = localStorage.getItem('theme') || 'light';
+  }, []);
+
+  return (
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <Component {...pageProps} />
+      </PersistGate>
+    </Provider>
+  );
 }
 
 export default MyApp;

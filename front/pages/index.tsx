@@ -1,6 +1,7 @@
+import React from 'react';
 import Head from 'next/head';
 import { Inter } from '@next/font/google';
-
+// 컴포넌트
 import Footer from '@/components/common/Footer';
 import Header from '@/components/common/Header';
 // import PerfectScore from '@/components/room/PerfectScore';

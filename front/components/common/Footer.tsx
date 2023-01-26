@@ -1,28 +1,44 @@
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
+
+import { useSelector } from 'react-redux';
 
 import styles from '@/styles/Footer.module.scss';
 
 function Footer() {
-  const lightSocials = [
+  const [themeMode, setThemeMode] = useState('light');
+
+  const storeTheme = useSelector<any>(state => state.theme);
+  useEffect(() => {
+    setThemeMode(localStorage.getItem('theme') || 'light');
+  }, [themeMode, storeTheme]);
+
+  const socials = [
     {
       name: 'Facebook',
-      icon: 'icon/footer/light/light_facebook_icon.svg',
+      icon: `icon/footer/${themeMode}/${themeMode}_facebook_icon.svg`,
     },
     {
       name: 'YouTube',
-      icon: 'icon/footer/light/light_youtube_icon.svg',
+      icon: `icon/footer/${themeMode}/${themeMode}_youtube_icon.svg`,
     },
     {
       name: 'Instagram',
-      icon: 'icon/footer/light/light_instagram_icon.svg',
+      icon: `icon/footer/${themeMode}/${themeMode}_instagram_icon.svg`,
     },
     {
       name: 'Google',
-      icon: 'icon/footer/light/light_google_icon.svg',
+      icon: `icon/footer/${themeMode}/${themeMode}_google_icon.svg`,
     },
   ];
 
-  const lightSocialsIcons = lightSocials.map(social => (
+  const icons = {
+    logo: `icon/Header/${themeMode}/${themeMode}_logo.svg`,
+    phone: `icon/Footer/${themeMode}/${themeMode}_phone_icon.svg`,
+    place: `icon/Footer/${themeMode}/${themeMode}_place_icon.svg`,
+  };
+
+  const socialsIcons = socials.map(social => (
     <Image
       key={social.name}
       src={social.icon}
@@ -36,35 +52,20 @@ function Footer() {
     <footer className={styles.footer}>
       <div className={styles.footer_container}>
         <div className={styles.img_div}>
-          <Image
-            src="icon/header/light/light_logo.svg"
-            alt="home"
-            width={300}
-            height={200}
-          />
+          <Image src={icons.logo} alt="home" width={300} height={200} />
         </div>
         <div className={styles.item_div}>
           <div className={styles.footer_item_upper}>
-            <Image
-              src="icon/footer/light/light_phone_icon.svg"
-              alt="place"
-              width={24}
-              height={24}
-            />
+            <Image src={icons.phone} alt="place" width={24} height={24} />
             <span>대전광역시 유성구 덕명동 124</span>
           </div>
           <div className={styles.footer_item_upper}>
-            <Image
-              src="icon/footer/light/light_place_icon.svg"
-              alt="phone"
-              width={24}
-              height={24}
-            />
+            <Image src={icons.place} alt="phone" width={24} height={24} />
             <span>042-123-4567</span>
           </div>
           <div className={styles.footer_item_lower}>
             <span>Social Media</span>
-            {lightSocialsIcons}
+            {socialsIcons}
           </div>
         </div>
       </div>

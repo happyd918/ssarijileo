@@ -1,5 +1,4 @@
 @import 'color.scss';
-// @use './theme.scss';
 
 .header {
   width: 100%;
@@ -47,11 +46,7 @@
       align-items: center;
       margin: auto 20px;
 
-      // #toggle:checked + .toggleSwitch .toggleButton {
-      //   left: calc(100% - 24px) !important;
-      // }
-
-      .toggleSwitch {
+      .switch {
         width: 50px;
         height: 25px;
         display: block;
@@ -63,7 +58,7 @@
         transition: all 0.2s ease-in;
 
         /* 토글 버튼 */
-        .toggleButton {
+        .checkbox {
           all: unset;
           /* 버튼은 토글보다 작아야함  */
           width: 20px;
@@ -77,7 +72,7 @@
           cursor: pointer;
           transition: all 0.2s ease-in;
         }
-        .toggleButton:checked {
+        .checkbox:checked {
           left: calc(100% - 24px) !important;
         }
       }
@@ -92,7 +87,7 @@
       width: 70px;
       height: 30px;
       border-radius: 6px;
-      border: 0px;
+      border: 0;
       font-weight: bold;
     }
     .loginBtn:hover {
