@@ -21,7 +21,6 @@ function Header() {
       dispatch(setTheme('light'));
       localStorage.setItem('theme', 'light');
     }
-
     setChecked(!checked);
   };
 
@@ -57,20 +56,26 @@ function Header() {
   ];
 
   const icons = {
-    logo: `icon/header/${themeMode}/${themeMode}_logo.svg`,
-    mode: `icon/header/${themeMode}/${themeMode}_mode_icon.svg`,
-    alarm: `icon/header/${themeMode}/${themeMode}_alarm_icon.svg`,
-    profile: `icon/header/${themeMode}/${themeMode}_profile_icon.svg`,
+    logo: `icon/header/${themeMode || 'light'}/${
+      themeMode || 'light'
+    }_logo.svg`,
+    mode: `icon/header/${themeMode || 'light'}/${
+      themeMode || 'light'
+    }_mode_icon.svg`,
+    alarm: `icon/header/${themeMode || 'light'}/${
+      themeMode || 'light'
+    }_alarm_icon.svg`,
+    profile: `icon/header/${themeMode || 'light'}/${
+      themeMode || 'light'
+    }_profile_icon.svg`,
   };
 
   // menu 리스트 요소에 대한 태그 생성
-  const headerMenus = headerMenu.map(item => {
-    return (
-      <Link key={item.name} className={styles.pages} href={item.link}>
-        {item.name}
-      </Link>
-    );
-  });
+  const headerMenus = headerMenu.map(item => (
+    <Link key={item.name} className={styles.pages} href={item.link}>
+      {item.name}
+    </Link>
+  ));
 
   return (
     <header className={styles.header}>
@@ -82,7 +87,7 @@ function Header() {
       <div className={styles.menu}>{headerMenus}</div>
       <div className={styles.icons}>
         <div className={styles.icon}>
-          <label className={styles.switch} id="cl" htmlFor="">
+          <label className={styles.switch} id="cl" htmlFor="toggleSwitch">
             <input
               type="checkbox"
               onChange={changeMode}
