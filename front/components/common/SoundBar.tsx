@@ -7,22 +7,22 @@ function SoundBar() {
       <Image
         src="img/common/common_sound_bar_image.svg"
         alt="soundBar"
-        width={1000}
-        height={60}
+        width={1800}
+        height={300}
         className={styles.img}
       />
       <Image
         src="img/common/common_sound_bar_image.svg"
         alt="soundBar"
-        width={1000}
-        height={60}
+        width={1800}
+        height={300}
         className={styles.img}
       />
       <Image
         src="img/common/common_sound_bar_image.svg"
         alt="soundBar"
-        width={1000}
-        height={60}
+        width={1800}
+        height={300}
         className={styles.img}
       />
     </div>
