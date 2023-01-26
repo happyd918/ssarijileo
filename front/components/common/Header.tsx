@@ -3,19 +3,29 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import styles from '@/styles/Header.module.scss';
+import { themeActions } from '@/redux/store';
+import { useSelector, useDispatch } from 'react-redux';
 
 function Header() {
   const [themeMode, setThemeMode] = useState('light');
   const [checked, setChecked] = useState(false);
-
+  const dispatch = useDispatch();
+  const t = useSelector(state => state.theme);
   const changeMode = () => {
     if (themeMode === 'light') {
       setThemeMode('dark');
+      dispatch(themeActions.setTheme('dark'));
       localStorage.setItem('theme', 'dark');
+      console.log('local: ', localStorage.getItem('theme'));
+      console.log('redux: ', t);
     } else {
       setThemeMode('light');
+      dispatch(themeActions.setTheme('light'));
       localStorage.setItem('theme', 'light');
+      console.log('local: ', localStorage.getItem('theme'));
+      console.log('redux: ', t);
     }
+
     setChecked(!checked);
   };
 
@@ -27,6 +37,7 @@ function Header() {
     const theme = localStorage.getItem('theme') || 'light';
     setThemeMode(theme);
     theme === 'dark' ? setChecked(true) : setChecked(false);
+    dispatch(themeActions.setTheme(themeMode));
   }, []);
 
   // header 에 들어갈 menu 리스트
@@ -49,21 +60,12 @@ function Header() {
     },
   ];
 
-  const LightIcons = {
-    logo: 'icon/header/light/light_logo.svg',
-    mode: 'icon/header/light/light_mode_icon.svg',
-    alarm: 'icon/header/light/light_alarm_icon.svg',
-    profile: 'icon/header/light/light_profile_icon.svg',
+  const icons = {
+    logo: `icon/header/${themeMode}/${themeMode}_logo.svg`,
+    mode: `icon/header/${themeMode}/${themeMode}_mode_icon.svg`,
+    alarm: `icon/header/${themeMode}/${themeMode}_alarm_icon.svg`,
+    profile: `icon/header/${themeMode}/${themeMode}_profile_icon.svg`,
   };
-
-  const DarkIcons = {
-    logo: 'icon/header/dark/dark_logo.svg',
-    mode: 'icon/header/dark/dark_mode_icon.svg',
-    alarm: 'icon/header/dark/dark_alarm_icon.svg',
-    profile: 'icon/header/dark/dark_profile_icon.svg',
-  };
-
-  const icons = themeMode === 'dark' ? DarkIcons : LightIcons;
 
   // menu 리스트 요소에 대한 태그 생성
   const headerMenus = headerMenu.map(item => (

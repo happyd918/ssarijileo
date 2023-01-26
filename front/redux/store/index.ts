@@ -23,6 +23,6 @@ const store = configureStore({
 
 export type RootState = ReturnType<typeof rootReducer>;
 
-export const { setTheme } = themeSlice.actions;
+export const themeActions = themeSlice.actions;
 
 export default store;
