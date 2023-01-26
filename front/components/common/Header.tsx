@@ -2,34 +2,33 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { useDispatch } from 'react-redux';
-import { setTheme } from '@/redux/store';
-
 import styles from '@/styles/Header.module.scss';
 
 function Header() {
+  const [themeMode, setThemeMode] = useState('light');
   const [checked, setChecked] = useState(false);
-  const dispatch = useDispatch();
-  const themeMode = document.body.dataset.theme;
 
   const changeMode = () => {
-    console.log(themeMode);
-    dispatch(setTheme(themeMode === 'dark' ? 'light' : 'dark'));
-    localStorage.setItem('theme', themeMode === 'dark' ? 'light' : 'dark');
-    setChecked(themeMode === 'dark');
+    if (themeMode === 'light') {
+      setThemeMode('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      setThemeMode('light');
+      localStorage.setItem('theme', 'light');
+    }
+    setChecked(!checked);
   };
 
   useEffect(() => {
-    localStorage.getItem('theme') === 'dark'
-      ? setChecked(true)
-      : setChecked(false);
-  }, []);
+    document.body.dataset.theme = themeMode;
+  }, [themeMode]);
 
   useEffect(() => {
-    if (typeof themeMode === 'string') {
-      document.body.dataset.theme = themeMode;
-    }
-  }, [themeMode]);
+    const theme = localStorage.getItem('theme') || 'light';
+    setThemeMode(theme);
+    theme === 'dark' ? setChecked(true) : setChecked(false);
+  }, []);
+
   // header 에 들어갈 menu 리스트
   const headerMenu = [
     {
