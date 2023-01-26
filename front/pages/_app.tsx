@@ -18,7 +18,6 @@ declare global {
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
-
   useEffect(() => {
     // 카카오 SDK 초기화
     if (!window.Kakao.isInitialized()) {
