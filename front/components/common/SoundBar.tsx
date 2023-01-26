@@ -8,12 +8,6 @@ import styles from '@/styles/SoundBar.module.scss';
 function SoundBar() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // let a = 0;
-  // const noteTable = data.NOTE_NUM.map((note, idx) => {
-  //   note = note + a;
-  //   a = (a + 1) % 3;
-  //   return note;
-  // });
   const noteTable = data.NOTE_NUM.map(() =>
     Math.ceil(Math.random() * NOTE_HEIGHT),
   );
@@ -72,7 +66,7 @@ function SoundBar() {
 
   return (
     <div className={styles.soundBar}>
-      <canvas width={data.WIDTH} height={data.HEIGHT} ref={canvasRef} />
+      <canvas width={data.WIDTH} height={data.HEIGHT} ref={canvasRef} className={styles.canvas}/>
     </div>
   );
 }
