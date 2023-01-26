@@ -3,15 +3,16 @@ import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '@/styles/Header.module.scss';
+import LoginModal from '../login/LoginModal';
 
 function Header() {
   const [themeMode, setThemeMode] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const changeMode = useCallback(
     (e: any) => {
       e.preventDefault();
       setThemeMode(!themeMode);
-      console.log(e.target.checked);
     },
     [themeMode],
   );
@@ -68,8 +69,14 @@ function Header() {
     </Link>
   ));
 
+  // 로그인 버튼 클릭 시 모달창 Open
+  const showModal = () => {
+    setModalOpen(true);
+  };
+
   return (
     <header className={styles.header}>
+      {modalOpen && <LoginModal setModalOpen={setModalOpen} />}
       <div className={styles.logo}>
         <Link href="/">
           <Image src={icons.logo} alt="logoFail" width={70} height={70} />
@@ -96,7 +103,14 @@ function Header() {
           </label>
           <Image src={icons.mode} alt="mode" width={20} height={20} />
         </div>
-        <div className={styles.icon}>
+        {/* 로그아웃 상태 */}
+        <div className={styles.login}>
+          <button type="button" className={styles.loginBtn} onClick={showModal}>
+            Login
+          </button>
+        </div>
+        {/* 로그인 상태 */}
+        {/* <div className={styles.icon}>
           <Image src={icons.alarm} alt="alarm" width={20} height={20} />
           <div className={styles.profile}>
             <Image
@@ -107,7 +121,7 @@ function Header() {
               height={25}
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </header>
   );

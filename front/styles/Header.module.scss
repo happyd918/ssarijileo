@@ -1,4 +1,4 @@
-// @import 'color.scss';
+@import 'color.scss';
 // @use './theme.scss';
 
 .header {
@@ -80,6 +80,20 @@
       img {
         margin-left: 10px;
       }
+    }
+
+    .loginBtn {
+      background-color: var(--color-text);
+      color: var(--color-background);
+      width: 70px;
+      height: 30px;
+      border-radius: 6px;
+      border: 0px;
+      font-weight: bold;
+    }
+    .loginBtn:hover {
+      background-color: $main;
+      color: $white;
     }
 
     .profile {
