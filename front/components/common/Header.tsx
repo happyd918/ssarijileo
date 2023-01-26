@@ -40,6 +40,12 @@ function Header() {
     theme === 'dark' ? setChecked(true) : setChecked(false);
     dispatch(setTheme(themeMode));
   }, []);
+  // useEffect(() => {
+  //   const theme = localStorage.getItem('theme') || 'light';
+  //   setThemeMode(theme);
+  //   theme === 'dark' ? setChecked(true) : setChecked(false);
+  //   dispatch(setTheme(themeMode));
+  // }, []);
 
   // header 에 들어갈 menu 리스트
   const headerMenu = [
