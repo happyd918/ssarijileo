@@ -15,18 +15,15 @@ function Kakao() {
       const response: ResponseType = await fetch(
         'http://192.168.31.64:8090/oauth2/authorization/kakao',
         {
-          method: 'POST',
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            //   인가 코드
-            authCode: code,
-          }),
         },
       ).then(res => res.json());
       if (response.ok) {
-        router.push('/');
+        console.log(code);
+        // router.push('/');
       } else {
         console.log('error');
       }

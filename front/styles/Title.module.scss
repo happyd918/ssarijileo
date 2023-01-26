@@ -1,16 +1,17 @@
 @import 'color.scss';
 
 @mixin btn_style {
-  width: 150px;
-  height: 40px;
+  width: 200px;
+  height: 50px;
   border-radius: 6px;
   font-weight: bold;
 }
 
 .title {
-  width: 520px;
+  width: 450px;
   display: flex;
   flex-direction: column;
+  text-align: left;
 
   .top {
     display: flex;
@@ -22,7 +23,7 @@
     }
 
     .line {
-      width: 200px;
+      width: 300px;
       height: 1px;
       border: 0;
       background-color: $main;
@@ -31,41 +32,41 @@
   }
 
   .main {
-    font-size: 40px;
+    font-size: 44px;
     font-weight: bold;
-    color: $dark;
+    color: var(--color-text);
     font-family: 'Inter', sans-serif;
   }
 
   .sub {
     font-size: 16px;
-    color: $placeholder;
-    margin: 10px 0;
+    color: var(--color-placeHolder);
+    margin: 20px 0;
   }
 
   .btn {
     .singBtn {
       @include btn_style;
       border: 0;
-      background-color: $dark;
+      background-color: var(--color-btn);
       color: $white;
     }
     .singBtn:hover {
-      border: 1px solid $dark;
-      background-color: $white;
-      color: $dark;
+      border: 1px solid var(--color-hover);
+      background-color: var(--color-hover);
+      color: var(--color-background);
     }
     .chartBtn {
       @include btn_style;
       margin-left: 20px;
-      border: 1px solid $dark;
-      background-color: $white;
-      color: $dark;
+      border: 1px solid var(--color-btn);
+      background-color: var(--color-background);
+      color: var(--color-btn);
     }
     .chartBtn:hover {
-      border: 0;
-      background-color: $dark;
-      color: $white;
+      border: 1px solid var(--color-hover);
+      background-color: var(--color-hover);
+      color: var(--color-background);
     }
   }
 }
