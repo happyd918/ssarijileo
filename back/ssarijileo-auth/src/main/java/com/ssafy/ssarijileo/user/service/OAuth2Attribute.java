@@ -16,7 +16,8 @@ public class OAuth2Attribute {
     private Map<String, Object> attributes;
     private String attributeKey;
     private String email;
-    private String name;
+    private String nickname;
+    private String image;
 
     static OAuth2Attribute of(String provider, String attributeKey,
                               Map<String, Object> attributes) {
@@ -35,7 +36,7 @@ public class OAuth2Attribute {
     private static OAuth2Attribute ofGoogle(String attributeKey,
                                             Map<String, Object> attributes) {
         return OAuth2Attribute.builder()
-                .name((String) attributes.get("name"))
+                .nickname((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
                 .attributes(attributes)
                 .attributeKey(attributeKey)
@@ -48,8 +49,9 @@ public class OAuth2Attribute {
         Map<String, Object> kakaoProfile = (Map<String, Object>) kakaoAccount.get("profile");
 
         return OAuth2Attribute.builder()
-                .name((String) kakaoProfile.get("nickname"))
+                .nickname((String) kakaoProfile.get("nickname"))
                 .email((String) kakaoAccount.get("email"))
+                .image((String)kakaoProfile.get("profile_image_url"))
                 .attributes(kakaoAccount)
                 .attributeKey(attributeKey)
                 .build();
@@ -60,7 +62,7 @@ public class OAuth2Attribute {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
 
         return OAuth2Attribute.builder()
-                .name((String) response.get("name"))
+                .nickname((String) response.get("name"))
                 .email((String) response.get("email"))
                 .attributes(response)
                 .attributeKey(attributeKey)
@@ -71,8 +73,9 @@ public class OAuth2Attribute {
         Map<String, Object> map = new HashMap<>();
         map.put("id", attributeKey);
         map.put("key", attributeKey);
-        map.put("name", name);
+        map.put("nickname", nickname);
         map.put("email", email);
+        map.put("image", image);
 
         return map;
     }

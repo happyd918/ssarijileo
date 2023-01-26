@@ -25,7 +25,7 @@ public class AuthController {
 
         if (token != null && tokenProvider.verifyToken(token)) {
             String email = tokenProvider.getUid(token);
-            Token newToken = tokenProvider.generateToken(email, "USER");
+            Token newToken = tokenProvider.generateToken(email, "ROLE_USER");
 
             response.addHeader("Access", newToken.getAccessToken());
             response.addHeader("Refresh", newToken.getRefreshToken());
