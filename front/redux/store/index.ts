@@ -1,28 +1,27 @@
-import { createSlice, configureStore } from '@reduxjs/toolkit';
-import { rootReducer } from '@reduxjs/toolkit/src/tests/injectableCombineReducers.example';
+import { configureStore } from '@reduxjs/toolkit';
+import storage from 'redux-persist/lib/storage';
+import { combineReducers } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
 
-const initialState = {
-  theme: 'light',
+import themeSlice from './themeSlice';
+
+const reducers = combineReducers({
+  theme: themeSlice.reducer,
+});
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['theme'],
+  // blacklist -> 그것만 제외
 };
 
-const themeSlice = createSlice({
-  name: 'theme',
-  initialState,
-  reducers: {
-    setTheme(state, action) {
-      state.theme = action.payload;
-    },
-  },
-});
+const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
-  reducer: {
-    theme: themeSlice.reducer,
-  },
+  reducer: persistedReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({ serializableCheck: false }),
 });
-
-export type RootState = ReturnType<typeof rootReducer>;
-
-export const themeActions = themeSlice.actions;
 
 export default store;
