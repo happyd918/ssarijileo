@@ -93,7 +93,7 @@ function Header() {
       <div className={styles.menu}>{headerMenus}</div>
       <div className={styles.icons}>
         <div className={styles.icon}>
-          <label className={styles.switch} id="cl" htmlFor="toggleSwitch">
+          <label className={styles.switch} htmlFor="toggleSwitch">
             <input
               type="checkbox"
               onChange={changeMode}
