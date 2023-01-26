@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
-import styles from '@/styles/Main.module.scss';
 import classNames from 'classnames';
+import styles from '@/styles/Main.module.scss';
 
 import Top from '@/components/common/Top';
 
@@ -67,7 +67,7 @@ function Main() {
     },
   ];
   const chartListA = chartItemA.map((item, idx) => {
-    let isCheck: boolean = false;
+    let isCheck = false;
     if (item.title.length > 18) {
       isCheck = true;
     }
@@ -90,9 +90,8 @@ function Main() {
     );
   });
   const chartListB = chartItemB.map((item, idx) => {
-    let isCheck: boolean = false;
+    let isCheck = false;
     if (item.title.length > 18) {
-      console.log(item.title + ' ' + item.title.length);
       isCheck = true;
     }
     return (
