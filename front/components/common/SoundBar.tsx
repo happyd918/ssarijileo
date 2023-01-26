@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from 'react';
-import styles from '@/styles/SoundBar.module.scss';
+import React, { useRef } from 'react';
 
 import * as data from '@/constants/SoundBarData';
 import { NOTE_HEIGHT } from '@/constants/SoundBarData';
+
+import styles from '@/styles/SoundBar.module.scss';
 
 function SoundBar() {
   const canvasRef = useRef<HTMLCanvasElement>(null);

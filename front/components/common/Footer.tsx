@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
-import styles from '@/styles/Footer.module.scss';
 import { useSelector } from 'react-redux';
+
+import styles from '@/styles/Footer.module.scss';
 
 function Footer() {
   const [themeMode, setThemeMode] = useState('light');

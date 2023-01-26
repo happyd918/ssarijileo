@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import styles from '@/styles/Header.module.scss';
 import { setTheme } from '@/redux/store/themeSlice';
 import { useDispatch } from 'react-redux';
+
+import styles from '@/styles/Header.module.scss';
 
 function Header() {
   const [themeMode, setThemeMode] = useState('');
