@@ -11,8 +11,10 @@
 ##### 집에서 즐기는 랜선 노래방 싸리질러 ~~~~~~~~
 
 ### CI/CD -> 이수민(1월 29일 내로 ec2 설정 완료 목표)
+
 1. git lab
 2. docker
 3. jenkins
 4. Kubernetes
 5. ansible (고려중)
+6. sonarQube (고려중)
