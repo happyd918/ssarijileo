@@ -12,13 +12,12 @@ function Header() {
   const [checked, setChecked] = useState(false);
   const dispatch = useDispatch();
 
-  const changeMode = () =>
-    useCallback(() => {
-      setChecked(!checked);
-      setThemeMode(themeMode === 'light' ? 'dark' : 'light');
-      localStorage.setItem('theme', themeMode === 'light' ? 'dark' : 'light');
-      dispatch(setTheme(themeMode));
-    }, [checked, themeMode]);
+  const changeMode = useCallback(() => {
+    setChecked(!checked);
+    setThemeMode(themeMode === 'light' ? 'dark' : 'light');
+    localStorage.setItem('theme', themeMode === 'light' ? 'dark' : 'light');
+    dispatch(setTheme(themeMode));
+  }, [checked, themeMode]);
 
   // if (themeMode === 'light') {
   //   setThemeMode('dark');
