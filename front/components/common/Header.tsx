@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -12,18 +12,24 @@ function Header() {
   const [checked, setChecked] = useState(false);
   const dispatch = useDispatch();
 
-  const changeMode = () => {
-    if (themeMode === 'light') {
-      setThemeMode('dark');
-      dispatch(setTheme('dark'));
-      localStorage.setItem('theme', 'dark');
-    } else if (themeMode === 'dark') {
-      setThemeMode('light');
-      dispatch(setTheme('light'));
-      localStorage.setItem('theme', 'light');
-    }
-    setChecked(!checked);
-  };
+  const changeMode = () =>
+    useCallback(() => {
+      setChecked(!checked);
+      setThemeMode(themeMode === 'light' ? 'dark' : 'light');
+      localStorage.setItem('theme', themeMode === 'light' ? 'dark' : 'light');
+      dispatch(setTheme(themeMode));
+    }, [checked, themeMode]);
+
+  // if (themeMode === 'light') {
+  //   setThemeMode('dark');
+  //   dispatch(setTheme('dark'));
+  //   localStorage.setItem('theme', 'dark');
+  // } else if (themeMode === 'dark') {
+  //   setThemeMode('light');
+  //   dispatch(setTheme('light'));
+  //   localStorage.setItem('theme', 'light');
+  // }
+  // setChecked(!checked);
 
   useEffect(() => {
     document.body.dataset.theme = themeMode;
