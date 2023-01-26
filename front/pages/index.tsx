@@ -4,7 +4,8 @@ import { Inter } from '@next/font/google';
 import Footer from '@/components/common/Footer';
 import Header from '@/components/common/Header';
 // import PerfectScore from '@/components/room/PerfectScore';
-import SoundBar from '@/components/common/SoundBar';
+// import SoundBar from '@/components/common/SoundBar';
+// import ErrorComp from '@/components/error/ErrorComp';
 
 import styles from '@/styles/Home.module.scss';
 
@@ -20,7 +21,8 @@ function Home() {
         <Header />
         <div className={styles.container}>
           {/* <PerfectScore /> */}
-          <SoundBar />
+          {/* <SoundBar /> */}
+          {/* <ErrorComp /> */}
         </div>
         <Footer />
       </main>

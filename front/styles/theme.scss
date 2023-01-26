@@ -4,10 +4,14 @@ body[data-theme='light'] {
   --color-background: #{$white};
   --color-text: #{$dark};
   --color-btn: #{$dark};
+  --color-black: #{$black};
+  --color-white: #{$white};
 }
 
 body[data-theme='dark'] {
   --color-background: #{$dark};
   --color-text: #{$white};
   --color-btn: #{$main};
+  --color-black: #{$white};
+  --color-white: #{$black};
 }
