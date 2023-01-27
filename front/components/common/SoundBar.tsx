@@ -4,13 +4,12 @@ import * as data from '@/constants/SoundBarData';
 import { useWave } from '@/hooks/useAnimation';
 
 import styles from '@/styles/SoundBar.module.scss';
-import { BAR_NUM } from '@/constants/SoundBarData';
 
 function SoundBar() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const noteTableRef = useRef<number[]>([]);
   const [noteTable, setNoteTable] = useState<number[]>([]);
-  const DOWN_FLAG = new Array(BAR_NUM).fill(false);
+  const DOWN_FLAG = new Array(data.BAR_NUM).fill(false);
 
   const draw = () => {
     if (!canvasRef.current) return;

@@ -1,84 +1,70 @@
 import Image from 'next/image';
-import classNames from 'classnames';
+import TodayChartItem from '@/components/main/TodayChartItem';
+
 import styles from '@/styles/TodayChart.module.scss';
 
 function TodayChart() {
   const chartItemA = [
     {
+      rank: 1,
       title: 'Ditto',
       singer: 'NewJeans',
     },
     {
+      rank: 2,
       title: '사건의 지평선',
       singer: '윤하',
     },
     {
+      rank: 3,
       title: 'Hype boy',
       singer: 'NewJeans',
     },
     {
+      rank: 4,
       title: 'OMG',
       singer: 'NewJeans',
     },
     {
+      rank: 5,
       title: 'After LIKE',
       singer: 'IVE(아이브)',
     },
   ];
   const chartItemB = [
     {
+      rank: 6,
       title: 'ANTIFRAGILE',
       singer: 'LE SSERAFIM (르세라핌)',
     },
     {
+      rank: 7,
       title: 'Attention',
       singer: 'NewJeans',
     },
     {
+      rank: 8,
       title: 'LOVE DIVE',
       singer: 'IVE(아이브)',
     },
     {
+      rank: 9,
       title: 'Nxde',
       singer: '여자(아이들)',
     },
     {
+      rank: 10,
       title: 'NOT SORRY (Feat. pH-1) (Prod. by Slom)',
       singer: '이영지',
     },
   ];
-  const chartListA = chartItemA.map((item, idx) => {
-    const titleClassName = classNames({
-      [styles.songTitle]: true,
-      [styles.isLong]: item.title.length > 18,
-    });
-    return (
-      <div key={idx} className={styles.song}>
-        <div className={styles.img}>커버</div>
-        <div className={styles.rank}>{idx + 1}</div>
-        <div className={styles.songInfo}>
-          <div className={titleClassName}>{item.title}</div>
-          <div className={styles.singer}>{item.singer}</div>
-        </div>
-      </div>
-    );
+  const chartListA = chartItemA.map(item => {
+    return <TodayChartItem key={item.rank} item={item} />;
   });
-  const chartListB = chartItemB.map((item, idx) => {
-    const titleClassName = classNames({
-      [styles.songTitle]: true,
-      [styles.isLong]: item.title.length > 18,
-    });
-    return (
-      <div key={idx} className={styles.song}>
-        <div className={styles.img}>커버</div>
-        <div className={styles.rank}>{idx + 6}</div>
-        <div className={styles.songInfo}>
-          <div className={titleClassName}>{item.title}</div>
-          <div className={styles.singer}>{item.singer}</div>
-        </div>
-      </div>
-    );
+  const chartListB = chartItemB.map(item => {
+    return <TodayChartItem key={item.rank} item={item} />;
   });
+
   return (
     <div className={styles.chart}>
       <div className={styles.chartTitle}>
