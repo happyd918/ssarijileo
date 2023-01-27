@@ -13,7 +13,7 @@ function PerfectScore() {
     PitchDetector.forFloat32Array(data.BUFFER_SIZE),
   );
   const analyserRef = useRef<AnalyserNode>();
-  const sourceRef = useRef<AudioBufferSourceNode>();
+  // const sourceRef = useRef<AudioBufferSourceNode>();
   const noteWindowRef = useRef<number[]>(
     new Array(data.NOTE_WINDOW_SIZE * data.DISPLAY_PERCENTAGE).fill(-1),
   );
@@ -28,16 +28,16 @@ function PerfectScore() {
     color: string;
     life: number;
   }[] = [];
-  const [isReady, setIsReady] = useState(false);
+  // const [isReady, setIsReady] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
 
   const start = () => {
-    sourceRef.current?.start();
+    // sourceRef.current?.start();
     setIsStarted(true);
   };
 
   const stop = () => {
-    sourceRef.current?.stop();
+    // sourceRef.current?.stop();
     setIsStarted(false);
   };
 
@@ -235,24 +235,23 @@ function PerfectScore() {
     analyser.smoothingTimeConstant = data.SMOOTHING_TIME_CONSTANT;
     analyser.fftSize = data.FFT_SIZE;
 
-    fetch('sounds/test.mp3')
-      .then(response => response.arrayBuffer())
-      .then(arrayBuffer => audioCtx.decodeAudioData(arrayBuffer))
-      .then(audioBuffer => {
-        const source = audioCtx.createBufferSource();
-        source.buffer = audioBuffer;
-        source.connect(analyser);
-        analyser.connect(audioCtx.destination);
-        sourceRef.current = source;
-        setIsReady(sourceRef.current !== undefined);
-      });
+    // fetch('sounds/test.mp3')
+    //   .then(response => response.arrayBuffer())
+    //   .then(arrayBuffer => audioCtx.decodeAudioData(arrayBuffer))
+    //   .then(audioBuffer => {
+    //     const source = audioCtx.createBufferSource();
+    //     source.buffer = audioBuffer;
+    //     source.connect(analyser);
+    //     analyser.connect(audioCtx.destination);
+    //     sourceRef.current = source;
+    //     setIsReady(sourceRef.current !== undefined);
+    //   });
 
-    // navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-    //   const source = audioCtx.createMediaStreamSource(stream);
-    //
-    //   source.connect(analyser);
-    // });
-  }, []);
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+      const source = audioCtx.createMediaStreamSource(stream);
+      source.connect(analyser);
+    });
+  }, [analyserRef, isStarted]);
 
   return (
     <>
@@ -269,7 +268,7 @@ function PerfectScore() {
           className={styles.button}
           value="Start"
           onClick={start}
-          disabled={isStarted || !isReady}
+          disabled={isStarted}
         />
         &nbsp; &nbsp;
         <input
