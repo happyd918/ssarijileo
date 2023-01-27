@@ -1,16 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import * as data from '@/constants/SoundBarData';
-import { NOTE_HEIGHT } from '@/constants/SoundBarData';
+import { useWave } from '@/hooks/useAnimation';
 
 import styles from '@/styles/SoundBar.module.scss';
 
 function SoundBar() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  const noteTable = data.NOTE_NUM.map(() =>
-    Math.ceil(Math.random() * NOTE_HEIGHT),
-  );
+  const noteTableRef = useRef<number[]>([]);
+  const [noteTable, setNoteTable] = useState<number[]>([]);
 
   const draw = () => {
     if (!canvasRef.current) return;
@@ -21,7 +19,7 @@ function SoundBar() {
     const height = data.HEIGHT;
     ctx.clearRect(0, 0, width, height);
     const barWidth = width / data.BAR_NUM;
-    const barHeight = height / NOTE_HEIGHT;
+    const barHeight = height / data.NOTE_HEIGHT;
     let x = 0;
     let y = height;
 
@@ -55,14 +53,33 @@ function SoundBar() {
       }
       x += barWidth;
       y = height;
-      noteTable[i] =
-        (noteTable[i] + Math.ceil(Math.random() * 8) - 4) % NOTE_HEIGHT;
-      if (noteTable[i] < 0) noteTable[i] = 0;
+      noteTable[i] = data.DOWN_FLAG ? (noteTable[i] + 1) % data.NOTE_HEIGHT : 0;
+      if (noteTable[i] < 0) {
+        noteTable[i] = 1;
+        data.DOWN_FLAG = true;
+      }
+      // noteTable[i] =
+      //   (noteTable[i] + Math.floor(Math.random() * 7) - 3) % data.NOTE_HEIGHT;
+      // if (noteTable[i] < 0) noteTable[i] = 1;
     }
   };
-  setInterval(() => {
-    requestAnimationFrame(draw);
-  }, 100);
+  useWave(() => {
+    draw();
+  }, [noteTable]);
+
+  useEffect(() => {
+    for (let i = 0; i < data.NOTE_NUM.length; i++) {
+      noteTableRef.current[i] = Math.ceil(Math.random() * data.NOTE_HEIGHT);
+      if (i !== 0 && noteTableRef.current[i] === noteTableRef.current[i - 1]) {
+        noteTableRef.current[i] =
+          (noteTableRef.current[i] + data.NOTE_HEIGHT / 2) % data.NOTE_HEIGHT;
+      }
+    }
+    noteTableRef.current = data.NOTE_NUM.map(() =>
+      Math.ceil(Math.random() * data.NOTE_HEIGHT),
+    );
+    setNoteTable(noteTableRef.current);
+  }, []);
 
   return (
     <div className={styles.soundBar}>

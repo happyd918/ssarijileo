@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useCallback } from 'react';
+import { timestamp } from 'rxjs';
 
 export const useAnimationFrame = (
   callback: (deltaTime: number) => void,
@@ -30,20 +31,32 @@ export const useAnimationFrame = (
   }, [requestRef, animate, ...depsArray]);
 };
 
-export const makeSample = (
-  callback: (deltaTime: number) => void,
+export const useWave = (
+  callback: () => void,
   deps?: React.DependencyList | undefined,
 ) => {
   const requestRef = useRef<number>();
-  const previousTimeRef = useRef<number>();
+
+  // let deltaTime = 0;
+  // let last = Date.now();
+  // let now = Date.now();
+  // const update = (time: number) => {
+  //   deltaTime += time;
+  //   if (deltaTime > 0.1) {
+  //     deltaTime = deltaTime - 0.1;
+  //     callback();
+  //   }
+  // };
+  let start = 0;
 
   const animate = useCallback(
-    (time: number) => {
-      if (previousTimeRef.current !== undefined) {
-        const deltaTime = time - previousTimeRef.current;
-        callback(deltaTime);
+    (timestamp: number) => {
+      if (!start) start = timestamp;
+      const progress = timestamp - start;
+      if (progress > 50) {
+        callback();
+        start = timestamp;
       }
-      previousTimeRef.current = time;
       requestRef.current = requestAnimationFrame(animate);
     },
     [callback],

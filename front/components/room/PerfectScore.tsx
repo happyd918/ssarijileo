@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 
 import { PitchDetector } from 'pitchy';
-import { useAnimationFrame } from '@/hooks/useAnimationFrame';
+import { useAnimationFrame } from '@/hooks/useAnimation';
 import * as data from '@/constants/PerfectScoreData';
 
 import styles from '@/styles/PerfectScore.module.scss';
