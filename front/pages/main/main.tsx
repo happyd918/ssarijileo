@@ -64,13 +64,7 @@ function Main() {
       <SoundBar />
 
       <div className={styles.team}>
-        <Image
-          src={img.team}
-          width={1300}
-          height={500}
-          layout="fil"
-          alt="team"
-        />
+        <Image src={img.team} width={1300} height={500} alt="team" />
       </div>
     </div>
   );

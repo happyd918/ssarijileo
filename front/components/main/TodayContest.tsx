@@ -73,8 +73,8 @@ function TodayContest() {
         <table className={styles.rankTable}>
           <thead>
             <tr>
-              <th />
-              <th />
+              <th role="cell" />
+              <th role="cell" />
               <th>닉네임</th>
               <th>제목</th>
               <th>가수</th>
