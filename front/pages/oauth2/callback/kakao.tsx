@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
 // import { actionCreators as userActions } from '@/redux/modules/user';
 import Spinner from '@/components/common/Spinner';
 
 function kakao() {
-  const dispatch = useDispatch();
-
   // 인가 코드
-  let code = new URL(window.location.href).searchParams.get('code');
-  console.log(code);
+  const code = new URL(window.location.href).searchParams.get('code');
 
   useEffect(() => {
     async function callbackCode() {
