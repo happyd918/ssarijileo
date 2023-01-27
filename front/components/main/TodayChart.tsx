@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import TodayChartItem from '@/components/main/TodayChartItem';
 
-import styles from '@/styles/TodayChart.module.scss';
+import styles from '@/styles/main/TodayChart.module.scss';
 
 function TodayChart() {
   const chartItemA = [

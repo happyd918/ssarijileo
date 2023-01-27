@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { setTheme } from '@/redux/store/themeSlice';
 
-import styles from '@/styles/Header.module.scss';
+import styles from '@/styles/common/Header.module.scss';
 import LoginModal from '@/components/login/LoginModal';
 
 function Header() {
