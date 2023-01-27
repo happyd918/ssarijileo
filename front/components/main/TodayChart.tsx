@@ -48,46 +48,32 @@ function TodayChart() {
     },
   ];
   const chartListA = chartItemA.map((item, idx) => {
-    let isCheck = false;
-    if (item.title.length > 18) {
-      isCheck = true;
-    }
+    const titleClassName = classNames({
+      [styles.songTitle]: true,
+      [styles.isLong]: item.title.length > 18,
+    });
     return (
       <div className={styles.song}>
         <div className={styles.img}>커버</div>
         <div className={styles.rank}>{idx + 1}</div>
         <div className={styles.songInfo}>
-          <div
-            className={classNames({
-              [styles.songTitle]: true,
-              [styles.isLong]: { isCheck },
-            })}
-          >
-            {item.title}
-          </div>
+          <div className={titleClassName}>{item.title}</div>
           <div className={styles.singer}>{item.singer}</div>
         </div>
       </div>
     );
   });
   const chartListB = chartItemB.map((item, idx) => {
-    let isCheck = false;
-    if (item.title.length > 18) {
-      isCheck = true;
-    }
+    const titleClassName = classNames({
+      [styles.songTitle]: true,
+      [styles.isLong]: item.title.length > 18,
+    });
     return (
       <div className={styles.song}>
         <div className={styles.img}>커버</div>
         <div className={styles.rank}>{idx + 6}</div>
         <div className={styles.songInfo}>
-          <div
-            className={classNames({
-              [styles.songTitle]: true,
-              [styles.isLong]: { isCheck },
-            })}
-          >
-            {item.title}
-          </div>
+          <div className={titleClassName}>{item.title}</div>
           <div className={styles.singer}>{item.singer}</div>
         </div>
       </div>
