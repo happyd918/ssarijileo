@@ -5,6 +5,7 @@
   "plugins": ["@typescript-eslint/eslint-plugin"],
   "extends": [
     "airbnb",
+    "next/core-web-vitals",
     "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended"
   ],
