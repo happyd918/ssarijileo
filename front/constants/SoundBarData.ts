@@ -1,4 +1,3 @@
-// export const COLOR = [87, 195, 189];
 export const COLOR = [1, 169, 240];
 export const PLUS = [20, 10, -20];
 export const WIDTH = 1000;

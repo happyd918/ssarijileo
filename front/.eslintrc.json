@@ -14,6 +14,8 @@
     "prettier/prettier": ["error"],
     // suppress errors for missing 'import React' in files
     "react/react-in-jsx-scope": "off",
+    // allow prop-types
+    "react/jsx-props-no-spreading": "off",
     // allow jsx syntax in js files (for next.js project)
     // use typescript
     "react/jsx-filename-extension": [
@@ -25,9 +27,7 @@
       2,
       { "namedcomponents": "arrow-function" }
     ],
-    // allow prop-types
-    "react/jsx-props-no-spreading": "off",
-    // allow no-unresolved
+    // another option
     "import/no-unresolved": "off",
     "import/extensions": ["off"],
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],

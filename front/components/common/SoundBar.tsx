@@ -4,13 +4,12 @@ import * as data from '@/constants/SoundBarData';
 import { useWave } from '@/hooks/useAnimation';
 
 import styles from '@/styles/common/SoundBar.module.scss';
-import { BAR_NUM } from '@/constants/SoundBarData';
 
 function SoundBar() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const noteTableRef = useRef<number[]>([]);
   const [noteTable, setNoteTable] = useState<number[]>([]);
-  const DOWN_FLAG = new Array(BAR_NUM).fill(false);
+  const DOWN_FLAG = new Array(data.BAR_NUM).fill(false);
 
   const draw = () => {
     if (!canvasRef.current) return;
@@ -55,9 +54,6 @@ function SoundBar() {
       }
       x += barWidth;
       y = height;
-      // noteTable[i] = DOWN_FLAG[i]
-      //   ? noteTable[i] + Math.ceil(Math.random() * 3)
-      //   : noteTable[i] - Math.ceil(Math.random() * 3);
       noteTable[i] = DOWN_FLAG[i]
         ? noteTable[i] + ((i % 3) + 1)
         : noteTable[i] - ((i % 3) + 1);
@@ -68,9 +64,6 @@ function SoundBar() {
         noteTable[i] = data.NOTE_HEIGHT - 1;
         DOWN_FLAG[i] = false;
       }
-      // noteTable[i] =
-      //   (noteTable[i] + Math.floor(Math.random() * 7) - 3) % data.NOTE_HEIGHT;
-      // if (noteTable[i] < 0) noteTable[i] = 1;
     }
   };
   useWave(() => {
