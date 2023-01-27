@@ -1,9 +1,11 @@
 package com.ssafy.ssarijileo.user.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.ssarijileo.exception.NotFoundException;
 import com.ssafy.ssarijileo.user.dto.Token;
 import com.ssafy.ssarijileo.user.dto.UserDto;
 import com.ssafy.ssarijileo.user.dto.UserRequestMapper;
+import com.ssafy.ssarijileo.user.entity.User;
 import com.ssafy.ssarijileo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,14 +15,18 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
+
 import java.io.IOException;
 import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 @Component
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final UserRepository userRepository;
@@ -33,26 +39,38 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             throws IOException {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
         UserDto userDto = userRequestMapper.toDto(oAuth2User);
-
         log.info("Principal에서 꺼낸 OAuth2User = {}", oAuth2User);
+
+        Token tokens = new Token();
+
+        // 회원 정보 받아옴
+        User user = userRepository.findByEmail(userDto.getEmail()).orElse(userDto.toUser(userDto));
+
         // 최초 로그인이라면 회원가입 처리를 한다.
-        log.info("find email = {}",userRepository.findByEmail(userDto.getEmail()));
-        if (userRepository.findByEmail(userDto.getEmail()).equals(Optional.empty())) {
+        if (user.getToken() == null) {
             log.info("회원가입 해야됨");
-            userRepository.save(userDto.toUser(userDto));
+            tokens = tokenProvider.generateToken(userDto.getEmail(), "ROLE_USER");
+            user.updateToken(tokens.getRefreshToken());
+            log.info("user token = {}",user.getToken());
+            userRepository.save(user);
+        } else {
+            log.info("액세스 토큰만 발급");
+            String access = tokenProvider.generateAccess(userDto.getEmail(), "ROLE_USER");
+            tokens = tokens.builder().accessToken(access).refreshToken(user.getToken()).build();
+
+            // 프로필 이미지 바뀌었으면 업데이트
+            if (!(user.getImage().equals(userDto.getImage()))) {
+                log.info("이미지 업데이트");
+                user.updateImage(userDto.getImage());
+            }
         }
 
+        log.info("{}", tokens);
 
         String targetUrl;
-        log.info("토큰 발행 시작");
-
-        Token token = tokenProvider.generateToken(userDto.getEmail(), "ROLE_USER");
-        log.info("{}", token);
-
-
         targetUrl = UriComponentsBuilder.fromUriString("/")
-                .queryParam("accessToken", token.getAccessToken())
-                .queryParam("refreshToken", token.getRefreshToken())
+                .queryParam("accessToken", tokens.getAccessToken())
+                .queryParam("refreshToken", tokens.getRefreshToken())
                 .build().toUriString();
 
         getRedirectStrategy().sendRedirect(request, response, targetUrl);

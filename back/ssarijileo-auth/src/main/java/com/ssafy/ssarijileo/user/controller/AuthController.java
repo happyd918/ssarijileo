@@ -21,17 +21,17 @@ public class AuthController {
 
     @GetMapping("/token/refresh")
     public String refreshAuth(HttpServletRequest request, HttpServletResponse response) {
-        String token = request.getHeader("Refresh");
+        String token = request.getHeader("refreshToken");
 
         if (token != null && tokenProvider.verifyToken(token)) {
             String email = tokenProvider.getUid(token);
             Token newToken = tokenProvider.generateToken(email, "ROLE_USER");
 
-            response.addHeader("Access", newToken.getAccessToken());
-            response.addHeader("Refresh", newToken.getRefreshToken());
+            response.addHeader("accessToken", newToken.getAccessToken());
+            response.addHeader("refreshToken", newToken.getRefreshToken());
             response.setContentType("application/json;charset=UTF-8");
 
-            return "NEW ACCESS TOKEN";
+            return "NEW TOKEN";
         }
 
         throw new RuntimeException();

@@ -40,27 +40,26 @@ public class TokenProvider implements InitializingBean {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
+    public String generateAccess(String uid, String role) {
+        return createToken(uid, role, 'A');
+    }
+
+    public String generateRefresh(String uid, String role) {
+        return createToken(uid, role, 'R');
+    }
+
     public Token generateToken(String uid, String role) {
-        // 30 min
-        long accessPeriod = tokenValidityInMilliseconds;
-        // 1 month
-        long refreshPeriod = tokenValidityInMilliseconds * 2L * 24L * 30L;
-
-        Claims claims = Jwts.claims().setSubject(uid);
-        claims.put("role", role);
-
-        Date now = new Date();
-
-        String accessToken = createToken(claims, now, accessPeriod);
-        String refreshToken = createToken(claims, now, refreshPeriod);
+        String accessToken = createToken(uid, role, 'A');
+        String refreshToken = createToken(uid, role, 'R');
 
         return new Token(accessToken, refreshToken);
     }
 
     public boolean verifyToken(String token) {
         try {
-            Jws<Claims> claims = Jwts.parser()
+            Jws<Claims> claims = Jwts.parserBuilder()
                     .setSigningKey(secret)
+                    .build()
                     .parseClaimsJws(token);
             return claims.getBody()
                     .getExpiration()
@@ -71,10 +70,23 @@ public class TokenProvider implements InitializingBean {
     }
 
     public String getUid(String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(token).getBody().getSubject();
     }
 
-    public String createToken(Claims claims, Date now, long period) {
+    public String createToken(String uid, String role, char state) {    // state -> 'A' : Access, 'R' : Refresh
+        long period;
+        // access : 30 min, refresh : 1 month
+        switch(state) {
+            case 'A' : period = tokenValidityInMilliseconds; break;
+            case 'R' : period = tokenValidityInMilliseconds * 2L * 24L * 30; break;
+            default : throw new RuntimeException();
+        }
+
+        Claims claims = Jwts.claims().setSubject(uid);
+        claims.put("role", role);
+
+        Date now = new Date();
+
         return Jwts.builder()
             .setClaims(claims)
             .setIssuedAt(now)

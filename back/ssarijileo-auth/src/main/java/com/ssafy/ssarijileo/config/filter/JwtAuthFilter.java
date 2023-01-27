@@ -37,7 +37,7 @@ public class JwtAuthFilter extends GenericFilterBean {
             // DB연동 x
             UserDto userDto = UserDto.builder()
                     .email(email)
-                    .nickname("닉네임")
+                    .nickname("")
                     .image("")
                     .build();
 
