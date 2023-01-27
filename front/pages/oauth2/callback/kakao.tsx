@@ -16,7 +16,7 @@ function kakao() {
           console.log(res);
           // 토큰이 넘어올 것임
           const ACCESS_TOKEN = res.data.accessToken;
-          //예시로 로컬에 저장함
+          // 예시로 로컬에 저장함
           localStorage.setItem('token', ACCESS_TOKEN);
           console.log('성공');
           // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
