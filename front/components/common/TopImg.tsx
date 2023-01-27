@@ -23,6 +23,7 @@ function TopImg() {
       height={701}
       alt="background"
       className={styles.background}
+      priority={true}
     />
   );
 }

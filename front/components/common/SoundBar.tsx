@@ -55,9 +55,6 @@ function SoundBar() {
       }
       x += barWidth;
       y = height;
-      // noteTable[i] = DOWN_FLAG[i]
-      //   ? noteTable[i] + Math.ceil(Math.random() * 3)
-      //   : noteTable[i] - Math.ceil(Math.random() * 3);
       noteTable[i] = DOWN_FLAG[i]
         ? noteTable[i] + ((i % 3) + 1)
         : noteTable[i] - ((i % 3) + 1);
@@ -68,9 +65,6 @@ function SoundBar() {
         noteTable[i] = data.NOTE_HEIGHT - 1;
         DOWN_FLAG[i] = false;
       }
-      // noteTable[i] =
-      //   (noteTable[i] + Math.floor(Math.random() * 7) - 3) % data.NOTE_HEIGHT;
-      // if (noteTable[i] < 0) noteTable[i] = 1;
     }
   };
   useWave(() => {

@@ -53,7 +53,7 @@ function TodayChart() {
       [styles.isLong]: item.title.length > 18,
     });
     return (
-      <div className={styles.song}>
+      <div key={idx} className={styles.song}>
         <div className={styles.img}>커버</div>
         <div className={styles.rank}>{idx + 1}</div>
         <div className={styles.songInfo}>
@@ -69,7 +69,7 @@ function TodayChart() {
       [styles.isLong]: item.title.length > 18,
     });
     return (
-      <div className={styles.song}>
+      <div key={idx} className={styles.song}>
         <div className={styles.img}>커버</div>
         <div className={styles.rank}>{idx + 6}</div>
         <div className={styles.songInfo}>
