@@ -4,7 +4,7 @@ import { PitchDetector } from 'pitchy';
 import { useAnimationFrame } from '@/hooks/useAnimationFrame';
 import * as data from '@/constants/PerfectScoreData';
 
-import styles from '@/styles/PerfectScore.module.scss';
+import styles from '@/styles/room/PerfectScore.module.scss';
 
 function PerfectScore() {
   const canvasRef = useRef<HTMLCanvasElement>(null);

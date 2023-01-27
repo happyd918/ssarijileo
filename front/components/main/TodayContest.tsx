@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from '@/styles/TodayContest.module.scss';
+import styles from '@/styles/main/TodayContest.module.scss';
 
 function TodayContest() {
   const ranking = [

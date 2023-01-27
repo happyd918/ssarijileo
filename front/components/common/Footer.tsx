@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 import { useSelector } from 'react-redux';
 
-import styles from '@/styles/Footer.module.scss';
+import styles from '@/styles/common/Footer.module.scss';
 
 function Footer() {
   const [themeMode, setThemeMode] = useState('light');

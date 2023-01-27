@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
-import styles from '@/styles/Loading.module.scss';
+import styles from '@/styles/room/Loading.module.scss';
 
 function Loading() {
   const [themeMode, setThemeMode] = useState('light');

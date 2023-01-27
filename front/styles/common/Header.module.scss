@@ -1,4 +1,4 @@
-@import 'color.scss';
+@import '../color.scss';
 
 .header {
   width: 100%;
@@ -89,6 +89,7 @@
       border-radius: 6px;
       border: 0;
       font-weight: bold;
+      cursor: pointer;
     }
     .loginBtn:hover {
       background-color: $main;

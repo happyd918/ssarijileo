@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import classNames from 'classnames';
-import styles from '@/styles/TodayChart.module.scss';
+import styles from '@/styles/main/TodayChart.module.scss';
 
 function TodayChart() {
   const chartItemA = [
