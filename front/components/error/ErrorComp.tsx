@@ -1,4 +1,4 @@
-import styles from '@/styles/Error.module.scss';
+import styles from '@/styles/error/Error.module.scss';
 
 function ErrorComp() {
   return (

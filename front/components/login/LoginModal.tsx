@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from '@/styles/LoginModal.module.scss';
+import styles from '@/styles/login/LoginModal.module.scss';
 
 function LoginModal({ setModalOpen }: any) {
   // 모달창 open 여부

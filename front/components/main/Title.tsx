@@ -1,5 +1,5 @@
 import router from 'next/router';
-import styles from '@/styles/Title.module.scss';
+import styles from '@/styles/main/Title.module.scss';
 
 function Title() {
   return (

@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as data from '@/constants/SoundBarData';
 import { useWave } from '@/hooks/useAnimation';
 
-import styles from '@/styles/SoundBar.module.scss';
+import styles from '@/styles/common/SoundBar.module.scss';
 import { BAR_NUM } from '@/constants/SoundBarData';
 
 function SoundBar() {

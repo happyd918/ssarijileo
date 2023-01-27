@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
-import styles from '@/styles/TopImg.module.scss';
+import styles from '@/styles/common/TopImg.module.scss';
 
 function TopImg() {
   const [themeMode, setThemeMode] = useState('light');

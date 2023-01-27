@@ -13,7 +13,7 @@ function Kakao() {
   const loginHandler = useCallback(
     async (code: string | string[]) => {
       const response: ResponseType = await fetch(
-        'http://192.168.31.64:8090/oauth2/authorization/kakao',
+        'http://localhost:3000/kakao',
         {
           method: 'GET',
           headers: {
