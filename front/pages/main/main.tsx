@@ -8,6 +8,7 @@ import Top from '@/components/common/Top';
 
 import SoundBar from '@/components/common/SoundBar';
 import TodayChart from '@/components/main/TodayChart';
+import TodayContest from '@/components/main/TodayContest';
 
 function Main() {
   const [themeMode, setThemeMode] = useState('light');
@@ -56,18 +57,20 @@ function Main() {
           className={styles.noteC}
         />
       </div>
-      <div>
-        <SoundBar />
-      </div>
-      <div>
-        <TodayChart />
-      </div>
-      <div>
-        <SoundBar />
-      </div>
+      <SoundBar />
+      <TodayChart />
+      <SoundBar />
+      <TodayContest />
+      <SoundBar />
 
       <div className={styles.team}>
-        <Image src={img.team} width={1200} height={1000} alt="team" />
+        <Image
+          src={img.team}
+          width={1300}
+          height={500}
+          layout="fil"
+          alt="team"
+        />
       </div>
     </div>
   );
