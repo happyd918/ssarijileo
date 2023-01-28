@@ -1,35 +1,33 @@
 @import '../color.scss';
 
 .header {
-  width: 100%;
+  width: 80%;
   height: 60px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   background-color: rgba(0 0 0 / 0%);
   z-index: 80;
-  position: absolute;
-  top: 0;
-  right: 0;
+  margin: auto;
 
   .logo {
-    width: 20%;
-    margin-left: 10px;
+    width: 10%;
+    // margin-left: 10px;
   }
 
   .menu {
-    width: 30%;
+    width: 70%;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
 
     .pages {
       text-decoration: none;
       font-weight: bold;
       color: var(--color-text);
-      margin-left: 1rem;
+      margin-left: 4rem;
     }
   }
 
@@ -38,6 +36,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-end;
 
     .icon {
       display: flex;
