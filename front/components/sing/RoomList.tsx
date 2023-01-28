@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from '@/styles/sing/RoomList.module.scss';
 import RoomListItem from './RoomListItem';
 

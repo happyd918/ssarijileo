@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { RoomInfo } from './RoomList';
 import classNames from 'classnames';
+import { RoomInfo } from './RoomList';
 import styles from '@/styles/sing/RoomListItem.module.scss';
 
 type RoomProps = {
@@ -47,30 +47,39 @@ function RoomListItem({ info }: RoomProps) {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={backClassName}>
-        <div className={styles.top}>
-          <div className={styles.title}>{title}</div>
-          <div className={typeClassName}>{type}</div>
-        </div>
-        <div className={styles.bottom}>
-          <div className={styles.lock}>
-            <div className={styles.type}>{lock ? '비공개방' : '공개방'}</div>
-            <Image
-              src="img/room/room_lock_image.svg"
-              width={18}
-              height={18}
-              alt="lock"
-            />
+    <div className={styles.component}>
+      <div className={styles.container}>
+        <div className={backClassName}>
+          <div className={styles.top}>
+            <div className={styles.title}>{title}</div>
+            <div className={typeClassName}>{type}</div>
           </div>
-          <div className={styles.member}>
-            <Image
-              src="img/room/room_member_image.svg"
-              width={35}
-              height={36}
-              alt="member"
-            />
-            <div className={styles.count}>{member}/10</div>
+          <Image
+            src="img/common/common_play_image.svg"
+            width={43}
+            height={43}
+            alt="play"
+            className={styles.play}
+          />
+          <div className={styles.bottom}>
+            <div className={styles.lock}>
+              <div className={styles.type}>{lock ? '비공개방' : '공개방'}</div>
+              <Image
+                src="img/room/room_lock_image.svg"
+                width={18}
+                height={18}
+                alt="lock"
+              />
+            </div>
+            <div className={styles.member}>
+              <Image
+                src="img/room/room_member_image.svg"
+                width={35}
+                height={36}
+                alt="member"
+              />
+              <div className={styles.count}>{member}/10</div>
+            </div>
           </div>
         </div>
       </div>
