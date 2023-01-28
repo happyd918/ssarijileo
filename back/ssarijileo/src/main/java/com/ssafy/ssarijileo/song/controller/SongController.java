@@ -26,7 +26,7 @@ public class SongController {
 		notes = "노래 전체 목록을 조회한다."
 	)
 	@GetMapping
-	public List<SongDto> findAllSong(){
+	public List<SongDto> findAllSong() {
 		return songService.findAllSong();
 	}
 
@@ -39,7 +39,7 @@ public class SongController {
 		value = "노래 PK"
 	)
 	@GetMapping("{id}")
-	public SongDto findAllSong(@PathVariable Long id){
+	public SongDto findAllSong(@PathVariable Long id) {
 		return songService.findSongById(id);
 	}
 }
