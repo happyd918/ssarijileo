@@ -5,6 +5,7 @@ import styles from '@/styles/main/TodayContest.module.scss';
 function TodayContest() {
   const ranking = [
     {
+      rank: 1,
       medal: 'img/main/main_medal_gold_image.svg',
       profile: 'icon/header/light/light_profile_icon.svg',
       name: '나는이수민',
@@ -13,6 +14,7 @@ function TodayContest() {
       like: '4k',
     },
     {
+      rank: 2,
       medal: 'img/main/main_medal_sliver_image.svg',
       profile: 'icon/header/light/light_profile_icon.svg',
       name: '김맹준',
@@ -21,6 +23,7 @@ function TodayContest() {
       like: '4k',
     },
     {
+      rank: 3,
       medal: 'img/main/main_medal_bronze_image.svg',
       profile: 'icon/header/light/light_profile_icon.svg',
       name: 'zㅣ존예지',
@@ -30,7 +33,7 @@ function TodayContest() {
     },
   ];
   const rank = ranking.map(item => (
-    <tr className={styles.item}>
+    <tr className={styles.item} key={item.rank}>
       <td className={styles.medal}>
         <Image
           src={item.medal}
@@ -53,7 +56,7 @@ function TodayContest() {
   ));
   const simpleRank = ranking.map(item => {
     return (
-      <div className={styles.simpleItem}>
+      <tr className={styles.simpleItem} key={item.rank}>
         <td className={styles.simpleMedal}>
           <Image
             src={item.medal}
@@ -64,7 +67,7 @@ function TodayContest() {
           />
         </td>
         <th className={styles.simpleName}>{item.name}</th>
-      </div>
+      </tr>
     );
   });
 
@@ -100,7 +103,7 @@ function TodayContest() {
             </tr>
           </thead>
           <tbody>{rank}</tbody>
-          <div className={styles.simpleRank}>{simpleRank}</div>
+          <tbody className={styles.simpleRank}>{simpleRank}</tbody>
         </table>
       </div>
     </div>
