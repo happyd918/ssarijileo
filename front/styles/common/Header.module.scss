@@ -41,14 +41,17 @@
 
   .dropdown {
     position: relative;
-    flex-direction: column;
     display: none;
 
     @include _768 {
       display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     button {
+      display: flex;
+      align-items: center;
       background-color: transparent;
       border: none;
       cursor: pointer;

@@ -19,9 +19,9 @@ function SoundBar() {
     const width = data.WIDTH;
     const height = data.HEIGHT;
     ctx.clearRect(0, 0, width, height);
-    const barWidth = width / data.BAR_NUM;
+    const barWidth = (width - 5) / data.BAR_NUM;
     const barHeight = height / data.NOTE_HEIGHT;
-    let x = 0;
+    let x = 5;
     let y = height;
 
     for (let i = 0; i < data.BAR_NUM; i++) {

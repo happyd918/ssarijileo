@@ -36,17 +36,6 @@ export const useWave = (
   deps?: React.DependencyList | undefined,
 ) => {
   const requestRef = useRef<number>();
-
-  // let deltaTime = 0;
-  // let last = Date.now();
-  // let now = Date.now();
-  // const update = (time: number) => {
-  //   deltaTime += time;
-  //   if (deltaTime > 0.1) {
-  //     deltaTime = deltaTime - 0.1;
-  //     callback();
-  //   }
-  // };
   let start = 0;
 
   const animate = useCallback(

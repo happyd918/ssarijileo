@@ -72,6 +72,9 @@ function Header() {
     profile: `icon/header/${themeMode || 'light'}/${
       themeMode || 'light'
     }_profile_icon.svg`,
+    dropdown: `icon/header/${themeMode || 'light'}/${
+      themeMode || 'light'
+    }_dropdown_icon.svg`,
   };
 
   // menu 리스트 요소에 대한 태그 생성
@@ -104,7 +107,10 @@ function Header() {
       </div>
       <div className={styles.menu}>{headerMenus}</div>
       <div className={styles.dropdown}>
-        <button onClick={toggleDropdown}>메뉴</button>
+        <button onClick={toggleDropdown}>
+          메뉴
+          <Image src={icons.dropdown} alt="drop" width={16} height={16} />
+        </button>
         <Dropdown visibility={dropdownVisible}>
           <ul className={styles.content}>{dropDownMenu}</ul>
         </Dropdown>

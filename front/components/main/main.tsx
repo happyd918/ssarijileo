@@ -8,7 +8,7 @@ import SoundBar from '@/components/common/SoundBar';
 import TodayChart from '@/components/main/TodayChart';
 import TodayContest from '@/components/main/TodayContest';
 
-import styles from '@/styles/Main.module.scss';
+import styles from '@/styles/main/Main.module.scss';
 
 function Main() {
   const [themeMode, setThemeMode] = useState('light');
