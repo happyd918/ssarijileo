@@ -111,7 +111,7 @@ function Header() {
           메뉴
           <Image src={icons.dropdown} alt="drop" width={16} height={16} />
         </button>
-        <Dropdown visibility={dropdownVisible}>
+        <Dropdown visible={dropdownVisible}>
           <ul className={styles.content}>{dropDownMenu}</ul>
         </Dropdown>
       </div>

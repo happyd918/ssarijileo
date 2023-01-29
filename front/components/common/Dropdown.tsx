@@ -3,13 +3,13 @@ import classNames from 'classnames';
 
 import styles from '@/styles/common/Dropdown.module.scss';
 
-function Dropdown(props: any) {
-  const { children, visibility } = props;
+function Dropdown(props: { children: React.ReactNode; visible: boolean }) {
+  const { children, visible } = props;
   const [animation, setAnimation] = useState(false);
   const [repeat, setRepeat] = useState(0);
 
   useEffect(() => {
-    if (visibility) {
+    if (visible) {
       clearTimeout(repeat);
       setRepeat(0);
       setAnimation(true);
@@ -17,12 +17,12 @@ function Dropdown(props: any) {
       const timeoutId = window.setTimeout(() => setAnimation(false), 400);
       setRepeat(timeoutId);
     }
-  }, [visibility]);
+  }, [visible]);
 
   return (
     <article
       className={classNames(
-        visibility ? styles.fadeIn : styles.fadeOut,
+        visible ? styles.fadeIn : styles.fadeOut,
         styles.dropdown,
       )}
     >
