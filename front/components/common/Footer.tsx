@@ -50,34 +50,34 @@ function Footer() {
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.footer_container}>
-        <div className={styles.img_div}>
+      <div className={styles.container}>
+        <div className={styles.logo}>
           <Image src={icons.logo} alt="home" width={300} height={200} />
         </div>
-        <div className={styles.item_div}>
-          <div className={styles.footer_item_upper}>
+        <div className={styles.item}>
+          <div className={styles.upper}>
             <Image src={icons.phone} alt="place" width={24} height={24} />
             <span>대전광역시 유성구 덕명동 124</span>
           </div>
-          <div className={styles.footer_item_upper}>
+          <div className={styles.upper}>
             <Image src={icons.place} alt="phone" width={24} height={24} />
             <span>042-123-4567</span>
           </div>
-          <div className={styles.footer_item_lower}>
+          <div className={styles.lower}>
             <span>Social Media</span>
             {socialsIcons}
           </div>
         </div>
       </div>
-      <div className={styles.footer_lower}>
-        <div className={styles.footer_lower_left}>
+      <div className={styles.about}>
+        <div className={styles.left}>
           <span>ABOUT US</span>
           <span>CONTACT US</span>
           <span>HELP</span>
           <span>PRIVACY POLICY</span>
           <span>DISCLAIMER</span>
         </div>
-        <div className={styles.footer_lower_right}>
+        <div className={styles.right}>
           <span>Copyright© 2021. SSarijileo All rights reserved.</span>
         </div>
       </div>

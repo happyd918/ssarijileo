@@ -1,17 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-
 import { useDispatch } from 'react-redux';
 import { setTheme } from '@/redux/store/themeSlice';
 
-import styles from '@/styles/common/Header.module.scss';
 import LoginModal from '@/components/login/LoginModal';
+import Dropdown from '@/components/common/Dropdown';
+
+import styles from '@/styles/common/Header.module.scss';
 
 function Header() {
   const [modalOpen, setModalOpen] = useState(false);
   const [themeMode, setThemeMode] = useState('');
   const [checked, setChecked] = useState(false);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
   const dispatch = useDispatch();
 
   const changeMode = useCallback(() => {
@@ -21,16 +23,10 @@ function Header() {
     dispatch(setTheme(themeMode));
   }, [checked, themeMode]);
 
-  // if (themeMode === 'light') {
-  //   setThemeMode('dark');
-  //   dispatch(setTheme('dark'));
-  //   localStorage.setItem('theme', 'dark');
-  // } else if (themeMode === 'dark') {
-  //   setThemeMode('light');
-  //   dispatch(setTheme('light'));
-  //   localStorage.setItem('theme', 'light');
-  // }
-  // setChecked(!checked);
+  const toggleDropdown = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setDropdownVisible(!dropdownVisible);
+  };
 
   useEffect(() => {
     document.body.dataset.theme = themeMode;
@@ -85,6 +81,14 @@ function Header() {
     </Link>
   ));
 
+  const dropDownMenu = headerMenu.map(menu => (
+    <li key={menu.name}>
+      <Link href={menu.link} key={menu.name} className={styles.pages}>
+        {menu.name}
+      </Link>
+    </li>
+  ));
+
   // 로그인 버튼 클릭 시 모달창 Open
   const showModal = () => {
     setModalOpen(true);
@@ -99,6 +103,13 @@ function Header() {
         </Link>
       </div>
       <div className={styles.menu}>{headerMenus}</div>
+      <div className={styles.dropdown}>
+        <button onClick={toggleDropdown}>메뉴</button>
+        <Dropdown visibility={dropdownVisible}>
+          <ul className={styles.content}>{dropDownMenu}</ul>
+        </Dropdown>
+      </div>
+
       <div className={styles.icons}>
         <div className={styles.icon}>
           <label className={styles.switch} htmlFor="toggleSwitch">

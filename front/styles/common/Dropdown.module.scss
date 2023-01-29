@@ -1,0 +1,49 @@
+.dropdown {
+  display: block;
+  position: absolute;
+  top: 40px;
+  z-index: 1;
+  //min-width: 150px;
+  //align-items: center;
+  //justify-content: center;
+  //border-radius: 5px;
+}
+
+@keyframes fadeIn-animation {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.fadeIn {
+  overflow: hidden;
+
+  ul {
+    animation: fadeIn-animation .4s ease;
+  }
+}
+
+/* fade out */
+
+@keyframes fadeOut-animation {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.fadeOut {
+  overflow: hidden;
+
+  ul {
+    animation: fadeOut-animation 0.4s ease;
+    animation-fill-mode: forwards;
+  }
+}
