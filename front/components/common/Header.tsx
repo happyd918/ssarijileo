@@ -107,7 +107,7 @@ function Header() {
       </div>
       <div className={styles.menu}>{headerMenus}</div>
       <div className={styles.dropdown}>
-        <button onClick={toggleDropdown}>
+        <button type="button" onClick={toggleDropdown}>
           메뉴
           <Image src={icons.dropdown} alt="drop" width={16} height={16} />
         </button>
