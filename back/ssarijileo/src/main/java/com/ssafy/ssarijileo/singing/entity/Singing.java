@@ -8,9 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.ssafy.ssarijileo.singing.dto.SingingDto;
 import com.ssafy.ssarijileo.song.entity.Song;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
 
@@ -42,6 +44,14 @@ public class Singing {
 	// 총부른시간
 	String totalSingingTime;
 
-	// 노래일시
-	String singingDate;
+	// Dto to Entity
+	@Builder
+	public Singing(SingingDto singingDto, Song song) {
+		this.singingId = singingDto.getSingingId();
+		this.userId = singingDto.getUserId();
+		this.song = song;
+		this.mode = singingDto.getMode();
+		this.score = singingDto.getScore();
+		this.totalSingingTime = singingDto.getTotalSingingTime();
+	}
 }
