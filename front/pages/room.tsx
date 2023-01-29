@@ -1,4 +1,4 @@
-// Path: front/pages/perfectscore.tsx
+// Path: front/pages/room.tsx
 import PerfectScore from '@/components/room/PerfectScore';
 
 function room() {

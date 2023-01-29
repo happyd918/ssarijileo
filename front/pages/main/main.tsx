@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
 
-import styles from '@/styles/Main.module.scss';
-
 import Top from '@/components/common/Top';
 
 import SoundBar from '@/components/common/SoundBar';
 import TodayChart from '@/components/main/TodayChart';
 import TodayContest from '@/components/main/TodayContest';
+
+import styles from '@/styles/Main.module.scss';
 
 function Main() {
   const [themeMode, setThemeMode] = useState('light');
@@ -64,7 +64,7 @@ function Main() {
       <SoundBar />
 
       <div className={styles.team}>
-        <Image src={img.team} width={1300} height={500} alt="team" />
+        <Image src={img.team} width={1300} height={800} alt="team" />
       </div>
     </div>
   );

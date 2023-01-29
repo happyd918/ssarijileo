@@ -1,4 +1,4 @@
-@use './color.scss' as *;
+@use 'color' as *;
 
 body[data-theme='light'] {
   --color-background: #{$white};

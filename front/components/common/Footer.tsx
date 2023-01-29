@@ -77,7 +77,9 @@ function Footer() {
           <span>PRIVACY POLICY</span>
           <span>DISCLAIMER</span>
         </div>
-        <span>Copyright© 2021. SSarijileo All rights reserved.</span>
+        <div className={styles.footer_lower_right}>
+          <span>Copyright© 2021. SSarijileo All rights reserved.</span>
+        </div>
       </div>
     </footer>
   );
