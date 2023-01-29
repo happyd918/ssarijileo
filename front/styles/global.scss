@@ -7,6 +7,7 @@ body[data-theme='light'] {
   --color-hover: #{$main};
   --color-black: #{$black};
   --color-white: #{$white};
+  --color-line: #{$line};
   --color-placeHolder: #{$placeholder};
   --color-linearA: rgba(25, 155, 223, 0.21);
   --color-linearB: rgba(187, 135, 229, 0.21);
@@ -21,6 +22,7 @@ body[data-theme='dark'] {
   --color-hover: #{$white};
   --color-black: #{$white};
   --color-white: #{$black};
+  --color-line: #{$white};
   --color-placeHolder: #{$white};
   --color-linearA: rgba(104, 225, 147, 0.5);
   --color-linearB: rgba(56, 205, 200, 0.5);
