@@ -1,4 +1,5 @@
 import Image from 'next/image';
+
 import styles from '@/styles/main/TodayContest.module.scss';
 
 function TodayContest() {
@@ -50,6 +51,23 @@ function TodayContest() {
       <td className={styles.like}>{item.like}</td>
     </tr>
   ));
+  const simpleRank = ranking.map(item => {
+    return (
+      <div className={styles.simpleItem}>
+        <td className={styles.simpleMedal}>
+          <Image
+            src={item.medal}
+            width={50}
+            height={50}
+            alt="medal"
+            className={styles.simpleMedalIcon}
+          />
+        </td>
+        <th className={styles.simpleName}>{item.name}</th>
+      </div>
+    );
+  });
+
   return (
     <div className={styles.container}>
       <div className={styles.contestTitle}>
@@ -82,6 +100,7 @@ function TodayContest() {
             </tr>
           </thead>
           <tbody>{rank}</tbody>
+          <div className={styles.simpleRank}>{simpleRank}</div>
         </table>
       </div>
     </div>

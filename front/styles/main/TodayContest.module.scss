@@ -1,4 +1,5 @@
 @import '../color';
+@import '../mixins';
 
 @mixin td_style {
   font-size: 18px;
@@ -37,13 +38,21 @@
 
       thead {
         color: var(--color-black);
+        @include _768 {
+          display: none;
+        }
       }
       tbody {
         color: var(--color-black);
+        @include _768 {
+          display: none;
+        }
+
         .item {
           border-radius: 10px;
           transition: all 1s;
           background: var(--color-today-contest);
+          @include truncate;
 
           td {
             padding: 20px;
@@ -93,6 +102,43 @@
             var(--color-linearA),
             var(--color-linearB),
             var(--color-linearC)
+          );
+        }
+      }
+
+      .simpleRank {
+        display: none;
+
+        @include _768 {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          grid-gap: 10px;
+        }
+
+
+        .simpleItem {
+          border-radius: 10px;
+          transition: all 1s;
+          background: var(--color-today-contest);
+          display : flex;
+          flex-direction : column;
+          padding : 2rem 0;
+
+          .medal {
+            border-radius: 20px 0 0 20px;
+            width: 5%;
+
+            .medalIcon {
+              filter: drop-shadow(5px 5px 3px rgba(0, 0, 0, 0.5));
+            }
+          }
+        }
+
+        .simpleItem:hover {
+          background: linear-gradient(
+                          var(--color-linearA),
+                          var(--color-linearB),
+                          var(--color-linearC)
           );
         }
       }
