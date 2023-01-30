@@ -77,7 +77,7 @@ function IconTop() {
 
   return (
     <div className={styles.container} ref={containerRef}>
-      <canvas className={styles.canvas} ref={canvasRef}></canvas>
+      <canvas className={styles.canvas} ref={canvasRef} />
       <NextImage
         src="img/common/common_microphone_image.svg"
         width={350}
