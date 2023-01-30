@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import * as data from '@/constants/SoundBarData';
-import { useWave } from '@/hooks/useAnimation';
 
 import styles from '@/styles/common/SoundBar.module.scss';
+import { useWave } from '@/hooks/useWave';
 
 function SoundBar() {
   const canvasRef = useRef<HTMLCanvasElement>(null);

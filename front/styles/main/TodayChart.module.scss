@@ -2,8 +2,9 @@
 @import '../mixins';
 
 .chart {
-  width: 100%;
   margin: 50px 0;
+  padding : 0 10%;
+
 
   .chartTitle {
     display: flex;
@@ -41,20 +42,15 @@
   }
 
   .chartList {
-    width: 100%;
     margin: 30px 0;
-    //display: flex;
-    //flex-direction: row;
-    //justify-content: space-between;
-    //align-items: center;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20%;
     @include _768 {
       grid-template-columns: 1fr;
     }
 
     .list {
-      //width: 100%;
       max-width: 40vw;
       @include _768 {
         max-width: 100%;

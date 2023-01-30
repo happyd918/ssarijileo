@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
 
-import Top from '@/components/common/Top';
-
+import IconTop from '@/components/common/IconTop';
 import SoundBar from '@/components/common/SoundBar';
 import TodayChart from '@/components/main/TodayChart';
 import TodayContest from '@/components/main/TodayContest';
@@ -26,43 +25,12 @@ function Main() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.top}>
-        <Top />
-        <Image
-          src="img/common/common_microphone_image.svg"
-          width={350}
-          height={350}
-          alt="mic"
-          className={styles.mic}
-        />
-        <Image
-          src="img/common/common_music_note_image.svg"
-          width={130}
-          height={130}
-          alt="noteA"
-          className={styles.noteA}
-        />
-        <Image
-          src="img/common/common_music_note2_image.svg"
-          width={160}
-          height={160}
-          alt="noteB"
-          className={styles.noteB}
-        />
-        <Image
-          src="img/common/common_music_note3_image.svg"
-          width={120}
-          height={120}
-          alt="noteC"
-          className={styles.noteC}
-        />
-      </div>
+      <IconTop />
       <SoundBar />
       <TodayChart />
       <SoundBar />
       <TodayContest />
       <SoundBar />
-
       <div className={styles.team}>
         <Image src={img.team} width={1300} height={800} alt="team" />
       </div>

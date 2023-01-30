@@ -3,39 +3,9 @@
 .container {
   width: 100%;
 
-  .top {
-    width: 100%;
-
-    .mic {
-      position: absolute;
-      top: 300px;
-      right: 200px;
-      filter: drop-shadow(20px 20px 10px rgba(0, 0, 0, 0.5));
-    }
-    .noteA {
-      position: absolute;
-      top: 100px;
-      left: 470px;
-      filter: drop-shadow(10px 10px 5px rgba(0, 0, 0, 0.5));
-    }
-    .noteB {
-      position: absolute;
-      top: 300px;
-      right: 640px;
-      filter: drop-shadow(10px 10px 5px rgba(0, 0, 0, 0.5));
-    }
-    .noteC {
-      position: absolute;
-      top: 120px;
-      right: 500px;
-      filter: drop-shadow(10px 10px 5px rgba(0, 0, 0, 0.5));
-    }
-  }
-
   .team {
-    width: 100vw;
-    height: 100%;
-    margin: 50px 0 50px calc(-50vw + 50%);
+    width: 100%;
+    margin: 50px 0;
 
     img {
       width: 100%;
