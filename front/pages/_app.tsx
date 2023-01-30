@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     // 카카오 SDK 초기화
     if (!window.Kakao.isInitialized()) {
-      // window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_SDK_KEY);
+      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_SDK_KEY);
       console.log(window.Kakao.isInitialized());
     }
   }, []);

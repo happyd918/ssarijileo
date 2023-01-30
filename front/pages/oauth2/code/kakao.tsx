@@ -5,6 +5,7 @@ import Spinner from '@/components/common/Spinner';
 function kakao() {
   // 인가 코드
   const code = new URL(window.location.href).searchParams.get('code');
+  console.log(code);
 
   useEffect(() => {
     async function callbackCode() {
