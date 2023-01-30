@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.config.filter;
+package com.ssafy.ssarijileo.filter;
 
 import com.ssafy.ssarijileo.user.dto.UserDto;
 import com.ssafy.ssarijileo.user.service.TokenProvider;
