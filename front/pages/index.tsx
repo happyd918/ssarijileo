@@ -7,11 +7,11 @@ import Header from '@/components/common/Header';
 // import PerfectScore from '@/components/room/PerfectScore';
 // import SoundBar from '@/components/common/SoundBar';
 // import ErrorComp from '@/components/error/ErrorComp';
-import Main from '@/components/main/main';
+// import Main from '@/components/main/main';
 // import RoomList from '@/components/sing/RoomList';
 
-// import Sing from '@/pages/sing';
-// import Main from '@/pages/main/main';
+import Sing from '@/components/sing/sing';
+// import Main from '@/components/main/main';
 
 import styles from '@/styles/Home.module.scss';
 
@@ -30,7 +30,8 @@ function Home() {
           {/* <SoundBar /> */}
           {/* <ErrorComp /> */}
           {/* <RoomList /> */}
-          <Main />
+          <Sing />
+          {/* <Main /> */}
         </div>
         <Footer />
       </main>
