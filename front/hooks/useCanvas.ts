@@ -29,7 +29,9 @@ export const useCanvas = (
         ctx.scale(devicePixelRatio, devicePixelRatio);
       }
     };
-    setCanvas();
+    if (canvasWidth !== -1 && canvasHeight !== -1) {
+      setCanvas();
+    }
 
     const animate = (timestamp: number) => {
       if (previousTimeRef.current !== undefined) {
