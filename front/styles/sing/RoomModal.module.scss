@@ -1,0 +1,239 @@
+@import '../color.scss';
+
+@mixin lebal {
+  width: 100px;
+  height: 35px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 35px;
+  border-radius: 20px;
+  margin: 0 5px;
+  background: $white;
+}
+
+@mixin btn {
+  all: unset;
+  width: 65px;
+  height: 25px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 6px;
+}
+
+.back {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 99;
+
+  .container {
+    // 방만들기 모달창 크기
+    width: 400px;
+    height: 320px;
+    z-index: 9999;
+
+    //   방만들기 모달창 위치
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    //   방만들기 모달창 스타일
+    background-color: var(--color-background);
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    padding: 20px 40px;
+
+    display: flex;
+    flex-direction: column;
+
+    .top {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      color: var(--color-text);
+      font-weight: bold;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--color-placeHolder);
+
+      .close {
+        all: unset;
+        cursor: pointer;
+      }
+    }
+
+    .main {
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0 0 0;
+
+      .input {
+        width: 100%;
+        height: 35px;
+        border: 1px solid var(--color-placeHolder);
+        border-radius: 6px;
+        background: var(--color-background);
+        outline: none;
+        padding-left: 20px;
+      }
+      .input::placeholder {
+        font-size: 12px;
+        color: var(--color-placeHolder);
+      }
+
+      .mode {
+        display: flex;
+        flex-direction: row;
+        margin: 20px 0;
+
+        .input {
+          display: none;
+        }
+        .nomal {
+          @include lebal();
+          color: $black;
+          border: 1px solid $black;
+        }
+        .perfect {
+          @include lebal();
+          color: #5d1abc;
+          border: 1px solid #5d1abc;
+        }
+        .relay {
+          @include lebal();
+          color: #c7241a;
+          border: 1px solid #c7241a;
+        }
+        .guess {
+          @include lebal();
+          color: #1f7d34;
+          border: 1px solid #1f7d34;
+        }
+
+        .nomal:hover,
+        .nomal:checked {
+          background: $black;
+          color: $white;
+        }
+        .perfect:hover,
+        .perfect:checked {
+          background: #5d1abc;
+          color: $white;
+        }
+        .relay:hover,
+        .relay:checked {
+          background: #c7241a;
+          color: $white;
+        }
+        .guess:hover,
+        .guess:checked {
+          background: #1f7d34;
+          color: $white;
+        }
+      }
+
+      .type {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        .lock {
+          display: flex;
+          flex-direction: column;
+          .title {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 10px;
+            color: var(--color-black);
+
+            .name {
+              font-size: 14px;
+              margin: 0 10px;
+            }
+          }
+          .pwd {
+            width: 150px;
+            height: 25px;
+            border: 1px solid var(--color-placeHolder);
+            border-radius: 6px;
+            outline: none;
+            padding-left: 10px;
+            background: var(--color-background);
+          }
+          .pwd::placeholder {
+            font-size: 12px;
+            color: var(--color-placeHolder);
+          }
+        }
+        .unlock {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          color: var(--color-black);
+
+          .name {
+            font-size: 14px;
+            margin: 0 10px;
+          }
+        }
+      }
+
+      .member {
+        display: flex;
+        flex-direction: row;
+        text-align: left;
+        align-items: center;
+        margin: 20px 0;
+
+        .context {
+          font-size: 14px;
+          margin-right: 15px;
+          color: var(--color-black);
+        }
+        .select {
+          width: 70px;
+          height: 25px;
+          border: 1px solid var(--color-placeHolder);
+          border-radius: 6px;
+          font-size: 12px;
+          color: var(--color-placeHolder);
+          outline: none;
+          padding-left: 5px;
+          background: var(--color-background);
+        }
+      }
+    }
+
+    .bottom {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+
+      .createBtn {
+        @include btn();
+        border: 1px solid var(--color-hover);
+        color: var(--color-hover);
+        margin: 0 5px;
+      }
+      .closeBtn {
+        @include btn();
+        background: var(--color-btn);
+        color: $white;
+      }
+
+      .createBtn:hover {
+        background: var(--color-hover);
+        color: var(--color-background);
+      }
+      .closeBtn:hover {
+        background: var(--color-hover);
+        color: var(--color-background);
+      }
+    }
+  }
+}

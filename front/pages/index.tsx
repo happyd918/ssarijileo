@@ -8,6 +8,10 @@ import Header from '@/components/common/Header';
 // import SoundBar from '@/components/common/SoundBar';
 // import ErrorComp from '@/components/error/ErrorComp';
 import Main from '@/components/main/main';
+// import RoomList from '@/components/sing/RoomList';
+
+// import Sing from '@/pages/sing';
+// import Main from '@/pages/main/main';
 
 import styles from '@/styles/Home.module.scss';
 
@@ -25,6 +29,7 @@ function Home() {
           {/* <PerfectScore /> */}
           {/* <SoundBar /> */}
           {/* <ErrorComp /> */}
+          {/* <RoomList /> */}
           <Main />
         </div>
         <Footer />
