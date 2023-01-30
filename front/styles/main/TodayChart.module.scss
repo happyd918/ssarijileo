@@ -49,6 +49,7 @@
     //align-items: center;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20%;
     @include _768 {
       grid-template-columns: 1fr;
     }
