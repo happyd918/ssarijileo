@@ -62,13 +62,13 @@ function IconTop() {
       noteWindow[i].size -= 1;
       noteWindow[i].life -= 1;
       const img = new Image();
-      img.src = noteImages(noteWindow[i]?.specific);
+      img.src = noteImages(noteWindow[i].specific);
       ctx.drawImage(
         img,
-        noteWindow[i]?.start.x,
-        noteWindow[i]?.start.y,
-        noteWindow[i]?.size,
-        noteWindow[i]?.size,
+        noteWindow[i].start.x,
+        noteWindow[i].start.y,
+        noteWindow[i].size,
+        noteWindow[i].size,
       );
     }
   };
