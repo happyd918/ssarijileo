@@ -18,7 +18,7 @@ function Sing() {
           className={styles.topImg}
         />
         <Image
-          src="img/common/common_music_note_image.svg"
+          src="img/common/common_music_note1_image.svg"
           width={130}
           height={130}
           alt="noteA"

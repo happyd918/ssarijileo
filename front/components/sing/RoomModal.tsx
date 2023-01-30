@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import classNames from 'classnames';
 import styles from '@/styles/sing/RoomModal.module.scss';
 
 function RoomModal({ setModalOpen }: any) {
@@ -8,12 +9,55 @@ function RoomModal({ setModalOpen }: any) {
     setModalOpen(false);
   };
 
+  // 비공개방 체크값 관리
+  const [unlock, setLock] = useState(true);
+
+  const checkClass = classNames({
+    [styles.pwd]: true,
+    [styles.lockMode]: unlock,
+  });
+
   // 라디오 값 관리
   const [mode, setMode] = useState('');
-  const handleClickRadioBtn = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const eventTarget = e.target as HTMLInputElement;
-    setMode(eventTarget.value);
-  };
+
+  const arrA = ['nomal', 'perfect', 'relay', 'guess'];
+  const arrB = ['일반노래방', '퍼펙트싱어', '이어부르기', '가사 맞추기'];
+  const Mode = arrA.map((str: string, idx) => {
+    let btnClass = '';
+    if (idx == 0) {
+      btnClass = classNames({
+        [styles.nomal]: str === 'nomal',
+        [styles.nowNomal]: mode === 'nomal',
+      });
+    } else if (idx == 1) {
+      btnClass = classNames({
+        [styles.perfect]: str === 'perfect',
+        [styles.nowPerfect]: mode === 'perfect',
+      });
+    } else if (idx == 2) {
+      btnClass = classNames({
+        [styles.relay]: str === 'relay',
+        [styles.nowRelay]: mode === 'relay',
+      });
+    } else {
+      btnClass = classNames({
+        [styles.guess]: str === 'guess',
+        [styles.nowGuess]: mode === 'guess',
+      });
+    }
+
+    return (
+      <button
+        className={btnClass}
+        type="button"
+        onClick={() => {
+          setMode(str);
+        }}
+      >
+        {arrB[idx]}
+      </button>
+    );
+  });
 
   return (
     <div className={styles.back}>
@@ -36,56 +80,18 @@ function RoomModal({ setModalOpen }: any) {
             placeholder="방 제목을 입력하세요..."
             className={styles.input}
           />
-          <div className={styles.mode}>
-            <label className={styles.nomal} htmlFor="nomal">
-              <input
-                id="nomal"
-                type="radio"
-                value="nomal"
-                checked={mode === 'nomal'}
-                className={styles.input}
-                onChange={handleClickRadioBtn}
-              />
-              일반 노래방
-            </label>
-            <label className={styles.perfect} htmlFor="perfect">
-              <input
-                id="perfect"
-                type="radio"
-                value="perfect"
-                checked={mode === 'perfect'}
-                className={styles.input}
-                onChange={handleClickRadioBtn}
-              />
-              퍼펙트싱어
-            </label>
-            <label className={styles.relay} htmlFor="relay">
-              <input
-                id="relay"
-                type="radio"
-                value="relay"
-                checked={mode === 'relay'}
-                className={styles.input}
-                onChange={handleClickRadioBtn}
-              />
-              이어부르기
-            </label>
-            <label className={styles.guess} htmlFor="guess">
-              <input
-                id="guess"
-                type="radio"
-                value="guess"
-                checked={mode === 'guess'}
-                className={styles.input}
-                onChange={handleClickRadioBtn}
-              />
-              가사 맞추기
-            </label>
-          </div>
+          <div className={styles.mode}>{Mode}</div>
           <div className={styles.type}>
             <div className={styles.lock}>
               <div className={styles.title}>
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={!unlock}
+                  onChange={() => {
+                    setLock(false);
+                  }}
+                  className={styles.check}
+                />
                 <div className={styles.name}>비공개방</div>
                 <Image
                   src="img/room/room_lock_image.svg"
@@ -97,11 +103,18 @@ function RoomModal({ setModalOpen }: any) {
               <input
                 type="password"
                 placeholder="비밀번호"
-                className={styles.pwd}
+                className={checkClass}
               />
             </div>
             <div className={styles.unlock}>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                checked={unlock}
+                onChange={() => {
+                  setLock(true);
+                }}
+                className={styles.check}
+              />
               <div className={styles.name}>공개방</div>
               <Image
                 src="img/room/room_unlock_image.svg"
