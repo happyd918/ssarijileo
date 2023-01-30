@@ -18,3 +18,4 @@
 4. Kubernetes
 5. ansible (고려중)
 6. sonarQube (고려중)
+7. ~~MySQL (설치 완료)~~
