@@ -1,9 +1,9 @@
-CREATE DATABASE IF NOT EXISTS ssarijileo;
-USE ssarijileo;
+-- 추후 로깅용 테이블 하나 생성 (권장)
 
-/*
-	추후 로깅용 테이블 하나 생성 (권장)
-*/
+-- Auth DB
+
+CREATE DATABASE IF NOT EXISTS ssarijileo_auth;
+USE ssarijileo_auth;
 
 -- 사용자 테이블
 /*
@@ -12,7 +12,7 @@ USE ssarijileo;
 */
 
 CREATE TABLE IF NOT EXISTS `user` (
-	`user_id` VARCHAR(13) COMMENT 'PK',
+	`user_id` BINARY(16) COMMENT 'PK',
     `email` VARCHAR(30) NOT NULL UNIQUE COMMENT '이메일',
     `nickname` VARCHAR(30) NOT NULL UNIQUE COMMENT '닉네임',
     `token` VARCHAR(255) COMMENT '토큰',
@@ -22,20 +22,19 @@ CREATE TABLE IF NOT EXISTS `user` (
 )
 ENGINE = InnoDB;
 
+-- Business DB
+
+CREATE DATABASE IF NOT EXISTS ssarijileo;
+USE ssarijileo;
+
 -- 친구 테이블
 
 CREATE TABLE IF NOT EXISTS `friend` (
 	`friend_id` INT AUTO_INCREMENT COMMENT 'PK',
-	`sending_user_id` VARCHAR(13) NOT NULL COMMENT '보낸사람ID',
-	`receiving_user_id` VARCHAR(13) NOT NULL COMMENT '받는사람ID',
+	`sending_user_id` BINARY(16) NOT NULL COMMENT '보낸사람PK',
+	`receiving_user_id` BINARY(16) NOT NULL COMMENT '받는사람PK',
 	`status` CHAR(1) NOT NULL DEFAULT 'W' COMMENT '상태(W:대기,A:수락,X:취소)',
-	PRIMARY KEY (`friend_id`),
-	CONSTRAINT `fk_user_friend_1`
-		FOREIGN KEY (`sending_user_id`)
-		REFERENCES `user` (`user_id`) ON DELETE CASCADE,
-	CONSTRAINT `fk_user_friend_2`
-		FOREIGN KEY (`receiving_user_id`)
-		REFERENCES `user` (`user_id`) ON DELETE CASCADE
+	PRIMARY KEY (`friend_id`)
   )
   ENGINE = InnoDB;
 
@@ -64,7 +63,7 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `pitch` (
 	`pitch_id` INT AUTO_INCREMENT COMMENT 'PK',
-    `song_id` INT NOT NULL COMMENT '노래ID',
+    `song_id` INT NOT NULL COMMENT '노래PK',
     `time` DECIMAL NOT NULL COMMENT '시간',
     `note` VARCHAR(30) NOT NULL COMMENT '음표',
     PRIMARY KEY (`pitch_id`),
@@ -83,7 +82,7 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `lyrics` (
 	`lyrics_id` INT AUTO_INCREMENT COMMENT 'PK',
-	`song_id` INT NOT NULL COMMENT '노래ID',
+	`song_id` INT NOT NULL COMMENT '노래PK',
     `verse` VARCHAR(255) NOT NULL COMMENT '한소절',
     `status` CHAR(1) NOT NULL DEFAULT 'N' COMMENT '상태(N:기본,O:가사순서맞추기,H:하이라이트)',
     PRIMARY KEY (`lyrics_id`),
@@ -97,16 +96,13 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `singing` (
 	`singing_id` INT AUTO_INCREMENT COMMENT 'PK',
-    `user_id` VARCHAR(13) NOT NULL COMMENT '사용자ID',
-    `song_id` INT NOT NULL COMMENT '노래ID',
+    `user_id` BINARY(16) NOT NULL COMMENT '사용자PK',
+    `song_id` INT NOT NULL COMMENT '노래PK',
     `mode` CHAR(1) NOT NULL DEFAULT 'N' COMMENT '모드(N:일반,P:퍼펙트스코어,O:가사순서맞추기,R:이어부르기)',
     `score` INT COMMENT '점수',
     `total_singing_time` TIME NOT NULL COMMENT '총부른시간',
     `singing_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '노래일시',
     PRIMARY KEY (`singing_id`),
-    CONSTRAINT `fk_user_singing`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`user_id`) ON DELETE CASCADE,
 	CONSTRAINT `fk_song_singing`
 		FOREIGN KEY (`song_id`)
         REFERENCES `song` (`song_id`) ON DELETE CASCADE
@@ -119,15 +115,12 @@ ENGINE = InnoDB;
     짝수면 애창곡 취소
 */
 
-CREATE TABLE IF NOT EXISTS `fovorite_song` (
-	`fovorite_song_id` INT AUTO_INCREMENT COMMENT 'PK',
-	`user_id` VARCHAR(13) NOT NULL COMMENT '사용자ID',
-    `song_id` INT NOT NULL COMMENT '노래ID',
+CREATE TABLE IF NOT EXISTS `favorite_song` (
+	`favorite_song_id` INT AUTO_INCREMENT COMMENT 'PK',
+	`user_id` BINARY(16) NOT NULL COMMENT '사용자PK',
+    `song_id` INT NOT NULL COMMENT '노래PK',
     `is_like` CHAR(1) NOT NULL DEFAULT 'Y' COMMENT '좋아요여부(Y:좋아요,N:좋아요취소)',
-    PRIMARY KEY (`fovorite_song_id`),
-    CONSTRAINT `fk_user_fovorite_song`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`user_id`) ON DELETE CASCADE,
+    PRIMARY KEY (`favorite_song_id`),
 	CONSTRAINT `fk_song_favorite_song`
 		FOREIGN KEY (`song_id`)
         REFERENCES `song` (`song_id`) ON DELETE CASCADE
@@ -137,13 +130,10 @@ ENGINE = InnoDB;
 -- 노래 환경설정 테이블
 
 CREATE TABLE IF NOT EXISTS `song_setting` (
-	`song_setting_id` VARCHAR(13) COMMENT 'PK',
+	`song_setting_id` VARCHAR(13) COMMENT 'PK(사용자PK)',
     `eco` INT NOT NULL DEFAULT 50 COMMENT '에코',
     `volume` INT NOT NULL DEFAULT 50 COMMENT '음량',
-    PRIMARY KEY (`song_setting_id`),
-	CONSTRAINT `fk_user_song_setting_id`
-		FOREIGN KEY (`song_setting_id`)
-        REFERENCES `user` (`user_id`) ON DELETE CASCADE
+    PRIMARY KEY (`song_setting_id`)
 )
 ENGINE = InnoDB;
 
@@ -151,14 +141,11 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `recording` (
 	`recording_id` INT AUTO_INCREMENT COMMENT 'PK',
-	`user_id` VARCHAR(13) NOT NULL COMMENT '사용자ID',
-    `song_id` INT NOT NULL COMMENT '노래ID',
+	`user_id` BINARY(16) NOT NULL COMMENT '사용자PK',
+    `song_id` INT NOT NULL COMMENT '노래PK',
     `file` VARCHAR(255) NOT NULL COMMENT '녹화파일',
-    `register_date` DATE COMMENT '날짜',
+    `register_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '녹화일시',
     PRIMARY KEY (`recording_id`),
-    CONSTRAINT `fk_user_recording`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `user` (`user_id`) ON DELETE CASCADE,
 	CONSTRAINT `fk_song_recording`
 		FOREIGN KEY (`song_id`)
         REFERENCES `song` (`song_id`) ON DELETE CASCADE
@@ -172,8 +159,7 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `singing_contest` (
 	`singing_contest_id` INT AUTO_INCREMENT COMMENT 'PK',
-    `recording_id`  INT NOT NULL COMMENT '녹화ID',
-    `image` VARCHAR(255) NOT NULL DEFAULT "default.jpg" COMMENT '이미지',
+    `recording_id`  INT NOT NULL COMMENT '녹화PK',
 	`register_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일시',
     `status` CHAR(1) NOT NULL DEFAULT 'V' COMMENT '상태(V:노출,D:삭제,B:신고)',
     PRIMARY KEY (`singing_contest_id`),

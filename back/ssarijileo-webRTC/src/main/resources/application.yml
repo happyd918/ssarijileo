@@ -1,0 +1,13 @@
+server.port: 5000
+server.ssl.enabled: false
+
+# openvidu
+OPENVIDU_URL: http://localhost:4443/
+OPENVIDU_SECRET: ssafy
+
+# log level setting
+logging:
+  level:
+    root: info
+    com:
+      ssafy: debug
