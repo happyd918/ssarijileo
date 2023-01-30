@@ -24,13 +24,6 @@ function Top() {
     <div className={styles.container}>
       <Title />
       <TopImg />
-      <Image
-        src="img/common/common_microphone_image.svg"
-        width={350}
-        height={350}
-        alt="mic"
-        className={styles.mic}
-      />
       <canvas
         className={styles.canvas}
         ref={canvasRef}
