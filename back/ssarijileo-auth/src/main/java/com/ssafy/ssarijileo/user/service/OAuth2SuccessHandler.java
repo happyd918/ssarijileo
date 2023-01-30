@@ -37,16 +37,47 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-            throws IOException {
+        throws IOException {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
         UserDto userDto = userRequestMapper.toDto(oAuth2User);
+        User guest = new User();
         log.info("Principal에서 꺼낸 OAuth2User = {}", oAuth2User);
 
         Token tokens = new Token();
 
         // 회원 정보 받아옴
-        User user = userRepository.findByEmail(userDto.getEmail()).orElse(userDto.toUser(userDto));
+        User user = userRepository.findByEmail(userDto.getEmail()).orElse(guest);
 
+        // 최초 로그인이라면 회원가입 처리를 한다.
+        if (user.equals(guest)) {
+            log.info("회원가입 해야됨");
+            tokens = tokenProvider.generateToken(userDto.getEmail(), "ROLE_USER");
+
+            // 리프레시 토큰 캐시 저장 구문
+            /*
+
+             */
+
+            userRepository.save(user);
+        } else {
+            log.info("액세스 토큰만 발급");
+            String access = tokenProvider.generateAccess(userDto.getEmail(), "ROLE_USER");
+
+            // 리프레시 토큰만 불러올 구문
+            // tokens = tokens.builder().accessToken(access).refreshToken(user.getToken()).build();
+
+            // 토큰 생성 - 임시
+            tokens = tokenProvider.generateToken(userDto.getEmail(), "ROLE_USER");
+
+            // 프로필 이미지 바뀌었으면 업데이트
+            if (!(user.getImage().equals(userDto.getImage()))) {
+                log.info("이미지 업데이트");
+                user.updateImage(userDto.getImage());
+            }
+        }
+
+
+        /*
         // 최초 로그인이라면 회원가입 처리를 한다.
         if (user.getToken() == null) {
             log.info("회원가입 해야됨");
@@ -65,14 +96,15 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                 user.updateImage(userDto.getImage());
             }
         }
+        */
 
         log.info("{}", tokens);
 
         String targetUrl;
         targetUrl = UriComponentsBuilder.fromUriString(redirectUrl)
-                .queryParam("accessToken", tokens.getAccessToken())
-                .queryParam("refreshToken", tokens.getRefreshToken())
-                .build().toUriString();
+            .queryParam("accessToken", tokens.getAccessToken())
+            .queryParam("refreshToken", tokens.getRefreshToken())
+            .build().toUriString();
 
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
 

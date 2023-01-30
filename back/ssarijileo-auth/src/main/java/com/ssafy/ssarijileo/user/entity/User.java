@@ -32,12 +32,6 @@ public class User {
 
     private String image;
 
-    private String token;
-
-    public void updateToken(String token) {
-        this.token = token;
-    }
-
     public void updateImage(String image) {
         this.image = image;
     }
