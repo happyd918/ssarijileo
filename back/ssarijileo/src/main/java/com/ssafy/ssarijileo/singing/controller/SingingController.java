@@ -18,6 +18,10 @@ public class SingingController {
 
 	private final SingingService singingService;
 
+	/**
+	 * 사용자 노래 정보 저장
+	 * @param singingDto
+	 */
 	@ApiOperation(
 		value = "사용자 노래 정보 저장",
 		notes = "사용자가 노래 부른 정보를 저장한다."

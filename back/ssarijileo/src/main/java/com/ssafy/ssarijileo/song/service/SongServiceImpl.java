@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.ssafy.ssarijileo.exception.NotFoundException;
 import com.ssafy.ssarijileo.song.dto.SongDto;
 import com.ssafy.ssarijileo.song.entity.Song;
-import com.ssafy.ssarijileo.song.repository.SongRepository;
+import com.ssafy.ssarijileo.song.repository.SongJpaRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,15 +19,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SongServiceImpl implements SongService {
 
-	private final SongRepository songRepository;
+	private final SongJpaRepository songJpaRepository;
 
 	@Override
 	public List<SongDto> findAllSong() {
-		return songRepository.findAll().stream().map(Song::toDto).collect(Collectors.toList());
+		return songJpaRepository.findAll().stream().map(Song::toDto).collect(Collectors.toList());
 	}
 
 	@Override
 	public SongDto findSongById(Long id) {
-		return songRepository.findById(id).orElseThrow(NotFoundException::new).toDto();
+		return songJpaRepository.findById(id).orElseThrow(NotFoundException::new).toDto();
 	}
 }

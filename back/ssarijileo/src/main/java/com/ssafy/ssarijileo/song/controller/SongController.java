@@ -21,6 +21,10 @@ public class SongController {
 
 	private final SongService songService;
 
+	/**
+	 * 노래 목록 조회
+	 * @return
+	 */
 	@ApiOperation(
 		value = "노래 목록 조회",
 		notes = "노래 전체 목록을 조회한다."
@@ -30,6 +34,11 @@ public class SongController {
 		return songService.findAllSong();
 	}
 
+	/**
+	 * 노래 정보 조회
+	 * @param id
+	 * @return
+	 */
 	@ApiOperation(
 		value = "노래 정보 조회",
 		notes = "노래 ID를 통해 노래 정보를 조회한다."
@@ -39,7 +48,7 @@ public class SongController {
 		value = "노래 PK"
 	)
 	@GetMapping("{id}")
-	public SongDto findAllSong(@PathVariable Long id) {
+	public SongDto findSongById(@PathVariable Long id) {
 		return songService.findSongById(id);
 	}
 }

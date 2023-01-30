@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.ssafy.ssarijileo.singing.entity.Singing;
 
 @Repository
-public interface SingingRepository extends JpaRepository<Singing, Long> {
+public interface SingingJpaRepository extends JpaRepository<Singing, Long> {
 }

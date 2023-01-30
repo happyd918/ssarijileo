@@ -5,7 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.ssafy.ssarijileo.friend.dto.FriendDto;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,4 +31,22 @@ public class Friend {
 
 	// 상태(W:대기,A:수락,X:취소)
 	char status;
+
+	// Dto to Entity
+	@Builder
+	public Friend(FriendDto friendDto) {
+		this.friendId = friendDto.getFriendId();
+		this.sendingUserId = friendDto.getSendingUserId();
+		this.receivingUserId = friendDto.getReceivingUserId();
+		this.status = friendDto.getStatus();
+	}
+
+	// Entity to Dto
+	public FriendDto toDto() {
+		return new FriendDto(friendId, sendingUserId, receivingUserId, status);
+	}
+
+	public void updateFriend(char status) {
+		this.status = status;
+	}
 }
