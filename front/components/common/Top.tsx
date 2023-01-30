@@ -5,7 +5,6 @@ import TopImg from './TopImg';
 import { useWave } from '@/hooks/useAnimation';
 
 import styles from '@/styles/common/Top.module.scss';
-import Image from 'next/image';
 
 function Top() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
