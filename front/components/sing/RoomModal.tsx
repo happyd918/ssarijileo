@@ -44,48 +44,48 @@ function RoomModal({ setModalOpen }: any) {
             className={styles.input}
           />
           <div className={styles.mode}>
-            <input
-              id="nomal"
-              type="radio"
-              value="nomal"
-              checked={mode === 'nomal'}
-              className={styles.input}
-              onChange={handleClickRadioBtn}
-            />
             <label className={styles.nomal} htmlFor="nomal">
+              <input
+                id="nomal"
+                type="radio"
+                value="nomal"
+                checked={mode === 'nomal'}
+                className={styles.input}
+                onChange={handleClickRadioBtn}
+              />
               일반 노래방
             </label>
-            <input
-              id="perfect"
-              type="radio"
-              value="perfect"
-              checked={mode === 'perfect'}
-              className={styles.input}
-              onChange={handleClickRadioBtn}
-            />
             <label className={styles.perfect} htmlFor="perfect">
+              <input
+                id="perfect"
+                type="radio"
+                value="perfect"
+                checked={mode === 'perfect'}
+                className={styles.input}
+                onChange={handleClickRadioBtn}
+              />
               퍼펙트싱어
             </label>
-            <input
-              id="relay"
-              type="radio"
-              value="relay"
-              checked={mode === 'relay'}
-              className={styles.input}
-              onChange={handleClickRadioBtn}
-            />
             <label className={styles.relay} htmlFor="relay">
+              <input
+                id="relay"
+                type="radio"
+                value="relay"
+                checked={mode === 'relay'}
+                className={styles.input}
+                onChange={handleClickRadioBtn}
+              />
               이어부르기
             </label>
-            <input
-              id="guess"
-              type="radio"
-              value="guess"
-              checked={mode === 'guess'}
-              className={styles.input}
-              onChange={handleClickRadioBtn}
-            />
             <label className={styles.guess} htmlFor="guess">
+              <input
+                id="guess"
+                type="radio"
+                value="guess"
+                checked={mode === 'guess'}
+                className={styles.input}
+                onChange={handleClickRadioBtn}
+              />
               가사 맞추기
             </label>
           </div>
