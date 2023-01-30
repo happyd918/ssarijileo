@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 import Title from '@/components/main/Title';
 import TopImg from './TopImg';
@@ -14,9 +14,6 @@ function Top() {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-
-    const width = canvas.width;
-    const height = canvas.height;
   };
 
   useWave(() => {
