@@ -9,7 +9,7 @@ import Header from '@/components/common/Header';
 // import ErrorComp from '@/components/error/ErrorComp';
 // import RoomList from '@/components/sing/RoomList';
 
-import Sing from '@/pages/sing/sing';
+import Sing from '@/pages/sing';
 // import Main from '@/pages/main/main';
 
 import styles from '@/styles/Home.module.scss';

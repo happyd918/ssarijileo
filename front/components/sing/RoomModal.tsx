@@ -15,13 +15,6 @@ function RoomModal({ setModalOpen }: any) {
     setMode(eventTarget.value);
   };
 
-  // 인원수 select option 태그 생성하기
-  //   let maxMember = 6;
-  //   const Member = () => {
-  //     for (let i = 1; i <= maxMember; i++) {
-  //       return <option value={i}>{i}</option>;
-  //     }
-  //   };
   return (
     <div className={styles.back}>
       <div className={styles.container}>
@@ -126,7 +119,6 @@ function RoomModal({ setModalOpen }: any) {
               name="인원수"
               id="member"
             >
-              {/* {Member} */}
               <option value="인원수">인원수</option>;
               <option value="1">1</option>;<option value="2">2</option>;
               <option value="3">3</option>;<option value="4">4</option>;

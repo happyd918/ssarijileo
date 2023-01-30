@@ -21,9 +21,9 @@ function Search({ optionItem }: any) {
     setSortType(eventTarget.innerText);
   };
   const optionList = optionItem.map((item: any) => (
-    <div className={styles.optionItem} onClick={changeMode}>
+    <button type="button" className={styles.optionItem} onClick={changeMode}>
       {item.mode}
-    </div>
+    </button>
   ));
   return (
     <div className={styles.container}>
