@@ -10,6 +10,7 @@ public class UserRequestMapper {
     public UserDto toDto(OAuth2User oAuth2User) {
         var attributes = oAuth2User.getAttributes();
         log.info("oAuth2User attributes = {}", attributes);
+
         return UserDto.builder()
                 .email((String)attributes.get("email"))
                 .nickname((String)attributes.get("nickname"))

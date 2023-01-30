@@ -27,18 +27,16 @@ public class JwtAuthFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String token = ((HttpServletRequest)request).getHeader("Access");
-        log.info("filter, token = {}",token);
+        String token = ((HttpServletRequest)request).getHeader("accessToken");
+        log.info("request = {}", ((HttpServletRequest)request).getHeaderNames());
+        log.info("token = {}", token);
 
         if (token != null && tokenProvider.verifyToken(token)) {
             String email = tokenProvider.getUid(token);
             log.info("email = {}",email);
 
-            // DB연동 x
             UserDto userDto = UserDto.builder()
                     .email(email)
-                    .nickname("")
-                    .image("")
                     .build();
 
             Authentication auth = getAuthentication(userDto);

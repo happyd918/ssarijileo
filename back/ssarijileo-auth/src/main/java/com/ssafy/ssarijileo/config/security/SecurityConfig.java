@@ -26,7 +26,7 @@ public class SecurityConfig {
     private final CustomOAuth2UserService oAuth2UserService;
     private final OAuth2SuccessHandler successHandler;
     private final TokenProvider tokenProvider;
-
+    /*
     @Bean
     public WebSecurityCustomizer configure() {
         return (web) -> web.ignoring()
@@ -42,10 +42,11 @@ public class SecurityConfig {
             .and()
             .ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());    // 정적인 리소스들에 대해서 시큐리티 적용 무시.
     }
+    */
 
     /*
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // REST 방식 사용 -> csrf, 세션 무시
         http.httpBasic().disable()
                 .csrf().disable()
@@ -55,15 +56,15 @@ public class SecurityConfig {
                 .antMatchers("/token/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new JwtAuthFilter(tokenService),
+                .addFilterBefore(new JwtAuthFilter(tokenProvider),
                         UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login().loginPage("/token/expired")
                 .successHandler(successHandler)
                 .userInfoEndpoint().userService(oAuth2UserService);
 
-        http.addFilterBefore(new JwtAuthFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
+        return http.addFilterBefore(new JwtAuthFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class).build();
     }
-    */
+*/
 
     // ver2
     @Bean
@@ -71,14 +72,17 @@ public class SecurityConfig {
         // cors 설정
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
             .and()
-        // REST 방식 사용 -> csrf, 세션 무시
+        // REST 방식 사용 -> csrf, form로그인, 세션 무시
             .httpBasic().disable()
                 .csrf().disable()
+                .formLogin().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
+        // token 사용하는 페이지는 인가 허가, 외엔 모두 인가 필요
             .authorizeRequests()
             .antMatchers("/token/**").permitAll()
+            .antMatchers("/").permitAll()
             .anyRequest().authenticated()
             .and()
                 .logout().logoutSuccessUrl("/")
@@ -92,4 +96,5 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 }

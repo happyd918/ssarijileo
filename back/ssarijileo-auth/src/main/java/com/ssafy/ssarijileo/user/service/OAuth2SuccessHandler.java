@@ -33,6 +33,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final TokenProvider tokenProvider;
     private final UserRequestMapper userRequestMapper;
     private final ObjectMapper objectMapper;
+    private String redirectUrl = "http://localhost:3000";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
@@ -68,28 +69,29 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         log.info("{}", tokens);
 
         String targetUrl;
-        targetUrl = UriComponentsBuilder.fromUriString("/")
+        targetUrl = UriComponentsBuilder.fromUriString(redirectUrl)
                 .queryParam("accessToken", tokens.getAccessToken())
                 .queryParam("refreshToken", tokens.getRefreshToken())
                 .build().toUriString();
 
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
 
-       // writeTokenResponse(response, token);
+        //writeTokenResponse(response, tokens);
     }
 
-    /*
+/*
     private void writeTokenResponse(HttpServletResponse response, Token token)
             throws IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        response.addHeader("Access", token.getAccessToken());
-        response.addHeader("Refresh", token.getRefreshToken());
+        response.addHeader("accessToken", token.getAccessToken());
+        response.addHeader("refreshToken", token.getRefreshToken());
         response.setContentType("application/json;charset=UTF-8");
 
         var writer = response.getWriter();
         writer.println(objectMapper.writeValueAsString(token));
         writer.flush();
     }
-    */
+*/
+
 }
