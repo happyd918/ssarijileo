@@ -1,17 +1,11 @@
 import React from 'react';
 import Head from 'next/head';
 import { Inter } from '@next/font/google';
+
 // 컴포넌트
 import Footer from '@/components/common/Footer';
 import Header from '@/components/common/Header';
-// import PerfectScore from '@/components/room/PerfectScore';
-// import SoundBar from '@/components/common/SoundBar';
-// import ErrorComp from '@/components/error/ErrorComp';
-import Main from '@/components/main/main';
-// import RoomList from '@/components/sing/RoomList';
-
-// import Sing from '@/pages/sing';
-// import Main from '@/pages/main/main';
+import Main from '@/components/main/Main';
 
 import styles from '@/styles/Home.module.scss';
 
@@ -26,10 +20,6 @@ function Home() {
       <main className={`${styles.main} ${inter.className}`}>
         <Header />
         <div className={styles.container}>
-          {/* <PerfectScore /> */}
-          {/* <SoundBar /> */}
-          {/* <ErrorComp /> */}
-          {/* <RoomList /> */}
           <Main />
         </div>
         <Footer />

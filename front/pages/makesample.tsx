@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 
 import { PitchDetector } from 'pitchy';
-import { useAnimationFrame } from '@/hooks/useAnimation';
+import { useAnimationFrame } from '@/hooks/useAnimationFrame';
 import * as data from '@/constants/MakeSampleData';
 
 import styles from '@/styles/MakeSample.module.scss';
