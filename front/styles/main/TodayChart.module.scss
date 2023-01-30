@@ -48,6 +48,7 @@
     grid-gap: 20%;
     @include _768 {
       grid-template-columns: 1fr;
+      grid-gap: 0;
     }
 
     .list {
@@ -59,7 +60,7 @@
       .song {
         display: flex;
         flex-direction: row;
-        margin: 20px 0;
+        margin-bottom: 20px;
         justify-content: flex-start;
         padding: 10px;
         border-radius: 8px;
