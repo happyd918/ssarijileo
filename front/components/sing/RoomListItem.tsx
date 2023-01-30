@@ -65,7 +65,7 @@ function RoomListItem({ info }: RoomProps) {
             <div className={styles.lock}>
               <div className={styles.type}>{lock ? '비공개방' : '공개방'}</div>
               <Image
-                src="img/room/room_lock_image.svg"
+                src="img/room/room_private_image.svg"
                 width={18}
                 height={18}
                 alt="lock"

@@ -12,6 +12,9 @@ function LoginModal({ setModalOpen }: any) {
     window.Kakao.Auth.authorize({
       redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECTURI,
     });
+    if (process.env.NEXT_PUBLIC_LOGIN_REDIRECTURI) {
+      window.location.href = process.env.NEXT_PUBLIC_LOGIN_REDIRECTURI;
+    }
   };
   return (
     <div className={styles.back}>
