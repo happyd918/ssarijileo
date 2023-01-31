@@ -12,11 +12,11 @@
   display: flex;
   flex-direction: column;
   text-align: left;
-  z-index: 2;
 
   .top {
     display: flex;
     flex-direction: row;
+    z-index: 1;
 
     .point {
       font-family: 'Miniver', cursive;
@@ -37,20 +37,24 @@
     font-weight: bold;
     color: var(--color-text);
     font-family: 'Inter', sans-serif;
+    z-index: 1;
   }
 
   .sub {
     font-size: 16px;
     color: var(--color-placeHolder);
     margin: 20px 0;
+    z-index: 1;
   }
 
   .btn {
+    z-index: 3;
     .singBtn {
       @include btn_style;
       border: 0;
       background-color: var(--color-btn);
       color: $white;
+      cursor: pointer;
     }
     .singBtn:hover {
       border: 1px solid var(--color-hover);
@@ -63,6 +67,7 @@
       border: 1px solid var(--color-btn);
       background-color: var(--color-background);
       color: var(--color-btn);
+      z-index: 3;
     }
     .chartBtn:hover {
       border: 1px solid var(--color-hover);
