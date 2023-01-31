@@ -3,12 +3,12 @@ package com.ssafy.ssarijileo.user.dto;
 import lombok.Getter;
 
 @Getter
-public enum RedisKey {
-	REFRESH("refreshToken");
+public enum TokenKey {
+	ACCESS("accessToken"), REFRESH("refreshToken");
 
 	private String key;
 
-	RedisKey(String key) {
+	TokenKey(String key) {
 		this.key = key;
 	}
 }

@@ -1,7 +1,8 @@
 package com.ssafy.ssarijileo.user.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.ssarijileo.exception.NotFoundException;
+import com.ssafy.ssarijileo.user.dto.Role;
+import com.ssafy.ssarijileo.user.dto.TokenKey;
 import com.ssafy.ssarijileo.user.dto.Token;
 import com.ssafy.ssarijileo.user.dto.UserDto;
 import com.ssafy.ssarijileo.user.dto.UserRequestMapper;
@@ -15,14 +16,11 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.persistence.EntityManager;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,6 +31,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final TokenProvider tokenProvider;
     private final UserRequestMapper userRequestMapper;
     private final ObjectMapper objectMapper;
+    private final RedisService redisService;
     private String redirectUrl = "http://localhost:3000";
 
     @Override
@@ -41,7 +40,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
         UserDto userDto = userRequestMapper.toDto(oAuth2User);
         User guest = new User();
-        log.info("Principal에서 꺼낸 OAuth2User = {}", oAuth2User);
 
         Token tokens = new Token();
 
@@ -50,45 +48,20 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         // 최초 로그인이라면 회원가입 처리를 한다.
         if (user.equals(guest)) {
-            log.info("회원가입 해야됨");
-            tokens = tokenProvider.generateToken(userDto.getEmail(), "ROLE_USER");
+            tokens = tokenProvider.generateToken(userDto.getEmail(), Role.USER.getKey());
 
             // 리프레시 토큰 캐시 저장 구문
-            /*
+            redisService.setDataWithExpiration(TokenKey.REFRESH.getKey(),
+                tokens.getRefreshToken(), tokenProvider.getExpiration('R'));
 
-             */
-
-            userRepository.save(user);
+            userRepository.save(userDto.toUser(userDto));
         } else {
-            log.info("액세스 토큰만 발급");
-            String access = tokenProvider.generateAccess(userDto.getEmail(), "ROLE_USER");
+            String access = tokenProvider.generateAccess(userDto.getEmail(), Role.USER.getKey());
 
             // 리프레시 토큰만 불러올 구문
-            // tokens = tokens.builder().accessToken(access).refreshToken(user.getToken()).build();
-
-            // 토큰 생성 - 임시
-            tokens = tokenProvider.generateToken(userDto.getEmail(), "ROLE_USER");
-
-            // 프로필 이미지 바뀌었으면 업데이트
-            if (!(user.getImage().equals(userDto.getImage()))) {
-                log.info("이미지 업데이트");
-                user.updateImage(userDto.getImage());
-            }
-        }
-
-
-        /*
-        // 최초 로그인이라면 회원가입 처리를 한다.
-        if (user.getToken() == null) {
-            log.info("회원가입 해야됨");
-            tokens = tokenProvider.generateToken(userDto.getEmail(), "ROLE_USER");
-            user.updateToken(tokens.getRefreshToken());
-            log.info("user token = {}",user.getToken());
-            userRepository.save(user);
-        } else {
-            log.info("액세스 토큰만 발급");
-            String access = tokenProvider.generateAccess(userDto.getEmail(), "ROLE_USER");
-            tokens = tokens.builder().accessToken(access).refreshToken(user.getToken()).build();
+            tokens = tokens.builder().accessToken(access)
+                        .refreshToken(redisService.getData(TokenKey.REFRESH
+                        .getKey())).build();
 
             // 프로필 이미지 바뀌었으면 업데이트
             if (!(user.getImage().equals(userDto.getImage()))) {
@@ -96,34 +69,14 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                 user.updateImage(userDto.getImage());
             }
         }
-        */
-
-        log.info("{}", tokens);
 
         String targetUrl;
         targetUrl = UriComponentsBuilder.fromUriString(redirectUrl)
-            .queryParam("accessToken", tokens.getAccessToken())
-            .queryParam("refreshToken", tokens.getRefreshToken())
+            .queryParam(TokenKey.ACCESS.getKey(), tokens.getAccessToken())
+            .queryParam(TokenKey.REFRESH.getKey(), tokens.getRefreshToken())
             .build().toUriString();
 
+        // 프론트 페이지로 리다이렉트
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
-
-        //writeTokenResponse(response, tokens);
     }
-
-/*
-    private void writeTokenResponse(HttpServletResponse response, Token token)
-            throws IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
-        response.addHeader("accessToken", token.getAccessToken());
-        response.addHeader("refreshToken", token.getRefreshToken());
-        response.setContentType("application/json;charset=UTF-8");
-
-        var writer = response.getWriter();
-        writer.println(objectMapper.writeValueAsString(token));
-        writer.flush();
-    }
-*/
-
 }

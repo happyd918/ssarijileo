@@ -42,29 +42,6 @@ public class SecurityConfig {
     }
     */
 
-    /*
-    @Bean
-    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // REST 방식 사용 -> csrf, 세션 무시
-        http.httpBasic().disable()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/token/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .addFilterBefore(new JwtAuthFilter(tokenProvider),
-                        UsernamePasswordAuthenticationFilter.class)
-                .oauth2Login().loginPage("/token/expired")
-                .successHandler(successHandler)
-                .userInfoEndpoint().userService(oAuth2UserService);
-
-        return http.addFilterBefore(new JwtAuthFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class).build();
-    }
-*/
-
-    // ver2
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // cors 설정

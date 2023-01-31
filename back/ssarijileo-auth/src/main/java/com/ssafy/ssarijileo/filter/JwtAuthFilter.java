@@ -1,5 +1,7 @@
 package com.ssafy.ssarijileo.filter;
 
+import com.ssafy.ssarijileo.user.dto.Role;
+import com.ssafy.ssarijileo.user.dto.TokenKey;
 import com.ssafy.ssarijileo.user.dto.UserDto;
 import com.ssafy.ssarijileo.user.service.TokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -27,13 +29,10 @@ public class JwtAuthFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String token = ((HttpServletRequest)request).getHeader("accessToken");
-        log.info("request = {}", ((HttpServletRequest)request).getHeaderNames());
-        log.info("token = {}", token);
+        String token = ((HttpServletRequest)request).getHeader(TokenKey.ACCESS.getKey());
 
         if (token != null && tokenProvider.verifyToken(token)) {
             String email = tokenProvider.getUid(token);
-            log.info("email = {}",email);
 
             UserDto userDto = UserDto.builder()
                     .email(email)
@@ -48,6 +47,6 @@ public class JwtAuthFilter extends GenericFilterBean {
 
     public Authentication getAuthentication(UserDto member) {
         return new UsernamePasswordAuthenticationToken(member, "",
-                Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+                Arrays.asList(new SimpleGrantedAuthority(Role.USER.getKey())));
     }
 }

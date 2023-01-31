@@ -2,7 +2,9 @@ package com.ssafy.ssarijileo.user.controller;
 
 import java.util.Map;
 
+import com.ssafy.ssarijileo.user.dto.Role;
 import com.ssafy.ssarijileo.user.dto.Token;
+import com.ssafy.ssarijileo.user.dto.TokenKey;
 import com.ssafy.ssarijileo.user.service.TokenProvider;
 import lombok.RequiredArgsConstructor;
 
@@ -26,14 +28,14 @@ public class AuthController {
 
     @GetMapping("/token/refresh")
     public String refreshAuth(HttpServletRequest request, HttpServletResponse response) {
-        String token = request.getHeader("refreshToken");
+        String token = request.getHeader(TokenKey.REFRESH.getKey());
 
         if (token != null && tokenProvider.verifyToken(token)) {
             String email = tokenProvider.getUid(token);
-            Token newToken = tokenProvider.generateToken(email, "ROLE_USER");
+            Token newToken = tokenProvider.generateToken(email, Role.USER.getKey());
 
-            response.addHeader("accessToken", newToken.getAccessToken());
-            response.addHeader("refreshToken", newToken.getRefreshToken());
+            response.addHeader(TokenKey.ACCESS.getKey(), newToken.getAccessToken());
+            response.addHeader(TokenKey.REFRESH.getKey(), newToken.getRefreshToken());
             response.setContentType("application/json;charset=UTF-8");
 
             return "NEW TOKEN";

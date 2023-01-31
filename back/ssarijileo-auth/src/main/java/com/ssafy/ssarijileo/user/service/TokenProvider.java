@@ -1,6 +1,8 @@
 package com.ssafy.ssarijileo.user.service;
 
 import com.ssafy.ssarijileo.user.dto.Token;
+import com.ssafy.ssarijileo.user.dto.TokenKey;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -71,6 +73,14 @@ public class TokenProvider implements InitializingBean {
 
     public String getUid(String token) {
         return Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(token).getBody().getSubject();
+    }
+
+    public Long getExpiration(char state) {
+        switch(state) {
+            case 'A' : return tokenValidityInMilliseconds;
+            case 'R' : return tokenValidityInMilliseconds * 2L * 24L * 30;
+            default : throw new RuntimeException();
+        }
     }
 
     public String createToken(String uid, String role, char state) {    // state -> 'A' : Access, 'R' : Refresh
