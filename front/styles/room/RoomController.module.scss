@@ -1,0 +1,58 @@
+@import '../color';
+
+.container {
+  position: absolute;
+  width: 800px;
+  height: 400px;
+  bottom: 70px;
+  left: calc(50% - 400px);
+  border-radius: 400px 400px 0 0;
+  background-color: var(--color-background);
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.25);
+
+  .pitch {
+    position: absolute;
+    bottom: 30px;
+    left: 70px;
+    text-align: center;
+  }
+  .beat {
+    position: absolute;
+    top: 130px;
+    left: 170px;
+    text-align: center;
+  }
+  .volume {
+    position: absolute;
+    top: 60px;
+    left: 360px;
+    text-align: center;
+  }
+  .musicNote {
+    position: absolute;
+    top: 130px;
+    right: 170px;
+    text-align: center;
+  }
+  .jump {
+    position: absolute;
+    bottom: 30px;
+    right: 70px;
+    text-align: center;
+  }
+
+  .icon {
+    filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+  }
+  .context {
+    font-weight: bold;
+    color: var(--color-text);
+  }
+
+  .setting {
+    position: absolute;
+    bottom: 30px;
+    left: 370px;
+    filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+  }
+}

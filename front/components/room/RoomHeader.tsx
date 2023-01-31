@@ -11,6 +11,7 @@ function RoomHeader() {
           width={49}
           height={46}
           alt="reserv"
+          className={styles.reservIcon}
         />
         <ReservList />
       </div>
@@ -19,6 +20,7 @@ function RoomHeader() {
         width={41}
         height={38}
         alt="close"
+        className={styles.closeIcon}
       />
     </div>
   );
