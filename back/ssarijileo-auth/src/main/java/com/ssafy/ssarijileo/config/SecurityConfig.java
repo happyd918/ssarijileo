@@ -1,18 +1,16 @@
-package com.ssafy.ssarijileo.config.security;
+package com.ssafy.ssarijileo.config;
 
-import com.ssafy.ssarijileo.config.filter.JwtAuthFilter;
+import com.ssafy.ssarijileo.filter.JwtAuthFilter;
 import com.ssafy.ssarijileo.user.service.OAuth2SuccessHandler;
 import com.ssafy.ssarijileo.user.service.CustomOAuth2UserService;
 import com.ssafy.ssarijileo.user.service.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -44,29 +42,6 @@ public class SecurityConfig {
     }
     */
 
-    /*
-    @Bean
-    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // REST 방식 사용 -> csrf, 세션 무시
-        http.httpBasic().disable()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/token/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .addFilterBefore(new JwtAuthFilter(tokenProvider),
-                        UsernamePasswordAuthenticationFilter.class)
-                .oauth2Login().loginPage("/token/expired")
-                .successHandler(successHandler)
-                .userInfoEndpoint().userService(oAuth2UserService);
-
-        return http.addFilterBefore(new JwtAuthFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class).build();
-    }
-*/
-
-    // ver2
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // cors 설정
