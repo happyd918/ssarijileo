@@ -15,7 +15,6 @@ CREATE TABLE IF NOT EXISTS `user` (
 	`user_id` BINARY(16) COMMENT 'PK',
     `email` VARCHAR(30) NOT NULL UNIQUE COMMENT '이메일',
     `nickname` VARCHAR(30) NOT NULL UNIQUE COMMENT '닉네임',
-    `token` VARCHAR(255) COMMENT '토큰',
     `image` VARCHAR(255) NOT NULL DEFAULT "default.jpg" COMMENT '프로필이미지',
     `status` CHAR(1) NOT NULL DEFAULT 'A' COMMENT '상태(A:활동회원,X:탈퇴회원,B:차단회원)',
     PRIMARY KEY (`user_id`)
