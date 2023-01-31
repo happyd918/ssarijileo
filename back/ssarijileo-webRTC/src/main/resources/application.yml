@@ -1,5 +1,7 @@
-server.port: 5000
-server.ssl.enabled: false
+server:
+  port: 5000
+  ssl:
+    enabled: false
 
 # openvidu
 OPENVIDU_URL: http://localhost:4443/
