@@ -1,7 +1,8 @@
-import { useRef } from 'react';
+import { MouseEvent, useRef } from 'react';
 import NextImage from 'next/image';
-import { useCanvas } from '@/hooks/useCanvas';
 import { useClientWidthHeight } from '@/hooks/useClientWidthHeight';
+import { useCanvas } from '@/hooks/useCanvas';
+import { useAnimation } from '@/hooks/useAnimation';
 
 import Title from '@/components/main/Title';
 import TopImg from '@/components/common/TopImg';
@@ -13,6 +14,8 @@ function IconTop() {
   const clientRect = useClientWidthHeight(containerRef);
   const canvasWidth = clientRect.width;
   const canvasHeight = clientRect.height;
+  const canvasRef = useCanvas(canvasWidth, canvasHeight);
+
   const noteImages = (num: number) =>
     `img/common/common_music_note${num}_image.svg`;
   const noteWindow: {
@@ -29,16 +32,23 @@ function IconTop() {
     life: number;
   }[] = [];
 
-  const animate = (ctx: CanvasRenderingContext2D) => {
+  const animate = () => {
+    if (!canvasRef.current) return;
+    const ctx = canvasRef.current?.getContext('2d');
+    if (!ctx) return;
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
     for (let i = 0; i < noteWindow.length; i++) {
+      noteWindow[i].start.x += noteWindow[i].speed.x;
+      noteWindow[i].start.y += noteWindow[i].speed.y;
+      noteWindow[i].size -= 1;
+      noteWindow[i].life -= 1;
       if (noteWindow[i].life < 0) {
         noteWindow.splice(i, 1);
       }
     }
 
-    if (noteWindow.length < 3) {
+    if (noteWindow.length < 0) {
       const note = {
         speed: {
           x: Math.random() * -5,
@@ -57,10 +67,6 @@ function IconTop() {
     }
 
     for (let i = 0; i < noteWindow.length; i++) {
-      noteWindow[i].start.x += noteWindow[i].speed.x;
-      noteWindow[i].start.y += noteWindow[i].speed.y;
-      noteWindow[i].size -= 1;
-      noteWindow[i].life -= 1;
       const img = new Image();
       img.src = noteImages(noteWindow[i].specific);
       ctx.drawImage(
@@ -73,11 +79,37 @@ function IconTop() {
     }
   };
 
-  const canvasRef = useCanvas(canvasWidth, canvasHeight, animate, 0);
+  useAnimation(animate, 0);
+
+  const onClickParticle = (e: MouseEvent<HTMLCanvasElement>) => {
+    const rect = canvasRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    for (let i = 0; i < 3; i++) {
+      const note = {
+        speed: {
+          x: Math.random() * 4 - 2,
+          y: Math.random() * 4 - 2,
+        },
+        start: {
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top,
+        },
+        specific: Math.floor(Math.random() * 3) + 1,
+        life: Math.random() * 10 + 10,
+        size: 0,
+      };
+      note.size = note.life + 10;
+      noteWindow.push(note);
+    }
+  };
 
   return (
     <div className={styles.container} ref={containerRef}>
-      <canvas className={styles.canvas} ref={canvasRef} />
+      <canvas
+        className={styles.canvas}
+        ref={canvasRef}
+        onClick={onClickParticle}
+      />
       <NextImage
         src="img/common/common_microphone_image.svg"
         width={350}

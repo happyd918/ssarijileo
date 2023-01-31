@@ -1,13 +1,13 @@
 import React, { useRef, useEffect, useState } from 'react';
 
 import { PitchDetector } from 'pitchy';
-import { useAnimationFrame } from '@/hooks/useAnimationFrame';
-import * as data from '@/constants/MakeSampleData';
+import { useCanvas } from '@/hooks/useCanvas';
+import * as data from '@/constants/PerfectScoreData';
 
 import styles from '@/styles/MakeSample.module.scss';
+import { useAnimation } from '@/hooks/useAnimation';
 
 function MakeSample() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const dataArrayRef = useRef<Float32Array>(new Float32Array(data.BUFFER_SIZE));
   const pitchDetectorRef = useRef<PitchDetector<Float32Array>>(
     PitchDetector.forFloat32Array(data.BUFFER_SIZE),
@@ -38,87 +38,89 @@ function MakeSample() {
   };
 
   // 메인 로직
-  useAnimationFrame(
-    (deltaTime: number) => {
-      if (
-        !canvasRef.current ||
-        !dataArrayRef.current ||
-        !pitchDetectorRef.current ||
-        !analyserRef.current ||
-        !isStarted ||
-        deltaTime === undefined
-      )
-        return;
+  const canvasWidth = 100000;
+  const canvasHeight = data.CANVAS_HEIGHT;
+  const canvasRef = useCanvas(canvasWidth, canvasHeight);
+  const play = () => {
+    if (
+      !dataArrayRef.current ||
+      !pitchDetectorRef.current ||
+      !analyserRef.current ||
+      !isStarted
+    )
+      return;
+    const ctx = canvasRef.current?.getContext('2d');
+    if (!ctx) return;
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
-      // 캔버스
-      const ctx = canvasRef.current.getContext('2d');
-      if (!ctx) return;
+    // 음정 분석
+    const dataArray = dataArrayRef.current;
+    const pitchDetector = pitchDetectorRef.current;
+    const analyser = analyserRef.current;
 
-      ctx.clearRect(0, 0, data.CANVAS_WIDTH, data.CANVAS_HEIGHT);
+    analyser.getFloatTimeDomainData(dataArray);
 
-      // 음정 분석
-      const dataArray = dataArrayRef.current;
-      const pitchDetector = pitchDetectorRef.current;
-      const analyser = analyserRef.current;
+    const [pitch] = isSilentBuffer(dataArray)
+      ? [-1, -1]
+      : pitchDetector.findPitch(dataArray, analyser.context.sampleRate);
 
-      analyser.getFloatTimeDomainData(dataArray);
+    const freqToNote = (freq: number) => {
+      return Math.round(12 * (Math.log(freq / 440.0) / Math.log(2))) + 69;
+    };
+    // 음정 분석 결과를 노트윈도우에 저장
+    let note = freqToNote(pitch);
+    if (note < 40 || note > 90) note = -1;
+    const noteWindow = noteWindowRef.current;
+    noteWindow.push(note);
 
-      const [pitch] = isSilentBuffer(dataArray)
-        ? [-1, -1]
-        : pitchDetector.findPitch(dataArray, analyser.context.sampleRate);
-
-      const freqToNote = (freq: number) => {
-        return Math.round(12 * (Math.log(freq / 440.0) / Math.log(2))) + 69;
-      };
-      // 음정 분석 결과를 노트윈도우에 저장
-      let note = freqToNote(pitch);
-      if (note < 40 || note > 90) note = NaN;
-      const noteWindow = noteWindowRef.current;
-      // const flag = note === noteWindow[noteWindow.length - 1];
-      noteWindow.push(note);
-      console.log(note);
-      // 음정 출력
-      let x = 0;
-      const barWidth = 1;
-      for (let i = 0; i < noteWindow.length; i++) {
-        const barHeight = 10;
-        const y = canvasRef.current.height - noteWindow[i] * 5;
-        if (!Number.isNaN(y)) {
-          const gradient = ctx.createLinearGradient(
-            x,
-            y,
-            x + barWidth,
-            y + barHeight,
-          );
-          gradient.addColorStop(0, data.NOTE_COLOR.skyblue);
-          gradient.addColorStop(1, '#fff5f5');
-          ctx.fillStyle = gradient;
-        }
-
-        ctx.beginPath();
-        if (
-          i !== 0 &&
-          i !== noteWindow.length - 1 &&
-          noteWindow[i] !== noteWindow[i - 1] &&
-          noteWindow[i] !== noteWindow[i + 1]
-        ) {
-          ctx.roundRect(x, y, barWidth + 1, barHeight, [5, 5, 5, 5]);
-        } else if (i !== 0 && noteWindow[i] !== noteWindow[i - 1]) {
-          ctx.roundRect(x, y, barWidth + 1, barHeight, [5, 0, 0, 5]);
-        } else if (
-          i !== noteWindow.length - 1 &&
-          noteWindow[i] !== noteWindow[i + 1]
-        ) {
-          ctx.roundRect(x, y, barWidth + 1, barHeight, [0, 5, 5, 0]);
-        } else {
-          ctx.rect(x, y, barWidth + 1, barHeight);
-        }
-        ctx.fill();
-        x += barWidth;
+    // 음정 출력
+    let x = 0;
+    const barWidth = 0.5;
+    for (let i = 0; i < noteWindow.length; i++) {
+      const barHeight = 10;
+      const y = canvasHeight - noteWindow[i] * 5;
+      if (!Number.isNaN(y)) {
+        const gradient = ctx.createLinearGradient(
+          x,
+          y,
+          x + barWidth,
+          y + barHeight,
+        );
+        gradient.addColorStop(0, data.NOTE_COLOR.skyblue);
+        gradient.addColorStop(1, '#fff5f5');
+        ctx.fillStyle = gradient;
       }
-    },
-    [canvasRef, dataArrayRef, pitchDetectorRef, analyserRef, isStarted],
-  );
+
+      ctx.beginPath();
+      if (
+        i !== 0 &&
+        i !== noteWindow.length - 1 &&
+        noteWindow[i] !== noteWindow[i - 1] &&
+        noteWindow[i] !== noteWindow[i + 1]
+      ) {
+        ctx.roundRect(x, y, barWidth + 1, barHeight, [5, 5, 5, 5]);
+      } else if (i !== 0 && noteWindow[i] !== noteWindow[i - 1]) {
+        ctx.roundRect(x, y, barWidth + 1, barHeight, [5, 0, 0, 5]);
+      } else if (
+        i !== noteWindow.length - 1 &&
+        noteWindow[i] !== noteWindow[i + 1]
+      ) {
+        ctx.roundRect(x, y, barWidth + 1, barHeight, [0, 5, 5, 0]);
+      } else {
+        ctx.rect(x, y, barWidth + 1, barHeight);
+      }
+      ctx.fill();
+      x += barWidth;
+    }
+  };
+
+  useAnimation(play, 0, [
+    dataArrayRef,
+    pitchDetectorRef,
+    analyserRef,
+    isStarted,
+  ]);
 
   // analyser 세팅
   useEffect(() => {
@@ -128,7 +130,7 @@ function MakeSample() {
 
     analyser.minDecibels = data.MIN_DB;
     analyser.smoothingTimeConstant = data.SMOOTHING_TIME_CONSTANT;
-    analyser.fftSize = data.FFT_SIZE;
+    analyser.fftSize = 8192;
 
     fetch('sounds/test.mp3')
       .then(response => response.arrayBuffer())
@@ -139,6 +141,9 @@ function MakeSample() {
         source.connect(analyser);
         analyser.connect(audioCtx.destination);
         sourceRef.current = source;
+        source.onended = () => {
+          console.log(noteWindowRef.current);
+        };
         setIsReady(sourceRef.current !== undefined);
       });
   }, []);
@@ -147,7 +152,7 @@ function MakeSample() {
     <>
       <canvas
         className={styles.canvas}
-        width={data.CANVAS_WIDTH}
+        width={10000}
         height={data.CANVAS_HEIGHT}
         ref={canvasRef}
       />
