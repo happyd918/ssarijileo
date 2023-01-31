@@ -924,7 +924,7 @@ function RoomList() {
       </div>
       <div className={styles.room}>
         {postData.map(info => (
-          <RoomListItem info={info} />
+          <RoomListItem info={info} key={info.title} />
         ))}
       </div>
       <Pagination

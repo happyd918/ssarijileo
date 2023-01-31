@@ -33,3 +33,7 @@
   white-space: nowrap;
   overflow: hidden;
 }
+
+@mixin container {
+  padding: 0 10%;
+}
