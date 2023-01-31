@@ -1,8 +1,7 @@
 @import '../mixins';
 
 .footer {
-  width: 80%;
-  margin: auto;
+  padding: 0 10%;
   background-color: var(--color-background);
 
   .container {
@@ -81,7 +80,7 @@
   .about {
     display: flex;
     justify-content: space-between;
-    padding: 2rem 0;
+    padding: 1rem 0;
     font-size: small;
     @include _768 {
       display: block;
@@ -94,10 +93,11 @@
       }
 
       span {
-        margin-right: 2rem;
+        padding: 0 1rem;
         color: var(--color-text);
         opacity: 0.8;
         width: 100%;
+        text-align: center;
         @include _768 {
           @include truncate;
         }
