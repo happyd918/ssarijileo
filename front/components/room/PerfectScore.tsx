@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { PitchDetector } from 'pitchy';
 import { useCanvas } from '@/hooks/useCanvas';
+import { useAnimation } from '@/hooks/useAnimation';
 
 import * as data from '@/constants/PerfectScoreData';
 import styles from '@/styles/room/PerfectScore.module.scss';
@@ -50,7 +51,7 @@ function PerfectScore() {
 
   const canvasWidth = data.CANVAS_WIDTH;
   const canvasHeight = data.CANVAS_HEIGHT;
-  const play = (ctx: CanvasRenderingContext2D) => {
+  const play = () => {
     if (
       !dataArrayRef.current ||
       !pitchDetectorRef.current ||
@@ -58,7 +59,8 @@ function PerfectScore() {
       !isStarted
     )
       return;
-
+    const ctx = canvasRef.current?.getContext('2d');
+    if (!ctx) return;
     const backgroundImage = new Image();
     backgroundImage.src = 'img/perfectscore/backgound.jpeg';
     ctx.drawImage(backgroundImage, 0, 0, canvasWidth, canvasHeight);
@@ -189,7 +191,8 @@ function PerfectScore() {
     }
   };
 
-  const canvasRef = useCanvas(-1, -1, play, 0, [
+  const canvasRef = useCanvas(-1, -1);
+  useAnimation(play, 0, [
     dataArrayRef,
     pitchDetectorRef,
     analyserRef,
