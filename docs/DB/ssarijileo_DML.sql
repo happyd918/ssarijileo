@@ -6,15 +6,15 @@ USE ssarijileo_auth;
 
 -- 사용자 데이터
 
-INSERT INTO `user` (`user_id`, `email`, `nickname`, `token`, `status`)
-VALUE ("USER1", "sm@ssafy.com", "이수민", "token1", "A"),
-	  ("USER2", "th@gmail.com", "김태학", "token2", "A"),
-      ("USER3", "mj@naver.com", "김명준", "token3", "A"),
-      ("USER4", "sw@kakao.com", "길상욱", "token4", "A"),
-      ("USER5", "sy@ssafy.com", "김소윤", "token5", "A"),
-      ("USER6", "yj@ssafy.com", "서예지", "token6", "A"),
-      ("USER7", "ksf@ssafy.com", "김싸피", "token7", "B"),
-      ("USER8", "psf@ssafy.com", "박싸피", "token8", "X");
+INSERT INTO `user` (`user_id`, `email`, `nickname`, `status`)
+VALUE ("USER1", "sm@ssafy.com", "이수민", "A"),
+	  ("USER2", "th@gmail.com", "김태학", "A"),
+      ("USER3", "mj@naver.com", "김명준", "A"),
+      ("USER4", "sw@kakao.com", "길상욱", "A"),
+      ("USER5", "sy@ssafy.com", "김소윤", "A"),
+      ("USER6", "yj@ssafy.com", "서예지", "A"),
+      ("USER7", "ksf@ssafy.com", "김싸피", "B"),
+      ("USER8", "psf@ssafy.com", "박싸피", "X");
 
 -- Business DB
 
