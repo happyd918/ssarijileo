@@ -1,29 +1,26 @@
 package com.ssafy.ssarijileo.user.controller;
 
-import java.util.Map;
-
 import com.ssafy.ssarijileo.user.dto.Role;
 import com.ssafy.ssarijileo.user.dto.Token;
 import com.ssafy.ssarijileo.user.dto.TokenKey;
 import com.ssafy.ssarijileo.user.service.TokenProvider;
 
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/token")
-public class AuthController {
+public class TokenController {
 
     private final TokenProvider tokenProvider;
 
@@ -43,31 +40,31 @@ public class AuthController {
     /**
      *
      * @param request
-     * @param response
      * @return
      */
     @ApiOperation(
-        value = "리프레시 토큰 검증",
-        notes = "리프레시 토큰을 검증 하여 토큰 재발급"
+            value = "리프레시 토큰 검증",
+            notes = "리프레시 토큰을 검증 하여 토큰 재발급"
     )
     @GetMapping("/refresh")
-    public String refreshAuth(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<String> refreshAuth(HttpServletRequest request) {
+        HttpHeaders responseHeader = new HttpHeaders();
         String token = request.getHeader(TokenKey.REFRESH.getKey());
 
         if (token != null && tokenProvider.verifyToken(token)) {
             String email = tokenProvider.getUid(token);
             Token newToken = tokenProvider.generateToken(email, Role.USER.getKey());
 
-            response.addHeader(TokenKey.ACCESS.getKey(), newToken.getAccessToken());
-            response.addHeader(TokenKey.REFRESH.getKey(), newToken.getRefreshToken());
-            response.setContentType("application/json;charset=UTF-8");
+            responseHeader.set(TokenKey.ACCESS.getKey(), newToken.getAccessToken());
+            responseHeader.set(TokenKey.REFRESH.getKey(), newToken.getRefreshToken());
+            responseHeader.setContentType(MediaType.APPLICATION_JSON);
 
-            return "NEW TOKEN";
+            return ResponseEntity.ok()
+                    .headers(responseHeader)
+                    .body("new Token");
         }
-
         throw new RuntimeException();
     }
-
 
 
 }

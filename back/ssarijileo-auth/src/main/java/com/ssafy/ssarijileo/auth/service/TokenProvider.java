@@ -14,8 +14,10 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 
 import java.security.Key;
 import java.util.Base64;
@@ -103,5 +105,12 @@ public class TokenProvider implements InitializingBean {
             .setExpiration(new Date(now.getTime() + period))
             .signWith(key, SignatureAlgorithm.HS256)
             .compact();
+    }
+
+    public String resolveToken(String bearerToken) {
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
     }
 }
