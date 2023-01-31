@@ -110,6 +110,7 @@ function IconTop() {
         ref={canvasRef}
         onClick={onClickParticle}
       />
+      <TopImg />
       <NextImage
         src="img/common/common_microphone_image.svg"
         width={350}
@@ -118,7 +119,6 @@ function IconTop() {
         className={styles.mic}
       />
       <Title />
-      <TopImg />
     </div>
   );
 }

@@ -5,7 +5,7 @@ import Top from '@/components/common/Top';
 import SoundBar from '@/components/common/SoundBar';
 import RoomList from '@/components/sing/RoomList';
 
-function Sing() {
+function Index() {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -47,4 +47,4 @@ function Sing() {
   );
 }
 
-export default Sing;
+export default Index;
