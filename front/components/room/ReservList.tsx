@@ -31,56 +31,59 @@ function ReservList() {
   // 예약 취소 시 해당 인덱스 요소 삭제
   // 우선 예약 시 1 인덱스로 추가
   // 노래 시작 시 0 인덱스 곡 정보 요청
+  // 데이터 localStorage에 저장 ..?
   const arr = [
     {
-      title: 'OMG1',
-      singer: 'NewJeans',
+      title: 'OMG11111111111',
+      singer: 'NewJeans111111111111111',
+      name: '김태학',
     },
     {
       title: 'OMG2',
       singer: 'NewJeansssss',
+      name: '길상욱',
     },
     {
       title: 'OMG3',
       singer: 'NewJeansssss',
+      name: '김명준',
     },
     {
       title: 'OMG4',
       singer: 'NewJeansssss',
+      name: '김소윤',
     },
     {
-      title: 'OMG4',
+      title: 'OMG5',
       singer: 'NewJeansssss',
+      name: '서예지',
     },
     {
-      title: 'OMG4',
+      title: 'OMG6',
       singer: 'NewJeansssss',
+      name: '이수민',
     },
   ];
 
   //   현재 곡 제외 예약 목록만 뽑아내기
   const reserv = arr.slice(1);
-
-  const ReservItem = reserv.map(item => {
-    return (
-      <div className={styles.item}>
-        {item.title}-{item.singer}
-      </div>
-    );
-  });
+  const [reservList, setReserv] = useState(reserv);
   return (
     <div className={styles.container}>
       <div className={modalClass}>
-        {reserv.map((item, idx) => (
+        {reservList.map((item, idx) => (
           <div className={styles.modalItem}>
             <div className={styles.number}>{idx + 2}</div>
             <div className={styles.title}>{item.title}</div>
             <div className={styles.singer}>{item.singer}</div>
+            <div className={styles.name}>{item.name}</div>
             <button
               type="button"
               onClick={() => {
-                arr.splice(idx, 1);
+                reserv.splice(idx, 1);
+                setReserv(reserv);
               }}
+              className={styles.btn}
             >
               예약취소
             </button>
@@ -90,10 +93,19 @@ function ReservList() {
       <button type="button" className={styles.reservList} onClick={showModal}>
         <div className={styles.list}>
           <div className={styles.nowPlay}>
-            <div className={styles.title}>{arr[0].title}</div>-{arr[0].singer}
+            <div className={styles.out}>
+              <span className={styles.title}>{arr[0].title}</span>-
+              {arr[0].singer}
+            </div>
           </div>
           <div className={styles.out}>
-            <div className={styles.listItem}>{ReservItem}</div>
+            <div className={styles.listItem}>
+              {reservList.map(item => (
+                <div className={styles.item}>
+                  {item.title}-{item.singer}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
