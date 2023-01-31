@@ -4,10 +4,11 @@ import Footer from '@/components/common/Footer';
 import styles from '@/styles/Layout.module.scss';
 
 function Layout(props: any) {
+  const { children } = props;
   return (
     <div className={styles.main}>
       <Header />
-      {props.children}
+      {children}
       <Footer />
     </div>
   );
