@@ -80,8 +80,10 @@ function IconTop() {
   };
 
   useAnimation(animate, 0);
+
   const onClickParticle = (e: MouseEvent<HTMLCanvasElement>) => {
     const rect = canvasRef.current?.getBoundingClientRect();
+    if (!rect) return;
     for (let i = 0; i < 3; i++) {
       const note = {
         speed: {
@@ -89,8 +91,8 @@ function IconTop() {
           y: Math.random() * 4 - 2,
         },
         start: {
-          x: e.clientX - rect!.left,
-          y: e.clientY - rect!.top,
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top,
         },
         specific: Math.floor(Math.random() * 3) + 1,
         life: Math.random() * 10 + 10,

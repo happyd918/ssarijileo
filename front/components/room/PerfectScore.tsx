@@ -48,7 +48,6 @@ function PerfectScore() {
   };
 
   // 메인 로직
-
   const canvasWidth = data.CANVAS_WIDTH;
   const canvasHeight = data.CANVAS_HEIGHT;
   const canvasRef = useCanvas(canvasWidth, canvasHeight);

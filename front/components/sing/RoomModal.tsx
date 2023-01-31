@@ -24,17 +24,17 @@ function RoomModal({ setModalOpen }: any) {
   const arrB = ['일반노래방', '퍼펙트싱어', '이어부르기', '가사 맞추기'];
   const Mode = arrA.map((str: string, idx) => {
     let btnClass = '';
-    if (idx == 0) {
+    if (idx === 0) {
       btnClass = classNames({
         [styles.nomal]: str === 'nomal',
         [styles.nowNomal]: mode === 'nomal',
       });
-    } else if (idx == 1) {
+    } else if (idx === 1) {
       btnClass = classNames({
         [styles.perfect]: str === 'perfect',
         [styles.nowPerfect]: mode === 'perfect',
       });
-    } else if (idx == 2) {
+    } else if (idx === 2) {
       btnClass = classNames({
         [styles.relay]: str === 'relay',
         [styles.nowRelay]: mode === 'relay',
