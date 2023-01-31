@@ -5,6 +5,7 @@ import { useCanvas } from '@/hooks/useCanvas';
 import * as data from '@/constants/PerfectScoreData';
 
 import styles from '@/styles/MakeSample.module.scss';
+import { useAnimation } from '@/hooks/useAnimation';
 
 function MakeSample() {
   const dataArrayRef = useRef<Float32Array>(new Float32Array(data.BUFFER_SIZE));
@@ -37,9 +38,9 @@ function MakeSample() {
   };
 
   // 메인 로직
-  const canvasWidth = data.CANVAS_WIDTH;
+  const canvasWidth = 100000;
   const canvasHeight = data.CANVAS_HEIGHT;
-  const play = (ctx: CanvasRenderingContext2D) => {
+  const play = () => {
     if (
       !dataArrayRef.current ||
       !pitchDetectorRef.current ||
@@ -47,7 +48,8 @@ function MakeSample() {
       !isStarted
     )
       return;
-
+    const ctx = canvasRef.current?.getContext('2d');
+    if (!ctx) return;
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
@@ -71,13 +73,14 @@ function MakeSample() {
     const noteWindow = noteWindowRef.current;
     const flag = note === noteWindow[noteWindow.length - 1];
     noteWindow.push(note);
-    if (noteWindow.length > data.NOTE_WINDOW_SIZE * data.DISPLAY_PERCENTAGE) {
-      noteWindow.shift();
-    }
+    // if (noteWindow.length > data.NOTE_WINDOW_SIZE * data.DISPLAY_PERCENTAGE) {
+    //   noteWindow.shift();
+    // }
 
     // 음정 출력
     let x = 0;
-    const barWidth = canvasWidth / data.NOTE_WINDOW_SIZE;
+    // const barWidth = canvasWidth / data.NOTE_WINDOW_SIZE;
+    const barWidth = 0.5;
     for (let i = 0; i < noteWindow.length; i++) {
       const barHeight = 10;
       const y = canvasHeight - noteWindow[i] * 5;
@@ -85,7 +88,7 @@ function MakeSample() {
         const gradient = ctx.createLinearGradient(
           x,
           y,
-          x + barWidth + 1,
+          x + barWidth,
           y + barHeight,
         );
         gradient.addColorStop(0, data.NOTE_COLOR.skyblue);
@@ -116,7 +119,8 @@ function MakeSample() {
     }
   };
 
-  const canvasRef = useCanvas(-1, -1, play, 0, [
+  const canvasRef = useCanvas(-1, -1);
+  useAnimation(play, 0, [
     dataArrayRef,
     pitchDetectorRef,
     analyserRef,
@@ -142,6 +146,9 @@ function MakeSample() {
         source.connect(analyser);
         analyser.connect(audioCtx.destination);
         sourceRef.current = source;
+        source.onended = () => {
+          console.log(noteWindowRef.current);
+        };
         setIsReady(sourceRef.current !== undefined);
       });
   }, []);
@@ -150,7 +157,7 @@ function MakeSample() {
     <>
       <canvas
         className={styles.canvas}
-        width={data.CANVAS_WIDTH}
+        width={10000}
         height={data.CANVAS_HEIGHT}
         ref={canvasRef}
       />

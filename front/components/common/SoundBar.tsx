@@ -1,5 +1,6 @@
 import * as data from '@/constants/SoundBarData';
 import { useCanvas } from '@/hooks/useCanvas';
+import { useAnimation } from '@/hooks/useAnimation';
 
 import styles from '@/styles/common/SoundBar.module.scss';
 
@@ -15,7 +16,9 @@ function SoundBar() {
   const canvasWidth = data.WIDTH;
   const canvasHeight = data.HEIGHT;
 
-  const draw = (ctx: CanvasRenderingContext2D) => {
+  const draw = () => {
+    const ctx = canvasRef.current?.getContext('2d');
+    if (!ctx) return;
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     const barWidth = canvasWidth / data.BAR_NUM;
     const barHeight = canvasHeight / data.NOTE_HEIGHT;
@@ -64,7 +67,8 @@ function SoundBar() {
       }
     }
   };
-  const canvasRef = useCanvas(-1, -1, draw, 50, [noteTable]);
+  const canvasRef = useCanvas(-1, -1);
+  useAnimation(draw, 50);
 
   return (
     <canvas
