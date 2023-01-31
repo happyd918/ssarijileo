@@ -1,8 +1,15 @@
 // Path: front/pages/room.tsx
-import PerfectScore from '@/components/room/PerfectScore';
+import styles from '@/styles/Room.module.scss';
+// import PerfectScore from '@/components/room/PerfectScore';
+import RoomHeader from '@/components/room/RoomHeader';
 
-function room() {
-  return <PerfectScore />;
+function Room() {
+  return (
+    <div className={styles.container}>
+      <RoomHeader />
+      {/* <PerfectScore /> */}
+    </div>
+  );
 }
 
-export default room;
+export default Room;

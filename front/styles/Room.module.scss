@@ -1,0 +1,12 @@
+@import 'color';
+
+.container {
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(
+    296.82deg,
+    var(--color-roomA) 0%,
+    var(--color-roomB) 50%,
+    var(--color-roomC) 100%
+  );
+}

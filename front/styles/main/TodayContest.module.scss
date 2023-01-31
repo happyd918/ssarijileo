@@ -8,7 +8,6 @@
 
 .container {
   margin: 50px 0;
-  padding : 0 10%;
 
   .contestTitle {
     display: flex;
@@ -115,14 +114,13 @@
           grid-gap: 10px;
         }
 
-
         .simpleItem {
           border-radius: 10px;
           transition: all 1s;
           background: var(--color-today-contest);
-          display : flex;
-          flex-direction : column;
-          padding : 2rem 0;
+          display: flex;
+          flex-direction: column;
+          padding: 2rem 0;
 
           .medal {
             border-radius: 20px 0 0 20px;
@@ -136,9 +134,9 @@
 
         .simpleItem:hover {
           background: linear-gradient(
-                          var(--color-linearA),
-                          var(--color-linearB),
-                          var(--color-linearC)
+            var(--color-linearA),
+            var(--color-linearB),
+            var(--color-linearC)
           );
         }
       }
