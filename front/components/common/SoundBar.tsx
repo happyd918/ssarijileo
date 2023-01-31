@@ -15,6 +15,7 @@ function SoundBar() {
   const DOWN_FLAG = new Array(data.BAR_NUM).fill(false);
   const canvasWidth = data.WIDTH;
   const canvasHeight = data.HEIGHT;
+  const canvasRef = useCanvas(-1, -1);
 
   const draw = () => {
     const ctx = canvasRef.current?.getContext('2d');
@@ -67,7 +68,6 @@ function SoundBar() {
       }
     }
   };
-  const canvasRef = useCanvas(-1, -1);
   useAnimation(draw, 50);
 
   return (

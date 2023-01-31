@@ -1,4 +1,4 @@
-import { MouseEvent, useRef, useState } from 'react';
+import { MouseEvent, useRef } from 'react';
 import NextImage from 'next/image';
 import { useClientWidthHeight } from '@/hooks/useClientWidthHeight';
 import { useCanvas } from '@/hooks/useCanvas';
@@ -14,6 +14,8 @@ function IconTop() {
   const clientRect = useClientWidthHeight(containerRef);
   const canvasWidth = clientRect.width;
   const canvasHeight = clientRect.height;
+  const canvasRef = useCanvas(canvasWidth, canvasHeight);
+
   const noteImages = (num: number) =>
     `img/common/common_music_note${num}_image.svg`;
   const noteWindow: {
@@ -31,6 +33,7 @@ function IconTop() {
   }[] = [];
 
   const animate = () => {
+    if (!canvasRef.current) return;
     const ctx = canvasRef.current?.getContext('2d');
     if (!ctx) return;
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -76,7 +79,6 @@ function IconTop() {
     }
   };
 
-  const canvasRef = useCanvas(canvasWidth, canvasHeight);
   useAnimation(animate, 0);
   const onClickParticle = (e: MouseEvent<HTMLCanvasElement>) => {
     const rect = canvasRef.current?.getBoundingClientRect();

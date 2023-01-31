@@ -40,6 +40,7 @@ function MakeSample() {
   // 메인 로직
   const canvasWidth = 100000;
   const canvasHeight = data.CANVAS_HEIGHT;
+  const canvasRef = useCanvas(canvasWidth, canvasHeight);
   const play = () => {
     if (
       !dataArrayRef.current ||
@@ -71,15 +72,10 @@ function MakeSample() {
     let note = freqToNote(pitch);
     if (note < 40 || note > 90) note = -1;
     const noteWindow = noteWindowRef.current;
-    const flag = note === noteWindow[noteWindow.length - 1];
     noteWindow.push(note);
-    // if (noteWindow.length > data.NOTE_WINDOW_SIZE * data.DISPLAY_PERCENTAGE) {
-    //   noteWindow.shift();
-    // }
 
     // 음정 출력
     let x = 0;
-    // const barWidth = canvasWidth / data.NOTE_WINDOW_SIZE;
     const barWidth = 0.5;
     for (let i = 0; i < noteWindow.length; i++) {
       const barHeight = 10;
@@ -119,7 +115,6 @@ function MakeSample() {
     }
   };
 
-  const canvasRef = useCanvas(-1, -1);
   useAnimation(play, 0, [
     dataArrayRef,
     pitchDetectorRef,

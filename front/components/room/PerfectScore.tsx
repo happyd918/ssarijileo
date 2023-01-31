@@ -51,6 +51,7 @@ function PerfectScore() {
 
   const canvasWidth = data.CANVAS_WIDTH;
   const canvasHeight = data.CANVAS_HEIGHT;
+  const canvasRef = useCanvas(canvasWidth, canvasHeight);
   const play = () => {
     if (
       !dataArrayRef.current ||
@@ -191,7 +192,6 @@ function PerfectScore() {
     }
   };
 
-  const canvasRef = useCanvas(-1, -1);
   useAnimation(play, 0, [
     dataArrayRef,
     pitchDetectorRef,
