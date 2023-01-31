@@ -1,0 +1,105 @@
+@import '../color';
+@import '../mixins';
+
+.container {
+  width: 700px;
+  height: 35px;
+  background: var(--color-linearB);
+  margin: 0 20px;
+  border-radius: 10px;
+  position: relative;
+  line-height: 35px;
+  padding: 0 20px;
+
+  .modal {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    padding: 10px 20px;
+    width: 700px;
+    height: 200px;
+    color: var(--color-text);
+    font-size: 14px;
+    background: var(--color-background);
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.25);
+
+    .modalItem {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+  .modalOpen {
+    display: block;
+  }
+
+  .reservList {
+    all: unset;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .list {
+      display: flex;
+      flex-direction: row;
+
+      .nowPlay {
+        width: 180px;
+        margin-right: 20px;
+        font-weight: bold;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        color: var(--color-black);
+        @include truncate;
+
+        .title {
+          color: var(--color-ssari);
+        }
+      }
+
+      .out {
+        width: 460px;
+        @include truncate;
+
+        .listItem {
+          width: 460px;
+          display: grid;
+          display: flex;
+          flex-direction: row;
+          animation: textLoop 30s linear infinite;
+
+          .item {
+            width: 130px;
+            margin: 0 15px;
+            font-size: 14px;
+            color: $dark;
+          }
+        }
+      }
+    }
+    .toggleIcon {
+      padding-top: 5px;
+      width: 5%;
+      margin: 0 20px;
+    }
+  }
+}
+
+@keyframes textLoop {
+  0% {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  5% {
+    overflow: visible;
+    text-overflow: unset;
+  }
+  100% {
+    transform: translateX(-100%);
+    overflow: visible;
+    text-overflow: unset;
+  }
+}

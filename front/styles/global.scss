@@ -5,6 +5,7 @@ body[data-theme='light'] {
   --color-text: #{$dark};
   --color-btn: #{$dark};
   --color-hover: #{$main};
+  --color-ssari: #{$main};
   --color-black: #{$black};
   --color-white: #{$white};
   --color-line: #{$line};
@@ -13,6 +14,9 @@ body[data-theme='light'] {
   --color-linearA: rgba(25, 155, 223, 0.21);
   --color-linearB: rgba(187, 135, 229, 0.21);
   --color-linearC: rgba(246, 138, 221, 0.08);
+  --color-roomC: rgb(94, 194, 234);
+  --color-roomB: rgb(169, 134, 232);
+  --color-roomA: rgb(247, 138, 221);
   --color-today-contest: rgba(122, 122, 122, 0.3);
 }
 
@@ -21,6 +25,7 @@ body[data-theme='dark'] {
   --color-text: #{$white};
   --color-btn: #{$main};
   --color-hover: #{$white};
+  --color-ssari: #{$black};
   --color-black: #{$white};
   --color-white: #{$black};
   --color-line: #{$white};
@@ -29,6 +34,9 @@ body[data-theme='dark'] {
   --color-linearA: rgba(104, 225, 147, 0.5);
   --color-linearB: rgba(56, 205, 200, 0.5);
   --color-linearC: rgba(31, 92, 125, 0.5);
+  --color-roomC: rgb(107, 225, 145);
+  --color-roomB: rgb(57, 206, 200);
+  --color-roomA: rgb(31, 92, 125);
   --color-today-contest: rgba(191, 191, 191, 0.5);
 }
 
