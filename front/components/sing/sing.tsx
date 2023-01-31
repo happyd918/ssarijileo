@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from '@/styles/Sing.module.scss';
+import styles from '@/styles/sing/Sing.module.scss';
 
 import Top from '@/components/common/Top';
 import SoundBar from '@/components/common/SoundBar';
