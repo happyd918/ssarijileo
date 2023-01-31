@@ -9,4 +9,8 @@
     var(--color-roomB) 50%,
     var(--color-roomC) 100%
   );
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

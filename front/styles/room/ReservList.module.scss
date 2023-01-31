@@ -16,20 +16,69 @@
     position: absolute;
     top: 50px;
     left: 0;
-    padding: 10px 20px;
-    width: 700px;
-    height: 200px;
+    width: 740px;
+    max-height: 200px;
     color: var(--color-text);
     font-size: 14px;
     background: var(--color-background);
     border-radius: 10px;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.25);
+    overflow-y: scroll;
 
     .modalItem {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+      text-align: center;
+      margin: 10px 20px;
+      padding: 10px 20px;
+      border-radius: 10px;
+
+      .number {
+        width: 50px;
+        color: var(--color-text);
+        font-size: 20px;
+      }
+      .title {
+        width: 200px;
+        @include truncate;
+      }
+      .singer {
+        width: 200px;
+        @include truncate;
+      }
+      .name {
+        width: 100px;
+      }
+      .btn {
+        width: 100px;
+        height: 30px;
+        background: var(--color-btn);
+        border: 0px;
+        border-radius: 8px;
+        color: $white;
+        font-weight: bold;
+        cursor: pointer;
+      }
     }
+    .modalItem:hover {
+      background-color: var(--color-linearB);
+    }
+  }
+  .modal::-webkit-scrollbar {
+    width: 8px; /* 스크롤바의 너비 */
+  }
+
+  .modal::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: var(--color-roomB); /* 스크롤바의 색상 */
+    border-radius: 10px;
+  }
+
+  .modal::-webkit-scrollbar-track {
+    margin: 10px;
+    background: var(--color-linearB); /*스크롤바 뒷 배경 색상*/
+    border-radius: 10px;
   }
   .modalOpen {
     display: block;
@@ -40,6 +89,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    cursor: pointer;
 
     .list {
       display: flex;
@@ -55,8 +105,16 @@
         color: var(--color-black);
         @include truncate;
 
-        .title {
-          color: var(--color-ssari);
+        .out {
+          @include truncate;
+          cursor: pointer;
+
+          .title {
+            color: var(--color-ssari);
+          }
+        }
+        .out:hover {
+          animation: textLoop 10s linear infinite;
         }
       }
 
