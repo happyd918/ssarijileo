@@ -1,19 +1,21 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 
-export const useWave = (
+export const useAnimation = (
   callback: () => void,
+  delay: number,
   deps?: React.DependencyList | undefined,
 ) => {
   const requestRef = useRef<number>();
-  let start = 0;
+  const previousTimeRef = useRef<number>(0);
 
   const animate = useCallback(
     (timestamp: number) => {
-      if (!start) start = timestamp;
-      const progress = timestamp - start;
-      if (progress > 50) {
-        callback();
-        start = timestamp;
+      if (previousTimeRef.current !== undefined) {
+        const progress = timestamp - previousTimeRef.current;
+        if (progress > delay) {
+          callback();
+          previousTimeRef.current = timestamp;
+        }
       }
       requestRef.current = requestAnimationFrame(animate);
     },

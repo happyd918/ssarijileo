@@ -3,13 +3,9 @@ import React, { useRef, useEffect } from 'react';
 export const useCanvas = (
   canvasWidth: number,
   canvasHeight: number,
-  callback: (ctx: CanvasRenderingContext2D) => void,
-  delay: number,
   deps?: React.DependencyList | undefined,
 ) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const requestRef = useRef<number>();
-  const previousTimeRef = useRef<number>(0);
   const depsArray = deps || [];
 
   useEffect(() => {
@@ -29,26 +25,10 @@ export const useCanvas = (
         ctx.scale(devicePixelRatio, devicePixelRatio);
       }
     };
-    setCanvas();
-
-    const animate = (timestamp: number) => {
-      if (previousTimeRef.current !== undefined) {
-        const progress = timestamp - previousTimeRef.current;
-        if (ctx && progress > delay) {
-          callback(ctx);
-          previousTimeRef.current = timestamp;
-        }
-      }
-      requestRef.current = requestAnimationFrame(animate);
-    };
-    animate(0);
-
-    return () => {
-      if (requestRef.current !== undefined) {
-        cancelAnimationFrame(requestRef.current);
-      }
-    };
-  }, [canvasWidth, canvasHeight, callback, ...depsArray]);
+    if (canvasWidth !== -1 && canvasHeight !== -1) {
+      setCanvas();
+    }
+  }, [canvasWidth, canvasHeight, ...depsArray]);
 
   return canvasRef;
 };

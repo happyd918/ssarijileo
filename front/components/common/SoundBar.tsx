@@ -1,28 +1,30 @@
-import React, { useEffect, useRef, useState } from 'react';
-
 import * as data from '@/constants/SoundBarData';
+import { useCanvas } from '@/hooks/useCanvas';
+import { useAnimation } from '@/hooks/useAnimation';
 
 import styles from '@/styles/common/SoundBar.module.scss';
-import { useWave } from '@/hooks/useWave';
 
 function SoundBar() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const noteTableRef = useRef<number[]>([]);
-  const [noteTable, setNoteTable] = useState<number[]>([]);
+  const noteTable = new Array(data.BAR_NUM);
+  for (let i = 0; i < data.BAR_NUM; i++) {
+    noteTable[i] = Math.ceil(Math.random() * data.NOTE_HEIGHT);
+    if (i !== 0 && noteTable[i] === noteTable[i - 1]) {
+      noteTable[i] = (noteTable[i] + data.NOTE_HEIGHT / 2) % data.NOTE_HEIGHT;
+    }
+  }
   const DOWN_FLAG = new Array(data.BAR_NUM).fill(false);
+  const canvasWidth = data.WIDTH;
+  const canvasHeight = data.HEIGHT;
+  const canvasRef = useCanvas(-1, -1);
 
   const draw = () => {
-    if (!canvasRef.current) return;
-    const ctx = canvasRef.current.getContext('2d');
+    const ctx = canvasRef.current?.getContext('2d');
     if (!ctx) return;
-
-    const width = data.WIDTH;
-    const height = data.HEIGHT;
-    ctx.clearRect(0, 0, width, height);
-    const barWidth = (width - 5) / data.BAR_NUM;
-    const barHeight = height / data.NOTE_HEIGHT;
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    const barWidth = canvasWidth / data.BAR_NUM;
+    const barHeight = canvasHeight / data.NOTE_HEIGHT;
     let x = 5;
-    let y = height;
+    let y = canvasHeight;
 
     for (let i = 0; i < data.BAR_NUM; i++) {
       for (let j = 0; j <= noteTable[i] + 1; j++) {
@@ -53,7 +55,7 @@ function SoundBar() {
         y -= barHeight;
       }
       x += barWidth;
-      y = height;
+      y = canvasHeight;
       noteTable[i] = DOWN_FLAG[i]
         ? noteTable[i] + ((i % 3) + 1)
         : noteTable[i] - ((i % 3) + 1);
@@ -66,33 +68,15 @@ function SoundBar() {
       }
     }
   };
-  useWave(() => {
-    draw();
-  }, [noteTable]);
-
-  useEffect(() => {
-    for (let i = 0; i < data.NOTE_NUM.length; i++) {
-      noteTableRef.current[i] = Math.ceil(Math.random() * data.NOTE_HEIGHT);
-      if (i !== 0 && noteTableRef.current[i] === noteTableRef.current[i - 1]) {
-        noteTableRef.current[i] =
-          (noteTableRef.current[i] + data.NOTE_HEIGHT / 2) % data.NOTE_HEIGHT;
-      }
-    }
-    noteTableRef.current = data.NOTE_NUM.map(() =>
-      Math.ceil(Math.random() * data.NOTE_HEIGHT),
-    );
-    setNoteTable(noteTableRef.current);
-  }, []);
+  useAnimation(draw, 50);
 
   return (
-    <div className={styles.soundBar}>
-      <canvas
-        width={data.WIDTH}
-        height={data.HEIGHT}
-        ref={canvasRef}
-        className={styles.canvas}
-      />
-    </div>
+    <canvas
+      width={data.WIDTH}
+      height={data.HEIGHT}
+      ref={canvasRef}
+      className={styles.canvas}
+    />
   );
 }
 
