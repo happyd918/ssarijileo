@@ -26,8 +26,12 @@ public class FriendController {
 
 	private final FriendService friendService;
 
+	/**
+	 * 친구 전체 목록 조회
+	 * @return
+	 */
 	@ApiOperation(
-		value = "친구 목록 조회",
+		value = "친구 전체 목록 조회",
 		notes = "친구 전체 목록을 조회한다."
 	)
 	@GetMapping
@@ -35,12 +39,28 @@ public class FriendController {
 		return friendService.findAllFriend();
 	}
 
-	// @GetMapping("{userId}")
-	// public List<MyFriendDto> findFriendByUserId(@PathVariable  String userId) {
-	// 	System.out.println("in controller : "+userId);
-	// 	return friendService.findFriendByUserId(userId);
-	// }
+	/**
+	 * 내 친구 목록 조회
+	 * @param userId
+	 * @return
+	 */
+	@ApiOperation(
+		value = "내 친구 목록 조회",
+		notes = "사용자 ID를 통해 해당 사용자의 친구 목록을 조회한다."
+	)
+	@ApiImplicitParam(
+		name = "userId",
+		value = "사용자 PK"
+	)
+	@GetMapping("/my/{userId}")
+	public List<MyFriendDto> findFriendByUserId(@PathVariable  String userId) {
+		return friendService.findFriendByUserId(userId);
+	}
 
+	/**
+	 * 친구 요청
+	 * @param friendDto
+	 */
 	@ApiOperation(
 		value = "친구 요청",
 		notes = "다른 사용자에게 친구를 요청한다."
@@ -50,6 +70,10 @@ public class FriendController {
 		friendService.insertFriend(friendDto);
 	}
 
+	/**
+	 * 친구 수락 및 취소
+	 * @param friendUpdateDto
+	 */
 	@ApiOperation(
 		value = "친구 수락 및 취소",
 		notes = "친구 요청을 수락하거나 취소한다."

@@ -32,7 +32,6 @@ public class FriendServiceImpl implements FriendService{
 
 	@Override
 	public List<MyFriendDto> findFriendByUserId(String userId) {
-		System.out.println("in service : "+userId);
 		return friendRepository.findFriendByUserId(userId).orElseThrow(NotFoundException::new);
 	}
 

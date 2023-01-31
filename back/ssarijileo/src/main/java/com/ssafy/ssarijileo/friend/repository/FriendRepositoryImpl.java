@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.StringPath;
+import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.ssarijileo.friend.dto.MyFriendDto;
 import com.ssafy.ssarijileo.friend.entity.QFriend;
@@ -23,46 +23,38 @@ public class FriendRepositoryImpl implements FriendRepository{
 
 	@Override
 	public Optional<List<MyFriendDto>> findFriendByUserId(String userId) {
-		System.out.println("in repo : "+convertStringToBinary(userId));
-		userId = convertStringToBinary(userId);
 		List<MyFriendDto> friendList = jpaQueryFactory
 			.select(Projections.fields(MyFriendDto.class,
 				friend.friendId,
-				getUserId(userId).as("userId"),
+				/*
+					friend.sendingUserId
+					.when(userId).then(friend.receivingUserId)
+					.otherwise(friend.sendingUserId)
+					.as("userId"),
+				 */
+				new CaseBuilder()
+					.when(friend.sendingUserId.contains(userId)).then(friend.receivingUserId)
+					.otherwise(friend.sendingUserId)
+					.as("userId"),
 				friend.status))
 			.from(friend)
 			.where(
 				friend.status.ne('X')
 					.and(
+						/*
 						(friend.sendingUserId.eq(userId)
 							.and(friend.status.eq('A')))
 							.or(friend.receivingUserId.eq(userId))
+						 */
+						(friend.sendingUserId.contains(userId)
+							.and(friend.status.eq('A')))
+							.or(friend.receivingUserId.contains(userId))
 					)
 			)
 			.orderBy(friend.status.desc())
 			.fetch();
 		if(friendList == null) return Optional.empty();
 		return Optional.ofNullable(friendList);
-
-	}
-
-	private StringPath getUserId(String userId){
-		if(friend.sendingUserId.equals(userId)) return friend.receivingUserId;
-		return friend.sendingUserId;
-	}
-
-	private static String convertStringToBinary(String input) {
-
-		StringBuilder result = new StringBuilder();
-		char[] chars = input.toCharArray();
-		for (char aChar : chars) {
-			result.append(
-				String.format("%16s", Integer.toBinaryString(aChar))   // char -> int, auto-cast
-					.replaceAll(" ", "0")                         // zero pads
-			);
-		}
-		return result.toString();
-
 	}
 
 	// 종목 필터링(복수) 검색
