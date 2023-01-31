@@ -25,23 +25,21 @@ function SwiperTop() {
   });
 
   return (
-    <>
-      <Swiper
-        spaceBetween={50}
-        slidesPerView={1}
-        loop={true}
-        autoplay={{
-          delay: 3000,
-          disableOnInteraction: false,
-        }}
-        modules={[Autoplay]}
-        // onSlideChange={() => console.log('slide change')}
-        // onSwiper={swiper => console.log(swiper)}
-        className={styles.swiper}
-      >
-        {swiperSlide}
-      </Swiper>
-    </>
+    <Swiper
+      spaceBetween={50}
+      slidesPerView={1}
+      loop
+      autoplay={{
+        delay: 3000,
+        disableOnInteraction: false,
+      }}
+      modules={[Autoplay]}
+      // onSlideChange={() => console.log('slide change')}
+      // onSwiper={swiper => console.log(swiper)}
+      className={styles.swiper}
+    >
+      {swiperSlide}
+    </Swiper>
   );
 }
 
