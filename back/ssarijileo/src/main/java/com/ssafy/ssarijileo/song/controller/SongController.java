@@ -22,11 +22,11 @@ public class SongController {
 	private final SongService songService;
 
 	/**
-	 * 노래 목록 조회
+	 * 노래 전체 목록 조회
 	 * @return
 	 */
 	@ApiOperation(
-		value = "노래 목록 조회",
+		value = "노래 전체 목록 조회",
 		notes = "노래 전체 목록을 조회한다."
 	)
 	@GetMapping

@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class RecordingServiceImpl implements RecordingService{
+public class RecordingServiceImpl implements RecordingService {
 
 	private final RecordingJpaRepository recordingJpaRepository;
 	private final SongJpaRepository songJpaRepository;
@@ -29,6 +29,15 @@ public class RecordingServiceImpl implements RecordingService{
 	@Override
 	public RecordingDto findRecordingById(Long id) {
 		return recordingJpaRepository.findById(id).orElseThrow(NotFoundException::new).toDto();
+	}
+
+	@Override
+	public List<RecordingDto> findRecordingByUserId(String userId) {
+		return recordingJpaRepository.findRecordingByUserId(userId)
+			.orElseThrow(NotFoundException::new)
+			.stream()
+			.map(Recording::toDto)
+			.collect(Collectors.toList());
 	}
 
 	@Override

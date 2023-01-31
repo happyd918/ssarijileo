@@ -10,5 +10,7 @@ public interface RecordingService {
 
 	RecordingDto findRecordingById(Long id);
 
+	List<RecordingDto> findRecordingByUserId(String userId);
+
 	void insertRecording(RecordingDto recordingDto);
 }
