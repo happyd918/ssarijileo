@@ -1,7 +1,6 @@
-package com.ssafy.ssarijileo.user.service;
+package com.ssafy.ssarijileo.auth.service;
 
-import com.ssafy.ssarijileo.user.dto.Token;
-import com.ssafy.ssarijileo.user.dto.TokenKey;
+import com.ssafy.ssarijileo.auth.dto.Token;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -12,15 +11,10 @@ import io.jsonwebtoken.security.Keys;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-
 import java.security.Key;
-import java.util.Base64;
 import java.util.Date;
 
 @Service

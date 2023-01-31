@@ -1,9 +1,8 @@
-package com.ssafy.ssarijileo.user.service;
+package com.ssafy.ssarijileo.auth.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.ssarijileo.user.dto.Role;
-import com.ssafy.ssarijileo.user.dto.TokenKey;
-import com.ssafy.ssarijileo.user.dto.Token;
+import com.ssafy.ssarijileo.auth.dto.Role;
+import com.ssafy.ssarijileo.auth.dto.TokenKey;
+import com.ssafy.ssarijileo.auth.dto.Token;
 import com.ssafy.ssarijileo.user.dto.UserDto;
 import com.ssafy.ssarijileo.user.dto.UserRequestMapper;
 import com.ssafy.ssarijileo.user.entity.User;

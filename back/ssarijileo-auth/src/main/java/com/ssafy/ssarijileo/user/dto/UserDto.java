@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class UserDto {
 

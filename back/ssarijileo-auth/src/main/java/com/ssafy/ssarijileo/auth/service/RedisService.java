@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.user.service;
+package com.ssafy.ssarijileo.auth.service;
 
 import java.time.Duration;
 

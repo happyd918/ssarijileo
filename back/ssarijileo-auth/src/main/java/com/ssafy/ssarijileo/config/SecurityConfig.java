@@ -1,9 +1,9 @@
 package com.ssafy.ssarijileo.config;
 
 import com.ssafy.ssarijileo.filter.JwtAuthFilter;
-import com.ssafy.ssarijileo.user.service.OAuth2SuccessHandler;
-import com.ssafy.ssarijileo.user.service.CustomOAuth2UserService;
-import com.ssafy.ssarijileo.user.service.TokenProvider;
+import com.ssafy.ssarijileo.auth.service.OAuth2SuccessHandler;
+import com.ssafy.ssarijileo.auth.service.CustomOAuth2UserService;
+import com.ssafy.ssarijileo.auth.service.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,7 +35,7 @@ public class SecurityConfig {
                 "/error",
                 "/swagger-resources/**",
                 "/swagger-ui/**",
-                "/v2/api-docs",
+                "/v3/api-docs",
                 "/webjars/**"
             )
             .and()
@@ -54,11 +54,11 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-        // token 사용하는 페이지는 인가 허가, 외엔 모두 인가 필요
-            .authorizeRequests()
-            .antMatchers("/token/**").permitAll()
-            .antMatchers("/").permitAll()
-            .anyRequest().authenticated()
+        // token 사용하는 페이지&메인페이지는 인가 허가, 외엔 모두 인가 필요
+                .authorizeRequests()
+                .antMatchers("/token/**").permitAll()
+                .antMatchers("/").permitAll()
+                .anyRequest().authenticated()
             .and()
                 .logout().logoutSuccessUrl("/")
             .and()

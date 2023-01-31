@@ -1,9 +1,9 @@
-package com.ssafy.ssarijileo.user.controller;
+package com.ssafy.ssarijileo.auth.controller;
 
-import com.ssafy.ssarijileo.user.dto.Role;
-import com.ssafy.ssarijileo.user.dto.Token;
-import com.ssafy.ssarijileo.user.dto.TokenKey;
-import com.ssafy.ssarijileo.user.service.TokenProvider;
+import com.ssafy.ssarijileo.auth.dto.Role;
+import com.ssafy.ssarijileo.auth.dto.Token;
+import com.ssafy.ssarijileo.auth.dto.TokenKey;
+import com.ssafy.ssarijileo.auth.service.TokenProvider;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

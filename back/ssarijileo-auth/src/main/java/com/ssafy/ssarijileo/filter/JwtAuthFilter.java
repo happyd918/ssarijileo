@@ -1,9 +1,9 @@
 package com.ssafy.ssarijileo.filter;
 
-import com.ssafy.ssarijileo.user.dto.Role;
-import com.ssafy.ssarijileo.user.dto.TokenKey;
+import com.ssafy.ssarijileo.auth.dto.Role;
+import com.ssafy.ssarijileo.auth.dto.TokenKey;
 import com.ssafy.ssarijileo.user.dto.UserDto;
-import com.ssafy.ssarijileo.user.service.TokenProvider;
+import com.ssafy.ssarijileo.auth.service.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +29,8 @@ public class JwtAuthFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String token = ((HttpServletRequest)request).getHeader(TokenKey.ACCESS.getKey());
+//        String token = ((HttpServletRequest)request).getHeader(TokenKey.ACCESS.getKey());
+        String token = tokenProvider.resolveToken(((HttpServletRequest)request).getHeader(TokenKey.ACCESS.getKey()));
 
         if (token != null && tokenProvider.verifyToken(token)) {
             String email = tokenProvider.getUid(token);
