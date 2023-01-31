@@ -17,16 +17,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
-@RestController
+@RestController("/token")
 public class AuthController {
     private final TokenProvider tokenProvider;
 
-    @GetMapping("/token/expired")
+    @GetMapping("/expired")
     public String auth() {
        throw new RuntimeException();
     }
 
-    @GetMapping("/token/refresh")
+    @GetMapping("/refresh")
     public String refreshAuth(HttpServletRequest request, HttpServletResponse response) {
         String token = request.getHeader(TokenKey.REFRESH.getKey());
 
@@ -43,4 +43,7 @@ public class AuthController {
 
         throw new RuntimeException();
     }
+
+
+
 }
