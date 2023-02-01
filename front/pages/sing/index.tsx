@@ -11,6 +11,7 @@ function Index() {
   return (
     <div className={styles.container}>
       <TopImg />
+      <SwiperTop />
       <Image
         src="img/common/common_music_note1_image.svg"
         width={130}
@@ -32,7 +33,6 @@ function Index() {
         alt="noteC"
         className={styles.noteC}
       />
-      <SwiperTop />
       <SoundBar />
       <div className={styles.title}>노래방 입장하기</div>
       <RoomList />
