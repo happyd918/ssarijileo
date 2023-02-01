@@ -189,13 +189,10 @@ function MakeSample() {
           min={0}
           max={1}
           color="gray"
-          step={0.02}
+          step={0.01}
           value={volume}
           onChange={changeVolume}
         />
-        <br />
-        <br />
-        <output id="msg" />
       </div>
     </>
   );
