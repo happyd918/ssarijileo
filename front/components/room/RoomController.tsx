@@ -1,7 +1,16 @@
+import React, { useState } from 'react';
 import Image from 'next/image';
 import styles from '@/styles/room/RoomController.module.scss';
 
+import PitchController from './PitchController';
+import BeatController from './BeatController';
+import VolumeController from './VolumeController';
+
 function RoomController({ setModalOpen }: any) {
+  const [picthModalOpen, setPicthModalOpen] = useState(false);
+  const [beatModalOpen, setBeatModalOpen] = useState(false);
+  const [volumeModalOpen, setVolumeModalOpen] = useState(false);
+  // const [settingModalOpen, setSettingModalOpen] = useState(false);
   return (
     <div className={styles.layout}>
       <input
@@ -19,6 +28,9 @@ function RoomController({ setModalOpen }: any) {
             height={72}
             alt="pitch"
             className={styles.icon}
+            onClick={() => {
+              setPicthModalOpen(!picthModalOpen);
+            }}
           />
           <div className={styles.context}>음정</div>
         </div>
@@ -29,6 +41,9 @@ function RoomController({ setModalOpen }: any) {
             height={72}
             alt="beat"
             className={styles.icon}
+            onClick={() => {
+              setBeatModalOpen(!beatModalOpen);
+            }}
           />
           <div className={styles.context}>박자</div>
         </div>
@@ -39,6 +54,9 @@ function RoomController({ setModalOpen }: any) {
             height={72}
             alt="volume"
             className={styles.icon}
+            onClick={() => {
+              setVolumeModalOpen(!volumeModalOpen);
+            }}
           />
           <div className={styles.context}>볼륨</div>
         </div>
@@ -69,6 +87,13 @@ function RoomController({ setModalOpen }: any) {
           alt="pitch"
           className={styles.setting}
         />
+        {picthModalOpen && (
+          <PitchController setPitchModal={setPicthModalOpen} />
+        )}
+        {beatModalOpen && <BeatController setBeatModal={setBeatModalOpen} />}
+        {volumeModalOpen && (
+          <VolumeController setVolumeModal={setVolumeModalOpen} />
+        )}
       </div>
     </div>
   );
