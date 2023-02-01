@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import classNames from 'classnames';
+
 import styles from '@/styles/sing/RoomModal.module.scss';
 
 function RoomModal({ setModalOpen }: any) {
   // 모달창 open 여부
   const closeModal = () => {
     setModalOpen(false);
+  };
+
+  // 방제
+  const [title, setTitle] = useState('');
+  const changeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
   };
 
   // 비공개방 체크값 관리
@@ -79,6 +87,8 @@ function RoomModal({ setModalOpen }: any) {
             type="text"
             placeholder="방 제목을 입력하세요..."
             className={styles.input}
+            value={title}
+            onChange={changeTitle}
           />
           <div className={styles.mode}>{Mode}</div>
           <div className={styles.type}>
@@ -141,13 +151,21 @@ function RoomModal({ setModalOpen }: any) {
         </div>
 
         <div className={styles.bottom}>
-          <button
-            type="button"
-            className={styles.createBtn}
-            onClick={closeModal}
+          <Link
+            href={{
+              pathname: '/room',
+              query: { customTitle: title },
+            }}
+            as="/room"
           >
-            생성
-          </button>
+            <button
+              type="button"
+              className={styles.createBtn}
+              onClick={closeModal}
+            >
+              생성
+            </button>
+          </Link>
 
           <button
             type="button"
