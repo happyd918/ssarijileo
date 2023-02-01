@@ -6,7 +6,7 @@ import MainScreen from '@/components/room/MainScreen';
 import MyScreen from '@/components/room/MyScreen';
 import OtherScreen from '@/components/room/OtherScreen';
 import RoomFooter from '@/components/room/RoomFooter';
-import RoomController from '@/components/room/RoomController';
+// import RoomController from '@/components/room/RoomController';
 
 import styles from '@/styles/Room.module.scss';
 
@@ -15,7 +15,7 @@ function Room() {
   // const member = 5;
   return (
     <div className={styles.container}>
-      <RoomController />
+      {/* <RoomController /> */}
       <RoomHeader />
       {/* <PerfectScore /> */}
       <div className={styles.screen}>
