@@ -7,6 +7,8 @@ import * as data from '@/constants/PerfectScoreData';
 import styles from '@/styles/MakeSample.module.scss';
 import { useAnimation } from '@/hooks/useAnimation';
 
+import ControllBar from '@/components/common/ControllBar';
+
 function MakeSample() {
   const [volume, setVolume] = useState(0.5);
   const dataArrayRef = useRef<Float32Array>(new Float32Array(data.BUFFER_SIZE));
@@ -194,6 +196,7 @@ function MakeSample() {
           onChange={changeVolume}
         />
       </div>
+      <ControllBar />
     </>
   );
 }
