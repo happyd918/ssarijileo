@@ -68,12 +68,17 @@
       h1 {
         margin: 30px 10px;
         height: 5%;
+        font-weight: bold;
+        font-size: 35px;
+        color: var(--color-text)
       }
 
       .contentHeader {
         margin: 10px;
         height: 4%;
         color: $main;
+        font-size: 15px;
+        font-weight: bold;
       }
 
       .contentForm {
@@ -93,7 +98,7 @@
           font-weight: 600;
 
           p {
-            display: block;
+            font-weight: bold;
           }
 
           .nickname {
