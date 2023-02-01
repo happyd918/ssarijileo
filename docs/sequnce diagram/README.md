@@ -14,12 +14,12 @@
 
 ### - 유저검색/친구추가
 
-![유저검색&친구추가](./%ED%9A%8C%EC%9B%90%EA%B4%80%EB%A6%AC_%EC%9C%A0%EC%A0%80%EA%B2%80%EC%83%89_%EC%B9%9C%EA%B5%AC%EC%B6%94%EA%B0%80.png)
+![유저검색&친구추가](./%ED%9A%8C%EC%9B%90%EA%B4%80%EB%A6%AC-%EC%9C%A0%EC%A0%80%EA%B2%80%EC%83%89_%EC%B9%9C%EA%B5%AC%EC%B6%94%EA%B0%80.png)
 <br><br>
 
 ### - 친구관리
 
-![친구관리](./%ED%9A%8C%EC%9B%90%EA%B4%80%EB%A6%AC_%EC%B9%9C%EA%B5%AC%EA%B4%80%EB%A6%AC.png)
+![친구관리](./%ED%9A%8C%EC%9B%90%EA%B4%80%EB%A6%AC-%EC%B9%9C%EA%B5%AC%EA%B4%80%EB%A6%AC.png)
 <br><br>
 
 ### - 노래자랑 등록
