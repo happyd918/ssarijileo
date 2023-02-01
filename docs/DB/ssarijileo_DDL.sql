@@ -13,11 +13,10 @@ USE ssarijileo_auth;
 
 CREATE TABLE IF NOT EXISTS `user` (
 	`user_id` BINARY(16) COMMENT 'PK',
-    `email` VARCHAR(30) NOT NULL UNIQUE COMMENT '이메일',
-    `nickname` VARCHAR(30) NOT NULL UNIQUE COMMENT '닉네임',
-    `image` VARCHAR(255) NOT NULL DEFAULT "default.jpg" COMMENT '프로필이미지',
+    `social_id` VARCHAR(10) NOT NULL UNIQUE COMMENT '고유번호',
     `status` CHAR(1) NOT NULL DEFAULT 'A' COMMENT '상태(A:활동회원,X:탈퇴회원,B:차단회원)',
-    PRIMARY KEY (`user_id`)
+    PRIMARY KEY (`user_id`),
+    INDEX `idx_social_id` (`social_id`)
 )
 ENGINE = InnoDB;
 
@@ -26,12 +25,31 @@ ENGINE = InnoDB;
 CREATE DATABASE IF NOT EXISTS ssarijileo;
 USE ssarijileo;
 
+-- 프로필 테이블
+
+CREATE TABLE IF NOT EXISTS `profile` (
+	`profile_id` BINARY(16) COMMENT 'PK',
+    `nickname` VARCHAR(50) NOT NULL UNIQUE COMMENT '닉네임',
+    `image` VARCHAR(255) NOT NULL DEFAULT "default.jpg" COMMENT '프로필이미지',
+    PRIMARY KEY (`profile_id`)
+)
+ENGINE = InnoDB;
+
 -- 친구 테이블
 
 CREATE TABLE IF NOT EXISTS `friend` (
 	`friend_id` INT AUTO_INCREMENT COMMENT 'PK',
 	`sending_user_id` BINARY(16) NOT NULL COMMENT '보낸사람PK',
 	`receiving_user_id` BINARY(16) NOT NULL COMMENT '받는사람PK',
+	`status` CHAR(1) NOT NULL DEFAULT 'W' COMMENT '상태(W:대기,A:수락,X:취소)',
+	PRIMARY KEY (`friend_id`)
+  )
+  ENGINE = InnoDB;
+  
+  CREATE TABLE IF NOT EXISTS `test_friend` (
+	`friend_id` INT AUTO_INCREMENT COMMENT 'PK',
+	`sending_user_id` VARCHAR(16) NOT NULL COMMENT '보낸사람PK',
+	`receiving_user_id` VARCHAR(16) NOT NULL COMMENT '받는사람PK',
 	`status` CHAR(1) NOT NULL DEFAULT 'W' COMMENT '상태(W:대기,A:수락,X:취소)',
 	PRIMARY KEY (`friend_id`)
   )
@@ -129,7 +147,7 @@ ENGINE = InnoDB;
 -- 노래 환경설정 테이블
 
 CREATE TABLE IF NOT EXISTS `song_setting` (
-	`song_setting_id` VARCHAR(13) COMMENT 'PK(사용자PK)',
+	`song_setting_id` BINARY(16) COMMENT 'PK(사용자PK)',
     `eco` INT NOT NULL DEFAULT 50 COMMENT '에코',
     `volume` INT NOT NULL DEFAULT 50 COMMENT '음량',
     PRIMARY KEY (`song_setting_id`)
@@ -167,4 +185,3 @@ CREATE TABLE IF NOT EXISTS `singing_contest` (
         REFERENCES `recording` (`recording_id`) ON DELETE CASCADE
 )
 ENGINE = InnoDB;
-
