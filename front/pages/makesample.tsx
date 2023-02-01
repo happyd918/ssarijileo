@@ -7,12 +7,16 @@ import * as data from '@/constants/PerfectScoreData';
 import styles from '@/styles/MakeSample.module.scss';
 import { useAnimation } from '@/hooks/useAnimation';
 
+import ControllBar from '@/components/common/ControllBar';
+
 function MakeSample() {
+  const [volume, setVolume] = useState(0.5);
   const dataArrayRef = useRef<Float32Array>(new Float32Array(data.BUFFER_SIZE));
   const pitchDetectorRef = useRef<PitchDetector<Float32Array>>(
     PitchDetector.forFloat32Array(data.BUFFER_SIZE),
   );
   const analyserRef = useRef<AnalyserNode>();
+  const gainRef = useRef<GainNode>();
   const sourceRef = useRef<AudioBufferSourceNode>();
   const noteWindowRef = useRef<number[]>([]);
   const [isReady, setIsReady] = useState(false);
@@ -29,6 +33,11 @@ function MakeSample() {
     console.log(noteWindowRef.current);
   };
 
+  const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setVolume(Number(e.target.value));
+    gainRef.current?.gain.setValueAtTime(Number(e.target.value), 0);
+  };
+
   const isSilentBuffer = (buffer: Float32Array) => {
     let ret = 0;
     for (let i = 0; i < buffer.length; i++) {
@@ -38,7 +47,7 @@ function MakeSample() {
   };
 
   // 메인 로직
-  const canvasWidth = 100000;
+  const canvasWidth = 10000;
   const canvasHeight = data.CANVAS_HEIGHT;
   const canvasRef = useCanvas(canvasWidth, canvasHeight);
   const play = () => {
@@ -126,7 +135,9 @@ function MakeSample() {
   useEffect(() => {
     const audioCtx = new AudioContext();
     const analyser = audioCtx.createAnalyser();
+    const gainNode = audioCtx.createGain();
     analyserRef.current = analyser;
+    gainRef.current = gainNode;
 
     analyser.minDecibels = data.MIN_DB;
     analyser.smoothingTimeConstant = data.SMOOTHING_TIME_CONSTANT;
@@ -139,7 +150,8 @@ function MakeSample() {
         const source = audioCtx.createBufferSource();
         source.buffer = audioBuffer;
         source.connect(analyser);
-        analyser.connect(audioCtx.destination);
+        source.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
         sourceRef.current = source;
         source.onended = () => {
           console.log(noteWindowRef.current);
@@ -174,10 +186,17 @@ function MakeSample() {
           onClick={stop}
           disabled={!isStarted}
         />
-        <br />
-        <br />
-        <output id="msg" />
+        <input
+          type="range"
+          min={0}
+          max={1}
+          color="gray"
+          step={0.01}
+          value={volume}
+          onChange={changeVolume}
+        />
       </div>
+      <ControllBar />
     </>
   );
 }
