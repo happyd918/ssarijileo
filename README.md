@@ -12,10 +12,15 @@
 
 ### CI/CD -> 이수민(1월 29일 내로 ec2 설정 완료 목표)
 
-1. git lab
-2. docker
-3. jenkins
-4. Kubernetes
-5. ansible (고려중)
+1. git lab -> jenkins 연결 확인
+2. docker -> 설치
+3. jenkins -> 설치 완료 (빌드까지 성공)
+4. Kubernetes -> minikube 선택
+5. ansible
 6. sonarQube (고려중)
-7. ~~MySQL (설치 완료)~~
+
+
+
+
+
+## 
