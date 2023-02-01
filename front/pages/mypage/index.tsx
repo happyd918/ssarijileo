@@ -1,7 +1,8 @@
-import styles from '@/styles/mypage/Mypage.module.scss';
 import React from 'react';
 
-function Mypage() {
+import styles from '@/styles/mypage/Mypage.module.scss';
+
+function MyPage() {
   const DUMMY_DATA = {
     name: '서예지',
     nickname: 'zㅣ존예지',
@@ -52,44 +53,52 @@ function Mypage() {
             />
           </div>
           <div className={styles.name}>{DUMMY_DATA.nickname}님</div>
-          <button className={styles.btn}>계정 관리</button>
-          <button className={styles.btn}>친구 목록</button>
+          <button type="button" className={styles.btn}>
+            계정 관리
+          </button>
+          <button type="button" className={styles.btn}>
+            친구 목록
+          </button>
         </div>
 
         <div className={styles.content}>
           <h1>마이페이지</h1>
           <p className={styles.contentHeader}>계정 관리</p>
           <form onSubmit={saveProfile} className={styles.contentForm}>
-            <label>
+            <label htmlFor="name">
               <p>이름</p>
               <input
+                id="name"
                 type="text"
                 value={DUMMY_DATA.name}
                 onChange={nameChange}
               />
             </label>
-            <label>
+            <label htmlFor="nickname">
               <p>닉네임</p>
               <input
+                id="nickname"
                 type="text"
                 value={DUMMY_DATA.nickname}
                 onChange={nickNameChange}
                 className={styles.nickname}
               />
-              <button>중복검사</button>
+              <button type="button">중복검사</button>
             </label>
-            <label>
+            <label htmlFor="email">
               <p>이메일</p>
               <input
+                id="email"
                 type="text"
                 value={DUMMY_DATA.email}
                 onChange={emailChange}
               />
             </label>
             <div className={styles.scrollBox}>
-              <label>
+              <label htmlFor="micVolume">
                 <p>마이크 볼륨</p>
                 <input
+                  id="micVolume"
                   type="range"
                   min={0}
                   max={1}
@@ -99,9 +108,10 @@ function Mypage() {
                   onChange={changeMicVolume}
                 />
               </label>
-              <label>
+              <label htmlFor="echo">
                 <p>에코</p>
                 <input
+                  id="echo"
                   type="range"
                   min={0}
                   max={1}
@@ -112,7 +122,7 @@ function Mypage() {
                 />
               </label>
             </div>
-            <button className={styles.submitBtn} type="submit">
+            <button type="submit" className={styles.submitBtn}>
               저장
             </button>
           </form>
@@ -122,4 +132,4 @@ function Mypage() {
   );
 }
 
-export default Mypage;
+export default MyPage;
