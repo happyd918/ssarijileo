@@ -39,8 +39,8 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `friend` (
 	`friend_id` INT AUTO_INCREMENT COMMENT 'PK',
-	`sending_user_id` BINARY(16) NOT NULL COMMENT '보낸사람PK',
-	`receiving_user_id` BINARY(16) NOT NULL COMMENT '받는사람PK',
+	`from_user_id` BINARY(16) NOT NULL COMMENT '보낸사람PK',
+	`to_user_id` BINARY(16) NOT NULL COMMENT '받는사람PK',
 	`status` CHAR(1) NOT NULL DEFAULT 'W' COMMENT '상태(W:대기,A:수락,X:취소)',
 	PRIMARY KEY (`friend_id`)
   )

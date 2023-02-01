@@ -16,7 +16,7 @@ VALUE ("USER1", "금쪽수민", "A"),
 
 -- 친구 데이터
 
-INSERT INTO `friend` (`sending_user_id`, `receiving_user_id`, `status`)
+INSERT INTO `friend` (`from_user_id`, `to_user_id`, `status`)
 VALUE ("USER1", "USER3", "A"),
       ("USER1", "USER4", "A"),
       ("USER2", "USER1", "W"),
