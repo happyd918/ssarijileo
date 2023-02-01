@@ -1,26 +1,28 @@
 package com.ssafy.ssarijileo.user.controller;
 
+import com.ssafy.ssarijileo.auth.dto.TokenKey;
 import com.ssafy.ssarijileo.user.dto.UserDto;
+import com.ssafy.ssarijileo.user.service.UserService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequiredArgsConstructor
 public class UserController {
 
+    private final UserService userService;
 
-    /**
-     * 토큰으로 유저정보 요청 들어옴
-     * 분기
-     * 1) 액세스 유효 -> 바로 줌
-     * 2) 액세스 만료
-     * 2-1) 리프레시 유효 -> 괜찮네? 회원정보랑 액세스 줌
-     * 2-2) 리프레시 만료 -> 로그아웃 시킴
-     *
-     */
     @GetMapping("/userInfo")
-    public ResponseEntity<UserDto> getUserInfo(HttpServletRequest request) {
+    public ResponseEntity<UserDto> findUserInfo(HttpServletRequest request) {
+        String access = request.getHeader(TokenKey.ACCESS.getKey());
+
         UserDto userDto = new UserDto();
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }

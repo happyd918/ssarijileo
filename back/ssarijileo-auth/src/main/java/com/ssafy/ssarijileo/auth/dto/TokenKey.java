@@ -1,10 +1,12 @@
 package com.ssafy.ssarijileo.auth.dto;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum TokenKey {
-	ACCESS("accessToken"), REFRESH("refreshToken");
+	ACCESS("Authorization"), REFRESH("refreshToken");
 
 	private String key;
 
