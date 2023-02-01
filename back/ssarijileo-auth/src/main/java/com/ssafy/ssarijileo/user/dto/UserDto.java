@@ -1,5 +1,7 @@
 package com.ssafy.ssarijileo.user.dto;
 
+import java.util.UUID;
+
 import com.ssafy.ssarijileo.user.entity.User;
 
 import lombok.AllArgsConstructor;
@@ -11,14 +13,14 @@ import lombok.NoArgsConstructor;
 @Data
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class UserDto {
-
-    private String email;
-    private String nickname;
-    private String image;
+    private String userId;
+    private String socialId;
+    private String status;
 
     public User toUser(UserDto userDto) {
-        return User.builder().email(userDto.getEmail()).nickname(userDto.getNickname()).image(userDto.getImage()).build();
+        return User.builder().socialId(userDto.getSocialId()).build();
     }
 }

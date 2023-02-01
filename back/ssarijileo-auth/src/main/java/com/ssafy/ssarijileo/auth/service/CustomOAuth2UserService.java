@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.user.service;
+package com.ssafy.ssarijileo.auth.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
-import com.ssafy.ssarijileo.user.dto.Role;
+import com.ssafy.ssarijileo.auth.dto.Role;
 
 @Slf4j
 @Service
@@ -41,6 +41,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(Role.USER.getKey())),
-                memberAttribute, "email");
+                memberAttribute, "id");
     }
 }

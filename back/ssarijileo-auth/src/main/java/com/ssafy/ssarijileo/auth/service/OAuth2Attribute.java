@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.user.service;
+package com.ssafy.ssarijileo.auth.service;
 
 
 import lombok.AccessLevel;
@@ -14,6 +14,7 @@ import java.util.Map;
 @Builder(access = AccessLevel.PRIVATE)
 public class OAuth2Attribute {
     private Map<String, Object> attributes;
+    private String id;
     private String attributeKey;
     private String email;
     private String nickname;
@@ -25,7 +26,7 @@ public class OAuth2Attribute {
             case "google":
                 return ofGoogle(attributeKey, attributes);
             case "kakao":
-                return ofKakao("email", attributes);
+                return ofKakao(attributeKey, attributes);
             case "naver":
                 return ofNaver("id", attributes);
             default:
@@ -49,6 +50,7 @@ public class OAuth2Attribute {
         Map<String, Object> kakaoProfile = (Map<String, Object>) kakaoAccount.get("profile");
 
         return OAuth2Attribute.builder()
+                .id(String.valueOf(attributes.get("id")))
                 .nickname((String) kakaoProfile.get("nickname"))
                 .email((String) kakaoAccount.get("email"))
                 .image((String)kakaoProfile.get("profile_image_url"))
@@ -71,7 +73,7 @@ public class OAuth2Attribute {
 
     Map<String, Object> convertToMap() {
         Map<String, Object> map = new HashMap<>();
-        map.put("id", attributeKey);
+        map.put("id", id);
         map.put("key", attributeKey);
         map.put("nickname", nickname);
         map.put("email", email);
