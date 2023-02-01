@@ -127,6 +127,10 @@ public class TokenProvider implements InitializingBean {
         return Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(token).getBody().getSubject();
     }
 
+    public Claims getClaims(String token) {
+        return Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(token).getBody();
+    }
+
     public Long getExpiration(TokenKey tokenKey) {
 
         String delimiter = tokenKey.getKey();
