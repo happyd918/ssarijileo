@@ -252,9 +252,6 @@ function PerfectScore() {
           onClick={stop}
           disabled={!isStarted}
         />
-        <br />
-        <br />
-        <output id="msg" />
       </div>
     </>
   );

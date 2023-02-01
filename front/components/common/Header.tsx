@@ -23,11 +23,6 @@ function Header() {
     dispatch(setTheme(themeMode));
   }, [checked, themeMode]);
 
-  const toggleDropdown = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setDropdownVisible(!dropdownVisible);
-  };
-
   useEffect(() => {
     document.body.dataset.theme = themeMode;
   }, [themeMode]);
@@ -39,11 +34,16 @@ function Header() {
     setChecked(theme === 'dark');
   }, []);
 
+  const toggleDropdown = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setDropdownVisible(!dropdownVisible);
+  };
+
   // header 에 들어갈 menu 리스트
   const headerMenu = [
     {
       name: '노래방',
-      link: '/',
+      link: 'sing/',
     },
     {
       name: '인기차트',

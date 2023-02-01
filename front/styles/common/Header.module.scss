@@ -2,18 +2,12 @@
 @import '../mixins';
 
 .header {
-  height: 60px;
   display: grid;
   justify-content: space-around;
   background-color: rgba(0 0 0 / 0%);
-  padding: 0 10%;
   z-index: 999;
   grid-template-columns: 2fr 3fr 2fr;
-
-  .logo {
-    margin-left: 10px;
-    width: 10%;
-  }
+  padding: 0 10%;
 
   .menu {
     display: flex;

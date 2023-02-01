@@ -1,14 +1,14 @@
 // Path: front/pages/room.tsx
 import React from 'react';
-import styles from '@/styles/Room.module.scss';
 // import PerfectScore from '@/components/room/PerfectScore';
 import RoomHeader from '@/components/room/RoomHeader';
 import MainScreen from '@/components/room/MainScreen';
 import MyScreen from '@/components/room/MyScreen';
 import OtherScreen from '@/components/room/OtherScreen';
 import RoomFooter from '@/components/room/RoomFooter';
-
 // import RoomController from '@/components/room/RoomController';
+
+import styles from '@/styles/Room.module.scss';
 
 function Room() {
   // 참가자 수만큼 생성
