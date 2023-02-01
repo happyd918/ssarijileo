@@ -20,9 +20,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/userInfo")
-    public ResponseEntity<UserDto> findUserInfo(HttpServletRequest request) {
-        String access = request.getHeader(TokenKey.ACCESS.getKey());
-
+    public ResponseEntity<UserDto> findUserInfo(String userId) {
         UserDto userDto = new UserDto();
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
