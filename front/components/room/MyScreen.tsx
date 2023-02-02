@@ -3,7 +3,6 @@ import React, { useRef, useEffect } from 'react';
 import styles from '@/styles/room/Screen.module.scss';
 
 function MyScreen({ streamManager }: any) {
-  // const videoRef = React.createRef();
   const videoRef = useRef<HTMLVideoElement>(null);
   const screen = streamManager;
 

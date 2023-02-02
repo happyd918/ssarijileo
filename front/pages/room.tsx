@@ -72,7 +72,7 @@ function Room() {
     setInit(true);
   };
 
-  // 참가자가 떠날때
+  // 다른 참가자가 떠날때
   const deleteSubscriber = (streamManager: any) => {
     const newsubscribers = subscribers;
     const index = subscribers.indexOf(streamManager, 0);
@@ -82,84 +82,34 @@ function Room() {
     }
   };
 
-  // 참가자 하이라이트 화면(노래부르는 사람)
+  // 사용자가 떠날때
+  const leaveSession = () => {
+    const mySession = session;
+    if (mySession) mySession.disconnect();
+
+    setOV(null);
+    setSession(undefined);
+    setMainStreamManager(undefined);
+    setPublisher(undefined);
+    setSubscribers([]);
+
+    roomRouter.push('/singsample');
+  };
+
+  // 참가자 하이라이트(노래부르는 사람) 화면 변경
   // const handleMainVideoStream = (stream: any) => {
   //   if (mainStreamManager !== stream) {
   //     setMainStreamManager(stream);
   //   }
   // };
 
-  // useEffect(() => {
-  //   if (session !== undefined) {
-  //     console.log('initsession 완료', session);
-  //     const mySession = session;
-  //     // subscribers에 참가자 추가
-  //     mySession.on('streamCreated', (event: any) => {
-  //       const subscriber = mySession.subscribe(event.stream, undefined);
-  //       const newsubscribers = subscribers.push(subscriber);
-  //       setSubscribers(newsubscribers);
-  //       console.log('newsubs', newsubscribers);
-  //     });
+  // 페이지 입장 후 로딩시작, joinsession
+  useEffect(() => {
+    setLoading(true);
+    joinsession();
+  }, []);
 
-  //     // 참가
-  //     getToken().then(token => {
-  //       mySession
-  //         .connect(token, { clientdata: myUserName })
-  //         .then(async () => {
-  //           // --- 5) Get your own camera stream ---
-  //           // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
-  //           // element: we will manage it on our own) and with the desired properties
-  //           const newpublisher = await OV.initPublisherAsync(undefined, {
-  //             audioSource: undefined, // The source of audio. If undefined default microphone
-  //             videoSource: undefined, // The source of video. If undefined default webcam
-  //             publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
-  //             publishVideo: true, // Whether you want to start publishing with your video enabled or not
-  //             resolution: '640x480', // The resolution of your video
-  //             frameRate: 30, // The frame rate of your video
-  //             insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
-  //             mirror: false, // Whether to mirror your local video or not
-  //           });
-
-  //           // --- 6) Publish your stream ---
-  //           mySession.publish(newpublisher);
-  //           console.log('pub su', newpublisher);
-
-  //           // Obtain the current video device in use
-  //           const devices = OV.getDevices();
-  //           const videoDevices = devices.filter(
-  //             (device: any) => device.kind === 'videoinput',
-  //           );
-  //           const currentVideoDeviceId = newpublisher.stream
-  //             .getMediaStream()
-  //             .getVideoTracks()[0]
-  //             .getSettings().deviceId;
-  //           const newcurrentVideoDevice = videoDevices.find(
-  //             (device: any) => device.deviceId === currentVideoDeviceId,
-  //           );
-
-  //           // Set the main video in the page to display our webcam and store our Publisher
-  //           setCurrentVideoDevice(newcurrentVideoDevice);
-  //           setMainStreamManager(newpublisher);
-  //           setPublisher(newpublisher);
-  //           console.log('done##');
-  //         })
-  //         .catch((error: any) => {
-  //           console.log(
-  //             'There was an error connecting to the session:',
-  //             error.code,
-  //             error.message,
-  //           );
-  //         });
-
-  //       // 참가자가 떠날때
-  //       mySession.on('streamDestroyed', (event: any) => {
-  //         // Remove the stream from 'subscribers' array
-  //         deleteSubscriber(event.stream.streamManager);
-  //       });
-  //     });
-  //   }
-  // }, [session]);
-
+  // joinsession 이후 초기 세팅 진행
   useEffect(() => {
     if (init) {
       const mySession = session;
@@ -232,11 +182,6 @@ function Room() {
     }
   }, [init]);
 
-  useEffect(() => {
-    setLoading(true);
-    joinsession();
-  }, []);
-
   // 로딩중 return
   if (loading)
     return (
@@ -245,12 +190,11 @@ function Room() {
       </div>
     );
 
-  // 참가자 수만큼 생성
-  // const member = 5;
+  // 로딩끝 return
   return (
     <div className={styles.container}>
       {/* <RoomController /> */}
-      <RoomHeader />
+      <RoomHeader leaveRoom={leaveSession} />
       {/* <PerfectScore /> */}
       <div className={styles.screen}>
         <div className={styles.mainScreen}>
