@@ -48,24 +48,6 @@ function IconTop() {
       }
     }
 
-    if (noteWindow.length < 0) {
-      const note = {
-        speed: {
-          x: Math.random() * -5,
-          y: Math.random() * -5 - 5,
-        },
-        start: {
-          x: Math.random() * canvasWidth,
-          y: 300,
-        },
-        specific: Math.floor(Math.random() * 3) + 1,
-        life: Math.random() * 10 + 10,
-        size: 0,
-      };
-      note.size = note.life + 30;
-      noteWindow.push(note);
-    }
-
     for (let i = 0; i < noteWindow.length; i++) {
       const img = new Image();
       img.src = noteImages(noteWindow[i].specific);
