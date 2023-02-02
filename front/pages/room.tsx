@@ -32,6 +32,7 @@ function Room() {
   const [currentVideoDevice, setCurrentVideoDevice] = useState<any>();
   const [loading, setLoading] = useState(true);
   const [init, setInit] = useState(false);
+  console.log(mainStreamManager, currentVideoDevice);
 
   // api
   async function createSession(sessionId: string) {
