@@ -29,4 +29,8 @@ public class User {
     private String socialId;
 
     private String status;
+
+    public void updateStatus(String status) {
+        this.status = status;
+    }
 }
