@@ -14,7 +14,6 @@ function MyScreen({ streamManager }: any) {
 
   return (
     <div className={styles.myScreen}>
-      내화면
       <video className={styles.video} autoPlay ref={videoRef}>
         <track kind="captions" />
       </video>
