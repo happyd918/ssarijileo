@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssarijileo.api.friend.dto.FriendDto;
+import com.ssafy.ssarijileo.api.friend.dto.FriendInviteDto;
 import com.ssafy.ssarijileo.api.friend.dto.FriendUpdateDto;
 import com.ssafy.ssarijileo.api.friend.dto.MyFriendDto;
 import com.ssafy.ssarijileo.api.friend.service.FriendService;
@@ -88,8 +89,8 @@ public class FriendController {
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@PostMapping
-	public ResponseEntity<? extends BaseResponseBody> insertFriend(@RequestBody FriendDto friendDto) {
-		friendService.insertFriend(friendDto);
+	public ResponseEntity<? extends BaseResponseBody> requestFriend(@RequestBody FriendDto friendDto) {
+		friendService.requestFriend(friendDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 
@@ -110,6 +111,26 @@ public class FriendController {
 	@PutMapping
 	public ResponseEntity<? extends BaseResponseBody> updateFriend(@RequestBody FriendUpdateDto friendUpdateDto) {
 		friendService.updateFriend(friendUpdateDto);
+		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+	}
+
+	/**
+	 * 친구 초대
+	 * @param friendInviteDto
+	 */
+	@ApiOperation(
+		value = "친구 초대",
+		notes = "노래방에 친구를 초대한다."
+	)
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "성공"),
+		@ApiResponse(code = 401, message = "인증 실패"),
+		@ApiResponse(code = 404, message = "정보 없음"),
+		@ApiResponse(code = 500, message = "서버 오류")
+	})
+	@PostMapping
+	public ResponseEntity<? extends BaseResponseBody> inviteFriend(@RequestBody FriendInviteDto friendInviteDto) {
+		friendService.inviteFriend(friendInviteDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 }

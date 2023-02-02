@@ -23,18 +23,18 @@ public class Pitch {
 	// PK (AUTO_INCREMENT)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long pitchId;
+	private Long pitchId;
 
 	// 노래PK
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "song_id")
-	Song song;
+	private Song song;
 
 	// 시간
-	Double time;
+	private Double time;
 
 	// 음표
-	String note;
+	private String note;
 
 	// Entity to Dto
 	public PitchDto toDto() {

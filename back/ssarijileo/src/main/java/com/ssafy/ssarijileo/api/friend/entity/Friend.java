@@ -21,29 +21,29 @@ public class Friend {
 	// PK (AUTO_INCREMENT)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long friendId;
+	private Long friendId;
 
 	// 보낸 사용자PK
-	String sendingUserId;
+	private String fromUserId;
 
 	// 받는 사용자PK
-	String receivingUserId;
+	private String toUserId;
 
 	// 상태(W:대기,A:수락,X:취소)
-	char status;
+	private char status;
 
 	// Dto to Entity
 	@Builder
 	public Friend(FriendDto friendDto) {
 		this.friendId = friendDto.getFriendId();
-		this.sendingUserId = friendDto.getSendingUserId();
-		this.receivingUserId = friendDto.getReceivingUserId();
+		this.fromUserId = friendDto.getFromUserId();
+		this.toUserId = friendDto.getToUserId();
 		this.status = friendDto.getStatus();
 	}
 
 	// Entity to Dto
 	public FriendDto toDto() {
-		return new FriendDto(friendId, sendingUserId, receivingUserId, status);
+		return new FriendDto(friendId, fromUserId, toUserId, status);
 	}
 
 	public void updateFriend(char status) {

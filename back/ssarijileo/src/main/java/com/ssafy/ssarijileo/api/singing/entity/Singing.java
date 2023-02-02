@@ -25,24 +25,24 @@ public class Singing {
 	// PK (AUTO_INCREMENT)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long singingId;
+	private Long singingId;
 
 	// 사용자PK
-	String userId;
+	private String userId;
 
 	// 노래PK
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "song_id")
-	Song song;
+	private Song song;
 
 	// 모드(N:일반,P:퍼펙트스코어,O:가사순서맞추기,R:이어부르기)
-	char mode;
+	private char mode;
 
 	// 점수
-	int score;
+	private int score;
 
 	// 총부른시간
-	String totalSingingTime;
+	private String totalSingingTime;
 
 	// Dto to Entity
 	@Builder

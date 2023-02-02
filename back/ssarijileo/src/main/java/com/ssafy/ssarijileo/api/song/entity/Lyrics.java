@@ -23,18 +23,18 @@ public class Lyrics {
 	// PK (AUTO_INCREMENT)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long lyricsId;
+	private Long lyricsId;
 
 	// 노래PK
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "song_id")
-	Song song;
+	private Song song;
 
 	// 한소절
-	String verse;
+	private String verse;
 
 	// 상태(N:기본,O:가사순서맞추기,H:하이라이트)
-	char status;
+	private char status;
 
 	// Entity to Dto
 	public LyricsDto toDto() {

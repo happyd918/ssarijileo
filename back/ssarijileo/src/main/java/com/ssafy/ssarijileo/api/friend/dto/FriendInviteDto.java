@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FriendDto {
-
-	// PK (AUTO_INCREMENT)
-	Long friendId;
+public class FriendInviteDto {
 
 	// 보낸 사용자PK
 	String fromUserId;
@@ -18,6 +15,6 @@ public class FriendDto {
 	// 받는 사용자PK
 	String toUserId;
 
-	// 상태(W:대기,A:수락,X:취소)
-	char status;
+	// 노래방 링크
+	String link;
 }
