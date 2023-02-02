@@ -1,9 +1,9 @@
 package com.ssafy.ssarijileo.config;
 
-import com.ssafy.ssarijileo.filter.JwtAuthFilter;
-import com.ssafy.ssarijileo.auth.service.OAuth2SuccessHandler;
-import com.ssafy.ssarijileo.auth.service.CustomOAuth2UserService;
-import com.ssafy.ssarijileo.auth.service.TokenProvider;
+import com.ssafy.ssarijileo.common.filter.JwtAuthFilter;
+import com.ssafy.ssarijileo.api.auth.service.OAuth2SuccessHandler;
+import com.ssafy.ssarijileo.api.auth.service.CustomOAuth2UserService;
+import com.ssafy.ssarijileo.api.auth.service.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
