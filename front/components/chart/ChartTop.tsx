@@ -47,31 +47,13 @@ function ChartTop() {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
     for (let i = 0; i < noteWindow.length; i++) {
-      noteWindow[i].start.x += noteWindow[i].speed.x;
-      noteWindow[i].start.y += noteWindow[i].speed.y;
-      noteWindow[i].size -= 1;
+      noteWindow[i].start.x += noteWindow[i].speed.x * 0.7;
+      noteWindow[i].start.y += noteWindow[i].speed.y * 0.7;
       noteWindow[i].life -= 1;
+      noteWindow[i].size += 0.1;
       if (noteWindow[i].life < 0) {
         noteWindow.splice(i, 1);
       }
-    }
-
-    if (noteWindow.length < 0) {
-      const note = {
-        speed: {
-          x: Math.random() * -5,
-          y: Math.random() * -5 - 5,
-        },
-        start: {
-          x: Math.random() * canvasWidth,
-          y: 300,
-        },
-        specific: Math.floor(Math.random() * 3) + 1,
-        life: Math.random() * 10 + 10,
-        size: 0,
-      };
-      note.size = note.life + 30;
-      noteWindow.push(note);
     }
 
     for (let i = 0; i < noteWindow.length; i++) {
@@ -87,14 +69,37 @@ function ChartTop() {
     }
   };
 
+  const onClickParticle = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const rect = canvasRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    for (let i = 0; i < 3; i++) {
+      const note = {
+        speed: {
+          x: Math.random() - 0.5,
+          y: -1,
+        },
+        start: {
+          x: e.clientX - rect.left - 10,
+          y: e.clientY - rect.top - 10,
+        },
+        specific: Math.floor(Math.random() * 3) + 1,
+        life: Math.random() * 50 + 50,
+        size: 0,
+      };
+      note.size = Math.random() * 10 + 15;
+      noteWindow.push(note);
+    }
+  };
+
   const heartA = `img/chart/${themeMode}/${themeMode}_chart_heart1_image.svg`;
   const heartB = `img/chart/${themeMode}/${themeMode}_chart_heart2_image.svg`;
   const heartC = `img/chart/${themeMode}/${themeMode}_chart_heart3_image.svg`;
+
   const heartD = `img/chart/${themeMode}/${themeMode}_chart_heart4_image.svg`;
 
   useAnimation(animate, 0);
-
   // 월간, 주간, 일간 1등 노래 정보 받기
+
   const best = [
     {
       // img: 'https://w.namu.la/s/6aa55fa851df9b94d4efd286dd2379c0c16daaccf1342b9ce41f48a2c5a3178463b0b7e997fb4ef3002ed45b6cb50b12f9150f14d3cc7e0b9c8f6a9655f10f0e670ba2aa8526575b19fdd962e6d3e47297811d8a89cb37ed90435896e91b4b31',
@@ -123,28 +128,6 @@ function ChartTop() {
       </div>
     );
   });
-
-  const onClickParticle = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    const rect = canvasRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    for (let i = 0; i < 3; i++) {
-      const note = {
-        speed: {
-          x: Math.random() * 4 - 2,
-          y: Math.random() * 4 - 2,
-        },
-        start: {
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top,
-        },
-        specific: Math.floor(Math.random() * 3) + 1,
-        life: Math.random() * 10 + 10,
-        size: 0,
-      };
-      note.size = note.life + 10;
-      noteWindow.push(note);
-    }
-  };
 
   return (
     <div className={styles.container} ref={ref}>
