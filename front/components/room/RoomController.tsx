@@ -1,66 +1,100 @@
+import React, { useState } from 'react';
 import Image from 'next/image';
 import styles from '@/styles/room/RoomController.module.scss';
 
-function RoomController() {
+import PitchController from './PitchController';
+import BeatController from './BeatController';
+import VolumeController from './VolumeController';
+
+function RoomController({ setModalOpen }: any) {
+  const [picthModalOpen, setPicthModalOpen] = useState(false);
+  const [beatModalOpen, setBeatModalOpen] = useState(false);
+  const [volumeModalOpen, setVolumeModalOpen] = useState(false);
+  // const [settingModalOpen, setSettingModalOpen] = useState(false);
   return (
-    <div className={styles.container}>
-      <div className={styles.pitch}>
-        <Image
-          src="img/ssari/ssari_pitch_image.svg"
-          width={82}
-          height={82}
-          alt="pitch"
-          className={styles.icon}
-        />
-        <div className={styles.context}>음정</div>
-      </div>
-      <div className={styles.beat}>
-        <Image
-          src="img/ssari/ssari_beat_image.svg"
-          width={82}
-          height={82}
-          alt="beat"
-          className={styles.icon}
-        />
-        <div className={styles.context}>박자</div>
-      </div>
-      <div className={styles.volume}>
-        <Image
-          src="img/ssari/ssari_volume_image.svg"
-          width={82}
-          height={82}
-          alt="volume"
-          className={styles.icon}
-        />
-        <div className={styles.context}>볼륨</div>
-      </div>
-      <div className={styles.musicNote}>
-        <Image
-          src="img/ssari/ssari_music_note_image.svg"
-          width={82}
-          height={82}
-          alt="musicNote"
-          className={styles.icon}
-        />
-        <div className={styles.context}>악보 표출</div>
-      </div>
-      <div className={styles.jump}>
-        <Image
-          src="img/ssari/ssari_jump_image.svg"
-          width={82}
-          height={82}
-          alt="jump"
-          className={styles.icon}
-        />
-        <div className={styles.context}>간주점프</div>
-      </div>
-      <Image
-        src="img/ssari/ssari_setting_image.svg"
-        width={62}
-        height={62}
-        alt="pitch"
-        className={styles.setting}
+    <div className={styles.layout}>
+      <input
+        type="button"
+        className={styles.back}
+        onClick={() => {
+          setModalOpen(false);
+        }}
       />
+      <div className={styles.container}>
+        <div className={styles.pitch}>
+          <Image
+            src="img/ssari/ssari_pitch_image.svg"
+            width={72}
+            height={72}
+            alt="pitch"
+            className={styles.icon}
+            onClick={() => {
+              setPicthModalOpen(!picthModalOpen);
+            }}
+          />
+          <div className={styles.context}>음정</div>
+        </div>
+        <div className={styles.beat}>
+          <Image
+            src="img/ssari/ssari_beat_image.svg"
+            width={72}
+            height={72}
+            alt="beat"
+            className={styles.icon}
+            onClick={() => {
+              setBeatModalOpen(!beatModalOpen);
+            }}
+          />
+          <div className={styles.context}>박자</div>
+        </div>
+        <div className={styles.volume}>
+          <Image
+            src="img/ssari/ssari_volume_image.svg"
+            width={72}
+            height={72}
+            alt="volume"
+            className={styles.icon}
+            onClick={() => {
+              setVolumeModalOpen(!volumeModalOpen);
+            }}
+          />
+          <div className={styles.context}>볼륨</div>
+        </div>
+        <div className={styles.musicNote}>
+          <Image
+            src="img/ssari/ssari_music_note_image.svg"
+            width={72}
+            height={72}
+            alt="musicNote"
+            className={styles.icon}
+          />
+          <div className={styles.context}>악보 표출</div>
+        </div>
+        <div className={styles.jump}>
+          <Image
+            src="img/ssari/ssari_jump_image.svg"
+            width={72}
+            height={72}
+            alt="jump"
+            className={styles.icon}
+          />
+          <div className={styles.context}>간주점프</div>
+        </div>
+        <Image
+          src="img/ssari/ssari_setting_image.svg"
+          width={52}
+          height={52}
+          alt="pitch"
+          className={styles.setting}
+        />
+        {picthModalOpen && (
+          <PitchController setPitchModal={setPicthModalOpen} />
+        )}
+        {beatModalOpen && <BeatController setBeatModal={setBeatModalOpen} />}
+        {volumeModalOpen && (
+          <VolumeController setVolumeModal={setVolumeModalOpen} />
+        )}
+      </div>
     </div>
   );
 }

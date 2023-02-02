@@ -3,7 +3,7 @@ import Spinner from '@/components/common/Spinner';
 
 function kakao() {
   const ACCESS_TOKEN = new URL(window.location.href).searchParams.get(
-    'accessToken',
+    'Authorization',
   );
   const REFRESH_TOKEN = new URL(window.location.href).searchParams.get(
     'refreshToken',

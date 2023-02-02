@@ -6,6 +6,8 @@ import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import store from '@/redux/store';
 
+import Layout from '@/components/layout/Layout';
+
 import '@/styles/global.scss';
 
 export const persistor = persistStore(store);
@@ -34,7 +36,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </PersistGate>
     </Provider>
   );

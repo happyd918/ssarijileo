@@ -7,6 +7,7 @@
   font-size: 12px;
   font-weight: bold;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
 }
 
 .container {
@@ -30,7 +31,7 @@
     align-items: center;
     width: 30%;
 
-    .btn {
+    .btnList {
       width: 200px;
       display: flex;
       flex-direction: row;
@@ -63,19 +64,23 @@
 
       .clap {
         filter: drop-shadow(4px 4px 2px rgba(0, 0, 0, 0.25));
+        cursor: pointer;
       }
       .tambourine {
         filter: drop-shadow(4px 4px 2px rgba(0, 0, 0, 0.25));
         padding-top: 5px;
+        cursor: pointer;
       }
     }
     .controller {
       position: absolute;
       left: calc(50% - 22.5px);
       filter: drop-shadow(4px 4px 2px rgba(0, 0, 0, 0.25));
+      cursor: pointer;
     }
   }
   .chat {
     filter: drop-shadow(4px 4px 2px rgba(0, 0, 0, 0.25));
+    cursor: pointer;
   }
 }

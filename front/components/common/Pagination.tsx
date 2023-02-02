@@ -50,6 +50,7 @@ function Pagination({ totalPosts, limit, page, setPage }: PaginationProps) {
     });
     return (
       <button
+        key={i}
         type="button"
         className={btnClass}
         onClick={() => {

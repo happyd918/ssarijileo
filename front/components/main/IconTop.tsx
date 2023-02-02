@@ -1,19 +1,19 @@
-import { MouseEvent, useRef } from 'react';
+import React from 'react';
 import NextImage from 'next/image';
-import { useClientWidthHeight } from '@/hooks/useClientWidthHeight';
+import { useComponentSize } from 'react-use-size';
 import { useCanvas } from '@/hooks/useCanvas';
 import { useAnimation } from '@/hooks/useAnimation';
 
 import Title from '@/components/main/Title';
 import TopImg from '@/components/common/TopImg';
 
-import styles from '@/styles/common/IconTop.module.scss';
+import styles from '@/styles/main/IconTop.module.scss';
 
 function IconTop() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const clientRect = useClientWidthHeight(containerRef);
-  const canvasWidth = clientRect.width;
-  const canvasHeight = clientRect.height;
+  const { height, width, ref } = useComponentSize();
+  const canvasWidth = width;
+  const canvasHeight = height;
+
   const canvasRef = useCanvas(canvasWidth, canvasHeight);
 
   const noteImages = (num: number) =>
@@ -81,7 +81,7 @@ function IconTop() {
 
   useAnimation(animate, 0);
 
-  const onClickParticle = (e: MouseEvent<HTMLCanvasElement>) => {
+  const onClickParticle = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const rect = canvasRef.current?.getBoundingClientRect();
     if (!rect) return;
     for (let i = 0; i < 3; i++) {
@@ -104,12 +104,13 @@ function IconTop() {
   };
 
   return (
-    <div className={styles.container} ref={containerRef}>
+    <div className={styles.container} ref={ref}>
       <canvas
         className={styles.canvas}
         ref={canvasRef}
         onClick={onClickParticle}
       />
+      <TopImg />
       <NextImage
         src="img/common/common_microphone_image.svg"
         width={350}
@@ -117,8 +118,28 @@ function IconTop() {
         alt="mic"
         className={styles.mic}
       />
+      <NextImage
+        src="img/common/common_music_note1_image.svg"
+        width={130}
+        height={130}
+        alt="noteA"
+        className={styles.noteA}
+      />
+      <NextImage
+        src="img/common/common_music_note2_image.svg"
+        width={160}
+        height={160}
+        alt="noteB"
+        className={styles.noteB}
+      />
+      <NextImage
+        src="img/common/common_music_note3_image.svg"
+        width={120}
+        height={120}
+        alt="noteC"
+        className={styles.noteC}
+      />
       <Title />
-      <TopImg />
     </div>
   );
 }

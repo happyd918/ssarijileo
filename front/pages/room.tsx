@@ -15,6 +15,8 @@ import Loading from '@/components/room/Loading';
 
 const APPLICATION_SERVER_URL = 'http://localhost:5000/';
 
+// import RoomController from '@/components/room/RoomController';
+
 function Room() {
   // query로 전달받은 값
   const roomRouter = useRouter();

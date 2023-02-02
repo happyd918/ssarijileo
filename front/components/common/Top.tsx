@@ -6,8 +6,8 @@ import styles from '@/styles/common/Top.module.scss';
 function Top() {
   return (
     <div className={styles.container}>
-      <Title />
       <TopImg />
+      <Title />
     </div>
   );
 }

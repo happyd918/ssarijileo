@@ -2,14 +2,12 @@
   width: 100%;
   min-height: 100vh;
   background-color: var(--color-background);
-  overflow: hidden;
+  //overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
 .container {
-  width: 80%;
-  margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
