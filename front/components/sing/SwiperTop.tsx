@@ -34,8 +34,6 @@ function SwiperTop() {
         disableOnInteraction: false,
       }}
       modules={[Autoplay]}
-      // onSlideChange={() => console.log('slide change')}
-      // onSwiper={swiper => console.log(swiper)}
       className={styles.swiper}
     >
       {swiperSlide}

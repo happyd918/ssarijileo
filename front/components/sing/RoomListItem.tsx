@@ -46,8 +46,17 @@ function RoomListItem({ info }: RoomProps) {
     });
   }
 
+  const openWindow = () => {
+    const popupWindow = window.open('room/', 'windowName', 'resizeable');
+    if (!popupWindow) return;
+    popupWindow.resizeTo(1920, 1080);
+    popupWindow.onresize = _ => {
+      popupWindow.resizeTo(1920, 1080);
+    };
+  };
+
   return (
-    <div className={styles.component}>
+    <div className={styles.component} onClick={openWindow}>
       <div className={styles.container}>
         <div className={backClassName}>
           <div className={styles.top}>
