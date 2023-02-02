@@ -58,7 +58,7 @@ function RoomListItem({ info }: RoomProps) {
   return (
     <div className={styles.component}>
       <div
-        role="button"
+        role="presentation"
         className={styles.container}
         onClick={openWindow}
         onKeyDown={openWindow}
