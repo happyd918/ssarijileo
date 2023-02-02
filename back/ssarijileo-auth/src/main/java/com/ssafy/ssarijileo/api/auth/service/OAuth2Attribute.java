@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.auth.service;
+package com.ssafy.ssarijileo.api.auth.service;
 
 
 import lombok.AccessLevel;

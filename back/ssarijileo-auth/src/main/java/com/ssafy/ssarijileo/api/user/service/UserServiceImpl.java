@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.user.service;
+package com.ssafy.ssarijileo.api.user.service;
 
 import org.springframework.stereotype.Service;
 

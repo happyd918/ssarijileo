@@ -1,13 +1,12 @@
-package com.ssafy.ssarijileo.auth.service;
+package com.ssafy.ssarijileo.api.auth.service;
 
-import com.ssafy.ssarijileo.auth.dto.JwtCode;
-import com.ssafy.ssarijileo.auth.dto.Token;
-import com.ssafy.ssarijileo.auth.dto.TokenKey;
-import com.ssafy.ssarijileo.user.dto.UserInfoDto;
+import com.ssafy.ssarijileo.api.auth.dto.JwtCode;
+import com.ssafy.ssarijileo.api.auth.dto.Token;
+import com.ssafy.ssarijileo.api.auth.dto.TokenKey;
+import com.ssafy.ssarijileo.api.user.dto.UserInfoDto;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;

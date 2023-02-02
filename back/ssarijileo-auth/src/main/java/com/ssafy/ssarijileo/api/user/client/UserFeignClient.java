@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.user.client;
+package com.ssafy.ssarijileo.api.user.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
 

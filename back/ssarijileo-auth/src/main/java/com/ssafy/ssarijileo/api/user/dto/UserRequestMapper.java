@@ -1,12 +1,8 @@
-package com.ssafy.ssarijileo.user.dto;
-
-import java.util.UUID;
+package com.ssafy.ssarijileo.api.user.dto;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
-
-import com.ssafy.ssarijileo.user.entity.User;
 
 @Slf4j
 @Component

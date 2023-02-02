@@ -1,12 +1,12 @@
-package com.ssafy.ssarijileo.filter;
+package com.ssafy.ssarijileo.common.filter;
 
-import com.ssafy.ssarijileo.auth.dto.JwtCode;
-import com.ssafy.ssarijileo.auth.dto.Role;
-import com.ssafy.ssarijileo.auth.dto.Token;
-import com.ssafy.ssarijileo.auth.dto.TokenKey;
-import com.ssafy.ssarijileo.user.dto.UserDto;
-import com.ssafy.ssarijileo.auth.service.TokenProvider;
-import com.ssafy.ssarijileo.user.dto.UserInfoDto;
+import com.ssafy.ssarijileo.api.auth.dto.JwtCode;
+import com.ssafy.ssarijileo.api.auth.dto.Role;
+import com.ssafy.ssarijileo.api.auth.dto.Token;
+import com.ssafy.ssarijileo.api.auth.dto.TokenKey;
+import com.ssafy.ssarijileo.api.user.dto.UserDto;
+import com.ssafy.ssarijileo.api.auth.service.TokenProvider;
+import com.ssafy.ssarijileo.api.user.dto.UserInfoDto;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

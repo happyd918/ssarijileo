@@ -1,24 +1,18 @@
-package com.ssafy.ssarijileo.user.entity;
+package com.ssafy.ssarijileo.api.user.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.transaction.Transactional;
-import javax.validation.constraints.NotNull;
 
 import java.util.UUID;
-
-import net.bytebuddy.implementation.bind.annotation.Default;
 
 @DynamicInsert
 @RequiredArgsConstructor

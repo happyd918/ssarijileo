@@ -1,15 +1,15 @@
-package com.ssafy.ssarijileo.auth.service;
+package com.ssafy.ssarijileo.api.auth.service;
 
-import com.ssafy.ssarijileo.auth.dto.JwtCode;
-import com.ssafy.ssarijileo.auth.dto.Role;
-import com.ssafy.ssarijileo.auth.dto.TokenKey;
-import com.ssafy.ssarijileo.auth.dto.Token;
-import com.ssafy.ssarijileo.exception.NotFoundException;
-import com.ssafy.ssarijileo.user.dto.UserDto;
-import com.ssafy.ssarijileo.user.dto.UserInfoDto;
-import com.ssafy.ssarijileo.user.dto.UserRequestMapper;
-import com.ssafy.ssarijileo.user.entity.User;
-import com.ssafy.ssarijileo.user.repository.UserRepository;
+import com.ssafy.ssarijileo.api.auth.dto.JwtCode;
+import com.ssafy.ssarijileo.api.auth.dto.Role;
+import com.ssafy.ssarijileo.api.auth.dto.TokenKey;
+import com.ssafy.ssarijileo.api.auth.dto.Token;
+import com.ssafy.ssarijileo.common.exception.NotFoundException;
+import com.ssafy.ssarijileo.api.user.dto.UserDto;
+import com.ssafy.ssarijileo.api.user.dto.UserInfoDto;
+import com.ssafy.ssarijileo.api.user.dto.UserRequestMapper;
+import com.ssafy.ssarijileo.api.user.entity.User;
+import com.ssafy.ssarijileo.api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import java.io.IOException;
-import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor

@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.auth.service;
+package com.ssafy.ssarijileo.api.auth.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
-import com.ssafy.ssarijileo.auth.dto.Role;
+import com.ssafy.ssarijileo.api.auth.dto.Role;
 
 @Slf4j
 @Service

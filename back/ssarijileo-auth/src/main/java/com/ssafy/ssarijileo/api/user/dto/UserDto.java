@@ -1,8 +1,6 @@
-package com.ssafy.ssarijileo.user.dto;
+package com.ssafy.ssarijileo.api.user.dto;
 
-import java.util.UUID;
-
-import com.ssafy.ssarijileo.user.entity.User;
+import com.ssafy.ssarijileo.api.user.entity.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

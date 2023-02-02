@@ -1,6 +1,6 @@
-package com.ssafy.ssarijileo.user.repository;
+package com.ssafy.ssarijileo.api.user.repository;
 
-import com.ssafy.ssarijileo.user.entity.User;
+import com.ssafy.ssarijileo.api.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.user.dto;
+package com.ssafy.ssarijileo.api.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

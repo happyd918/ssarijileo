@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.auth.dto;
+package com.ssafy.ssarijileo.api.auth.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,22 +1,11 @@
-package com.ssafy.ssarijileo.auth.controller;
+package com.ssafy.ssarijileo.api.auth.controller;
 
-import com.ssafy.ssarijileo.auth.dto.JwtCode;
-import com.ssafy.ssarijileo.auth.dto.Role;
-import com.ssafy.ssarijileo.auth.dto.Token;
-import com.ssafy.ssarijileo.auth.dto.TokenKey;
-import com.ssafy.ssarijileo.auth.service.TokenProvider;
+import com.ssafy.ssarijileo.api.auth.service.TokenProvider;
 
-import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RequiredArgsConstructor
 @RestController
