@@ -5,7 +5,7 @@ import { Inter } from '@next/font/google';
 // 컴포넌트 추가
 import Footer from '@/components/common/Footer';
 import Header from '@/components/common/Header';
-import Sing from '@/components/sing/sing';
+import Index from '@/pages/sing/index';
 
 import styles from '@/styles/Home.module.scss';
 
@@ -20,7 +20,7 @@ function singsample() {
       <main className={`${styles.main} ${inter.className}`}>
         <Header />
         <div className={styles.container}>
-          <Sing />
+          <Index />
         </div>
         <Footer />
       </main>
