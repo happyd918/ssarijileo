@@ -1,26 +1,17 @@
-@import '../color.scss';
+@import '../color';
+@import '../mixin';
 
 .container {
   width: 100%;
 
     .noteA {
-      position: absolute;
-      top: 100px;
-      left: 470px;
-      filter: drop-shadow(10px 10px 5px rgba(0, 0, 0, 0.5));
+      @include noteA;
     }
     .noteB {
-      position: absolute;
-      top: 300px;
-      right: 640px;
-      filter: drop-shadow(10px 10px 5px rgba(0, 0, 0, 0.5));
-      z-index: 1;
+      @include noteB;
     }
     .noteC {
-      position: absolute;
-      top: 120px;
-      right: 500px;
-      filter: drop-shadow(10px 10px 5px rgba(0, 0, 0, 0.5));
+      @include noteC;
     }
 
   .title {
