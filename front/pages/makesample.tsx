@@ -21,8 +21,8 @@ function MakeSample() {
   const [isStarted, setIsStarted] = useState(false);
 
   const start = () => {
-    sourceRef.current?.start();
     setIsStarted(true);
+    sourceRef.current?.start();
   };
 
   const stop = () => {
