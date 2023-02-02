@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 import styles from '@/styles/room/Screen.module.scss';
 
-function MyScreen(props: any) {
-  const videoRef = React.createRef();
-  const screen = props.streamManager;
+function MyScreen({ streamManager }: any) {
+  // const videoRef = React.createRef();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const screen = streamManager;
 
   useEffect(() => {
-    if (props && !!videoRef) {
+    if (screen && !!videoRef) {
       screen.addVideoElement(videoRef.current);
     }
   }, [screen]);
@@ -15,7 +16,9 @@ function MyScreen(props: any) {
   return (
     <div className={styles.myScreen}>
       내화면
-      <video className={styles.video} autoPlay ref={videoRef} />
+      <video className={styles.video} autoPlay ref={videoRef}>
+        <track kind="captions" />
+      </video>
     </div>
   );
 }
