@@ -3,12 +3,29 @@ import Image from 'next/image';
 import classNames from 'classnames';
 import styles from '@/styles/room/RoomChat.module.scss';
 
-function RoomChat({ setModalOpen }: any) {
+function RoomChat({ setModalOpen, session }: any) {
   // 현재 입력하는 채팅정보
   const [chatContext, setChat] = useState('');
   const changeChat = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const eventTarget = e.target as HTMLTextAreaElement;
     setChat(eventTarget.value);
+  };
+
+  // 채팅 보내기
+  const sendChat = (event: any) => {
+    console.log(event);
+    session
+      .signal({
+        data: '메세지 보낸 싸리질러', // Any string (optional)
+        to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
+        type: 'chat', // The type of message (optional)
+      })
+      .then(() => {
+        console.log('Message successfully sent');
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
   };
 
   // 오픈비두에서 제공되는 채팅정보 (data)
@@ -116,6 +133,7 @@ function RoomChat({ setModalOpen }: any) {
               name: myName,
             });
             setChatData(chatData);
+            sendChat(chatContext);
           }}
         >
           전송

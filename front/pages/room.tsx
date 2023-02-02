@@ -115,6 +115,7 @@ function Room() {
   useEffect(() => {
     if (init) {
       const mySession = session;
+
       // subscribers에 참가자 추가
       mySession.on('streamCreated', (event: any) => {
         const subscriber = mySession.subscribe(event.stream, undefined);
@@ -122,6 +123,13 @@ function Room() {
         newsubscribers.push(subscriber);
         // setSubscribers([...subscribers, subscriber]);
         setSubscribers([...newsubscribers]);
+      });
+
+      // 채팅
+      mySession.on('chat', (event: any) => {
+        console.log(event.data); // Message
+        console.log(event.from); // Connection object of the sender
+        console.log(event.type); // The type of message ("my-chat")
       });
 
       // 참가
@@ -137,7 +145,7 @@ function Room() {
               videoSource: undefined, // The source of video. If undefined default webcam
               publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
               publishVideo: true, // Whether you want to start publishing with your video enabled or not
-              resolution: '640x480', // The resolution of your video
+              resolution: '480x480', // The resolution of your video
               frameRate: 30, // The frame rate of your video
               insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
               mirror: false, // Whether to mirror your local video or not
@@ -210,7 +218,7 @@ function Room() {
           })}
         </div>
       </div>
-      <RoomFooter />
+      <RoomFooter mySession={session} />
     </div>
   );
 }

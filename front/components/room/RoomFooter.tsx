@@ -6,13 +6,15 @@ import RoomController from './RoomController';
 import RoomFriend from './RoomFriend';
 import RoomChat from './RoomChat';
 
-function RoomFooter() {
+function RoomFooter({ mySession }: any) {
   const [controllerModalOpen, setControllerModalOpen] = useState(false);
   const [friendModalOpen, setFriendModalOpen] = useState(false);
   const [chatModalOpen, setChatModalOpen] = useState(false);
   return (
     <div className={styles.container}>
-      {chatModalOpen && <RoomChat setModalOpen={setChatModalOpen} />}
+      {chatModalOpen && (
+        <RoomChat setModalOpen={setChatModalOpen} session={mySession} />
+      )}
       {friendModalOpen && <RoomFriend setModalOpen={setFriendModalOpen} />}
       {controllerModalOpen && (
         <RoomController setModalOpen={setControllerModalOpen} />
