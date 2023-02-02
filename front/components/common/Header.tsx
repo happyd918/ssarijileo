@@ -47,7 +47,7 @@ function Header() {
     },
     {
       name: '인기차트',
-      link: '/',
+      link: 'chart/',
     },
     {
       name: '노래자랑',
@@ -96,6 +96,8 @@ function Header() {
   const showModal = () => {
     setModalOpen(true);
   };
+
+  if (window.location.pathname === '/room') return null;
 
   return (
     <header className={styles.header}>

@@ -33,9 +33,9 @@ function Footer() {
   ];
 
   const icons = {
-    logo: `icon/Header/${themeMode}/${themeMode}_logo.svg`,
-    phone: `icon/Footer/${themeMode}/${themeMode}_phone_icon.svg`,
-    place: `icon/Footer/${themeMode}/${themeMode}_place_icon.svg`,
+    logo: `icon/header/${themeMode}/${themeMode}_logo.svg`,
+    phone: `icon/footer/${themeMode}/${themeMode}_phone_icon.svg`,
+    place: `icon/footer/${themeMode}/${themeMode}_place_icon.svg`,
   };
 
   const socialsIcons = socials.map(social => (
@@ -48,6 +48,7 @@ function Footer() {
     />
   ));
 
+  if (window.location.pathname === '/room') return null;
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
