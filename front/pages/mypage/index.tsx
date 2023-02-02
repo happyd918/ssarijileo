@@ -6,6 +6,7 @@ import EchoControlBar from '@/components/common/EchoControlBar';
 
 import styles from '@/styles/mypage/Mypage.module.scss';
 import { useSelector } from 'react-redux';
+import ContentForm from '@/components/mypage/ContentForm';
 
 function MyPage() {
   const DUMMY_DATA = {
@@ -55,6 +56,7 @@ function MyPage() {
         <div className={styles.content}>
           <h1>마이페이지</h1>
           <p className={styles.contentHeader}>계정 관리</p>
+          <ContentForm theme={theme} DUMMY_DATA={DUMMY_DATA} />
         </div>
       </div>
     </div>

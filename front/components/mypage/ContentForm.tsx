@@ -4,7 +4,7 @@ import Image from 'next/image';
 import MicControlBar from '@/components/common/MicControlBar';
 import EchoControlBar from '@/components/common/EchoControlBar';
 
-import styles from '@/styles/mypage/Mypage.module.scss';
+import styles from '@/styles/mypage/ContentForm.module.scss';
 
 function ContentForm(props: { theme: string; DUMMY_DATA: any }) {
   const { theme, DUMMY_DATA } = props;
@@ -125,3 +125,5 @@ function ContentForm(props: { theme: string; DUMMY_DATA: any }) {
     </>
   );
 }
+
+export default ContentForm;
