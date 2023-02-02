@@ -17,6 +17,7 @@ function MicControlBar() {
   return (
     <div id="controls" className={styles.controls}>
       <input
+        id="micVolume"
         type="range"
         min={0}
         max={1}
