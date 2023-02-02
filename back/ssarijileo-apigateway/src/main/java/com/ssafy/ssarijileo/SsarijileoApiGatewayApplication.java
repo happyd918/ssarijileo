@@ -3,12 +3,14 @@ package com.ssafy.ssarijileo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
-public class SsarijileoApiGateWayApplication {
+@EnableFeignClients
+public class SsarijileoApiGatewayApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SsarijileoApiGateWayApplication.class, args);
+		SpringApplication.run(SsarijileoApiGatewayApplication.class, args);
 	}
 
 }
