@@ -12,12 +12,30 @@
     cursor: pointer;
   }
 
-  .mic {
+  .topList {
+    display: flex;
+    flex-direction: row;
     position: absolute;
-    top: 300px;
-    right: 200px;
-    filter: drop-shadow(20px 20px 10px rgba(0, 0, 0, 0.5));
-    z-index: 0;
+    right: 100px;
+
+    .item {
+      z-index: 10;
+      width: 220px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 20px;
+      color: var(--color-text);
+      cursor: pointer;
+      transition: all 1s ease;
+
+      .albumCover {
+        border-radius: 15px;
+        margin-bottom: 10px;
+      }
+    }
+    .item:hover {
+      transform: scale(110%);
+    }
   }
 
   .heartA {

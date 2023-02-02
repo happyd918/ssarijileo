@@ -102,17 +102,17 @@ function ChartTop() {
 
   const best = [
     {
-      // img: 'https://w.namu.la/s/6aa55fa851df9b94d4efd286dd2379c0c16daaccf1342b9ce41f48a2c5a3178463b0b7e997fb4ef3002ed45b6cb50b12f9150f14d3cc7e0b9c8f6a9655f10f0e670ba2aa8526575b19fdd962e6d3e47297811d8a89cb37ed90435896e91b4b31',
+      img: 'https://i1.sndcdn.com/artworks-Ah2Fl2dwIlA2xWeb-kWN55A-t240x240.jpg',
       title: 'OMG',
       singer: 'NewJeans',
     },
     {
-      // img: 'https://images.genius.com/a336c0b9afbfd6d1bf645ac584bf56b9.1000x1000x1.png',
+      img: 'https://image.bugsm.co.kr/album/images/500/40789/4078936.jpg',
       title: 'After LIKE',
       singer: 'IVE',
     },
     {
-      // img: 'https://cdnimg.melon.co.kr/cm2/album/images/110/78/852/11078852_20221017102947_500.jpg?3afd315fe8957d40a511b9c42aeaf516/melon/optimize/90',
+      img: 'http://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/083/072/254/83072254_1665976983718_1_600x600.JPG',
       title: 'Nxde',
       singer: '(여자)아이들',
     },
@@ -121,7 +121,13 @@ function ChartTop() {
   const bestData = best.map(item => {
     return (
       <div className={styles.item}>
-        <div>앨범커버</div>
+        <NextImage
+          src={item.img}
+          width={180}
+          height={180}
+          alt="album"
+          className={styles.albumCover}
+        />
         <div>
           {item.title}-{item.singer}
         </div>

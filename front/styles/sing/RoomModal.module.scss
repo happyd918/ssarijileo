@@ -10,6 +10,7 @@
   border-radius: 20px;
   margin: 0 5px;
   background: $white;
+  text-align: center;
 }
 
 @mixin btn {
@@ -19,6 +20,7 @@
   font-size: 12px;
   font-weight: bold;
   border-radius: 6px;
+  text-align: center;
 }
 
 .back {
@@ -237,6 +239,9 @@
       flex-direction: row;
       justify-content: flex-end;
 
+      .link {
+        text-decoration: none;
+      }
       .createBtn {
         @include btn();
         border: 1px solid var(--color-hover);

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useSelector } from 'react-redux';
 
 import ContentForm from '@/components/mypage/ContentForm';
+import FriendForm from '@/components/mypage/FriendForm';
 
 import styles from '@/styles/mypage/Mypage.module.scss';
 
@@ -16,6 +17,7 @@ function MyPage() {
   };
 
   const [theme, setTheme] = useState('light');
+  const [type, setType] = useState('계정 관리');
 
   const storeTheme = useSelector<any>(state => state.theme);
   useEffect(() => {
@@ -34,27 +36,45 @@ function MyPage() {
               width={100}
               height={100}
             />
-            <Image
-              src="/img/mypage/mypage_edit_image.svg"
-              alt="profile"
-              className={styles.edit}
-              width={20}
-              height={20}
-            />
+            <label htmlFor="inputFile" className={styles.editBtn}>
+              <Image
+                src="/img/mypage/mypage_edit_image.svg"
+                alt="profile"
+                className={styles.edit}
+                width={20}
+                height={20}
+              />
+            </label>
+            <input type="file" id="inputFile" className={styles.inputFile} />
           </div>
           <div className={styles.name}>{DUMMY_DATA.nickname}님</div>
-          <button type="button" className={styles.btn}>
+          <button
+            type="button"
+            className={styles.btn}
+            onClick={() => {
+              setType('계정 관리');
+            }}
+          >
             계정 관리
           </button>
-          <button type="button" className={styles.btn}>
+          <button
+            type="button"
+            className={styles.btn}
+            onClick={() => {
+              setType('친구 목록');
+            }}
+          >
             친구 목록
           </button>
         </div>
 
         <div className={styles.content}>
           <h1>마이페이지</h1>
-          <p className={styles.contentHeader}>계정 관리</p>
-          <ContentForm theme={theme} DUMMY_DATA={DUMMY_DATA} />
+          <p className={styles.contentHeader}>{type}</p>
+          {type === '계정 관리' && (
+            <ContentForm theme={theme} DUMMY_DATA={DUMMY_DATA} />
+          )}
+          {type === '친구 목록' && <FriendForm />}
         </div>
       </div>
     </div>

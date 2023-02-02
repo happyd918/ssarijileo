@@ -157,6 +157,7 @@ function RoomModal({ setModalOpen }: any) {
               query: { customTitle: title },
             }}
             as="/room"
+            className={styles.link}
           >
             <button
               type="button"
