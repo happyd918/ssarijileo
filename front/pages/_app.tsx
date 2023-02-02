@@ -10,7 +10,7 @@ import Layout from '@/components/layout/Layout';
 
 import '@/styles/global.scss';
 
-export const persistor = persistStore(store);
+export const persist = persistStore(store);
 
 // 카카오 전역 객체 선언
 declare global {
@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     // 카카오 SDK 초기화
     if (!window.Kakao.isInitialized()) {
       window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_SDK_KEY);
-      console.log(window.Kakao.isInitialized());
+      // console.log(window.Kakao.isInitialized());
     }
   }, []);
 
@@ -35,7 +35,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store}>
-      <PersistGate persistor={persistor}>
+      <PersistGate persistor={persist}>
         <Layout>
           <Component {...pageProps} />
         </Layout>

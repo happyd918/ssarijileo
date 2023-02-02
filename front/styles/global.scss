@@ -19,6 +19,7 @@ body[data-theme='light'] {
   --color-roomB: rgb(169, 134, 232);
   --color-roomA: rgb(247, 138, 221);
   --color-today-contest: rgba(122, 122, 122, 0.3);
+  --color-star: #{$main};
 }
 
 body[data-theme='dark'] {
@@ -40,6 +41,7 @@ body[data-theme='dark'] {
   --color-roomB: rgb(57, 206, 200);
   --color-roomA: rgb(31, 92, 125);
   --color-today-contest: rgba(191, 191, 191, 0.5);
+  --color-star: rgba(255, 199, 0, 1);
 }
 
 body {
