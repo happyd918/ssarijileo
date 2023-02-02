@@ -6,13 +6,11 @@ function EchoControlBar() {
   const [volume, setVolume] = useState(0.5);
   const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVolume(Number(e.target.value));
-    e.target.style.background = `
-      'linear-gradient(to right, #00AADF 0%, #00AADF ' +
-      ${Math.round(volume * 100)} +
-      '%, rgb(236, 236, 236) ' +
-      ${Math.round(volume * 100)} +
-      '%, rgb(236, 236, 236) 100%)'
-    `;
+    e.target.style.background = `linear-gradient(to right, #00AADF 0%, #00AADF ${Math.round(
+      volume * 100,
+    )}%, rgb(236, 236, 236) ${Math.round(
+      volume * 100,
+    )}%, rgb(236, 236, 236) 100%)`;
   };
   return (
     <div id="controls" className={styles.controls}>
