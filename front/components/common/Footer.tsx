@@ -48,6 +48,7 @@ function Footer() {
     />
   ));
 
+  if (window.location.pathname === '/room') return null;
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
