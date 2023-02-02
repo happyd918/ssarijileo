@@ -23,8 +23,8 @@ function Room() {
   const title = roomRouter.query.customTitle;
   console.log('title', title);
 
-  // loading
-  const mySessionId = 'sampleid';
+  // session Info , (23.02.02 : sessionId 사용자가 입력한 title을 사용중, sessionid와 방제는 redis 에서 구현될 예정!)
+  const mySessionId = title;
   const myUserName = 'samplename';
   const [OV, setOV] = useState<any>(undefined);
   const [session, setSession] = useState<any>(undefined);
@@ -37,7 +37,7 @@ function Room() {
   console.log(mainStreamManager, currentVideoDevice);
 
   // api
-  async function createSession(sessionId: string) {
+  async function createSession(sessionId: string | string[] | undefined) {
     const response = await axios.post(
       `${APPLICATION_SERVER_URL}api/sessions`,
       { customSessionId: sessionId },
@@ -95,7 +95,7 @@ function Room() {
     setPublisher(undefined);
     setSubscribers([]);
 
-    roomRouter.push('/singsample');
+    roomRouter.push('sing/');
   };
 
   // 참가자 하이라이트(노래부르는 사람) 화면 변경
