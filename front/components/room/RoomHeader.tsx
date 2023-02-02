@@ -2,7 +2,7 @@ import Image from 'next/image';
 import styles from '@/styles/room/RoomHeader.module.scss';
 import ReservList from './ReservList';
 
-function RoomHeader() {
+function RoomHeader({ leaveRoom }: any) {
   return (
     <div className={styles.container}>
       <div className={styles.reservList}>
@@ -21,6 +21,7 @@ function RoomHeader() {
         height={38}
         alt="close"
         className={styles.closeIcon}
+        onClick={leaveRoom}
       />
     </div>
   );
