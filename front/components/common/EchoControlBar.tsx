@@ -15,6 +15,7 @@ function EchoControlBar() {
   return (
     <div id="controls" className={styles.controls}>
       <input
+        id="echo"
         type="range"
         min={0}
         max={1}

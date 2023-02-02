@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
 
-import MicControlBar from '@/components/common/MicControlBar';
-import EchoControlBar from '@/components/common/EchoControlBar';
+import ContentForm from '@/components/mypage/ContentForm';
 
 import styles from '@/styles/mypage/Mypage.module.scss';
-import { useSelector } from 'react-redux';
-import ContentForm from '@/components/mypage/ContentForm';
 
 function MyPage() {
   const DUMMY_DATA = {
