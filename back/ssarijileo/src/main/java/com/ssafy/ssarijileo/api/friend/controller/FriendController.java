@@ -112,4 +112,9 @@ public class FriendController {
 		friendService.updateFriend(friendUpdateDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
+
+	@GetMapping("/test")
+	public ResponseEntity<? extends BaseResponseBody> testFriend() {
+		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+	}
 }

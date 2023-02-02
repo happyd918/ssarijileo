@@ -4,6 +4,7 @@ import com.ssafy.ssarijileo.api.user.dto.UserDto;
 import com.ssafy.ssarijileo.api.user.service.UserService;
 import com.ssafy.ssarijileo.common.model.BaseResponseBody;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,6 +26,11 @@ public class UserController {
     @PutMapping("/withdrawl/{userId}")
     public ResponseEntity<? extends BaseResponseBody> withdrawalUser(@PathVariable String userId) {
         userService.withdrawlUser(userId);
+        return ResponseEntity.ok().body(BaseResponseBody.of(200, "Success"));
+    }
+
+    @GetMapping()
+    public ResponseEntity<? extends BaseResponseBody> testUser() {
         return ResponseEntity.ok().body(BaseResponseBody.of(200, "Success"));
     }
 
