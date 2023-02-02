@@ -1,17 +1,12 @@
-package com.ssafy.ssarijileo.common.sse.controller;
+package com.ssafy.ssarijileo.sse.controller;
 
-import java.io.IOException;
-
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import com.querydsl.codegen.utils.support.ClassUtils;
-import com.ssafy.ssarijileo.common.sse.service.SseService;
+import com.ssafy.ssarijileo.sse.service.SseService;
 
 import lombok.RequiredArgsConstructor;
 

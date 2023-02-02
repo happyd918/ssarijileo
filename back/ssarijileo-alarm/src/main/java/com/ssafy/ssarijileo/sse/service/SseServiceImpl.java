@@ -1,13 +1,14 @@
-package com.ssafy.ssarijileo.common.sse.service;
+package com.ssafy.ssarijileo.sse.service;
 
 import java.io.IOException;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import com.ssafy.ssarijileo.common.kafka.event.FriendInviteEvent;
-import com.ssafy.ssarijileo.common.kafka.event.FriendRequestEvent;
-import com.ssafy.ssarijileo.common.sse.repository.SseRepository;
+import com.ssafy.ssarijileo.common.exception.AlarmException;
+import com.ssafy.ssarijileo.kafka.event.FriendInviteEvent;
+import com.ssafy.ssarijileo.kafka.event.FriendRequestEvent;
+import com.ssafy.ssarijileo.sse.repository.SseRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,7 @@ public class SseServiceImpl implements SseService {
 				.name(ALARM_NAME)
 				.data("connect completed"));
 		} catch (IOException exception) {
-			// throw new SnsApplicationException(ErrorCode.NOTIFICATION_CONNECT_ERROR);
+			throw new AlarmException();
 		}
 
 		return emitter;
@@ -52,7 +53,7 @@ public class SseServiceImpl implements SseService {
 						.data(event));
 				} catch (IOException exception) {
 					sseRepository.remove(event.getUser().getToUserId());
-					// throw new SnsApplicationException(ErrorCode.NOTIFICATION_CONNECT_ERROR);
+					throw new AlarmException("친구요청 알림 전송 중 오류가 발생했습니다.");
 				}
 			},
 			() -> log.info("No friend invite emitter founded")
@@ -69,7 +70,7 @@ public class SseServiceImpl implements SseService {
 						.data(event));
 				} catch (IOException exception) {
 					sseRepository.remove(event.getUser().getToUserId());
-					// throw new SnsApplicationException(ErrorCode.NOTIFICATION_CONNECT_ERROR);
+					throw new AlarmException("친구초대 알림 전송 중 오류가 발생했습니다.");
 				}
 			},
 			() -> log.info("No friend request emitter founded")

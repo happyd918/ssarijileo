@@ -8,7 +8,7 @@ public interface RecordingService {
 
 	List<RecordingDto> findAllRecording();
 
-	RecordingDto findRecordingById(Long id);
+	RecordingDto findRecordingById(Long recordingId);
 
 	List<RecordingDto> findRecordingByUserId(String userId);
 

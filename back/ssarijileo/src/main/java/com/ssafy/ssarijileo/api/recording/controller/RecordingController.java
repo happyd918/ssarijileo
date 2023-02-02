@@ -48,7 +48,7 @@ public class RecordingController {
 
 	/**
 	 * 녹화 정보 조회
-	 * @param id
+	 * @param recordingId
 	 * @return
 	 */
 	@ApiOperation(
@@ -56,7 +56,7 @@ public class RecordingController {
 		notes = "녹화 ID를 통해 녹화 정보를 조회한다."
 	)
 	@ApiImplicitParam(
-		name = "id",
+		name = "recordingId",
 		value = "녹화 PK"
 	)
 	@ApiResponses({
@@ -65,9 +65,9 @@ public class RecordingController {
 		@ApiResponse(code = 404, message = "녹화 없음"),
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
-	@GetMapping("{id}")
-	public ResponseEntity<RecordingDto> findRecordingById(@PathVariable Long id){
-		return ResponseEntity.status(200).body(recordingService.findRecordingById(id));
+	@GetMapping("{recordingId}")
+	public ResponseEntity<RecordingDto> findRecordingById(@PathVariable Long recordingId){
+		return ResponseEntity.status(200).body(recordingService.findRecordingById(recordingId));
 	}
 
 	/**

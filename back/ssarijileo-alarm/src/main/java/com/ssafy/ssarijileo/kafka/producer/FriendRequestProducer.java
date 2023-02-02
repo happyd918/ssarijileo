@@ -1,9 +1,9 @@
-package com.ssafy.ssarijileo.common.kafka.producer;
+package com.ssafy.ssarijileo.kafka.producer;
 
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import com.ssafy.ssarijileo.common.kafka.event.FriendRequestEvent;
+import com.ssafy.ssarijileo.kafka.event.FriendRequestEvent;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

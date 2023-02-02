@@ -1,5 +1,7 @@
 package com.ssafy.ssarijileo.api.favoritesong.entity;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,7 +28,7 @@ public class FavoriteSong {
 	private Long favoriteSongId;
 
 	// 사용자PK
-	private String userId;
+	private UUID userId;
 
 	// 노래PK
 	@ManyToOne(fetch = FetchType.LAZY)

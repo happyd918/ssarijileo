@@ -1,5 +1,7 @@
 package com.ssafy.ssarijileo.api.friend.entity;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,10 +26,10 @@ public class Friend {
 	private Long friendId;
 
 	// 보낸 사용자PK
-	private String fromUserId;
+	private UUID fromUserId;
 
 	// 받는 사용자PK
-	private String toUserId;
+	private UUID toUserId;
 
 	// 상태(W:대기,A:수락,X:취소)
 	private char status;
@@ -36,14 +38,14 @@ public class Friend {
 	@Builder
 	public Friend(FriendDto friendDto) {
 		this.friendId = friendDto.getFriendId();
-		this.fromUserId = friendDto.getFromUserId();
-		this.toUserId = friendDto.getToUserId();
+		this.fromUserId = UUID.fromString(friendDto.getFromUserId());
+		this.toUserId = UUID.fromString(friendDto.getToUserId());
 		this.status = friendDto.getStatus();
 	}
 
 	// Entity to Dto
 	public FriendDto toDto() {
-		return new FriendDto(friendId, fromUserId, toUserId, status);
+		return new FriendDto(friendId, String.valueOf(fromUserId), String.valueOf(toUserId), status);
 	}
 
 	public void updateFriend(char status) {

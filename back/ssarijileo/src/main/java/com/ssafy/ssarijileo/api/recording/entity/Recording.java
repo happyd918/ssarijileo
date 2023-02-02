@@ -1,5 +1,7 @@
 package com.ssafy.ssarijileo.api.recording.entity;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -28,7 +30,7 @@ public class Recording {
 	private Long recordingId;
 
 	// 사용자PK
-	private String userId;
+	private UUID userId;
 
 	// 노래PK
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -45,7 +47,7 @@ public class Recording {
 	@Builder
 	public Recording(RecordingDto recordingDto, Song song) {
 		this.recordingId = recordingDto.getRecordingId();
-		this.userId = recordingDto.getUserId();
+		this.userId = UUID.fromString(recordingDto.getUserId());
 		this.song = song;
 		this.file = recordingDto.getFile();
 		this.registerDate = recordingDto.getRegisterDate();
@@ -53,6 +55,6 @@ public class Recording {
 
 	// Entity to Dto
 	public RecordingDto toDto(){
-		return new RecordingDto(recordingId, userId, song.getSongId(), file, registerDate);
+		return new RecordingDto(recordingId, String.valueOf(userId), song.getSongId(), file, registerDate);
 	}
 }

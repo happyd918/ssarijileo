@@ -1,5 +1,7 @@
 package com.ssafy.ssarijileo.api.profile.entitiy;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,11 +19,11 @@ public class Profile {
 
 	// PK (AUTO_INCREMENT)
 	@Id
-	String profileId;
+	private UUID profileId;
 
 	// 닉네임
-	String nickname;
+	private String nickname;
 
 	// 프로필이미지
-	String image;
+	private String image;
 }

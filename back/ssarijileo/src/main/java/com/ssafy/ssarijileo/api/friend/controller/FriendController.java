@@ -118,19 +118,19 @@ public class FriendController {
 	 * 친구 초대
 	 * @param friendInviteDto
 	 */
-	@ApiOperation(
-		value = "친구 초대",
-		notes = "노래방에 친구를 초대한다."
-	)
-	@ApiResponses({
-		@ApiResponse(code = 200, message = "성공"),
-		@ApiResponse(code = 401, message = "인증 실패"),
-		@ApiResponse(code = 404, message = "정보 없음"),
-		@ApiResponse(code = 500, message = "서버 오류")
-	})
-	@PostMapping
-	public ResponseEntity<? extends BaseResponseBody> inviteFriend(@RequestBody FriendInviteDto friendInviteDto) {
-		friendService.inviteFriend(friendInviteDto);
-		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-	}
+	// @ApiOperation(
+	// 	value = "친구 초대",
+	// 	notes = "노래방에 친구를 초대한다."
+	// )
+	// @ApiResponses({
+	// 	@ApiResponse(code = 200, message = "성공"),
+	// 	@ApiResponse(code = 401, message = "인증 실패"),
+	// 	@ApiResponse(code = 404, message = "정보 없음"),
+	// 	@ApiResponse(code = 500, message = "서버 오류")
+	// })
+	// @PostMapping("/invite")
+	// public ResponseEntity<? extends BaseResponseBody> inviteFriend(@RequestBody FriendInviteDto friendInviteDto) {
+	// 	friendService.inviteFriend(friendInviteDto);
+	// 	return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+	// }
 }

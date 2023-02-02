@@ -1,9 +1,9 @@
-package com.ssafy.ssarijileo.common.kafka.producer;
+package com.ssafy.ssarijileo.kafka.producer;
 
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import com.ssafy.ssarijileo.common.kafka.event.FriendInviteEvent;
+import com.ssafy.ssarijileo.kafka.event.FriendInviteEvent;
 import com.ssafy.ssarijileo.common.model.AlarmType;
 
 import lombok.RequiredArgsConstructor;

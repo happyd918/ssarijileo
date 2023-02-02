@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.common.sse.repository;
+package com.ssafy.ssarijileo.sse.repository;
 
 import java.util.HashMap;
 import java.util.Map;

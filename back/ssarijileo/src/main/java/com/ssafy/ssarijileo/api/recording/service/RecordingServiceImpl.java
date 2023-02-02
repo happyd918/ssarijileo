@@ -27,8 +27,8 @@ public class RecordingServiceImpl implements RecordingService {
 	}
 
 	@Override
-	public RecordingDto findRecordingById(Long id) {
-		return recordingJpaRepository.findById(id).orElseThrow(NotFoundException::new).toDto();
+	public RecordingDto findRecordingById(Long recordingId) {
+		return recordingJpaRepository.findById(recordingId).orElseThrow(NotFoundException::new).toDto();
 	}
 
 	@Override

@@ -1,11 +1,11 @@
-package com.ssafy.ssarijileo.common.kafka.consumer;
+package com.ssafy.ssarijileo.kafka.consumer;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
-import com.ssafy.ssarijileo.common.kafka.event.FriendRequestEvent;
-import com.ssafy.ssarijileo.common.sse.service.SseService;
+import com.ssafy.ssarijileo.kafka.event.FriendRequestEvent;
+import com.ssafy.ssarijileo.sse.service.SseService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

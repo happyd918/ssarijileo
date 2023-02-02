@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.common.kafka.event;
+package com.ssafy.ssarijileo.kafka.event;
 
 import com.ssafy.ssarijileo.common.model.AlarmUser;
 
