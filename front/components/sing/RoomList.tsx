@@ -41,10 +41,11 @@ function RoomList() {
 
   const roomInfo: any[] = [];
   for (let i = 0; i < 100; i++) {
+    const num = Math.floor(Math.random() * 4) + 1;
     const room = {
       id: i,
       title: `방 ${i + 1}`,
-      type: '일반모드',
+      type: sortType[num].mode,
       lock: i % 2 === 0,
       member: i % 2 === 0 ? 2 : 1,
     };

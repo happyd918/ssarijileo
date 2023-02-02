@@ -17,7 +17,7 @@ function RoomListItem({ info }: RoomProps) {
     [styles.type]: true,
     [styles.nomal]: true,
   });
-  if (type === '퍼펙트싱어') {
+  if (type === '퍼펙트스코어') {
     backClassName = classNames({
       [styles.back]: true,
       [styles.perfect]: true,
@@ -35,7 +35,7 @@ function RoomListItem({ info }: RoomProps) {
       [styles.type]: true,
       [styles.relay]: true,
     });
-  } else if (type === '가사맞추기') {
+  } else if (type === '가사 맞추기') {
     backClassName = classNames({
       [styles.back]: true,
       [styles.guess]: true,
