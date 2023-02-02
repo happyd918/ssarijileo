@@ -50,14 +50,19 @@ function RoomListItem({ info }: RoomProps) {
     const popupWindow = window.open('room/', 'windowName', 'resizeable');
     if (!popupWindow) return;
     popupWindow.resizeTo(1920, 1080);
-    popupWindow.onresize = _ => {
+    popupWindow.onresize = () => {
       popupWindow.resizeTo(1920, 1080);
     };
   };
 
   return (
-    <div className={styles.component} onClick={openWindow}>
-      <div className={styles.container}>
+    <div className={styles.component}>
+      <div
+        role="button"
+        className={styles.container}
+        onClick={openWindow}
+        onKeyDown={openWindow}
+      >
         <div className={backClassName}>
           <div className={styles.top}>
             <div className={styles.title}>{title}</div>

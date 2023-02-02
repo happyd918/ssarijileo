@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import styles from '@/styles/sing/RoomList.module.scss';
 import Search from '@/components/common/Search';
