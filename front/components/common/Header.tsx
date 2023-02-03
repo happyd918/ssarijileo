@@ -10,6 +10,8 @@ import Dropdown from '@/components/common/Dropdown';
 import styles from '@/styles/common/Header.module.scss';
 
 function Header() {
+  if (window.location.pathname === '/room') return null;
+
   const [modalOpen, setModalOpen] = useState(false);
   const [themeMode, setThemeMode] = useState('');
   const [checked, setChecked] = useState(false);
@@ -61,21 +63,11 @@ function Header() {
   ];
 
   const icons = {
-    logo: `icon/header/${themeMode || 'light'}/${
-      themeMode || 'light'
-    }_logo.svg`,
-    mode: `icon/header/${themeMode || 'light'}/${
-      themeMode || 'light'
-    }_mode_icon.svg`,
-    alarm: `icon/header/${themeMode || 'light'}/${
-      themeMode || 'light'
-    }_alarm_icon.svg`,
-    profile: `icon/header/${themeMode || 'light'}/${
-      themeMode || 'light'
-    }_profile_icon.svg`,
-    dropdown: `icon/header/${themeMode || 'light'}/${
-      themeMode || 'light'
-    }_dropdown_icon.svg`,
+    logo: `icon/header/${themeMode}/${themeMode}_logo.svg`,
+    mode: `icon/header/${themeMode}/${themeMode}_mode_icon.svg`,
+    alarm: `icon/header/${themeMode}/${themeMode}_alarm_icon.svg`,
+    profile: `icon/header/${themeMode}/${themeMode}_profile_icon.svg`,
+    dropdown: `icon/header/${themeMode}/${themeMode}_dropdown_icon.svg`,
   };
 
   // menu 리스트 요소에 대한 태그 생성
@@ -98,7 +90,70 @@ function Header() {
     setModalOpen(true);
   };
 
-  if (window.location.pathname === '/room') return null;
+  {
+    /*const showAlarm = () => {*/
+  }
+  {
+    /*  // const eventSource = new EventSource(`/subscribe/` + id);*/
+  }
+  {
+    /*  const eventSource = new EventSource(`/subscribe/1`);*/
+  }
+
+  {
+    /*  eventSource.addEventListener('sse', function (event) {*/
+  }
+  {
+    /*    console.log(event.data);*/
+  }
+
+  {
+    /*    const data = JSON.parse(event.data);*/
+  }
+
+  //     (async () => {
+  //       // 브라우저 알림
+  //       const showNotification = () => {
+  //         const notification = new Notification('코드 봐줘', {
+  //           body: data.content,
+  //         });
+  //
+  //         setTimeout(() => {
+  {
+    /*          notification.close();*/
+  }
+  {
+    /*        }, 10 * 1000);*/
+  }
+  //
+  //         notification.addEventListener('click', () => {
+  //           window.open(data.url, '_blank');
+  {
+    /*        });*/
+  }
+  {
+    /*      };*/
+  }
+
+  //       // 브라우저 알림 허용 권한
+  //       let granted = false;
+  //
+  //       if (Notification.permission === 'granted') {
+  //         granted = true;
+  //       } else if (Notification.permission !== 'denied') {
+  //         let permission = await Notification.requestPermission();
+  //         granted = permission === 'granted';
+  {
+    /*      }*/
+  }
+  //
+  //       // 알림 보여주기
+  //       if (granted) {
+  //         showNotification();
+  //       }
+  //     })();
+  //   });
+  // };
 
   return (
     <header className={styles.header}>
@@ -138,10 +193,19 @@ function Header() {
         </div>
         {/* 로그인 상태 */}
         {/* <div className={styles.icon}>
-          <Image src={icons.alarm} alt="alarm" width={20} height={20} />
-          <div className={styles.profile}>
-            <Image src={icons.profile} alt="profile" width={25} height={25} />
-          </div>
+          <Image
+            src={icons.alarm}
+            alt="alarm"
+            width={20}
+            height={20}
+            className={styles.alarm}
+            onClick={showAlarm}
+          />
+          <Link href="profile/" key="profile">
+            <div className={styles.profile}>
+              <Image src={icons.profile} alt="profile" width={25} height={25} />
+            </div>
+          </Link>
         </div> */}
       </div>
     </header>

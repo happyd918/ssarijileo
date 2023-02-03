@@ -1,3 +1,5 @@
+@import '../mixin';
+
 .container {
   height: 800px;
   display: flex;
@@ -27,6 +29,10 @@
       color: var(--color-text);
       cursor: pointer;
       transition: all 1s ease;
+      @include _1440 {
+        display: none;
+      }
+
 
       .albumCover {
         border-radius: 15px;
@@ -43,6 +49,9 @@
     top: 450px;
     left: 80px;
     filter: drop-shadow(10px 10px 5px rgba(0, 0, 0, 0.5));
+    @include _1024{
+      display: none;
+    }
   }
 
   .heartB {
@@ -50,6 +59,9 @@
     top: 340px;
     left: 20px;
     filter: drop-shadow(10px 10px 5px rgba(0, 0, 0, 0.5));
+    @include _1024{
+      display: none;
+    }
   }
 
   .heartC {
@@ -57,6 +69,9 @@
     top: 320px;
     left: 640px;
     filter: drop-shadow(10px 10px 5px rgba(0, 0, 0, 0.5));
+    @include _1024{
+      display: none;
+    }
   }
 
   .heartD {
@@ -64,5 +79,8 @@
     top: 380px;
     left: 600px;
     filter: drop-shadow(10px 10px 5px rgba(0, 0, 0, 0.5));
+    @include _1024{
+      display: none;
+    }
   }
 }

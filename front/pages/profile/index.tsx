@@ -1,12 +1,12 @@
-// Path: 'mypage/'
+// Path: 'profile/'
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
 
-import ContentForm from '@/components/mypage/ContentForm';
-import FriendForm from '@/components/mypage/FriendForm';
+import ContentForm from '@/components/profile/ContentForm';
+import FriendForm from '@/components/profile/FriendForm';
 
-import styles from '@/styles/mypage/Mypage.module.scss';
+import styles from '@/styles/profile/Profile.module.scss';
 
 function MyPage() {
   const DUMMY_DATA = {
@@ -40,7 +40,7 @@ function MyPage() {
             />
             <label htmlFor="inputFile" className={styles.editBtn}>
               <Image
-                src="/img/mypage/mypage_edit_image.svg"
+                src="/img/profile/profile_edit_image.svg"
                 alt="profile"
                 className={styles.edit}
                 width={20}

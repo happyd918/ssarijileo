@@ -4,7 +4,7 @@ import Image from 'next/image';
 import MicControlBar from '@/components/common/MicControlBar';
 import EchoControlBar from '@/components/common/EchoControlBar';
 
-import styles from '@/styles/mypage/ContentForm.module.scss';
+import styles from '@/styles/profile/ContentForm.module.scss';
 
 function ContentForm(props: { theme: string; DUMMY_DATA: any }) {
   const { theme, DUMMY_DATA } = props;
@@ -12,10 +12,10 @@ function ContentForm(props: { theme: string; DUMMY_DATA: any }) {
   const [nickname, setNickname] = useState(DUMMY_DATA.nickname);
   const [email, setEmail] = useState(DUMMY_DATA.email);
 
-  const imgs = {
-    name: `img/mypage/${theme}/${theme}_name_image.svg`,
-    nickname: `img/mypage/${theme}/${theme}_nickname_image.svg`,
-    email: `img/mypage/${theme}/${theme}_email_image.svg`,
+  const images = {
+    name: `img/profile/${theme}/${theme}_name_image.svg`,
+    nickname: `img/profile/${theme}/${theme}_nickname_image.svg`,
+    email: `img/profile/${theme}/${theme}_email_image.svg`,
   };
 
   const saveProfile = (e: React.FormEvent<HTMLFormElement>) => {
@@ -43,7 +43,7 @@ function ContentForm(props: { theme: string; DUMMY_DATA: any }) {
             <span>*</span>&nbsp;&nbsp;이름
           </p>
           <Image
-            src={imgs.name}
+            src={images.name}
             alt=""
             width={16}
             height={16}
@@ -62,7 +62,7 @@ function ContentForm(props: { theme: string; DUMMY_DATA: any }) {
             <span>*</span>&nbsp;&nbsp;닉네임
           </p>
           <Image
-            src={imgs.nickname}
+            src={images.nickname}
             alt=""
             width={16}
             height={16}
@@ -84,7 +84,7 @@ function ContentForm(props: { theme: string; DUMMY_DATA: any }) {
             <span>*</span>&nbsp;&nbsp;이메일
           </p>
           <Image
-            src={imgs.email}
+            src={images.email}
             alt=""
             width={16}
             height={16}

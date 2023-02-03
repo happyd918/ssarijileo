@@ -210,8 +210,8 @@ function ChartList() {
       <div className={styles.chart}>
         {postData.map(item => {
           return (
-            <div className={styles.item}>
-              <ChartListItem key={item.rank} item={item} />
+            <div className={styles.item} key={item.rank}>
+              <ChartListItem item={item} />
               <Image
                 src={heartIcon}
                 width={20}

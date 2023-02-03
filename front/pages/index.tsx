@@ -29,22 +29,17 @@ function Home() {
   };
 
   return (
-    <>
-      <Head>
-        <title>My App</title>
-      </Head>
-      <main className={`${styles.main} ${inter.className}`}>
-        <MainTop />
-        <div className={styles.container}>
-          <SoundBar />
-          <TodayChart />
-          <SoundBar />
-          <TodayContest />
-          <SoundBar />
-          <Team img={img} />
-        </div>
-      </main>
-    </>
+    <main className={`${styles.main} ${inter.className}`}>
+      <MainTop />
+      <div className={styles.container}>
+        <SoundBar />
+        <TodayChart />
+        <SoundBar />
+        <TodayContest />
+        <SoundBar />
+        <Team img={img} />
+      </div>
+    </main>
   );
 }
 
