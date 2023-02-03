@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import type { AppProps } from 'next/app';
-import { Provider } from 'react-redux';
+import Head from 'next/head';
 
+import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import store from '@/redux/store';
@@ -9,7 +10,6 @@ import store from '@/redux/store';
 import Layout from '@/components/layout/Layout';
 
 import '@/styles/global.scss';
-import Head from 'next/head';
 
 export const persist = persistStore(store);
 
