@@ -95,6 +95,7 @@ public class FriendController {
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 
+<<<<<<< back/ssarijileo/src/main/java/com/ssafy/ssarijileo/api/friend/controller/FriendController.java
 	/**
 	 * 친구 초대
 	 * @param friendInviteDto
@@ -112,6 +113,7 @@ public class FriendController {
 	@PostMapping("/invite")
 	public ResponseEntity<? extends BaseResponseBody> inviteFriend(@RequestBody FriendInviteDto friendInviteDto) {
 		friendService.inviteFriend(friendInviteDto);
-		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
+=======
+	
 }

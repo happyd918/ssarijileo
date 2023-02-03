@@ -1,38 +1,24 @@
 -- 더미 데이터
 
--- Auth DB
-
-USE ssarijileo_auth;
-
--- 사용자 데이터
-
-INSERT INTO `user` (`user_id`, `email`, `nickname`, `status`)
-VALUE ("USER1", "sm@ssafy.com", "이수민", "A"),
-	  ("USER2", "th@gmail.com", "김태학", "A"),
-      ("USER3", "mj@naver.com", "김명준", "A"),
-      ("USER4", "sw@kakao.com", "길상욱", "A"),
-      ("USER5", "sy@ssafy.com", "김소윤", "A"),
-      ("USER6", "yj@ssafy.com", "서예지", "A"),
-      ("USER7", "ksf@ssafy.com", "김싸피", "B"),
-      ("USER8", "psf@ssafy.com", "박싸피", "X");
-
 -- Business DB
 
 USE ssarijileo;
 
--- 친구 데이터
-/*
-	이수민 - 김명준, 길상욱
-    김태학 - 김명준
-    김명준 - 이수민, 김명준
-    길상욱 - 이수민
-    김소윤 - 서예지
-    서예지 - 김소윤
-*/
+-- 프로필 데이터
 
-INSERT INTO `friend` (`sending_user_id`, `receiving_user_id`, `status`)
+INSERT INTO `profile` (`profile_id`, `nickname`, `image`)
+VALUE ("USER1", "금쪽수민", "A"),
+      ("USER2", "쁘띠태학", "A"),
+      ("USER3", "굠굠명준", "A"),
+      ("USER4", "최강상욱", "A"),
+      ("USER5", "천사소윤", "A"),
+      ("USER6", "꼬미예지", "A");
+
+-- 친구 데이터
+
+INSERT INTO `friend` (`from_user_id`, `to_user_id`, `status`)
 VALUE ("USER1", "USER3", "A"),
-	  ("USER1", "USER4", "A"),
+      ("USER1", "USER4", "A"),
       ("USER2", "USER1", "W"),
       ("USER5", "USER6", "A"),
       ("USER3", "USER2", "A"),
@@ -52,31 +38,31 @@ VALUE ("서른 즈음에", "김광석", "김광석 네번째", "00:04:43", "defa
 
 INSERT INTO `pitch` (`song_id`, `time`, `note`)
 VALUE (1, 10, "C#"),
-	  (1, 12.5, "D0"),
+	(1, 12.5, "D0"),
       (1, 17.22, "D#0"),
       (1, 18.01, "E0"),
       (1, 20.2, "C0"),
       (2, 5, "C#"),
-	  (2, 6, "D0"),
+	(2, 6, "D0"),
       (2, 7, "D#0"),
       (3, 5, "C#"),
-	  (3, 6, "D0"),
+	(3, 6, "D0"),
       (3, 7, "D#0"),
       (4, 5, "C#"),
-	  (4, 6, "D0"),
+	(4, 6, "D0"),
       (4, 7, "D#0"),
       (5, 5, "C#"),
-	  (5, 6, "D0"),
+	(5, 6, "D0"),
       (5, 7, "D#0"),
       (6, 5, "C#"),
-	  (6, 6, "D0"),
+	(6, 6, "D0"),
       (6, 7, "D#0");
 
 -- 가사 데이터
 
 INSERT INTO `lyrics` (`song_id`, `verse`, `status`)
 VALUE (1, "또 하루 멀어져 간다", "O"),
-	  (1, "내뿜은 담배연기처럼", "O"),
+	(1, "내뿜은 담배연기처럼", "O"),
       (1, "작기만한 내 기억속엔", "O"),
       (1, "무얼 채워 살고 있는지", "O"),
       (1, "점점 더 멀어져 간다", "O"),
@@ -108,7 +94,7 @@ VALUE (1, "또 하루 멀어져 간다", "O"),
 
 INSERT INTO `singing` (`user_id`, `song_id`, `mode`, `score`, `total_singing_time`, `singing_date`)
 VALUE ("USER1", 1, "N", 50, "00:04:43", "2023-01-01 09:00:00"),
-	  ("USER2", 2, "P", 70, "00:02:22", "2023-01-01 14:24:00"),
+	("USER2", 2, "P", 70, "00:02:22", "2023-01-01 14:24:00"),
       ("USER3", 3, "O", 100, "00:02:40", "2023-01-06 12:30:00"),
       ("USER1", 6, "N", 90, "00:02:30", "2023-01-12 09:20:00"),
       ("USER4", 4, "R", 90, "00:02:30", "2023-01-12 18:30:00"),
@@ -120,7 +106,7 @@ VALUE ("USER1", 1, "N", 50, "00:04:43", "2023-01-01 09:00:00"),
 
 INSERT INTO `favorite_song` (`user_id`, `song_id`, `is_like`)
 VALUE ("USER1", 1, "Y"),
-	  ("USER1", 6, "Y"),
+	("USER1", 6, "Y"),
       ("USER2", 2, "Y"),
       ("USER1", 2, "Y"),
       ("USER1", 2, "N"),
@@ -135,7 +121,7 @@ VALUE ("USER1", 1, "Y"),
 
 INSERT INTO `song_setting` (`song_setting_id`, `eco`, `volume`)
 VALUE ("USER1", 70, 70),
-	  ("USER2", 50, 50),
+	("USER2", 50, 50),
       ("USER3", 50, 80),
       ("USER4", 60, 90),
       ("USER5", 30, 50),
@@ -145,7 +131,7 @@ VALUE ("USER1", 70, 70),
 
 INSERT INTO `recording` (`user_id`, `song_id`, `file`, `register_date`)
 VALUE ("USER1", 1, "file1", "2023-01-01 09:05:00"),
-	  ("USER2", 2, "file2", "2023-01-01 14:29:00"),
+	("USER2", 2, "file2", "2023-01-01 14:29:00"),
       ("USER3", 3, "file3", "2023-01-06 12:35:00"),
       ("USER4", 4, "file4", "2023-01-12 18:35:00"),
       ("USER5", 5, "file5", "2023-01-12 18:35:25"),
@@ -155,7 +141,7 @@ VALUE ("USER1", 1, "file1", "2023-01-01 09:05:00"),
 
 INSERT INTO `singing_contest` (`recording_id`, `register_date`, `status`)
 VALUE (1, "2023-01-01 09:10:00", "V"),
-	  (2, "2023-01-01 16:00:00", "V"),
+	(2, "2023-01-01 16:00:00", "V"),
       (3, "2023-01-08 12:00:00", "V"),
       (4, "2023-01-12 20:50:00", "B"),
       (5, "2023-01-13 02:30:00", "D"),
