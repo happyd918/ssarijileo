@@ -23,16 +23,16 @@ public class FavoriteSong {
 	// PK (AUTO_INCREMENT)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long favoriteSongId;
+	private Long favoriteSongId;
 
 	// 사용자PK
-	String userId;
+	private String userId;
 
 	// 노래PK
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "song_id")
-	Song song;
+	private Song song;
 
 	// 좋아요여부(Y:좋아요,N:좋아요취소)
-	char isLike;
+	private char isLike;
 }

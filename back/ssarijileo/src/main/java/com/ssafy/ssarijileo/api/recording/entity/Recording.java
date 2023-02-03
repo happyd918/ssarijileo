@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.DynamicInsert;
+
 import com.ssafy.ssarijileo.api.recording.dto.RecordingDto;
 import com.ssafy.ssarijileo.api.song.entity.Song;
 
@@ -20,26 +22,27 @@ import lombok.Getter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@DynamicInsert
 public class Recording {
 
 	// PK (AUTO_INCREMENT)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long recordingId;
+	private Long recordingId;
 
 	// 사용자PK
-	String userId;
+	private String userId;
 
 	// 노래PK
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "song_id")
-	Song song;
+	private Song song;
 
 	// 녹화파일
-	String file;
+	private String file;
 
 	// 녹화일시
-	String registerDate;
+	private String registerDate;
 
 	// Dto to Entity
 	@Builder

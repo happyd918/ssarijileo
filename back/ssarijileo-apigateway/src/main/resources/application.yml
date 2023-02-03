@@ -1,0 +1,53 @@
+server:
+  port: 8000
+
+spring:
+  # swagger
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+
+  # application-oauth
+  profiles:
+    include: oauth
+
+  # API id for MSA & routes
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/user/**
+        - id: ssarijileo-service
+          uri: lb://ssarijileo-service
+          predicates:
+            - Path=/friend/**, /songsetting/**, /favoritesong/**, /singingcontest/**, /recording/**, /singing/**, /song/**
+        - id: webrtc-service
+          uri: lb://webrtc-service
+          predicates:
+            - Path=/webrtc/**
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/notification/**
+
+# log level setting
+logging:
+  level:
+    root: info
+    com.ssafy: debug
+    org.springframework.cloud.gateway: debug
+    reactor.netty.http.client: debug
+
+# eureka setting
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true

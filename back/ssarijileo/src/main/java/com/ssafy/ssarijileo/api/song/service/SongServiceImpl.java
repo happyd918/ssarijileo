@@ -27,7 +27,7 @@ public class SongServiceImpl implements SongService {
 	}
 
 	@Override
-	public SongDto findSongById(Long id) {
-		return songJpaRepository.findById(id).orElseThrow(NotFoundException::new).toDto();
+	public SongDto findSongById(Long songId) {
+		return songJpaRepository.findById(songId).orElseThrow(NotFoundException::new).toDto();
 	}
 }

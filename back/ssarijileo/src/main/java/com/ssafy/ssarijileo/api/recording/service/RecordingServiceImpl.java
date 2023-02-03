@@ -22,16 +22,6 @@ public class RecordingServiceImpl implements RecordingService {
 	private final SongJpaRepository songJpaRepository;
 
 	@Override
-	public List<RecordingDto> findAllRecording() {
-		return recordingJpaRepository.findAll().stream().map(Recording::toDto).collect(Collectors.toList());
-	}
-
-	@Override
-	public RecordingDto findRecordingById(Long id) {
-		return recordingJpaRepository.findById(id).orElseThrow(NotFoundException::new).toDto();
-	}
-
-	@Override
 	public List<RecordingDto> findRecordingByUserId(String userId) {
 		return recordingJpaRepository.findRecordingByUserId(userId)
 			.orElseThrow(NotFoundException::new)

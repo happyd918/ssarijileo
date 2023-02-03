@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.songsetting.entity;
+package com.ssafy.ssarijileo.api.songsetting.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,11 +15,11 @@ public class SongSetting {
 
 	// PK
 	@Id
-	String songSettingId;
+	private String songSettingId;
 
 	// 에코
-	int eco;
+	private int eco;
 
 	// 음량
-	int volume;
+	private int volume;
 }

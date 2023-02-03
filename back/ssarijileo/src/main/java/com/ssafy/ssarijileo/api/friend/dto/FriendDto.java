@@ -13,11 +13,11 @@ public class FriendDto {
 	Long friendId;
 
 	// 보낸 사용자PK
-	String sendingUserId;
+	String fromUserId;
 
 	// 받는 사용자PK
-	String receivingUserId;
+	String toUserId;
 
 	// 상태(W:대기,A:수락,X:취소)
-	char status;
+	String status;
 }
