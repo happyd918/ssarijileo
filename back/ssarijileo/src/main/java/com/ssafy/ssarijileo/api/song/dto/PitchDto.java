@@ -12,9 +12,6 @@ public class PitchDto {
 	// PK (AUTO_INCREMENT)
 	Long pitchId;
 
-	// 노래PK
-	Long songId;
-
 	// 시간
 	Double time;
 

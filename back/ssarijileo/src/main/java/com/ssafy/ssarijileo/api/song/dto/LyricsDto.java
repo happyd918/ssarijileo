@@ -12,9 +12,6 @@ public class LyricsDto {
 	// PK (AUTO_INCREMENT)
 	Long lyricsId;
 
-	// 노래PK
-	Long songId;
-
 	// 한소절
 	String verse;
 

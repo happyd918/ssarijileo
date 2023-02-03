@@ -38,6 +38,6 @@ public class Pitch {
 
 	// Entity to Dto
 	public PitchDto toDto() {
-		return new PitchDto(pitchId, song.getSongId(), time, note);
+		return new PitchDto(pitchId, time, note);
 	}
 }

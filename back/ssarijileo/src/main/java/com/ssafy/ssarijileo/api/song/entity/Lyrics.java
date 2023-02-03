@@ -38,6 +38,6 @@ public class Lyrics {
 
 	// Entity to Dto
 	public LyricsDto toDto() {
-		return new LyricsDto(lyricsId, song.getSongId(), verse, time);
+		return new LyricsDto(lyricsId, verse, time);
 	}
 }

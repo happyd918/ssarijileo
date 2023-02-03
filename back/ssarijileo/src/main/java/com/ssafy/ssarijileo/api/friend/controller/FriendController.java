@@ -112,5 +112,6 @@ public class FriendController {
 	@PostMapping("/invite")
 	public ResponseEntity<? extends BaseResponseBody> inviteFriend(@RequestBody FriendInviteDto friendInviteDto) {
 		friendService.inviteFriend(friendInviteDto);
+		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 }
