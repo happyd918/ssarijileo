@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import styles from '@/styles/mypage/FriendModal.module.scss';
+
+import styles from '@/styles/profile/FriendModal.module.scss';
 
 type RoomProps = {
   setModalOpen: any;
