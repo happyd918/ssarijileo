@@ -29,7 +29,7 @@ spring:
 
   redis:
     host: localhost
-    port: 6389
+    port: 6399
 
   # API id for MSA
   application:

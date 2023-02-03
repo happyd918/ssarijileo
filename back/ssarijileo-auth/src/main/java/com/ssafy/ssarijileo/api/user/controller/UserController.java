@@ -23,15 +23,4 @@ public class UserController {
 
     private final UserService userService;
 
-    @PutMapping("/withdrawl/{userId}")
-    public ResponseEntity<? extends BaseResponseBody> withdrawalUser(@PathVariable String userId) {
-        userService.withdrawlUser(userId);
-        return ResponseEntity.ok().body(BaseResponseBody.of(200, "Success"));
-    }
-
-    @GetMapping()
-    public ResponseEntity<? extends BaseResponseBody> testUser() {
-        return ResponseEntity.ok().body(BaseResponseBody.of(200, "Success"));
-    }
-
 }
