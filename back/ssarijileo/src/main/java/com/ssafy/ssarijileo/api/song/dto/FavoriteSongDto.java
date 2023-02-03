@@ -7,24 +7,17 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SongDto {
+public class FavoriteSongDto {
 
 	// PK (AUTO_INCREMENT)
+	Long favoriteSongId;
+
+	// 사용자PK
+	String userId;
+
+	// 노래PK
 	Long songId;
 
-	// 제목
-	String title;
-
-	// 가수
-	String singer;
-
-	// 앨범명
-	String album;
-
-	// 앨범이미지
-	String image;
-
-	// 발매일자
-	String releaseDate;
+	// 좋아요여부(Y:좋아요,N:좋아요취소)
+	String isLike;
 }
-

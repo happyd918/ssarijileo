@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssarijileo.api.recording.dto.RecordingDto;
+import com.ssafy.ssarijileo.api.recording.dto.RecordingResponseDto;
 import com.ssafy.ssarijileo.api.recording.service.RecordingService;
 import com.ssafy.ssarijileo.common.model.BaseResponseBody;
 
@@ -47,16 +48,16 @@ public class RecordingController {
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@GetMapping("/my/{userId}")
-	public ResponseEntity<List<RecordingDto>> findRecordingByUserId(@PathVariable  String userId) {
+	public ResponseEntity<List<RecordingResponseDto>> findRecordingByUserId(@PathVariable  String userId) {
 		return ResponseEntity.status(200).body(recordingService.findRecordingByUserId(userId));
 	}
 
 	/**
-	 * 녹화 정보 저장
+	 * 녹화 저장
 	 * @param recordingDto
 	 */
 	@ApiOperation(
-		value = "녹화 정보 저장",
+		value = "녹화 저장",
 		notes = "녹화 정보를 저장한다."
 	)
 	@ApiResponses({

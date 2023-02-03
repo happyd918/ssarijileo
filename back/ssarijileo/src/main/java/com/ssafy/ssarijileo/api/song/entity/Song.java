@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 
 import com.ssafy.ssarijileo.api.song.dto.LyricsDto;
 import com.ssafy.ssarijileo.api.song.dto.PitchDto;
+import com.ssafy.ssarijileo.api.song.dto.SongDetailDto;
 import com.ssafy.ssarijileo.api.song.dto.SongDto;
 
 import lombok.AllArgsConstructor;
@@ -57,8 +58,13 @@ public class Song {
 
 	// Entity to Dto
 	public SongDto toDto() {
+		return new SongDto(songId, title, singer, album, image, releaseDate);
+	}
+
+	// Entity to Dto
+	public SongDetailDto toDetailDto() {
 		List<LyricsDto> lyricsDtoList = lyricsList.stream().map(Lyrics::toDto).collect(Collectors.toList());
 		List<PitchDto> pitchDtoList = pitchList.stream().map(Pitch::toDto).collect(Collectors.toList());
-		return new SongDto(songId, title, singer, album, time, image, releaseDate, lyricsDtoList, pitchDtoList);
+		return new SongDetailDto(songId, title, singer, album, time, image, releaseDate, lyricsDtoList, pitchDtoList);
 	}
 }

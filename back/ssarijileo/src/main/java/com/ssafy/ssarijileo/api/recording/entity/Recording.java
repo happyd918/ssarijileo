@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.DynamicInsert;
 
 import com.ssafy.ssarijileo.api.recording.dto.RecordingDto;
+import com.ssafy.ssarijileo.api.recording.dto.RecordingResponseDto;
 import com.ssafy.ssarijileo.api.song.entity.Song;
 
 import lombok.AllArgsConstructor;
@@ -34,7 +35,7 @@ public class Recording {
 	private String userId;
 
 	// 노래PK
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "song_id")
 	private Song song;
 
@@ -55,7 +56,7 @@ public class Recording {
 	}
 
 	// Entity to Dto
-	public RecordingDto toDto(){
-		return new RecordingDto(recordingId, userId, song.getSongId(), file, registerDate);
+	public RecordingResponseDto toDto(){
+		return new RecordingResponseDto(recordingId, song.getTitle(), song.getSinger(), file, registerDate);
 	}
 }

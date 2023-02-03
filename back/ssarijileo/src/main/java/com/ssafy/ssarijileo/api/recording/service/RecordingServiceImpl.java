@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.querydsl.core.types.Projections;
+import com.ssafy.ssarijileo.api.recording.dto.RecordingResponseDto;
 import com.ssafy.ssarijileo.common.exception.NotFoundException;
 import com.ssafy.ssarijileo.api.recording.dto.RecordingDto;
 import com.ssafy.ssarijileo.api.recording.entity.Recording;
@@ -22,7 +24,7 @@ public class RecordingServiceImpl implements RecordingService {
 	private final SongJpaRepository songJpaRepository;
 
 	@Override
-	public List<RecordingDto> findRecordingByUserId(String userId) {
+	public List<RecordingResponseDto> findRecordingByUserId(String userId) {
 		return recordingJpaRepository.findRecordingByUserId(userId)
 			.orElseThrow(NotFoundException::new)
 			.stream()
