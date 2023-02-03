@@ -115,6 +115,7 @@ function Room() {
   useEffect(() => {
     if (init) {
       const mySession = session;
+
       // subscribers에 참가자 추가
       mySession.on('streamCreated', (event: any) => {
         const subscriber = mySession.subscribe(event.stream, undefined);
@@ -210,7 +211,7 @@ function Room() {
           })}
         </div>
       </div>
-      <RoomFooter />
+      <RoomFooter session={session} />
     </div>
   );
 }
