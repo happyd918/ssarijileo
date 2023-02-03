@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import storage from 'redux-persist/lib/storage';
 import { combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 
 import themeSlice from './themeSlice';
+import storage from 'redux-persist/lib/storage';
 
-const reducers = combineReducers({
+const rootReducer = combineReducers({
   theme: themeSlice.reducer,
 });
 
@@ -13,10 +13,9 @@ const persistConfig = {
   key: 'root',
   storage,
   whitelist: ['theme'],
-  // blacklist -> 그것만 제외
 };
 
-const persistedReducer = persistReducer(persistConfig, reducers);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,

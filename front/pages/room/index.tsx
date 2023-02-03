@@ -1,23 +1,23 @@
-// Path: front/pages/room.tsx
-import axios from 'axios';
+// Path: '/room'
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
 import { useRouter } from 'next/router';
-import styles from '@/styles/Room.module.scss';
 
-// import PerfectScore from '@/components/room/PerfectScore';
 import RoomHeader from '@/components/room/RoomHeader';
 import MainScreen from '@/components/room/MainScreen';
 import MyScreen from '@/components/room/MyScreen';
-// import OtherScreen from '@/components/room/OtherScreen';
 import RoomFooter from '@/components/room/RoomFooter';
 import Loading from '@/components/room/Loading';
+// import PerfectScore from '@/components/room/PerfectScore';
+// import OtherScreen from '@/components/room/OtherScreen';
+// import RoomController from '@/components/room/RoomController';
+
+import styles from '@/styles/Room.module.scss';
 
 const APPLICATION_SERVER_URL = 'http://localhost:5000/';
 
-// import RoomController from '@/components/room/RoomController';
-
-function Room() {
+function Index() {
   // query로 전달받은 값
   const roomRouter = useRouter();
   const title = roomRouter.query.customTitle;
@@ -95,7 +95,7 @@ function Room() {
     setPublisher(undefined);
     setSubscribers([]);
 
-    roomRouter.push('sing/');
+    window.close();
   };
 
   // 참가자 하이라이트(노래부르는 사람) 화면 변경
@@ -115,6 +115,7 @@ function Room() {
   useEffect(() => {
     if (init) {
       const mySession = session;
+
       // subscribers에 참가자 추가
       mySession.on('streamCreated', (event: any) => {
         const subscriber = mySession.subscribe(event.stream, undefined);
@@ -210,9 +211,9 @@ function Room() {
           })}
         </div>
       </div>
-      <RoomFooter />
+      <RoomFooter session={session} />
     </div>
   );
 }
 
-export default Room;
+export default Index;

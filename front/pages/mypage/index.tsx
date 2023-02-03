@@ -1,3 +1,4 @@
+// Path: 'mypage/'
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
@@ -16,13 +17,14 @@ function MyPage() {
     echo: 0.5,
   };
 
-  const [theme, setTheme] = useState('light');
+  const [themeMode, setThemeMode] = useState('light');
   const [type, setType] = useState('계정 관리');
 
-  const storeTheme = useSelector<any>(state => state.theme);
+  const storeTheme: any = useSelector<any>(state => state.theme);
+
   useEffect(() => {
-    setTheme(localStorage.getItem('theme') || 'light');
-  }, [theme, storeTheme]);
+    setThemeMode(storeTheme.theme);
+  }, [storeTheme]);
 
   return (
     <div className={styles.container}>
@@ -72,7 +74,7 @@ function MyPage() {
           <h1>마이페이지</h1>
           <p className={styles.contentHeader}>{type}</p>
           {type === '계정 관리' && (
-            <ContentForm theme={theme} DUMMY_DATA={DUMMY_DATA} />
+            <ContentForm theme={themeMode} DUMMY_DATA={DUMMY_DATA} />
           )}
           {type === '친구 목록' && <FriendForm />}
         </div>

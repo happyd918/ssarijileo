@@ -9,6 +9,7 @@ import { useAnimation } from '@/hooks/useAnimation';
 
 function MakeSample() {
   const [volume, setVolume] = useState(0.5);
+  const [tempo, setTempo] = useState(1);
   const dataArrayRef = useRef<Float32Array>(new Float32Array(data.BUFFER_SIZE));
   const pitchDetectorRef = useRef<PitchDetector<Float32Array>>(
     PitchDetector.forFloat32Array(data.BUFFER_SIZE),
@@ -34,6 +35,11 @@ function MakeSample() {
   const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVolume(Number(e.target.value));
     gainRef.current?.gain.setValueAtTime(Number(e.target.value), 0);
+  };
+
+  const changeTempo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTempo(Number(e.target.value));
+    sourceRef.current?.playbackRate.setValueAtTime(Number(e.target.value), 0);
   };
 
   const isSilentBuffer = (buffer: Float32Array) => {
@@ -192,6 +198,15 @@ function MakeSample() {
           step={0.01}
           value={volume}
           onChange={changeVolume}
+        />
+        <input
+          className="playback-rate-control"
+          type="range"
+          min="0.25"
+          max="3"
+          step="0.05"
+          value={tempo}
+          onChange={changeTempo}
         />
       </div>
     </>

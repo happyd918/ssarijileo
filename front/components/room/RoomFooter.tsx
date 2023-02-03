@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styles from '@/styles/room/RoomFooter.module.scss';
 
@@ -6,13 +6,60 @@ import RoomController from './RoomController';
 import RoomFriend from './RoomFriend';
 import RoomChat from './RoomChat';
 
-function RoomFooter() {
+function RoomFooter({ session }: any) {
   const [controllerModalOpen, setControllerModalOpen] = useState(false);
   const [friendModalOpen, setFriendModalOpen] = useState(false);
   const [chatModalOpen, setChatModalOpen] = useState(false);
+  const [chatList, setChatList] = useState([
+    {
+      message: '채팅 입력창이에요',
+      name: '싸리질러',
+    },
+  ]);
+
+  // 채팅 듣기 on
+  const chatOn = () => {
+    session.on('signal:chat', (event: any) => {
+      const newChat = {
+        message: event.data,
+        name: '이수민',
+      };
+      const newChatList = [...chatList, newChat];
+      setChatList(newChatList);
+    });
+  };
+
+  // 채팅 보내기
+  const sendChat = (sendMassage: string) => {
+    session
+      .signal({
+        data: sendMassage, // Any string (optional)
+        to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
+        type: 'chat', // The type of message (optional)
+      })
+      .then(() => {
+        console.log(`"${sendMassage}"라고 채팅 보내기 성공`);
+      })
+      .catch((error: any) => {
+        console.error('채팅 보내기 에러', error);
+      });
+  };
+
+  // 렌더링시 실행
+  useEffect(() => {
+    chatOn();
+  }, []);
+
   return (
     <div className={styles.container}>
-      {chatModalOpen && <RoomChat setModalOpen={setChatModalOpen} />}
+      {chatModalOpen && (
+        <RoomChat
+          setModalOpen={setChatModalOpen}
+          session={session}
+          sendChat={sendChat}
+          chatList={chatList}
+        />
+      )}
       {friendModalOpen && <RoomFriend setModalOpen={setFriendModalOpen} />}
       {controllerModalOpen && (
         <RoomController setModalOpen={setControllerModalOpen} />

@@ -1,9 +1,10 @@
+// Path: '/'
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Head from 'next/head';
 import { Inter } from '@next/font/google';
 
-import IconTop from '@/components/main/IconTop';
+import MainTop from '@/components/main/MainTop';
 import SoundBar from '@/components/common/SoundBar';
 import TodayChart from '@/components/main/TodayChart';
 import TodayContest from '@/components/main/TodayContest';
@@ -15,11 +16,11 @@ const inter = Inter({ subsets: ['latin'] });
 
 function Home() {
   const [themeMode, setThemeMode] = useState('light');
+  const storeTheme: any = useSelector<any>(state => state.theme);
 
-  const storeTheme = useSelector<any>(state => state.theme);
   useEffect(() => {
-    setThemeMode(localStorage.getItem('theme') || 'light');
-  }, [themeMode, storeTheme]);
+    setThemeMode(storeTheme.theme);
+  }, [storeTheme]);
 
   const img = {
     team: `img/common/${themeMode || 'light'}/${
@@ -33,7 +34,7 @@ function Home() {
         <title>My App</title>
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
-        <IconTop />
+        <MainTop />
         <div className={styles.container}>
           <SoundBar />
           <TodayChart />
