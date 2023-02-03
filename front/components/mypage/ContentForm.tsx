@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 
 import MicControlBar from '@/components/common/MicControlBar';
@@ -8,6 +8,9 @@ import styles from '@/styles/mypage/ContentForm.module.scss';
 
 function ContentForm(props: { theme: string; DUMMY_DATA: any }) {
   const { theme, DUMMY_DATA } = props;
+  const [name, setName] = useState(DUMMY_DATA.name);
+  const [nickname, setNickname] = useState(DUMMY_DATA.nickname);
+  const [email, setEmail] = useState(DUMMY_DATA.email);
 
   const imgs = {
     name: `img/mypage/${theme}/${theme}_name_image.svg`,
@@ -21,15 +24,15 @@ function ContentForm(props: { theme: string; DUMMY_DATA: any }) {
   };
 
   const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    DUMMY_DATA.name = e.target.value;
+    setName(e.target.value);
   };
 
   const nickNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    DUMMY_DATA.nickname = e.target.value;
+    setNickname(e.target.value);
   };
 
   const emailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    DUMMY_DATA.email = e.target.value;
+    setEmail(e.target.value);
   };
 
   return (
@@ -50,7 +53,7 @@ function ContentForm(props: { theme: string; DUMMY_DATA: any }) {
             id="name"
             type="text"
             className={styles.inputTag}
-            value={DUMMY_DATA.name}
+            value={name}
             onChange={nameChange}
           />
         </label>
@@ -69,7 +72,7 @@ function ContentForm(props: { theme: string; DUMMY_DATA: any }) {
             id="nickname"
             type="text"
             className={styles.nickname}
-            value={DUMMY_DATA.nickname}
+            value={nickname}
             onChange={nickNameChange}
           />
           <button type="button" className={styles.checkBtn}>
@@ -91,7 +94,7 @@ function ContentForm(props: { theme: string; DUMMY_DATA: any }) {
             id="email"
             type="text"
             className={styles.inputTag}
-            value={DUMMY_DATA.email}
+            value={email}
             onChange={emailChange}
           />
         </label>

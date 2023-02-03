@@ -61,8 +61,8 @@ function ChartTop() {
       img.src = noteImages(noteWindow[i].specific);
       ctx.drawImage(
         img,
-        noteWindow[i].start.x,
-        noteWindow[i].start.y,
+        noteWindow[i].start.x - noteWindow[i].size / 2,
+        noteWindow[i].start.y - noteWindow[i].size / 2,
         noteWindow[i].size,
         noteWindow[i].size,
       );
@@ -79,8 +79,8 @@ function ChartTop() {
           y: -1,
         },
         start: {
-          x: e.clientX - rect.left - 10,
-          y: e.clientY - rect.top - 10,
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top,
         },
         specific: Math.floor(Math.random() * 3) + 1,
         life: Math.random() * 50 + 50,

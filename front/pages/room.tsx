@@ -95,7 +95,7 @@ function Room() {
     setPublisher(undefined);
     setSubscribers([]);
 
-    roomRouter.push('sing/');
+    window.close();
   };
 
   // 참가자 하이라이트(노래부르는 사람) 화면 변경
