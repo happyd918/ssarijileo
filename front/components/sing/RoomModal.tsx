@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import classNames from 'classnames';
 
@@ -9,6 +8,16 @@ function RoomModal({ setModalOpen }: any) {
   // 모달창 open 여부
   const closeModal = () => {
     setModalOpen(false);
+  };
+
+  const createRoom = () => {
+    setModalOpen(false);
+    const roomWindow = window.open('room/', 'roomWindow', 'resizeable');
+    if (!roomWindow) return;
+    roomWindow.resizeTo(1920, 1080);
+    roomWindow.onresize = () => {
+      roomWindow.resizeTo(1920, 1080);
+    };
   };
 
   // 방제
@@ -151,23 +160,13 @@ function RoomModal({ setModalOpen }: any) {
         </div>
 
         <div className={styles.bottom}>
-          <Link
-            href={{
-              pathname: '/room',
-              query: { customTitle: title },
-            }}
-            as="/room"
-            className={styles.link}
+          <button
+            type="button"
+            className={styles.createBtn}
+            onClick={createRoom}
           >
-            <button
-              type="button"
-              className={styles.createBtn}
-              onClick={closeModal}
-            >
-              생성
-            </button>
-          </Link>
-
+            생성
+          </button>
           <button
             type="button"
             className={styles.closeBtn}

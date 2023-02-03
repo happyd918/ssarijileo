@@ -7,11 +7,11 @@ import styles from '@/styles/common/Footer.module.scss';
 
 function Footer() {
   const [themeMode, setThemeMode] = useState('light');
+  const storeTheme: any = useSelector<any>(state => state.theme);
 
-  const storeTheme = useSelector<any>(state => state.theme);
   useEffect(() => {
-    setThemeMode(localStorage.getItem('theme') || 'light');
-  }, [themeMode, storeTheme]);
+    setThemeMode(storeTheme.theme);
+  }, [storeTheme]);
 
   const socials = [
     {

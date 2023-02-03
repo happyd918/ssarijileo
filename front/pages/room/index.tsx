@@ -1,23 +1,23 @@
-// Path: front/pages/room.tsx
-import axios from 'axios';
+// Path: '/room'
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
 import { useRouter } from 'next/router';
-import styles from '@/styles/Room.module.scss';
 
-// import PerfectScore from '@/components/room/PerfectScore';
 import RoomHeader from '@/components/room/RoomHeader';
 import MainScreen from '@/components/room/MainScreen';
 import MyScreen from '@/components/room/MyScreen';
-// import OtherScreen from '@/components/room/OtherScreen';
 import RoomFooter from '@/components/room/RoomFooter';
 import Loading from '@/components/room/Loading';
+// import PerfectScore from '@/components/room/PerfectScore';
+// import OtherScreen from '@/components/room/OtherScreen';
+// import RoomController from '@/components/room/RoomController';
+
+import styles from '@/styles/Room.module.scss';
 
 const APPLICATION_SERVER_URL = 'http://localhost:5000/';
 
-// import RoomController from '@/components/room/RoomController';
-
-function Room() {
+function Index() {
   // query로 전달받은 값
   const roomRouter = useRouter();
   const title = roomRouter.query.customTitle;
@@ -216,4 +216,4 @@ function Room() {
   );
 }
 
-export default Room;
+export default Index;

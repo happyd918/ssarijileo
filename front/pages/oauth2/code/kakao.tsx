@@ -9,8 +9,8 @@ function kakao() {
     'refreshToken',
   );
 
-  console.log(ACCESS_TOKEN);
-  console.log(REFRESH_TOKEN);
+  // console.log(ACCESS_TOKEN);
+  // console.log(REFRESH_TOKEN);
 
   // 예시로 로컬에 저장함
   if (ACCESS_TOKEN) {

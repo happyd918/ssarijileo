@@ -1,3 +1,4 @@
+// Path: '/'
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Head from 'next/head';
@@ -15,11 +16,11 @@ const inter = Inter({ subsets: ['latin'] });
 
 function Home() {
   const [themeMode, setThemeMode] = useState('light');
+  const storeTheme: any = useSelector<any>(state => state.theme);
 
-  const storeTheme = useSelector<any>(state => state.theme);
   useEffect(() => {
-    setThemeMode(localStorage.getItem('theme') || 'light');
-  }, [themeMode, storeTheme]);
+    setThemeMode(storeTheme.theme);
+  }, [storeTheme]);
 
   const img = {
     team: `img/common/${themeMode || 'light'}/${
