@@ -1,7 +1,6 @@
 // Path: '/'
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import Head from 'next/head';
 import { Inter } from '@next/font/google';
 
 import MainTop from '@/components/main/MainTop';

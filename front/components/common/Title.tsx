@@ -1,7 +1,7 @@
+import React from 'react';
 import Link from 'next/link';
 
 import styles from '@/styles/common/Title.module.scss';
-import React from 'react';
 
 function Title(props: { main: string; sub: string }) {
   const { main, sub } = props;
