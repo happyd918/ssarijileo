@@ -18,9 +18,10 @@ function Header() {
 
   const changeMode = useCallback(() => {
     setChecked(!checked);
-    setThemeMode(themeMode === 'light' ? 'dark' : 'light');
-    localStorage.setItem('theme', themeMode === 'light' ? 'dark' : 'light');
-    dispatch(setTheme(themeMode));
+    const theme = themeMode === 'light' ? 'dark' : 'light';
+    setThemeMode(theme);
+    localStorage.setItem('theme', theme);
+    dispatch(setTheme(theme));
   }, [checked, themeMode]);
 
   useEffect(() => {
@@ -30,7 +31,7 @@ function Header() {
   useEffect(() => {
     const theme = localStorage.getItem('theme') || 'light';
     setThemeMode(theme);
-    dispatch(setTheme(themeMode));
+    dispatch(setTheme(theme));
     setChecked(theme === 'dark');
   }, []);
 
@@ -102,11 +103,9 @@ function Header() {
   return (
     <header className={styles.header}>
       {modalOpen && <LoginModal setModalOpen={setModalOpen} />}
-      <div className={styles.logo}>
-        <Link href="/">
-          <Image src={icons.logo} alt="logoFail" width={70} height={70} />
-        </Link>
-      </div>
+      <Link href="/">
+        <Image src={icons.logo} alt="logoFail" width={70} height={70} />
+      </Link>
       <div className={styles.menu}>{headerMenus}</div>
       <div className={styles.dropdown}>
         <button type="button" onClick={toggleDropdown}>

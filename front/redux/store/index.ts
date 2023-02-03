@@ -13,7 +13,6 @@ const persistConfig = {
   key: 'root',
   storage,
   whitelist: ['theme'],
-  // blacklist -> 그것만 제외
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

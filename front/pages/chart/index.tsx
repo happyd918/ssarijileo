@@ -1,8 +1,10 @@
+// Path: 'chart/'
 import Image from 'next/image';
-import styles from '@/styles/chart/Chart.module.scss';
 import ChartTop from '@/components/chart/ChartTop';
 import SoundBar from '@/components/common/SoundBar';
 import ChartList from '@/components/chart/ChartList';
+
+import styles from '@/styles/chart/Chart.module.scss';
 
 function Chart() {
   // 이번 달, 주차, 날짜 구하기
