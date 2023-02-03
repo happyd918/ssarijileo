@@ -161,14 +161,6 @@ function RoomModal({ setModalOpen }: any) {
         </div>
 
         <div className={styles.bottom}>
-          {/*<Link*/}
-          {/*  href={{*/}
-          {/*    pathname: '/room',*/}
-          {/*    query: { customTitle: title },*/}
-          {/*  }}*/}
-          {/*  as="/room"*/}
-          {/*  className={styles.link}*/}
-          {/*>*/}
           <button
             type="button"
             className={styles.createBtn}
@@ -176,8 +168,6 @@ function RoomModal({ setModalOpen }: any) {
           >
             생성
           </button>
-          {/*</Link>*/}
-
           <button
             type="button"
             className={styles.closeBtn}
