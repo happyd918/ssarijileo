@@ -3,37 +3,40 @@ import Image from 'next/image';
 
 import styles from '@/styles/mypage/FriendForm.module.scss';
 
+import FriendModal from './FriendModal';
+
 function FriendForm() {
+  const [modalOpen, setModalOpen] = useState(false);
   const friend = [
     {
       profile: 'icon/header/dark/dark_profile_icon.svg',
       name: '김태학',
-      play: '22회',
+      // play: '22회',
     },
     {
       profile: 'icon/header/dark/dark_profile_icon.svg',
       name: '길상욱',
-      play: '22회',
+      // play: '22회',
     },
     {
       profile: 'icon/header/dark/dark_profile_icon.svg',
       name: '김명준',
-      play: '22회',
+      // play: '22회',
     },
     {
       profile: 'icon/header/dark/dark_profile_icon.svg',
       name: '김소윤',
-      play: '22회',
+      // play: '22회',
     },
     {
       profile: 'icon/header/dark/dark_profile_icon.svg',
       name: '서예지',
-      play: '22회',
+      // play: '22회',
     },
     {
       profile: 'icon/header/dark/dark_profile_icon.svg',
       name: '이수민',
-      play: '22회',
+      // play: '22회',
     },
   ];
   const [friendList, setState] = useState(friend);
@@ -51,21 +54,36 @@ function FriendForm() {
   };
   const listItems = friendList.map(item => {
     return (
-      <tr className={styles.item} key={item.name}>
-        <td className={styles.profile}>
+      <div className={styles.item} key={item.name}>
+        <div className={styles.profile}>
           <div className={styles.content}>
-            <Image src={item.profile} width={30} height={30} alt="profile" />
+            <Image
+              className={styles.img}
+              src={item.profile}
+              width={30}
+              height={30}
+              alt="profile"
+            />
           </div>
-        </td>
-        <td className={styles.name}>{item.name}</td>
-        <td className={styles.play}>{item.play}</td>
-      </tr>
+        </div>
+        <div className={styles.name}>{item.name}</div>
+        <button type="button" className={styles.okBtn}>
+          친구삭제
+        </button>
+      </div>
     );
   });
   return (
     <div className={styles.contentForm}>
+      {modalOpen && <FriendModal setModalOpen={setModalOpen} friend={friend} />}
       <div className={styles.top}>
-        <button type="button" className={styles.addBtn}>
+        <button
+          type="button"
+          className={styles.addBtn}
+          onClick={() => {
+            setModalOpen(!modalOpen);
+          }}
+        >
           <Image
             src="img/common/common_add_image.svg"
             width={15}
@@ -91,38 +109,58 @@ function FriendForm() {
           />
         </div>
       </div>
-      <div>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th role="row" />
-              <th>닉네임</th>
-              <th>PLAY횟수</th>
-            </tr>
-          </thead>
-          <tbody>
+      <div className={styles.content}>
+        <div className={styles.thead}>
+          <div className={styles.tr}>
+            <div className={styles.profile} />
+            <div className={styles.name}>닉네임</div>
+            <div className={styles.play}>상태</div>
+          </div>
+        </div>
+        <div className={styles.table}>
+          <div className={styles.fix}>
             {/* 상단 고정 (친구요청) */}
-            <tr className={styles.item}>
-              <td className={styles.profile}>
+            <div className={styles.item}>
+              <div className={styles.profile}>
                 <div className={styles.content}>
                   <Image
+                    className={styles.img}
                     src="icon/header/dark/dark_profile_icon.svg"
                     width={30}
                     height={30}
                     alt="profile"
                   />
                 </div>
-              </td>
-              <td className={styles.name}>누구세요</td>
-              <td className={styles.play}>
+              </div>
+              <div className={styles.name}>누구세요</div>
+              <div className={styles.play}>
                 <button type="button" className={styles.okBtn}>
                   친구수락
                 </button>
-              </td>
-            </tr>
-          </tbody>
-          <tbody className={styles.friendList}>{listItems}</tbody>
-        </table>
+              </div>
+            </div>
+            <div className={styles.item}>
+              <div className={styles.profile}>
+                <div className={styles.content}>
+                  <Image
+                    src="icon/header/dark/dark_profile_icon.svg"
+                    width={30}
+                    height={30}
+                    alt="profile"
+                    className={styles.img}
+                  />
+                </div>
+              </div>
+              <div className={styles.name}>누구세요</div>
+              <div className={styles.play}>
+                <button type="button" className={styles.okBtn}>
+                  친구수락
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className={styles.friendList}>{listItems}</div>
+        </div>
       </div>
     </div>
   );

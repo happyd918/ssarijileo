@@ -1,27 +1,36 @@
 @import '../color';
 
-.loading {
-  width: 400px;
-  height: 400px;
-  margin: auto;
+.container {
+  width: 100vw;
+  height: 100vh;
+  background: var(--color-background);
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
 
-.loadImg {
-  width: 200px;
-  height: 200px;
-  margin: auto;
+  .loading {
+    width: 400px;
+    height: 400px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
-  transform-origin: 50%;
-  animation: Rotate 3.5s infinite ease;
-}
+    .loadImg {
+      width: 200px;
+      height: 200px;
+      margin: auto;
 
-.loadContext {
-  font-size: 20px;
-  text-align: center;
-  color: $white;
+      transform-origin: 50%;
+      animation: Rotate 3.5s infinite ease;
+    }
+
+    .loadContext {
+      font-size: 20px;
+      text-align: center;
+      color: $placeholder;
+    }
+  }
 }
 
 @keyframes Rotate {

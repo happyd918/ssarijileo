@@ -76,7 +76,7 @@ function ContentForm(props: { theme: string; DUMMY_DATA: any }) {
             중복검사
           </button>
         </label>
-        <label htmlFor="email">
+        {/* <label htmlFor="email">
           <p>
             <span>*</span>&nbsp;&nbsp;이메일
           </p>
@@ -94,7 +94,7 @@ function ContentForm(props: { theme: string; DUMMY_DATA: any }) {
             value={DUMMY_DATA.email}
             onChange={emailChange}
           />
-        </label>
+        </label> */}
         <div className={styles.scrollBox}>
           <label htmlFor="micVolume">
             <p>
@@ -117,11 +117,11 @@ function ContentForm(props: { theme: string; DUMMY_DATA: any }) {
           저장
         </button>
       </form>
-      <div className={styles.contentFooter}>
+      {/* <div className={styles.contentFooter}>
         <button type="button" className={styles.signOutBtn}>
           회원 탈퇴
         </button>
-      </div>
+      </div> */}
     </>
   );
 }

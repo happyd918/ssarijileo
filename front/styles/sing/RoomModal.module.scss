@@ -81,6 +81,7 @@
         background: var(--color-background);
         outline: none;
         padding-left: 20px;
+        color: var(--color-text);
       }
       .input::placeholder {
         font-size: 12px;
@@ -113,18 +114,22 @@
           border: 2px solid #1f7d34;
         }
         .nomal:hover {
+          border: 2px solid $white;
           background: $black;
           color: $white;
         }
         .perfect:hover {
+          border: 2px solid $white;
           background: #5d1abc;
           color: $white;
         }
         .relay:hover {
+          border: 2px solid $white;
           background: #c7241a;
           color: $white;
         }
         .guess:hover {
+          border: 2px solid $white;
           background: #1f7d34;
           color: $white;
         }
@@ -181,6 +186,7 @@
             outline: none;
             padding-left: 10px;
             background: var(--color-background);
+            color: var(--color-text);
           }
           .pwd::placeholder {
             font-size: 12px;
