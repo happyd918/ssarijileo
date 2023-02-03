@@ -57,11 +57,11 @@ function Footer() {
         </div>
         <div className={styles.item}>
           <div className={styles.upper}>
-            <Image src={icons.phone} alt="place" width={24} height={24} />
+            <Image src={icons.place} alt="phone" width={24} height={24} />
             <span>대전광역시 유성구 덕명동 124</span>
           </div>
           <div className={styles.upper}>
-            <Image src={icons.place} alt="phone" width={24} height={24} />
+            <Image src={icons.phone} alt="place" width={24} height={24} />
             <span>042-123-4567</span>
           </div>
           <div className={styles.lower}>
