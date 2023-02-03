@@ -5,6 +5,9 @@
 .swiper {
   width: 80%;
   margin: 0 auto;
+  @include _576 {
+    width: 90%;
+  }
 
   .swiperSlide {
     width: 100%;
@@ -17,8 +20,8 @@
     .topImg {
       background: var(--color-text);
       border-radius: 30px;
-      @include _1024 {
-      display: none;
+      @media screen and (max-width: 1250px) {
+        display: none;
       }
     }
   }

@@ -9,6 +9,7 @@ import store from '@/redux/store';
 import Layout from '@/components/layout/Layout';
 
 import '@/styles/global.scss';
+import Head from 'next/head';
 
 export const persist = persistStore(store);
 
@@ -36,6 +37,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <PersistGate persistor={persist}>
+        <Head>
+          <title>싸리질러</title>
+        </Head>
         <Layout>
           <Component {...pageProps} />
         </Layout>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 
-import styles from '@/styles/mypage/FriendForm.module.scss';
+import styles from '@/styles/profile/FriendForm.module.scss';
 
 import FriendModal from './FriendModal';
 

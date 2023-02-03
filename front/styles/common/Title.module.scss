@@ -38,6 +38,7 @@
     color: var(--color-text);
     font-family: 'Inter', sans-serif;
     z-index: 1;
+    white-space: pre-line;
   }
 
   .sub {
@@ -45,6 +46,7 @@
     color: var(--color-placeHolder);
     margin: 20px 0;
     z-index: 1;
+    white-space: pre-line;
   }
 
   .btn {
@@ -67,6 +69,7 @@
       border: 1px solid var(--color-btn);
       background-color: var(--color-background);
       color: var(--color-btn);
+      cursor: pointer;
       z-index: 3;
     }
     .chartBtn:hover {

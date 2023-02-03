@@ -4,7 +4,7 @@ import { useComponentSize } from 'react-use-size';
 import { useCanvas } from '@/hooks/useCanvas';
 import { useAnimation } from '@/hooks/useAnimation';
 
-import Title from '@/components/main/Title';
+import Title from '@/components/common/Title';
 import TopImg from '@/components/common/TopImg';
 
 import styles from '@/styles/main/MainTop.module.scss';
@@ -85,6 +85,11 @@ function MainTop() {
     }
   };
 
+  const titleContent = {
+    main: ' 집에서 즐기는\n랜선 노래방 싸리질러',
+    sub: '집에서 친구들과 화상채팅으로 노래를 부르고\n다양한 게임까지 즐길 수 있습니다.',
+  };
+
   return (
     <div className={styles.container} ref={ref}>
       <canvas
@@ -121,7 +126,7 @@ function MainTop() {
         alt="noteC"
         className={styles.noteC}
       />
-      <Title />
+      <Title main={titleContent.main} sub={titleContent.sub} />
     </div>
   );
 }
