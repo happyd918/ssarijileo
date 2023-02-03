@@ -11,6 +11,16 @@ function RoomModal({ setModalOpen }: any) {
     setModalOpen(false);
   };
 
+  const createRoom = () => {
+    setModalOpen(false);
+    const roomWindow = window.open('room/', 'roomWindow', 'resizeable');
+    if (!roomWindow) return;
+    roomWindow.resizeTo(1920, 1080);
+    roomWindow.onresize = () => {
+      roomWindow.resizeTo(1920, 1080);
+    };
+  };
+
   // 방제
   const [title, setTitle] = useState('');
   const changeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -151,22 +161,22 @@ function RoomModal({ setModalOpen }: any) {
         </div>
 
         <div className={styles.bottom}>
-          <Link
-            href={{
-              pathname: '/room',
-              query: { customTitle: title },
-            }}
-            as="/room"
-            className={styles.link}
+          {/*<Link*/}
+          {/*  href={{*/}
+          {/*    pathname: '/room',*/}
+          {/*    query: { customTitle: title },*/}
+          {/*  }}*/}
+          {/*  as="/room"*/}
+          {/*  className={styles.link}*/}
+          {/*>*/}
+          <button
+            type="button"
+            className={styles.createBtn}
+            onClick={createRoom}
           >
-            <button
-              type="button"
-              className={styles.createBtn}
-              onClick={closeModal}
-            >
-              생성
-            </button>
-          </Link>
+            생성
+          </button>
+          {/*</Link>*/}
 
           <button
             type="button"
