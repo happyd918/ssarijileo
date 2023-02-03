@@ -85,3 +85,8 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
+
+// 배포 설정
+tasks.name("jar") {
+    enabled = false
+}
