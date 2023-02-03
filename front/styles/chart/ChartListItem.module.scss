@@ -83,6 +83,7 @@
     var(--color-linearB),
     var(--color-linearC)
   );
+  cursor: pointer;
 }
 .container:hover .isLong {
   animation: textLoop 10s linear infinite;

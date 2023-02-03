@@ -10,6 +10,8 @@ import Dropdown from '@/components/common/Dropdown';
 import styles from '@/styles/common/Header.module.scss';
 
 function Header() {
+  if (window.location.pathname === '/room') return null;
+
   const [modalOpen, setModalOpen] = useState(false);
   const [themeMode, setThemeMode] = useState('');
   const [checked, setChecked] = useState(false);
@@ -61,21 +63,11 @@ function Header() {
   ];
 
   const icons = {
-    logo: `icon/header/${themeMode || 'light'}/${
-      themeMode || 'light'
-    }_logo.svg`,
-    mode: `icon/header/${themeMode || 'light'}/${
-      themeMode || 'light'
-    }_mode_icon.svg`,
-    alarm: `icon/header/${themeMode || 'light'}/${
-      themeMode || 'light'
-    }_alarm_icon.svg`,
-    profile: `icon/header/${themeMode || 'light'}/${
-      themeMode || 'light'
-    }_profile_icon.svg`,
-    dropdown: `icon/header/${themeMode || 'light'}/${
-      themeMode || 'light'
-    }_dropdown_icon.svg`,
+    logo: `icon/header/${themeMode}/${themeMode}_logo.svg`,
+    mode: `icon/header/${themeMode}/${themeMode}_mode_icon.svg`,
+    alarm: `icon/header/${themeMode}/${themeMode}_alarm_icon.svg`,
+    profile: `icon/header/${themeMode}/${themeMode}_profile_icon.svg`,
+    dropdown: `icon/header/${themeMode}/${themeMode}_dropdown_icon.svg`,
   };
 
   // menu 리스트 요소에 대한 태그 생성
@@ -97,8 +89,6 @@ function Header() {
   const showModal = () => {
     setModalOpen(true);
   };
-
-  if (window.location.pathname === '/room') return null;
 
   return (
     <header className={styles.header}>
@@ -138,10 +128,19 @@ function Header() {
         </div>
         {/* 로그인 상태 */}
         {/* <div className={styles.icon}>
-          <Image src={icons.alarm} alt="alarm" width={20} height={20} />
-          <div className={styles.profile}>
-            <Image src={icons.profile} alt="profile" width={25} height={25} />
-          </div>
+          <Image
+            src={icons.alarm}
+            alt="alarm"
+            width={20}
+            height={20}
+            className={styles.alarm}
+            onClick={showAlarm}
+          />
+          <Link href="profile/" key="profile">
+            <div className={styles.profile}>
+              <Image src={icons.profile} alt="profile" width={25} height={25} />
+            </div>
+          </Link>
         </div> */}
       </div>
     </header>

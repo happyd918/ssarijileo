@@ -57,11 +57,11 @@ function Footer() {
         </div>
         <div className={styles.item}>
           <div className={styles.upper}>
-            <Image src={icons.phone} alt="place" width={24} height={24} />
+            <Image src={icons.place} alt="phone" width={24} height={24} />
             <span>대전광역시 유성구 덕명동 124</span>
           </div>
           <div className={styles.upper}>
-            <Image src={icons.place} alt="phone" width={24} height={24} />
+            <Image src={icons.phone} alt="place" width={24} height={24} />
             <span>042-123-4567</span>
           </div>
           <div className={styles.lower}>
@@ -79,7 +79,7 @@ function Footer() {
           <span>DISCLAIMER</span>
         </div>
         <div className={styles.right}>
-          <span>Copyright© 2021. SSarijileo All rights reserved.</span>
+          <span>Copyright© 2021. All rights reserved.</span>
         </div>
       </div>
     </footer>
