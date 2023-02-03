@@ -1,75 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import styles from '@/styles/room/RoomChat.module.scss';
 
-function RoomChat({ setModalOpen, session }: any) {
+function RoomChat({ setModalOpen, sendChat, chatList }: any) {
+  // 내 닉네임
+  const myName = '이수민';
+
   // 현재 입력하는 채팅정보
-  const [chatContext, setChat] = useState('');
+  const [sendMessage, setChat] = useState('');
   const changeChat = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const eventTarget = e.target as HTMLTextAreaElement;
     setChat(eventTarget.value);
   };
 
-  // 채팅 보내기
-  const sendChat = (event: any) => {
-    console.log(event);
-    session
-      .signal({
-        data: '메세지 보낸 싸리질러', // Any string (optional)
-        to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
-        type: 'chat', // The type of message (optional)
-      })
-      .then(() => {
-        console.log('Message successfully sent');
-      })
-      .catch((error: any) => {
-        console.error(error);
-      });
+  // 채팅데이터 상태관리
+  const [chatData, setChatData] = useState(chatList);
+
+  useEffect(() => {
+    setChatData([...chatList]);
+  }, [chatList]);
+
+  // 보낼 채팅 메세지 전달
+  const upChat = () => {
+    sendChat(sendMessage);
+    setChat('');
   };
 
-  // 오픈비두에서 제공되는 채팅정보 (data)
-  const chat = [
-    {
-      message: 'ㅋㅋㅋㅋㅋzzzzzㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-      name: '서예지',
-    },
-    {
-      message:
-        'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-      name: '서예지',
-    },
-    {
-      message: 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-      name: '이수민',
-    },
-    {
-      message: 'ㅋㅋㅋㅋㅋㅋㅋㅋ',
-      name: '서예지',
-    },
-    {
-      message: 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-      name: '이수민',
-    },
-    {
-      message:
-        'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-      name: '이수민',
-    },
-    {
-      message: 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-      name: '서예지',
-    },
-    {
-      message: 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-      name: '서예지',
-    },
-  ];
-  // 채팅목록 더미데이터 상태관리
-  const [chatData, setChatData] = useState(chat);
-  // 내 닉네임
-  const myName = '이수민';
-  const chatList = chatData.map(item => {
+  // 채팅리스트
+  const chats = chatData.map((item: any) => {
     //   item.name을 주고 프로필이미지 받아오기
     //   내가 보낸 것과 다른 사람이 보낸 거 class로 차이 나타내기
     const chatClass = classNames({
@@ -95,6 +54,7 @@ function RoomChat({ setModalOpen, session }: any) {
       </div>
     );
   });
+
   return (
     <div className={styles.layout}>
       <input
@@ -117,25 +77,14 @@ function RoomChat({ setModalOpen, session }: any) {
             className={styles.close}
           />
         </div>
-        <div className={styles.main}>{chatList}</div>
+        <div className={styles.main}>{chats}</div>
         <textarea
           id="send"
           className={styles.input}
           onChange={changeChat}
-          value={chatContext}
+          value={sendMessage}
         />
-        <button
-          type="button"
-          className={styles.btn}
-          onClick={() => {
-            chatData.push({
-              message: chatContext,
-              name: myName,
-            });
-            setChatData(chatData);
-            sendChat(chatContext);
-          }}
-        >
+        <button type="button" className={styles.btn} onClick={upChat}>
           전송
         </button>
       </div>

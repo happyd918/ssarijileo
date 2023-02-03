@@ -125,13 +125,6 @@ function Room() {
         setSubscribers([...newsubscribers]);
       });
 
-      // 채팅
-      mySession.on('chat', (event: any) => {
-        console.log(event.data); // Message
-        console.log(event.from); // Connection object of the sender
-        console.log(event.type); // The type of message ("my-chat")
-      });
-
       // 참가
       getToken().then(token => {
         mySession
@@ -218,7 +211,7 @@ function Room() {
           })}
         </div>
       </div>
-      <RoomFooter mySession={session} />
+      <RoomFooter session={session} />
     </div>
   );
 }
