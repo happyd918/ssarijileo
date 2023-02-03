@@ -8,5 +8,5 @@ public interface SongService {
 
 	List<SongDto> findAllSong();
 
-	SongDto findSongById(Long id);
+	SongDto findSongById(Long songId);
 }

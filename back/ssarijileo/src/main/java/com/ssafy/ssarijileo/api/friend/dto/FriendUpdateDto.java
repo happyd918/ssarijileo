@@ -13,5 +13,5 @@ public class FriendUpdateDto {
 	Long friendId;
 
 	// 상태(W:대기,A:수락,X:취소)
-	char status;
+	String status;
 }

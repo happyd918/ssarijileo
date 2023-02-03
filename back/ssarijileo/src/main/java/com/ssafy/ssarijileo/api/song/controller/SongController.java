@@ -25,11 +25,11 @@ public class SongController {
 	private final SongService songService;
 
 	/**
-	 * 노래 전체 목록 조회
+	 * 노래 전체 목록
 	 * @return
 	 */
 	@ApiOperation(
-		value = "노래 전체 목록 조회",
+		value = "노래 전체 목록",
 		notes = "노래 전체 목록을 조회한다."
 	)
 	@ApiResponses({
@@ -44,16 +44,16 @@ public class SongController {
 	}
 
 	/**
-	 * 노래 정보 조회
-	 * @param id
+	 * 노래 상세 정보
+	 * @param songId
 	 * @return
 	 */
 	@ApiOperation(
-		value = "노래 정보 조회",
+		value = "노래 상세 정보",
 		notes = "노래 ID를 통해 노래 정보를 조회한다."
 	)
 	@ApiImplicitParam(
-		name = "id",
+		name = "songId",
 		value = "노래 PK"
 	)
 	@ApiResponses({
@@ -62,8 +62,8 @@ public class SongController {
 		@ApiResponse(code = 404, message = "노래 없음"),
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
-	@GetMapping("{id}")
-	public ResponseEntity<SongDto> findSongById(@PathVariable Long id) {
-		return ResponseEntity.status(200).body(songService.findSongById(id));
+	@GetMapping("{songId}")
+	public ResponseEntity<SongDto> findSongById(@PathVariable Long songId) {
+		return ResponseEntity.status(200).body(songService.findSongById(songId));
 	}
 }

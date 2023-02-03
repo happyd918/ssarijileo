@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssarijileo.api.friend.dto.FriendDto;
+import com.ssafy.ssarijileo.api.friend.dto.FriendInviteDto;
 import com.ssafy.ssarijileo.api.friend.dto.FriendUpdateDto;
 import com.ssafy.ssarijileo.api.friend.dto.MyFriendDto;
 import com.ssafy.ssarijileo.api.friend.service.FriendService;
@@ -24,38 +25,19 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/friend")
+@RequestMapping("/api/v1/friend")
 @RequiredArgsConstructor
 public class FriendController {
 
 	private final FriendService friendService;
 
 	/**
-	 * 친구 전체 목록 조회
-	 * @return
-	 */
-	@ApiOperation(
-		value = "친구 전체 목록 조회",
-		notes = "친구 전체 목록을 조회한다."
-	)
-	@ApiResponses({
-		@ApiResponse(code = 200, message = "성공"),
-		@ApiResponse(code = 401, message = "인증 실패"),
-		@ApiResponse(code = 404, message = "친구 없음"),
-		@ApiResponse(code = 500, message = "서버 오류")
-	})
-	@GetMapping
-	public ResponseEntity<List<FriendDto>> findAllFriend() {
-		return ResponseEntity.status(200).body(friendService.findAllFriend());
-	}
-
-	/**
-	 * 내 친구 목록 조회
+	 * 내 친구 목록
 	 * @param userId
 	 * @return
 	 */
 	@ApiOperation(
-		value = "내 친구 목록 조회",
+		value = "내 친구 목록",
 		notes = "사용자 ID를 통해 해당 사용자의 친구 목록을 조회한다."
 	)
 	@ApiImplicitParam(
@@ -88,8 +70,8 @@ public class FriendController {
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@PostMapping
-	public ResponseEntity<? extends BaseResponseBody> insertFriend(@RequestBody FriendDto friendDto) {
-		friendService.insertFriend(friendDto);
+	public ResponseEntity<? extends BaseResponseBody> requestFriend(@RequestBody FriendDto friendDto) {
+		friendService.requestFriend(friendDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 
@@ -113,8 +95,25 @@ public class FriendController {
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 
-	@GetMapping("/test")
-	public ResponseEntity<? extends BaseResponseBody> testFriend() {
-		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+<<<<<<< back/ssarijileo/src/main/java/com/ssafy/ssarijileo/api/friend/controller/FriendController.java
+	/**
+	 * 친구 초대
+	 * @param friendInviteDto
+	 */
+	@ApiOperation(
+		value = "친구 초대",
+		notes = "노래방에 친구를 초대한다."
+	)
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "성공"),
+		@ApiResponse(code = 401, message = "인증 실패"),
+		@ApiResponse(code = 404, message = "정보 없음"),
+		@ApiResponse(code = 500, message = "서버 오류")
+	})
+	@PostMapping("/invite")
+	public ResponseEntity<? extends BaseResponseBody> inviteFriend(@RequestBody FriendInviteDto friendInviteDto) {
+		friendService.inviteFriend(friendInviteDto);
 	}
+=======
+	
 }

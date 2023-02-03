@@ -18,6 +18,6 @@ public class LyricsDto {
 	// 한소절
 	String verse;
 
-	// 상태(N:기본,O:가사순서맞추기,H:하이라이트)
-	char status;
+	// 시간
+	private String time;
 }

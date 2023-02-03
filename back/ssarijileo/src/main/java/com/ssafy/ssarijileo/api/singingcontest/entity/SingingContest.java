@@ -23,16 +23,16 @@ public class SingingContest {
 	// PK (AUTO_INCREMENT)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long SingingContestId;
+	private Long SingingContestId;
 
 	// 녹화PK
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "recording_id")
-	Recording recording;
+	private Recording recording;
 
 	// 등록일시
-	String registerDate;
+	private String registerDate;
 
 	// 상태(V:노출,D:삭제,B:신고)
-	char status;
+	private char status;
 }
