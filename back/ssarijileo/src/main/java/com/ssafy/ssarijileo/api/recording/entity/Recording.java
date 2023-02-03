@@ -1,7 +1,5 @@
 package com.ssafy.ssarijileo.api.recording.entity;
 
-import java.util.UUID;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -9,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.DynamicInsert;
 
 import com.ssafy.ssarijileo.api.recording.dto.RecordingDto;
 import com.ssafy.ssarijileo.api.song.entity.Song;
@@ -22,6 +22,7 @@ import lombok.Getter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@DynamicInsert
 public class Recording {
 
 	// PK (AUTO_INCREMENT)
@@ -30,7 +31,7 @@ public class Recording {
 	private Long recordingId;
 
 	// 사용자PK
-	private UUID userId;
+	private String userId;
 
 	// 노래PK
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -47,7 +48,7 @@ public class Recording {
 	@Builder
 	public Recording(RecordingDto recordingDto, Song song) {
 		this.recordingId = recordingDto.getRecordingId();
-		this.userId = UUID.fromString(recordingDto.getUserId());
+		this.userId = recordingDto.getUserId();
 		this.song = song;
 		this.file = recordingDto.getFile();
 		this.registerDate = recordingDto.getRegisterDate();
@@ -55,6 +56,6 @@ public class Recording {
 
 	// Entity to Dto
 	public RecordingDto toDto(){
-		return new RecordingDto(recordingId, String.valueOf(userId), song.getSongId(), file, registerDate);
+		return new RecordingDto(recordingId, userId, song.getSongId(), file, registerDate);
 	}
 }

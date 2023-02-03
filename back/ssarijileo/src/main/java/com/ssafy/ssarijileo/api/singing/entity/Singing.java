@@ -1,7 +1,5 @@
 package com.ssafy.ssarijileo.api.singing.entity;
 
-import java.util.UUID;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -30,7 +28,7 @@ public class Singing {
 	private Long singingId;
 
 	// 사용자PK
-	private UUID userId;
+	private String userId;
 
 	// 노래PK
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -50,7 +48,7 @@ public class Singing {
 	@Builder
 	public Singing(SingingDto singingDto, Song song) {
 		this.singingId = singingDto.getSingingId();
-		this.userId = UUID.fromString(singingDto.getUserId());
+		this.userId = singingDto.getUserId();
 		this.song = song;
 		this.mode = singingDto.getMode();
 		this.score = singingDto.getScore();

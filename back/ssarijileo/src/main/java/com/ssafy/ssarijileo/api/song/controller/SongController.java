@@ -25,11 +25,11 @@ public class SongController {
 	private final SongService songService;
 
 	/**
-	 * 노래 전체 목록 조회
+	 * 노래 전체 목록
 	 * @return
 	 */
 	@ApiOperation(
-		value = "노래 전체 목록 조회",
+		value = "노래 전체 목록",
 		notes = "노래 전체 목록을 조회한다."
 	)
 	@ApiResponses({
@@ -44,12 +44,12 @@ public class SongController {
 	}
 
 	/**
-	 * 노래 정보 조회
+	 * 노래 상세 정보
 	 * @param songId
 	 * @return
 	 */
 	@ApiOperation(
-		value = "노래 정보 조회",
+		value = "노래 상세 정보",
 		notes = "노래 ID를 통해 노래 정보를 조회한다."
 	)
 	@ApiImplicitParam(

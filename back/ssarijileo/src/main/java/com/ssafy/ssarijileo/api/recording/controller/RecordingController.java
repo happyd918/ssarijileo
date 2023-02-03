@@ -21,62 +21,19 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/recording")
+@RequestMapping("/api/v1/recording")
 @RequiredArgsConstructor
 public class RecordingController {
 
 	private final RecordingService recordingService;
 
 	/**
-	 * 녹화 전체 목록 조회
-	 * @return
-	 */
-	@ApiOperation(
-		value = "녹화 전체 목록 조회",
-		notes = "녹화 전체 목록을 조회한다."
-	)
-	@ApiResponses({
-		@ApiResponse(code = 200, message = "성공"),
-		@ApiResponse(code = 401, message = "인증 실패"),
-		@ApiResponse(code = 404, message = "녹화 없음"),
-		@ApiResponse(code = 500, message = "서버 오류")
-	})
-	@GetMapping
-	public ResponseEntity<List<RecordingDto>> findAllRecording(){
-		return ResponseEntity.status(200).body(recordingService.findAllRecording());
-	}
-
-	/**
-	 * 녹화 정보 조회
-	 * @param recordingId
-	 * @return
-	 */
-	@ApiOperation(
-		value = "녹화 정보 조회",
-		notes = "녹화 ID를 통해 녹화 정보를 조회한다."
-	)
-	@ApiImplicitParam(
-		name = "recordingId",
-		value = "녹화 PK"
-	)
-	@ApiResponses({
-		@ApiResponse(code = 200, message = "성공"),
-		@ApiResponse(code = 401, message = "인증 실패"),
-		@ApiResponse(code = 404, message = "녹화 없음"),
-		@ApiResponse(code = 500, message = "서버 오류")
-	})
-	@GetMapping("{recordingId}")
-	public ResponseEntity<RecordingDto> findRecordingById(@PathVariable Long recordingId){
-		return ResponseEntity.status(200).body(recordingService.findRecordingById(recordingId));
-	}
-
-	/**
-	 * 내 녹화 목록 조회
+	 * 내 녹화 목록
 	 * @param userId
 	 * @return
 	 */
 	@ApiOperation(
-		value = "내 녹화 목록 조회",
+		value = "내 녹화 목록",
 		notes = "사용자 ID를 통해 해당 사용자의 녹화 목록을 조회한다."
 	)
 	@ApiImplicitParam(

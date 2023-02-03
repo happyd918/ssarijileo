@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProfileDto {
 
-	// PK (AUTO_INCREMENT)
+	// PK
 	String profileId;
 
 	// 닉네임

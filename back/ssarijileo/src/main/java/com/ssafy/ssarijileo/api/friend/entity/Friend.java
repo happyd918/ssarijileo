@@ -1,11 +1,11 @@
 package com.ssafy.ssarijileo.api.friend.entity;
 
-import java.util.UUID;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.DynamicInsert;
 
 import com.ssafy.ssarijileo.api.friend.dto.FriendDto;
 
@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@DynamicInsert
 public class Friend {
 
 	// PK (AUTO_INCREMENT)
@@ -26,29 +27,29 @@ public class Friend {
 	private Long friendId;
 
 	// 보낸 사용자PK
-	private UUID fromUserId;
+	private String fromUserId;
 
 	// 받는 사용자PK
-	private UUID toUserId;
+	private String toUserId;
 
 	// 상태(W:대기,A:수락,X:취소)
-	private char status;
+	private String status;
 
 	// Dto to Entity
 	@Builder
 	public Friend(FriendDto friendDto) {
 		this.friendId = friendDto.getFriendId();
-		this.fromUserId = UUID.fromString(friendDto.getFromUserId());
-		this.toUserId = UUID.fromString(friendDto.getToUserId());
+		this.fromUserId = friendDto.getFromUserId();
+		this.toUserId = friendDto.getToUserId();
 		this.status = friendDto.getStatus();
 	}
 
 	// Entity to Dto
 	public FriendDto toDto() {
-		return new FriendDto(friendId, String.valueOf(fromUserId), String.valueOf(toUserId), status);
+		return new FriendDto(friendId, fromUserId, toUserId, status);
 	}
 
-	public void updateFriend(char status) {
+	public void updateFriend(String status) {
 		this.status = status;
 	}
 }

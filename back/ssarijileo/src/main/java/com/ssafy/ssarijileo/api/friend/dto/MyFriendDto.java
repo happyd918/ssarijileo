@@ -15,6 +15,12 @@ public class MyFriendDto {
 	// 친구 사용자PK
 	String userId;
 
+	// 친구 닉네임
+	String nickname;
+
+	// 친구 프로필이미지
+	String image;
+
 	// 상태(W:대기,A:수락,X:취소)
-	char status;
+	String status;
 }

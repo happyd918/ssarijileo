@@ -1,7 +1,6 @@
 package com.ssafy.ssarijileo.api.friend.service;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -28,7 +27,7 @@ public class FriendServiceImpl implements FriendService {
 
 	private final FriendJpaRepository friendJpaRepository;
 	private final FriendRepository friendRepository;
-	private final ProfileJpaRepository friendRequestEvent;
+	private final ProfileJpaRepository profileJpaRepository;
 
 	@Override
 	public List<FriendDto> findAllFriend() {
@@ -45,7 +44,7 @@ public class FriendServiceImpl implements FriendService {
 		Friend friend = Friend.builder().friendDto(friendDto).build();
 		friendJpaRepository.save(friend);
 
-		Profile profile = friendRequestEvent.findById(friend.getFromUserId()).orElseThrow(NotFoundException::new);
+		// Profile profile = friendRequestEvent.findById(friend.getFromUserId()).orElseThrow(NotFoundException::new);
 
 		// 친구 요청 알림
 		// FriendRequestEvent friendRequestEvent = FriendRequestEvent.builder()
@@ -64,7 +63,7 @@ public class FriendServiceImpl implements FriendService {
 
 	@Override
 	public void inviteFriend(FriendInviteDto friendInviteDto) {
-		Profile profile = friendRequestEvent.findById(UUID.fromString(friendInviteDto.getFromUserId())).orElseThrow(NotFoundException::new);
+		// Profile profile = profileJpaRepository.findById(friendInviteDto.getFromUserId()).orElseThrow(NotFoundException::new);
 
 		// 친구 초대 알림
 		// FriendInviteEvent friendInviteEvent = FriendInviteEvent.builder()
@@ -73,6 +72,5 @@ public class FriendServiceImpl implements FriendService {
 		// 	.link(friendInviteDto.getLink())
 		// 	.build();
 		// friendInviteProducer.send(friendInviteEvent);
-
 	}
 }

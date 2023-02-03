@@ -1,10 +1,6 @@
 package com.ssafy.ssarijileo.api.profile.entitiy;
 
-import java.util.UUID;
-
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
@@ -17,9 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Profile {
 
-	// PK (AUTO_INCREMENT)
+	// PK
 	@Id
-	private UUID profileId;
+	private String profileId;
 
 	// 닉네임
 	private String nickname;

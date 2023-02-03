@@ -33,11 +33,11 @@ public class Lyrics {
 	// 한소절
 	private String verse;
 
-	// 상태(N:기본,O:가사순서맞추기,H:하이라이트)
-	private char status;
+	// 시간
+	private String time;
 
 	// Entity to Dto
 	public LyricsDto toDto() {
-		return new LyricsDto(lyricsId, song.getSongId(), verse, status);
+		return new LyricsDto(lyricsId, song.getSongId(), verse, time);
 	}
 }
