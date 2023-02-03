@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import Head from 'next/head';
 import { Inter } from '@next/font/google';
 
-import IconTop from '@/components/main/IconTop';
+import MainTop from '@/components/main/MainTop';
 import SoundBar from '@/components/common/SoundBar';
 import TodayChart from '@/components/main/TodayChart';
 import TodayContest from '@/components/main/TodayContest';
@@ -33,7 +33,7 @@ function Home() {
         <title>My App</title>
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
-        <IconTop />
+        <MainTop />
         <div className={styles.container}>
           <SoundBar />
           <TodayChart />

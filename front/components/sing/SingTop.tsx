@@ -5,9 +5,9 @@ import Image from 'next/image';
 import Title from '@/components/main/Title';
 
 import 'swiper/swiper.min.css';
-import styles from '@/styles/sing/SwiperTop.module.scss';
+import styles from '@/styles/sing/SingTop.module.scss';
 
-function SwiperTop() {
+function SingTop() {
   const slides = [1, 2, 3];
   const swiperSlide = slides.map(slide => {
     return (
@@ -41,4 +41,4 @@ function SwiperTop() {
   );
 }
 
-export default SwiperTop;
+export default SingTop;

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import SwiperTop from '@/components/sing/SwiperTop';
+import SingTop from '@/components/sing/SingTop';
 import SoundBar from '@/components/common/SoundBar';
 import RoomList from '@/components/sing/RoomList';
 import TopImg from '@/components/common/TopImg';
@@ -11,7 +11,7 @@ function Index() {
   return (
     <div className={styles.container}>
       <TopImg />
-      <SwiperTop />
+      <SingTop />
       <Image
         src="img/common/common_music_note1_image.svg"
         width={130}

@@ -7,9 +7,9 @@ import { useAnimation } from '@/hooks/useAnimation';
 import Title from '@/components/main/Title';
 import TopImg from '@/components/common/TopImg';
 
-import styles from '@/styles/main/IconTop.module.scss';
+import styles from '@/styles/main/MainTop.module.scss';
 
-function IconTop() {
+function MainTop() {
   const { height, width, ref } = useComponentSize();
   const canvasWidth = width;
   const canvasHeight = height;
@@ -53,8 +53,8 @@ function IconTop() {
       img.src = noteImages(noteWindow[i].specific);
       ctx.drawImage(
         img,
-        noteWindow[i].start.x,
-        noteWindow[i].start.y,
+        noteWindow[i].start.x - noteWindow[i].size / 2,
+        noteWindow[i].start.y - noteWindow[i].size / 2,
         noteWindow[i].size,
         noteWindow[i].size,
       );
@@ -69,18 +69,18 @@ function IconTop() {
     for (let i = 0; i < 3; i++) {
       const note = {
         speed: {
-          x: Math.random() * 4 - 2,
-          y: Math.random() * 4 - 2,
+          x: Math.random() * 3 - 1.5,
+          y: Math.random() * 3 - 1.5,
         },
         start: {
           x: e.clientX - rect.left,
           y: e.clientY - rect.top,
         },
         specific: Math.floor(Math.random() * 3) + 1,
-        life: Math.random() * 10 + 10,
+        life: Math.random() * 10 + 20,
         size: 0,
       };
-      note.size = note.life + 10;
+      note.size = note.life + 25;
       noteWindow.push(note);
     }
   };
@@ -126,4 +126,4 @@ function IconTop() {
   );
 }
 
-export default IconTop;
+export default MainTop;
