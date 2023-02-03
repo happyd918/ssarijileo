@@ -28,9 +28,9 @@ function ContentForm(props: { theme: string; DUMMY_DATA: any }) {
     DUMMY_DATA.nickname = e.target.value;
   };
 
-  const emailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    DUMMY_DATA.email = e.target.value;
-  };
+  // const emailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   DUMMY_DATA.email = e.target.value;
+  // };
 
   return (
     <>
