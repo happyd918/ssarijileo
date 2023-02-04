@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.DynamicInsert;
 
+import com.ssafy.ssarijileo.api.profile.entitiy.Profile;
 import com.ssafy.ssarijileo.api.recording.dto.RecordingDto;
 import com.ssafy.ssarijileo.api.recording.dto.RecordingResponseDto;
 import com.ssafy.ssarijileo.api.song.entity.Song;
@@ -32,7 +33,9 @@ public class Recording {
 	private Long recordingId;
 
 	// 사용자PK
-	private String userId;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private Profile profile;
 
 	// 노래PK
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -47,9 +50,9 @@ public class Recording {
 
 	// Dto to Entity
 	@Builder
-	public Recording(RecordingDto recordingDto, Song song) {
+	public Recording(RecordingDto recordingDto, Profile profile, Song song) {
 		this.recordingId = recordingDto.getRecordingId();
-		this.userId = recordingDto.getUserId();
+		this.profile = profile;
 		this.song = song;
 		this.file = recordingDto.getFile();
 		this.registerDate = recordingDto.getRegisterDate();

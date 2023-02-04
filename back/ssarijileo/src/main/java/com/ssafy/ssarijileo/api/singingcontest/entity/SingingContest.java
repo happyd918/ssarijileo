@@ -8,9 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.DynamicInsert;
+
 import com.ssafy.ssarijileo.api.recording.entity.Recording;
+import com.ssafy.ssarijileo.api.singingcontest.dto.SingingContestResponseDto;
+import com.ssafy.ssarijileo.api.singingcontest.dto.SingingContestUpdateDto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,12 +23,13 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@DynamicInsert
 public class SingingContest {
 
 	// PK (AUTO_INCREMENT)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long SingingContestId;
+	private Long singingContestId;
 
 	// 녹화PK
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -34,5 +40,20 @@ public class SingingContest {
 	private String registerDate;
 
 	// 상태(V:노출,D:삭제,B:신고)
-	private char status;
+	private String status;
+
+	// Dto to Entity
+	@Builder
+	public SingingContest(Recording recording) {
+		this.recording = recording;
+	}
+
+	// Entity to Dto
+	public SingingContestResponseDto toDto() {
+		return new SingingContestResponseDto(singingContestId, recording.getProfile().getNickname(), recording.getSong().getTitle(), recording.getSong().getSinger(), recording.getFile(), registerDate);
+	}
+
+	public void updateStatus(String status) {
+		this.status = status;
+	}
 }

@@ -7,9 +7,11 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.ssarijileo.api.song.dto.FavoriteSongDto;
 import com.ssafy.ssarijileo.api.song.dto.SongDto;
 import com.ssafy.ssarijileo.api.song.entity.FavoriteSong;
 import com.ssafy.ssarijileo.api.song.repository.FavoriteSongJpaRepository;
+import com.ssafy.ssarijileo.api.song.repository.SongRepository;
 import com.ssafy.ssarijileo.common.exception.NotFoundException;
 import com.ssafy.ssarijileo.api.song.dto.SongDetailDto;
 import com.ssafy.ssarijileo.api.song.entity.Song;
@@ -23,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class SongServiceImpl implements SongService {
 
 	private final SongJpaRepository songJpaRepository;
+	private final SongRepository songRepository;
 	private final FavoriteSongJpaRepository favoriteSongJpaRepository;
 
 	@Override
@@ -42,7 +45,13 @@ public class SongServiceImpl implements SongService {
 
 	@Override
 	public List<SongDto> findSongByUserId(String userId) {
-		return favoriteSongJpaRepository.findByUserId(userId).orElseThrow(NotFoundException::new)
-			.stream().map(FavoriteSong::toDto).collect(Collectors.toList());
+		return songRepository.findFavoriteSongByUserId(userId).orElseThrow(NotFoundException::new);
+	}
+
+	@Override
+	public void setFavoriteSong(FavoriteSongDto favoriteSongDto) {
+		Song song = songJpaRepository.findById(favoriteSongDto.getSongId()).orElseThrow(NotFoundException::new);
+		FavoriteSong favoriteSong = FavoriteSong.builder().favoriteSongDto(favoriteSongDto).song(song).build();
+		favoriteSongJpaRepository.save(favoriteSong);
 	}
 }

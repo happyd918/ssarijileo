@@ -11,5 +11,5 @@ import com.ssafy.ssarijileo.api.recording.entity.Recording;
 @Repository
 public interface RecordingJpaRepository extends JpaRepository<Recording, Long> {
 
-	Optional<List<Recording>> findRecordingByUserId(String userId);
+	Optional<List<Recording>> findByProfile_ProfileId(String userId);
 }

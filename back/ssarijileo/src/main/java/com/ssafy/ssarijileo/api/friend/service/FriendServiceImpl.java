@@ -41,7 +41,9 @@ public class FriendServiceImpl implements FriendService {
 
 	@Override
 	public void requestFriend(FriendDto friendDto) {
-		Friend friend = Friend.builder().friendDto(friendDto).build();
+		Profile fromProfile = profileJpaRepository.findById(friendDto.getFromUserId()).orElseThrow(NotFoundException::new);
+		Profile toProfile = profileJpaRepository.findById(friendDto.getFromUserId()).orElseThrow(NotFoundException::new);
+		Friend friend = Friend.builder().friendDto(friendDto).fromProfile(fromProfile).toProfile(toProfile).build();
 		friendJpaRepository.save(friend);
 
 		// Profile profile = friendRequestEvent.findById(friend.getFromUserId()).orElseThrow(NotFoundException::new);

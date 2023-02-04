@@ -16,14 +16,14 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/singing")
+@RequestMapping("/api/v1/singing")
 @RequiredArgsConstructor
 public class SingingController {
 
 	private final SingingService singingService;
 
 	/**
-	 * 사용자 노래 정보 저장
+	 * @title 사용자 노래 정보 저장
 	 * @param singingDto
 	 */
 	@ApiOperation(

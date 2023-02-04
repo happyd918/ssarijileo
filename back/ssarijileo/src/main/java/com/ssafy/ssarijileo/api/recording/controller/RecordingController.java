@@ -24,12 +24,12 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/v1/recording")
 @RequiredArgsConstructor
-public class RecordingController {
+public class  RecordingController {
 
 	private final RecordingService recordingService;
 
 	/**
-	 * 내 녹화 목록
+	 * @title 내 녹화 목록
 	 * @param userId
 	 * @return
 	 */
@@ -53,7 +53,7 @@ public class RecordingController {
 	}
 
 	/**
-	 * 녹화 저장
+	 * @title 녹화 저장
 	 * @param recordingDto
 	 */
 	@ApiOperation(

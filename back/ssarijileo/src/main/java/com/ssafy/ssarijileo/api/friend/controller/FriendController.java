@@ -32,7 +32,7 @@ public class FriendController {
 	private final FriendService friendService;
 
 	/**
-	 * 내 친구 목록
+	 * @title 내 친구 목록
 	 * @param userId
 	 * @return
 	 */
@@ -56,7 +56,7 @@ public class FriendController {
 	}
 
 	/**
-	 * 친구 요청
+	 * @title 친구 요청
 	 * @param friendDto
 	 */
 	@ApiOperation(
@@ -76,7 +76,7 @@ public class FriendController {
 	}
 
 	/**
-	 * 친구 수락 및 취소
+	 * @title 친구 수락 및 취소
 	 * @param friendUpdateDto
 	 */
 	@ApiOperation(
@@ -96,7 +96,7 @@ public class FriendController {
 	}
 
 	/**
-	 * 친구 초대
+	 * @title 친구 초대
 	 * @param friendInviteDto
 	 */
 	@ApiOperation(

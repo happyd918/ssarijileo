@@ -27,24 +27,24 @@ public class FriendRepositoryImpl implements FriendRepository {
 		List<MyFriendDto> friendList = jpaQueryFactory
 			.select(Projections.fields(MyFriendDto.class,
 				friend.friendId,
-				friend.fromUserId
-					.when(userId).then(friend.toUserId)
-					.otherwise(friend.fromUserId)
+				friend.fromProfile.profileId
+					.when(userId).then(friend.toProfile.profileId)
+					.otherwise(friend.fromProfile.profileId)
 					.as("userId"),
 				profile.nickname,
 				profile.image,
 				friend.status))
 			.from(friend)
 			.leftJoin(profile)
-			.on(friend.fromUserId
-				.when(userId).then(friend.toUserId)
-				.otherwise(friend.fromUserId).eq(profile.profileId))
+			.on(friend.fromProfile.profileId
+				.when(userId).then(friend.toProfile.profileId)
+				.otherwise(friend.fromProfile.profileId).eq(profile.profileId))
 			.where(
 				friend.status.ne("X")
 					.and(
-						(friend.fromUserId.eq(userId)
+						(friend.fromProfile.profileId.eq(userId)
 							.and(friend.status.eq("A")))
-							.or(friend.toUserId.eq(userId))
+							.or(friend.toProfile.profileId.eq(userId))
 					)
 			)
 			.orderBy(friend.status.desc())
