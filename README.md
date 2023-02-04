@@ -10,17 +10,8 @@
 
 ##### 집에서 즐기는 랜선 노래방 싸리질러 ~~~~~~~~
 
-### CI/CD -> 이수민(1월 29일 내로 ec2 설정 완료 목표)
+### 팀 역할 분담
 
-1. git lab -> jenkins 연결 확인
-2. docker -> 설치
-3. jenkins -> 설치 완료 (빌드까지 성공)
-4. Kubernetes -> minikube 선택
-5. ansible
-6. sonarQube (고려중)
-
-
-
-
-
-## 
+* 김명준 : 회원 로그인 및 관리
+* 김소윤 : Web RTC 기능 구현
+* 이수민 : CI / CD 구축 (jenkins(fe, be), redis(session), redis(cache), MySQL, WebRTC)
