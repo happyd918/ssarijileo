@@ -3,7 +3,7 @@ package com.ssafy.ssarijileo.api.auth.service;
 import com.ssafy.ssarijileo.api.auth.dto.JwtCode;
 import com.ssafy.ssarijileo.api.auth.dto.Token;
 import com.ssafy.ssarijileo.api.auth.dto.TokenKey;
-import com.ssafy.ssarijileo.api.user.dto.UserInfoDto;
+import com.ssafy.ssarijileo.api.user.dto.ProfileDto;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -56,22 +56,22 @@ public class TokenProvider implements InitializingBean {
         redisService.setDataWithExpiration(key, value, time);
     }
 
-    public String generateAccess(UserInfoDto userInfo, String role) {
+    public String generateAccess(ProfileDto userInfo, String role) {
         return createToken(userInfo, role, TokenKey.ACCESS);
     }
 
-    public String generateRefresh(UserInfoDto userInfo, String role) {
+    public String generateRefresh(ProfileDto userInfo, String role) {
         return createToken(userInfo, role, TokenKey.REFRESH);
     }
 
-    public Token generateToken(UserInfoDto userInfo, String role) {
+    public Token generateToken(ProfileDto userInfo, String role) {
         String accessToken = generateAccess(userInfo, role);
         String refreshToken = generateRefresh(userInfo, role);
 
         return new Token(accessToken, refreshToken);
     }
 
-    public String createToken(UserInfoDto userInfo, String role, TokenKey tokenKey) {
+    public String createToken(ProfileDto userInfo, String role, TokenKey tokenKey) {
         // access : 30 min, refresh : 1 month
         long period = getExpiration(tokenKey);
 

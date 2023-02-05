@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class UserRequestMapper {
-    public UserInfoDto toDto(OAuth2User oAuth2User) {
+    public ProfileDto toDto(OAuth2User oAuth2User) {
         var attributes = oAuth2User.getAttributes();
         log.info("oAuth2User attributes = {}", attributes);
 
-        return UserInfoDto.builder()
+        return ProfileDto.builder()
                 .image(String.valueOf(attributes.get("image")))
                 .nickname(String.valueOf(attributes.get("nickname")))
                 .build();
