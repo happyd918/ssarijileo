@@ -7,23 +7,20 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecordingDto {
+public class RecordingResponseDto {
 
 	// PK (AUTO_INCREMENT)
 	Long recordingId;
 
-	// 사용자PK
-	String userId;
+	// 제목
+	String title;
 
-	// 노래PK
-	Long songId;
+	// 가수
+	String singer;
 
 	// 녹화파일
 	String file;
 
 	// 녹화일시
 	String registerDate;
-
-	// 상태(V:노출,D:삭제)
-	String status;
 }

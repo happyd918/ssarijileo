@@ -18,12 +18,14 @@ import com.ssafy.ssarijileo.api.friend.dto.MyFriendDto;
 import com.ssafy.ssarijileo.api.friend.service.FriendService;
 import com.ssafy.ssarijileo.common.model.BaseResponseBody;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
+@Api(tags = "친구 API")
 @RestController
 @RequestMapping("/api/v1/friend")
 @RequiredArgsConstructor
@@ -32,7 +34,7 @@ public class FriendController {
 	private final FriendService friendService;
 
 	/**
-	 * 내 친구 목록
+	 * @title 내 친구 목록
 	 * @param userId
 	 * @return
 	 */
@@ -56,7 +58,7 @@ public class FriendController {
 	}
 
 	/**
-	 * 친구 요청
+	 * @title 친구 요청
 	 * @param friendDto
 	 */
 	@ApiOperation(
@@ -76,7 +78,7 @@ public class FriendController {
 	}
 
 	/**
-	 * 친구 수락 및 취소
+	 * @title 친구 수락 및 취소
 	 * @param friendUpdateDto
 	 */
 	@ApiOperation(
@@ -96,7 +98,7 @@ public class FriendController {
 	}
 
 	/**
-	 * 친구 초대
+	 * @title 친구 초대
 	 * @param friendInviteDto
 	 */
 	@ApiOperation(

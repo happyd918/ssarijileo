@@ -1,16 +1,17 @@
-package com.ssafy.ssarijileo.api.recording.dto;
+package com.ssafy.ssarijileo.api.song.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecordingDto {
+public class FavoriteSongDto {
 
 	// PK (AUTO_INCREMENT)
-	Long recordingId;
+	Long favoriteSongId;
 
 	// 사용자PK
 	String userId;
@@ -18,12 +19,6 @@ public class RecordingDto {
 	// 노래PK
 	Long songId;
 
-	// 녹화파일
-	String file;
-
-	// 녹화일시
-	String registerDate;
-
-	// 상태(V:노출,D:삭제)
-	String status;
+	// 좋아요여부(Y:좋아요,N:좋아요취소)
+	String isLike;
 }

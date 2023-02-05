@@ -2,6 +2,9 @@ server:
   port: 8080
 
 spring:
+  # API id for MSA
+  application:
+    name: ssarijileo-service
   # MySQL
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -23,11 +26,6 @@ spring:
         format_sql: true
         use_sql_comments: true
         show_sql: true
-
-  # API id for MSA
-  application:
-    name: ssarijileo-service
-
   # swagger
   mvc:
     pathmatch:
@@ -46,6 +44,7 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
+# feign
 feign:
   hystrix:
     enabled: true
