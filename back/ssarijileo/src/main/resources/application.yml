@@ -44,7 +44,7 @@ logging:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://10.108.116.229:8761/eureka/
+      defaultZone: http://eureka-server:8761/eureka/
 
 feign:
   hystrix:
