@@ -7,6 +7,8 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+import org.hibernate.annotations.DynamicInsert;
+
 import com.ssafy.ssarijileo.api.profile.entitiy.Profile;
 import com.ssafy.ssarijileo.api.songsetting.dto.SongSettingDto;
 
@@ -31,13 +33,15 @@ public class SongSetting {
 	// 음량
 	private int volume;
 
+	// to Entity
 	@Builder
-	public SongSetting(SongSettingDto songSettingDto) {
-		this.songSettingId = songSettingDto.getSongSettingId();
-		this.eco = songSettingDto.getEco();
-		this.volume = songSettingDto.getVolume();
+	public SongSetting(String userId) {
+		this.songSettingId = userId;
+		this.eco = 50;
+		this.volume = 50;
 	}
 
+	// Entity to Dto
 	public SongSettingDto toDto() {
 		return new SongSettingDto(songSettingId, eco, volume);
 	}

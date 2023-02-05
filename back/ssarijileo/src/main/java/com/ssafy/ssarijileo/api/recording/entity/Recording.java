@@ -48,6 +48,9 @@ public class Recording {
 	// 녹화일시
 	private String registerDate;
 
+	// 상태(V:노출,D:삭제)
+	private String status;
+
 	// Dto to Entity
 	@Builder
 	public Recording(RecordingDto recordingDto, Profile profile, Song song) {
@@ -56,10 +59,15 @@ public class Recording {
 		this.song = song;
 		this.file = recordingDto.getFile();
 		this.registerDate = recordingDto.getRegisterDate();
+		this.status = recordingDto.getStatus();
 	}
 
 	// Entity to Dto
 	public RecordingResponseDto toDto(){
 		return new RecordingResponseDto(recordingId, song.getTitle(), song.getSinger(), file, registerDate);
+	}
+
+	public void updateStatus(String status) {
+		this.status = status;
 	}
 }

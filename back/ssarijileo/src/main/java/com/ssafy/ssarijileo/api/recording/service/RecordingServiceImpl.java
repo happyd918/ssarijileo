@@ -3,6 +3,8 @@ package com.ssafy.ssarijileo.api.recording.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.querydsl.core.types.Projections;
@@ -19,6 +21,7 @@ import com.ssafy.ssarijileo.api.song.repository.SongJpaRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class RecordingServiceImpl implements RecordingService {
 
@@ -28,7 +31,7 @@ public class RecordingServiceImpl implements RecordingService {
 
 	@Override
 	public List<RecordingResponseDto> findRecordingByUserId(String userId) {
-		return recordingJpaRepository.findByProfile_ProfileId(userId)
+		return recordingJpaRepository.findByProfile_ProfileIdAndStatus(userId, "V")
 			.orElseThrow(NotFoundException::new)
 			.stream()
 			.map(Recording::toDto)
@@ -41,5 +44,11 @@ public class RecordingServiceImpl implements RecordingService {
 		Song song = songJpaRepository.findById(recordingDto.getSongId()).orElseThrow(NotFoundException::new);
 		Recording recording = Recording.builder().recordingDto(recordingDto).profile(profile).song(song).build();
 		recordingJpaRepository.save(recording);
+	}
+
+	@Override
+	public void deleteRecording(Long recordingId) {
+		Recording recording = recordingJpaRepository.findById(recordingId).orElseThrow(NotFoundException::new);
+		recording.updateStatus("X");
 	}
 }

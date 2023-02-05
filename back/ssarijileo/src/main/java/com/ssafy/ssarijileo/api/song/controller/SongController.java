@@ -17,12 +17,14 @@ import com.ssafy.ssarijileo.api.song.entity.FavoriteSong;
 import com.ssafy.ssarijileo.api.song.service.SongService;
 import com.ssafy.ssarijileo.common.model.BaseResponseBody;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
+@Api(tags = "노래 API")
 @RestController
 @RequestMapping("api/v1/song")
 @RequiredArgsConstructor // private final 변수에 의존성 주입 (@Autowired 대체)

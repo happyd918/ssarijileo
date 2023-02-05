@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.api.singing.controller;
+package com.ssafy.ssarijileo.api.profile.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.ssarijileo.api.singing.dto.SingingDto;
-import com.ssafy.ssarijileo.api.singing.service.SingingService;
+import com.ssafy.ssarijileo.api.profile.dto.ProfileDto;
+import com.ssafy.ssarijileo.api.profile.service.ProfileService;
 import com.ssafy.ssarijileo.common.model.BaseResponseBody;
 
 import io.swagger.annotations.Api;
@@ -16,21 +16,21 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
-@Api(tags = "사용자 노래 API")
+@Api(tags = "프로필 API")
 @RestController
-@RequestMapping("/api/v1/singing")
+@RequestMapping("/api/v1/profile")
 @RequiredArgsConstructor
-public class SingingController {
+public class ProfileController {
 
-	private final SingingService singingService;
+	private final ProfileService profileService;
 
 	/**
-	 * @title 사용자 노래 정보 저장
-	 * @param singingDto
+	 * @title 사용자 프로필 정보 저장
+	 * @param profileDto
 	 */
 	@ApiOperation(
-		value = "사용자 노래 정보 저장",
-		notes = "사용자가 노래 부른 정보를 저장한다."
+		value = "사용자 프로필 정보 저장",
+		notes = "로그인 후 자동으로 사용자 프로필 정보를 저장한다."
 	)
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "성공"),
@@ -39,8 +39,8 @@ public class SingingController {
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@PostMapping
-	public ResponseEntity<? extends BaseResponseBody> insertSinging(@RequestBody SingingDto singingDto) {
-		singingService.insertSinging(singingDto);
+	public ResponseEntity<? extends BaseResponseBody> insertSinging(@RequestBody ProfileDto profileDto) {
+		profileService.insertProfile(profileDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 }

@@ -10,4 +10,6 @@ public interface RecordingService {
 	List<RecordingResponseDto> findRecordingByUserId(String userId);
 
 	void insertRecording(RecordingDto recordingDto);
+
+	void deleteRecording(Long recordingId);
 }

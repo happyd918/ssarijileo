@@ -15,12 +15,14 @@ import com.ssafy.ssarijileo.api.recording.dto.RecordingResponseDto;
 import com.ssafy.ssarijileo.api.recording.service.RecordingService;
 import com.ssafy.ssarijileo.common.model.BaseResponseBody;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
+@Api(tags = "녹화 API")
 @RestController
 @RequestMapping("/api/v1/recording")
 @RequiredArgsConstructor
@@ -69,6 +71,31 @@ public class  RecordingController {
 	@PostMapping
 	public ResponseEntity<? extends BaseResponseBody> insertRecording(@RequestBody RecordingDto recordingDto){
 		recordingService.insertRecording(recordingDto);
+		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+	}
+
+	/**
+	 * @title 녹화 삭제
+	 * @param recordingId
+	 * @return
+	 */
+	@ApiOperation(
+		value = "녹화 삭제",
+		notes = "녹화 ID를 통해 해당 녹화 정보를 삭제한다."
+	)
+	@ApiImplicitParam(
+		name = "recordingId",
+		value = "녹화 PK"
+	)
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "성공"),
+		@ApiResponse(code = 401, message = "인증 실패"),
+		@ApiResponse(code = 404, message = "정보 없음"),
+		@ApiResponse(code = 500, message = "서버 오류")
+	})
+	@GetMapping("/{recordingId}")
+	public ResponseEntity<? extends BaseResponseBody> findRecordingByUserId(@PathVariable Long recordingId) {
+		recordingService.deleteRecording(recordingId);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 }

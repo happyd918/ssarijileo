@@ -27,12 +27,13 @@ public class SingingContestServiceImpl implements SingingContestService{
 
 	@Override
 	public List<SingingContestResponseDto> findAllSingingContest() {
-		return singingContestJpaRepository.findAll().stream().map(SingingContest::toDto).collect(Collectors.toList());
+		return singingContestJpaRepository.findByStatus("V").orElseThrow(NumberFormatException::new)
+			.stream().map(SingingContest::toDto).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<SingingContestResponseDto> findSingingContestByUserId(String userId) {
-		return singingContestJpaRepository.findByRecording_Profile_ProfileId(userId).orElseThrow(NumberFormatException::new)
+		return singingContestJpaRepository.findByRecording_Profile_ProfileIdAndStatus(userId, "V").orElseThrow(NumberFormatException::new)
 			.stream().map(SingingContest::toDto).collect(Collectors.toList());
 	}
 
@@ -47,6 +48,6 @@ public class SingingContestServiceImpl implements SingingContestService{
 	public void updateSingingContest(SingingContestUpdateDto singingContestUpdateDto) {
 		SingingContest singingContest = singingContestJpaRepository.findById(
 			singingContestUpdateDto.getSingingContestId()).orElseThrow(NotFoundException::new);
-		singingContest.updateStatus(singingContest.getStatus());
+		singingContest.updateStatus(singingContestUpdateDto.getStatus());
 	}
 }

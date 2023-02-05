@@ -8,9 +8,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.ssafy.ssarijileo.api.profile.dto.ProfileDto;
 import com.ssafy.ssarijileo.api.songsetting.entity.SongSetting;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,4 +31,12 @@ public class Profile {
 
 	// 프로필이미지
 	private String image;
+
+	// Dto to Entity
+	@Builder
+	public Profile(ProfileDto profileDto) {
+		this.profileId = profileDto.getProfileId();
+		this.nickname = profileDto.getNickname();
+		this.image = profileDto.getImage();
+	}
 }

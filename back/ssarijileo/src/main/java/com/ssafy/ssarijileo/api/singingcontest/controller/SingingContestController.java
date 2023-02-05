@@ -16,12 +16,14 @@ import com.ssafy.ssarijileo.api.singingcontest.dto.SingingContestUpdateDto;
 import com.ssafy.ssarijileo.api.singingcontest.service.SingingContestService;
 import com.ssafy.ssarijileo.common.model.BaseResponseBody;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
+@Api(tags = "노래자랑 API")
 @RestController
 @RequestMapping("api/v1/singing-contest")
 @RequiredArgsConstructor
@@ -78,10 +80,10 @@ public class SingingContestController {
 	 * @return
 	 */
 	@ApiOperation(
-		value = "노래자랑 등록",
-		notes = "녹화 ID를 통해 해당 녹화 파일을 노래자랑에 등록한다."
-	)
-	@ApiImplicitParam(
+			value = "노래자랑 등록",
+			notes = "녹화 ID를 통해 해당 녹화 파일을 노래자랑에 등록한다."
+		)
+		@ApiImplicitParam(
 		name = "recordingId",
 		value = "녹화 PK"
 	)
