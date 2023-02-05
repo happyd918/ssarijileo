@@ -7,32 +7,35 @@ spring:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
 
-  # application-oauth
+  # application-jwt
   profiles:
-    include: oauth
+    include: jwt
 
   # API id for MSA & routes
   application:
     name: gateway-service
   cloud:
     gateway:
+      default-filters:
+        - AuthorizationHeaderFilter
       routes:
         - id: auth-service
           uri: lb://auth-service
           predicates:
-            - Path=/user/**
+            - Path=/api/v1/user/**
         - id: ssarijileo-service
           uri: lb://ssarijileo-service
           predicates:
-            - Path=/friend/**, /songsetting/**, /favoritesong/**, /singingcontest/**, /recording/**, /singing/**, /song/**
+#            - Path=/friend/**, /songsetting/**, /favoritesong/**, /singingcontest/**, /recording/**, /singing/**, /song/**
+            - Path=/api/v1/**
         - id: webrtc-service
           uri: lb://webrtc-service
           predicates:
-            - Path=/webrtc/**
+            - Path=/api/v1/webrtc/**
         - id: notification-service
           uri: lb://notification-service
           predicates:
-            - Path=/notification/**
+            - Path=/api/v1/notification/**
 
 # log level setting
 logging:
