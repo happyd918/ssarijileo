@@ -20,8 +20,6 @@ import org.springframework.web.cors.CorsConfiguration;
 
 @RequiredArgsConstructor
 @Configuration
-@Slf4j
-@EnableWebSecurity
 public class SecurityConfig {
     private final CustomOAuth2UserService oAuth2UserService;
     private final OAuth2SuccessHandler successHandler;
@@ -54,7 +52,7 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-        // token 사용하는 페이지&메인페이지는 인가 허가, 외엔 모두 인가 필요
+        // token 검증하는 페이지&메인페이지는 인가 허가, 외엔 모두 인가 필요
                 .authorizeRequests()
                 .antMatchers("/token/**").permitAll()
                 .antMatchers("/").permitAll()
