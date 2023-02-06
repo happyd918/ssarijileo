@@ -4,9 +4,10 @@ import com.ssafy.ssarijileo.api.auth.dto.JwtCode;
 import com.ssafy.ssarijileo.api.auth.dto.Role;
 import com.ssafy.ssarijileo.api.auth.dto.TokenKey;
 import com.ssafy.ssarijileo.api.auth.dto.Token;
+import com.ssafy.ssarijileo.api.user.client.UserProfileClient;
 import com.ssafy.ssarijileo.common.exception.NotFoundException;
 import com.ssafy.ssarijileo.api.user.dto.UserDto;
-import com.ssafy.ssarijileo.api.user.dto.UserInfoDto;
+import com.ssafy.ssarijileo.api.user.dto.ProfileDto;
 import com.ssafy.ssarijileo.api.user.dto.UserRequestMapper;
 import com.ssafy.ssarijileo.api.user.entity.User;
 import com.ssafy.ssarijileo.api.user.repository.UserRepository;
@@ -32,6 +33,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final UserRepository userRepository;
     private final TokenProvider tokenProvider;
     private final UserRequestMapper userRequestMapper;
+    private final UserProfileClient userProfileClient;
     private String redirectUrl = "http://localhost:3000";
 
     @Override
@@ -45,7 +47,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             .socialId(String.valueOf(oAuth2User.getAttributes().get("id")))
             .build();
 
-        UserInfoDto userInfoDto = userRequestMapper.toDto(oAuth2User);
+        ProfileDto profileDto = userRequestMapper.toDto(oAuth2User);
 
         User guest = new User();
 
@@ -62,19 +64,19 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             // 저장된 회원 정보 불러옴 -> userId 사용
             user = userRepository.findBySocialId(userDto.getSocialId()).orElseThrow(NotFoundException::new);
 
-            userInfoDto.updateUserId(String.valueOf(user.getUserId()));
+            profileDto.updateUserId(String.valueOf(user.getUserId()));
 
             // 토큰 발행
-            tokens = tokenProvider.generateToken(userInfoDto, Role.USER.getKey());
+            tokens = tokenProvider.generateToken(profileDto.getProfileId(), Role.USER.getKey());
             
             // 리프레시 토큰 캐시 저장
             tokenProvider.setSaveRefresh(String.valueOf(user.getUserId()),
                 tokens.getRefreshToken(), tokenProvider.getExpiration(TokenKey.REFRESH));
 
         } else {
-            userInfoDto.updateUserId(String.valueOf(user.getUserId()));
+            profileDto.updateUserId(String.valueOf(user.getUserId()));
 
-            String access = tokenProvider.generateAccess(userInfoDto, Role.USER.getKey());
+            String access = tokenProvider.generateAccess(profileDto.getProfileId(), Role.USER.getKey());
 
             // 리프레시 토큰 유효하면 그대로 사용, 아니면 재발행
             String refresh = tokenProvider.getSavedRefresh(String.valueOf(user.getUserId()));
@@ -82,9 +84,12 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                 tokens = tokens.builder().accessToken(access)
                     .refreshToken(refresh).build();
             } else {
-                tokens = tokenProvider.generateToken(userInfoDto, Role.USER.getKey());
+                tokens = tokenProvider.generateToken(profileDto.getProfileId(), Role.USER.getKey());
             }
         }
+
+        // 프로필 DB에 저장
+        userProfileClient.insertSinging(profileDto);
 
         String targetUrl;
         targetUrl = UriComponentsBuilder.fromUriString(redirectUrl)

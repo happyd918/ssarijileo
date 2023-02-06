@@ -3,7 +3,7 @@ package com.ssafy.ssarijileo.api.auth.service;
 import com.ssafy.ssarijileo.api.auth.dto.JwtCode;
 import com.ssafy.ssarijileo.api.auth.dto.Token;
 import com.ssafy.ssarijileo.api.auth.dto.TokenKey;
-import com.ssafy.ssarijileo.api.user.dto.UserInfoDto;
+import com.ssafy.ssarijileo.api.user.dto.ProfileDto;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -56,28 +56,26 @@ public class TokenProvider implements InitializingBean {
         redisService.setDataWithExpiration(key, value, time);
     }
 
-    public String generateAccess(UserInfoDto userInfo, String role) {
-        return createToken(userInfo, role, TokenKey.ACCESS);
+    public String generateAccess(String userId, String role) {
+        return createToken(userId, role, TokenKey.ACCESS);
     }
 
-    public String generateRefresh(UserInfoDto userInfo, String role) {
-        return createToken(userInfo, role, TokenKey.REFRESH);
+    public String generateRefresh(String userId, String role) {
+        return createToken(userId, role, TokenKey.REFRESH);
     }
 
-    public Token generateToken(UserInfoDto userInfo, String role) {
-        String accessToken = generateAccess(userInfo, role);
-        String refreshToken = generateRefresh(userInfo, role);
+    public Token generateToken(String userId, String role) {
+        String accessToken = generateAccess(userId, role);
+        String refreshToken = generateRefresh(userId, role);
 
         return new Token(accessToken, refreshToken);
     }
 
-    public String createToken(UserInfoDto userInfo, String role, TokenKey tokenKey) {
+    public String createToken(String userId, String role, TokenKey tokenKey) {
         // access : 30 min, refresh : 1 month
         long period = getExpiration(tokenKey);
 
-        Claims claims = Jwts.claims().setSubject(userInfo.getUserId());
-        claims.put("nickname", userInfo.getNickname());
-        claims.put("image", userInfo.getImage());
+        Claims claims = Jwts.claims().setSubject(userId);
         claims.put("role", role);
 
         Date now = new Date();
