@@ -10,20 +10,22 @@ import com.ssafy.ssarijileo.api.singing.dto.SingingDto;
 import com.ssafy.ssarijileo.api.singing.service.SingingService;
 import com.ssafy.ssarijileo.common.model.BaseResponseBody;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
+@Api(tags = "사용자 노래 API")
 @RestController
-@RequestMapping("/singing")
+@RequestMapping("/api/v1/singing")
 @RequiredArgsConstructor
 public class SingingController {
 
 	private final SingingService singingService;
 
 	/**
-	 * 사용자 노래 정보 저장
+	 * @title 사용자 노래 정보 저장
 	 * @param singingDto
 	 */
 	@ApiOperation(

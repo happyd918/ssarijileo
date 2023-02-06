@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.api.favoritesong.entity;
+package com.ssafy.ssarijileo.api.song.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,9 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.ssafy.ssarijileo.api.song.entity.Song;
+import com.ssafy.ssarijileo.api.song.dto.FavoriteSongDto;
+import com.ssafy.ssarijileo.api.song.dto.SongDto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,5 +36,19 @@ public class FavoriteSong {
 	private Song song;
 
 	// 좋아요여부(Y:좋아요,N:좋아요취소)
-	private char isLike;
+	private String isLike;
+
+	// Dto to Entity
+	@Builder
+	public FavoriteSong(FavoriteSongDto favoriteSongDto, Song song) {
+		this.favoriteSongId = favoriteSongDto.getFavoriteSongId();
+		this.userId = favoriteSongDto.getUserId();
+		this.song = song;
+		this.isLike = favoriteSongDto.getIsLike();
+	}
+
+	// Entity to Dto
+	public SongDto toDto() {
+		return new SongDto(song.getSongId(), song.getTitle(), song.getSinger(), song.getAlbum(), song.getImage(), song.getReleaseDate());
+	}
 }

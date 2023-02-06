@@ -23,4 +23,7 @@ public class RecordingDto {
 
 	// 녹화일시
 	String registerDate;
+
+	// 상태(V:노출,D:삭제)
+	String status;
 }

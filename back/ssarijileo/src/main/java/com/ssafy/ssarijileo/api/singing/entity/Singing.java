@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.ssafy.ssarijileo.api.profile.entitiy.Profile;
 import com.ssafy.ssarijileo.api.singing.dto.SingingDto;
 import com.ssafy.ssarijileo.api.song.entity.Song;
 
@@ -28,7 +29,9 @@ public class Singing {
 	private Long singingId;
 
 	// 사용자PK
-	private String userId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private Profile profile;
 
 	// 노래PK
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -46,9 +49,9 @@ public class Singing {
 
 	// Dto to Entity
 	@Builder
-	public Singing(SingingDto singingDto, Song song) {
+	public Singing(SingingDto singingDto, Profile profile, Song song) {
 		this.singingId = singingDto.getSingingId();
-		this.userId = singingDto.getUserId();
+		this.profile = profile;
 		this.song = song;
 		this.mode = singingDto.getMode();
 		this.score = singingDto.getScore();

@@ -1,5 +1,6 @@
 version: "1"
 services:
+  # mysql
   mysql:
     image: mysql:8.0
     container_name: mysql
@@ -10,13 +11,13 @@ services:
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
-
+  # zookeeper
   zookeeper:
     container_name: zookeeper
     image: wurstmeister/zookeeper
     ports:
       - "2181:2181"
-
+  #kafka
   kafka:
     container_name: kafka
     image: wurstmeister/kafka
@@ -30,3 +31,5 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+  # redis
+
