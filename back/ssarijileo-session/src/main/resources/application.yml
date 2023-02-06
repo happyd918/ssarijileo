@@ -1,0 +1,10 @@
+server:
+    port: 8070
+    ssl:
+        enabled: false
+
+spring:
+    #redis
+    redis:
+        host: localhost
+        port: 6379

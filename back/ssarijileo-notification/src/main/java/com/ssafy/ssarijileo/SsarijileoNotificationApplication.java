@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SsarijileoAlarmApplication {
+public class SsarijileoNotificationApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SsarijileoAlarmApplication.class, args);
+		SpringApplication.run(SsarijileoNotificationApplication.class, args);
 	}
 
 }
