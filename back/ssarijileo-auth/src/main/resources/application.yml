@@ -28,7 +28,7 @@ spring:
       matching-strategy: ANT_PATH_MATCHER
 
   redis:
-    host: localhost
+    host: http://i8b302.p.ssafy.io/
     port: 6399
 
   # API id for MSA
@@ -50,7 +50,7 @@ logging:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://i8b302.p.ssafy.io:8761/eureka/
   instance:
     prefer-ip-address: true
 
