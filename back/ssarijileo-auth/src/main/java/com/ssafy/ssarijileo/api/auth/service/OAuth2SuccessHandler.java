@@ -67,7 +67,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             profileDto.updateUserId(String.valueOf(user.getUserId()));
 
             // 토큰 발행
-            tokens = tokenProvider.generateToken(profileDto, Role.USER.getKey());
+            tokens = tokenProvider.generateToken(profileDto.getProfileId(), Role.USER.getKey());
             
             // 리프레시 토큰 캐시 저장
             tokenProvider.setSaveRefresh(String.valueOf(user.getUserId()),
@@ -76,7 +76,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         } else {
             profileDto.updateUserId(String.valueOf(user.getUserId()));
 
-            String access = tokenProvider.generateAccess(profileDto, Role.USER.getKey());
+            String access = tokenProvider.generateAccess(profileDto.getProfileId(), Role.USER.getKey());
 
             // 리프레시 토큰 유효하면 그대로 사용, 아니면 재발행
             String refresh = tokenProvider.getSavedRefresh(String.valueOf(user.getUserId()));
@@ -84,7 +84,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                 tokens = tokens.builder().accessToken(access)
                     .refreshToken(refresh).build();
             } else {
-                tokens = tokenProvider.generateToken(profileDto, Role.USER.getKey());
+                tokens = tokenProvider.generateToken(profileDto.getProfileId(), Role.USER.getKey());
             }
         }
 

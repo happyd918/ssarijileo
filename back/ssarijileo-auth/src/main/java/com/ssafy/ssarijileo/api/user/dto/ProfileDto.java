@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ProfileDto {
-	private String userId;
+	private String profileId;
 	private String nickname;
 	private String image;
 
-	public void updateUserId(String userId) {
-		this.userId = userId;
+	public void updateUserId(String profileId) {
+		this.profileId = profileId;
 	}
 
 }

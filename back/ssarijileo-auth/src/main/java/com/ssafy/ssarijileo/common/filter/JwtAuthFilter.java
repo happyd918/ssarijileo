@@ -51,10 +51,8 @@ public class JwtAuthFilter extends GenericFilterBean {
             Claims claims = tokenProvider.getClaims(token);
 
             // 토큰에 저장된 유저정보
-            ProfileDto profileDto = ProfileDto.builder()
+            UserDto userDto = UserDto.builder()
                     .userId(claims.getSubject())
-                    .nickname(String.valueOf(claims.get("nickname")))
-                    .image(String.valueOf(claims.get("image")))
                     .build();
 
             // 헤더에 존재하는 리프레시 토큰
@@ -62,21 +60,17 @@ public class JwtAuthFilter extends GenericFilterBean {
                 ((HttpServletRequest)request).getHeader(TokenKey.REFRESH.getKey()));
 
             // 캐시에 존재하는 리프레시 토큰
-            String savedRefresh = tokenProvider.getSavedRefresh(profileDto.getUserId());
+            String savedRefresh = tokenProvider.getSavedRefresh(userDto.getUserId());
 
             // refresh token을 확인해서 재발급
             if (token != null && refresh.equals(savedRefresh) && tokenProvider.validateToken(refresh) == JwtCode.ACCESS) {
-                Token tokens = tokenProvider.generateToken(profileDto, Role.USER.getKey());
+                Token tokens = tokenProvider.generateToken(userDto.getUserId(), Role.USER.getKey());
 
-                tokenProvider.setSaveRefresh(profileDto.getUserId(),
+                tokenProvider.setSaveRefresh(userDto.getUserId(),
                     tokens.getRefreshToken(), tokenProvider.getExpiration(TokenKey.REFRESH));
 
                 ((HttpServletResponse)response).setHeader(TokenKey.ACCESS.getKey(), "Bearer " + tokens.getAccessToken());
                 ((HttpServletResponse)response).setHeader(TokenKey.REFRESH.getKey(), "Bearer " + tokens.getRefreshToken());
-
-                UserDto userDto = UserDto.builder()
-                    .userId(profileDto.getUserId())
-                    .build();
 
                 Authentication auth = getAuthentication(userDto);
                 SecurityContextHolder.getContext().setAuthentication(auth);

@@ -56,28 +56,26 @@ public class TokenProvider implements InitializingBean {
         redisService.setDataWithExpiration(key, value, time);
     }
 
-    public String generateAccess(ProfileDto userInfo, String role) {
-        return createToken(userInfo, role, TokenKey.ACCESS);
+    public String generateAccess(String userId, String role) {
+        return createToken(userId, role, TokenKey.ACCESS);
     }
 
-    public String generateRefresh(ProfileDto userInfo, String role) {
-        return createToken(userInfo, role, TokenKey.REFRESH);
+    public String generateRefresh(String userId, String role) {
+        return createToken(userId, role, TokenKey.REFRESH);
     }
 
-    public Token generateToken(ProfileDto userInfo, String role) {
-        String accessToken = generateAccess(userInfo, role);
-        String refreshToken = generateRefresh(userInfo, role);
+    public Token generateToken(String userId, String role) {
+        String accessToken = generateAccess(userId, role);
+        String refreshToken = generateRefresh(userId, role);
 
         return new Token(accessToken, refreshToken);
     }
 
-    public String createToken(ProfileDto userInfo, String role, TokenKey tokenKey) {
+    public String createToken(String userId, String role, TokenKey tokenKey) {
         // access : 30 min, refresh : 1 month
         long period = getExpiration(tokenKey);
 
-        Claims claims = Jwts.claims().setSubject(userInfo.getUserId());
-        claims.put("nickname", userInfo.getNickname());
-        claims.put("image", userInfo.getImage());
+        Claims claims = Jwts.claims().setSubject(userId);
         claims.put("role", role);
 
         Date now = new Date();
