@@ -1,15 +1,15 @@
 server:
-    port: 8070
-    ssl:
-        enabled: false
+  port: 8070
+  ssl:
+    enabled: false
 
 spring:
-    # Redis
-    redis:
-        host: localhost
-        port: 6379
-        pool:
-            max-idle: 8
-            min-idle: 0
-            max-active: 8
-            max-wait: -1
+  # Redis
+  redis:
+    host: i8b302.p.ssafy.io
+    port: 6379
+    pool:
+      max-idle: 8
+      min-idle: 0
+      max-active: 8
+      max-wait: -1
