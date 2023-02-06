@@ -6,7 +6,7 @@ server:
 spring:
     # Redis
     redis:
-        host: localhost
+        host: http://i8b302.p.ssafy.io/
         port: 6379
         pool:
             max-idle: 8
