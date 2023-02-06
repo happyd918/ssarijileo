@@ -33,8 +33,10 @@ public class SongDetailDto {
 	// 발매일자
 	String releaseDate;
 
-	List<LyricsDto> lyricsList = new ArrayList<>();
+	// 시간음정
+	String note;
 
-	List<PitchDto> pitchList = new ArrayList<>();
+	// 가사 목록
+	List<LyricsDto> lyricsList = new ArrayList<>();
 }
 

@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.ssafy.ssarijileo.api.song.dto.LyricsDto;
-import com.ssafy.ssarijileo.api.song.dto.PitchDto;
 import com.ssafy.ssarijileo.api.song.dto.SongDetailDto;
 import com.ssafy.ssarijileo.api.song.dto.SongDto;
 
@@ -48,13 +47,12 @@ public class Song {
 	// 발매일자
 	private String releaseDate;
 
+	// 시간음정
+	private String note;
+
 	// 가사 목록
 	@OneToMany(mappedBy = "song")
 	private List<Lyrics> lyricsList = new ArrayList<>();
-
-	// 음정 목록
-	@OneToMany(mappedBy = "song")
-	private List<Pitch> pitchList = new ArrayList<>();
 
 	// Entity to Dto
 	public SongDto toDto() {
@@ -64,7 +62,6 @@ public class Song {
 	// Entity to Dto
 	public SongDetailDto toDetailDto() {
 		List<LyricsDto> lyricsDtoList = lyricsList.stream().map(Lyrics::toDto).collect(Collectors.toList());
-		List<PitchDto> pitchDtoList = pitchList.stream().map(Pitch::toDto).collect(Collectors.toList());
-		return new SongDetailDto(songId, title, singer, album, time, image, releaseDate, lyricsDtoList, pitchDtoList);
+		return new SongDetailDto(songId, title, singer, album, time, image, releaseDate, note, lyricsDtoList);
 	}
 }
