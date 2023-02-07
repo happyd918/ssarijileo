@@ -44,6 +44,9 @@ public class Song {
 	// 앨범이미지
 	private String image;
 
+	// 노래 파일
+	private String file;
+
 	// 발매일자
 	private String releaseDate;
 
@@ -62,6 +65,6 @@ public class Song {
 	// Entity to Dto
 	public SongDetailDto toDetailDto() {
 		List<LyricsDto> lyricsDtoList = lyricsList.stream().map(Lyrics::toDto).collect(Collectors.toList());
-		return new SongDetailDto(songId, title, singer, album, time, image, releaseDate, note, lyricsDtoList);
+		return new SongDetailDto(songId, title, singer, album, time, image, file, releaseDate, note, lyricsDtoList);
 	}
 }

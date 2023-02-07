@@ -30,6 +30,9 @@ public class SongDetailDto {
 	// 앨범이미지
 	String image;
 
+	// 노래 파일
+	String file;
+
 	// 발매일자
 	String releaseDate;
 

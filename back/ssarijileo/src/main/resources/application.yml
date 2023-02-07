@@ -30,8 +30,9 @@ spring:
         show_sql: true
   #redis
   redis:
-    host: localhost
-    port: 6389
+    cluster:
+      host: redis-business
+      port: 6389
   # swagger
   mvc:
     pathmatch:
