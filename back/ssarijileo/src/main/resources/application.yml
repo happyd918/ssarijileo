@@ -44,11 +44,11 @@ logging:
     com:
       ssafy: debug
 
-# eureka setting
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+## eureka setting
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka/
 
 # feign
 feign:

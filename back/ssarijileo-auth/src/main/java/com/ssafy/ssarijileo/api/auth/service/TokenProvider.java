@@ -141,7 +141,7 @@ public class TokenProvider implements InitializingBean {
     }
 
     public String resolveToken(String bearerToken) {
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer-")) {
             return bearerToken.substring(7);
         }
         return null;

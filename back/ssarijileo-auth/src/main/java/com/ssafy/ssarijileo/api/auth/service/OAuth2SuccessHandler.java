@@ -93,8 +93,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         String targetUrl;
         targetUrl = UriComponentsBuilder.fromUriString(redirectUrl)
-            .queryParam(TokenKey.ACCESS.getKey(), "Bearer " + tokens.getAccessToken())
-            .queryParam(TokenKey.REFRESH.getKey(), "Bearer " + tokens.getRefreshToken())
+            .queryParam(TokenKey.ACCESS.getKey(), "Bearer-" + tokens.getAccessToken())
+            .queryParam(TokenKey.REFRESH.getKey(), "Bearer-" + tokens.getRefreshToken())
             .build().toUriString();
 
         // 프론트 페이지로 리다이렉트
