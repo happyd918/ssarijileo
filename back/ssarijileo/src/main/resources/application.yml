@@ -1,5 +1,5 @@
 server:
-  port: 8070
+  port: 8080
   ssl:
     enabled: false
 
@@ -48,7 +48,7 @@ logging:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eureka:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
 
 # feign
 feign:
