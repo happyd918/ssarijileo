@@ -7,9 +7,15 @@ import org.springframework.stereotype.Service;
 import com.ssafy.ssarijileo.api.room.dto.RoomDto;
 import com.ssafy.ssarijileo.api.room.dto.RoomRequestDto;
 import com.ssafy.ssarijileo.api.room.dto.RoomResponseDto;
+import com.ssafy.ssarijileo.api.room.repository.RoomRedisRepository;
+
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class RoomServiceImpl implements RoomService{
+
+	private final RoomRedisRepository roomRedisRepository;
 
 	@Override
 	public List<RoomResponseDto> findAllRoom() {
