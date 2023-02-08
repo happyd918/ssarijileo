@@ -28,21 +28,25 @@ public class RoomController {
 
 	@GetMapping
 	List<RoomResponseDto> findAllRoom() {
+		System.out.println("findAllRoom");
 		return roomService.findAllRoom();
 	}
 
 	@PostMapping
 	void createRoom(@RequestBody RoomDto roomDto) {
+		System.out.println("create " + roomDto.getSessionId());
 		roomService.createRoom(roomDto);
 	}
 
 	@PutMapping
 	void enterRoom(@RequestBody RoomRequestDto roomRequestDto) {
+		System.out.println("enter " + roomRequestDto.getSessionId());
 		roomService.enterRoom(roomRequestDto);
 	}
 
 	@DeleteMapping
 	void leaveRoom(@RequestBody RoomRequestDto roomRequestDto) {
+		System.out.println("leave " + roomRequestDto.getSessionId());
 		roomService.leaveRoom(roomRequestDto);
 	}
 }

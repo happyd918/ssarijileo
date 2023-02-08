@@ -8,7 +8,10 @@
 // import org.springframework.data.redis.connection.RedisClusterConfiguration;
 // import org.springframework.data.redis.connection.RedisConnectionFactory;
 // import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+// import org.springframework.data.redis.core.RedisTemplate;
 // import org.springframework.data.redis.core.StringRedisTemplate;
+// import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+// import org.springframework.data.redis.serializer.StringRedisSerializer;
 //
 // @Configuration
 // public class RedisConfig {
@@ -23,7 +26,16 @@
 // 	}
 //
 // 	@Bean
-// 	public StringRedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-// 		return new StringRedisTemplate(redisConnectionFactory);
+// 	public RedisTemplate<String, Object> redisTemplate() {
+// 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+// 		redisTemplate.setConnectionFactory(redisConnectionFactory());
+// 		redisTemplate.setKeySerializer(new StringRedisSerializer());
+// 		redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+// 		return redisTemplate;
 // 	}
+//
+// 	// @Bean
+// 	// public StringRedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+// 	// 	return new StringRedisTemplate(redisConnectionFactory);
+// 	// }
 // }

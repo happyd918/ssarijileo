@@ -31,8 +31,13 @@ spring:
   #redis
   redis:
     cluster:
-      host: redis-business
-      port: 6389
+      nodes:
+        - 172.20.0.2:6379
+        - 172.20.0.3:6389
+        - 172.20.0.4:6399
+  #    cluster:
+#      nodes:
+#        - localhost:6389
   # swagger
   mvc:
     pathmatch:
