@@ -89,7 +89,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         }
 
         // 프로필 DB에 저장
-        userProfileClient.insertSinging(profileDto);
+        // userProfileClient.insertSinging(profileDto);
 
         String targetUrl;
         targetUrl = UriComponentsBuilder.fromUriString(redirectUrl)
