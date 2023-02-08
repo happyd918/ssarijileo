@@ -28,7 +28,7 @@ spring:
       matching-strategy: ANT_PATH_MATCHER
 
   redis:
-    host: http://i8b302.p.ssafy.io/
+    host: i8b302.p.ssafy.io
     port: 6399
 
   # API id for MSA
