@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "userProfileClient", url = "localhost:8080/api/v1/profile")
+@FeignClient(name = "userProfileClient", url = "i8b302.p.ssafy.io:8080/api/v1/profile")
 public interface UserProfileClient {
     @PostMapping(produces = "application/json")
     ResponseEntity<? extends BaseResponseBody> insertSinging(@RequestBody ProfileDto profileDto);
