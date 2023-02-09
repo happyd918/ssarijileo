@@ -3,11 +3,13 @@ package com.ssafy.ssarijileo.api.reservation.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReservationDeleteDto {
+public class ReservationDto {
 
 	// 세션PK
 	String sessionId;

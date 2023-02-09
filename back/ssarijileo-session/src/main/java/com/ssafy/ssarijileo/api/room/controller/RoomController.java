@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,25 +29,26 @@ public class RoomController {
 
 	@GetMapping
 	List<RoomResponseDto> findAllRoom() {
-		System.out.println("findAllRoom");
 		return roomService.findAllRoom();
 	}
 
 	@PostMapping
 	void createRoom(@RequestBody RoomDto roomDto) {
-		System.out.println("create " + roomDto.getSessionId());
 		roomService.createRoom(roomDto);
 	}
 
-	@PutMapping
+	@PutMapping("/in")
 	void enterRoom(@RequestBody RoomRequestDto roomRequestDto) {
-		System.out.println("enter " + roomRequestDto.getSessionId());
 		roomService.enterRoom(roomRequestDto);
 	}
 
-	@DeleteMapping
+	@PutMapping("/out")
 	void leaveRoom(@RequestBody RoomRequestDto roomRequestDto) {
-		System.out.println("leave " + roomRequestDto.getSessionId());
 		roomService.leaveRoom(roomRequestDto);
+	}
+
+	@DeleteMapping("/{sessionId}")
+	void deleteRoom(@PathVariable String sessionId) {
+		roomService.deleteRoom(sessionId);
 	}
 }

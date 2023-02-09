@@ -36,4 +36,8 @@ public class RoomDto implements Serializable {
 
 	// 사용자 목록
 	List<String> userList = new ArrayList<>();
+
+	public RoomResponseDto toResponseDto() {
+		return new RoomResponseDto(sessionId, title, mode, userMaxCount, userList.size(), isPublic, password);
+	}
 }

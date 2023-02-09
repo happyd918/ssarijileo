@@ -18,12 +18,16 @@ public class ReservationRepository {
 
 	private static final Duration TTL = Duration.ofDays(1);
 
-	public void set(String key, RoomDto value) {
-		redisBase.set(getKey(key), value, TTL);
-	}
+	private String category = "reservation_";
+
+	private Class classType = ReservationDto.class;
 
 	public Optional<RoomDto> get(String key) {
 		return redisBase.get(getKey(key), RoomDto.class);
+	}
+
+	public void set(String key, RoomDto value) {
+		redisBase.set(getKey(key), value, TTL);
 	}
 
 	public void remove(String key) {
@@ -31,6 +35,6 @@ public class ReservationRepository {
 	}
 
 	public String getKey(String sessionId) {
-		return "reservation_" + sessionId;
+		return category + sessionId;
 	}
 }

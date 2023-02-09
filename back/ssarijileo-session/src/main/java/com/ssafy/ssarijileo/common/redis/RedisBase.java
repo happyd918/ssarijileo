@@ -47,9 +47,7 @@ public class RedisBase {
 
 				while (entries.hasNext()) {
 					String key = new String(entries.next());
-					System.out.println("key : " + key);
 					result.add(get(key, classType).orElseThrow());
-					System.out.println("value : " + get(key, classType).orElseThrow());
 				}
 
 				return result;

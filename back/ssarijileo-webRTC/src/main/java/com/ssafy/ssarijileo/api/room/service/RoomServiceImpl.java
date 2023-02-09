@@ -36,4 +36,9 @@ public class RoomServiceImpl implements RoomService{
 	public void leaveRoom(RoomRequestDto roomRequestDto) {
 		roomClient.leaveRoom(roomRequestDto);
 	}
+
+	@Override
+	public void deleteRoom(String sessionId) {
+		roomClient.deleteRoom(sessionId);
+	}
 }

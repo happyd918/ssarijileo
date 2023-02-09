@@ -3,6 +3,7 @@ package com.ssafy.ssarijileo.api.singing.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,7 +40,8 @@ public class SingingController {
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@PostMapping
-	public ResponseEntity<? extends BaseResponseBody> insertSinging(@RequestBody SingingDto singingDto) {
+	public ResponseEntity<? extends BaseResponseBody> insertSinging(@RequestHeader String userId, @RequestBody SingingDto singingDto) {
+		singingDto.setUserId(userId);
 		singingService.insertSinging(singingDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}

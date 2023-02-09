@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,8 +53,8 @@ public class FriendController {
 		@ApiResponse(code = 404, message = "친구 없음"),
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
-	@GetMapping("/my/{userId}")
-	public ResponseEntity<List<MyFriendDto>> findFriendByUserId(@PathVariable  String userId) {
+	@GetMapping("/my")
+	public ResponseEntity<List<MyFriendDto>> findFriendByUserId(@RequestHeader String userId) {
 		return ResponseEntity.status(200).body(friendService.findFriendByUserId(userId));
 	}
 
@@ -72,7 +73,8 @@ public class FriendController {
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@PostMapping
-	public ResponseEntity<? extends BaseResponseBody> requestFriend(@RequestBody FriendDto friendDto) {
+	public ResponseEntity<? extends BaseResponseBody> requestFriend(@RequestHeader String userId, @RequestBody FriendDto friendDto) {
+		friendDto.setFromUserId(userId);
 		friendService.requestFriend(friendDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
@@ -112,7 +114,8 @@ public class FriendController {
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@PostMapping("/invite")
-	public ResponseEntity<? extends BaseResponseBody> inviteFriend(@RequestBody FriendInviteDto friendInviteDto) {
+	public ResponseEntity<? extends BaseResponseBody> inviteFriend(@RequestHeader String userId, @RequestBody FriendInviteDto friendInviteDto) {
+		friendInviteDto.setFromUserId(userId);
 		friendService.inviteFriend(friendInviteDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
