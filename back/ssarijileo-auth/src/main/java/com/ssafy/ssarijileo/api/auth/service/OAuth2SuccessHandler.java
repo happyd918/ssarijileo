@@ -34,7 +34,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final TokenProvider tokenProvider;
     private final UserRequestMapper userRequestMapper;
     private final UserProfileClient userProfileClient;
-    private String redirectUrl = "https://front-beryl.vercel.app/login";
+    // private String redirectUrl = "https://front-beryl.vercel.app/login";
+    private String redirectUrl = "https:localhost:3000";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
