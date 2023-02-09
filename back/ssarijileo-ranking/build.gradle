@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	compileOnly 'org.projectlombok:lombok'
@@ -27,6 +28,8 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 	implementation group: 'io.github.openfeign', name: 'feign-core', version: '12.1'
 
+	// logging
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '2.7.7'
 }
 
 tasks.named('test') {
