@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 // import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
-@EnableFeignClients
 // @EnableEurekaClient
-@SpringBootApplication
 // @EnableRedisHttpSession
+@EnableFeignClients
+@SpringBootApplication
 public class SsarijileoApplication {
 
 	public static void main(String[] args) {
