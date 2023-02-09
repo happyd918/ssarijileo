@@ -23,6 +23,11 @@ public class RoomServiceImpl implements RoomService{
 	}
 
 	@Override
+	public RoomDto findRoomBySessionId(String sessionId) {
+		return roomClient.findRoomBySessionId(sessionId);
+	}
+
+	@Override
 	public void createRoom(RoomDto roomDto) {
 		roomClient.createRoom(roomDto);
 	}
@@ -35,6 +40,11 @@ public class RoomServiceImpl implements RoomService{
 	@Override
 	public void leaveRoom(RoomRequestDto roomRequestDto) {
 		roomClient.leaveRoom(roomRequestDto);
+	}
+
+	@Override
+	public void updateRoom(RoomDto roomDto) {
+		roomClient.updateRoom(roomDto);
 	}
 
 	@Override

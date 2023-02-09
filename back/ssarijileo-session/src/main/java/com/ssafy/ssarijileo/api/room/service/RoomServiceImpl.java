@@ -25,6 +25,11 @@ public class RoomServiceImpl implements RoomService{
 	}
 
 	@Override
+	public RoomDto findRoomBySessionId(String sessionId) {
+		return roomRedisRepository.get(sessionId).orElseThrow(NotFoundException::new);
+	}
+
+	@Override
 	public void createRoom(RoomDto roomDto) {
 		// 방장 정보를 사용자 목록에 추가
 		roomDto.getUserList().add(roomDto.getUserId());
@@ -42,6 +47,11 @@ public class RoomServiceImpl implements RoomService{
 	public void leaveRoom(RoomRequestDto roomRequestDto) {
 		RoomDto roomDto = roomRedisRepository.get(roomRequestDto.getSessionId()).orElseThrow(NotFoundException::new);
 		roomDto.getUserList().remove(roomRequestDto.getUserId());
+		roomRedisRepository.set(roomDto.getSessionId(), roomDto);
+	}
+
+	@Override
+	public void updateRoom(RoomDto roomDto) {
 		roomRedisRepository.set(roomDto.getSessionId(), roomDto);
 	}
 

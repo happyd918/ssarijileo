@@ -1,8 +1,14 @@
 package com.ssafy.ssarijileo.api.room.controller;
 
 import java.util.List;
+import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,103 +25,129 @@ import com.ssafy.ssarijileo.api.room.dto.RoomResponseDto;
 import com.ssafy.ssarijileo.api.room.service.RoomService;
 import com.ssafy.ssarijileo.common.model.BaseResponseBody;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.openvidu.java.client.Connection;
+import io.openvidu.java.client.ConnectionProperties;
+import io.openvidu.java.client.OpenVidu;
+import io.openvidu.java.client.OpenViduHttpException;
+import io.openvidu.java.client.OpenViduJavaClientException;
+import io.openvidu.java.client.Session;
+import io.openvidu.java.client.SessionProperties;
 import lombok.RequiredArgsConstructor;
 
-@Api(tags = "노래방 API")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/room")
 @RequiredArgsConstructor
 public class RoomController {
 
+	@Value("${OPENVIDU_URL}")
+	private String OPENVIDU_URL;
+
+	@Value("${OPENVIDU_SECRET}")
+	private String OPENVIDU_SECRET;
+
+	private OpenVidu openvidu;
+
 	private final RoomService roomService;
+
+	@PostConstruct
+	public void init() {
+		this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
+	}
 
 	/**
 	 * @title 방 목록
 	 * @return
 	 */
-	@ApiOperation(
-		value = "방 목록",
-		notes = "노래방 전체 목록을 조회한다."
-	)
-	@ApiResponses({
-		@ApiResponse(code = 200, message = "성공"),
-		@ApiResponse(code = 401, message = "인증 실패"),
-		@ApiResponse(code = 404, message = "노래방 없음"),
-		@ApiResponse(code = 500, message = "서버 오류")
-	})
 	@GetMapping
 	ResponseEntity<List<RoomResponseDto>> findAllRoom() {
 		return ResponseEntity.status(200).body(roomService.findAllRoom());
 	}
 
 	/**
-	 * @title 방 생성
-	 * @param roomDto
+	 * @title 방 정보
+	 * @param sessionId
 	 * @return
 	 */
-	@ApiOperation(
-		value = "방 생성",
-		notes = "세션 ID를 랜덤으로 생성하여 해당 세션의 노래방을 만든다."
-	)
-	@ApiResponses({
-		@ApiResponse(code = 200, message = "성공"),
-		@ApiResponse(code = 401, message = "인증 실패"),
-		@ApiResponse(code = 404, message = "정보 없음"),
-		@ApiResponse(code = 500, message = "서버 오류")
-	})
-	@PostMapping
-	ResponseEntity<? extends BaseResponseBody> createRoom(@RequestHeader String userId, @RequestBody RoomDto roomDto) {
-		roomDto.setUserId(userId);
-		roomService.createRoom(roomDto);
-		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+	@GetMapping("/{sessionId}")
+	ResponseEntity<RoomDto> findRoomBySessionId(@PathVariable String sessionId) {
+		return ResponseEntity.status(200).body(roomService.findRoomBySessionId(sessionId));
 	}
 
 	/**
-	 * @title 방 입장
-	 * @param roomRequestDto
-	 * @return
+	 * @title 세션 초기화
+	 * 동일한 세션에 연결된 참가자는 스트림을 주고 받을 수 있다.
+	 * @param params The Session properties
+	 * @return The Session ID
 	 */
-	@ApiOperation(
-		value = "방 입장",
-		notes = "세션 ID를 통해 해당 세션의 노래방에 입장한다."
-	)
-	@ApiResponses({
-		@ApiResponse(code = 200, message = "성공"),
-		@ApiResponse(code = 401, message = "인증 실패"),
-		@ApiResponse(code = 404, message = "정보 없음"),
-		@ApiResponse(code = 500, message = "서버 오류")
-	})
-	@PutMapping("/in")
-	ResponseEntity<? extends BaseResponseBody> enterRoom(@RequestHeader String userId, @RequestBody RoomRequestDto roomRequestDto) {
-		roomRequestDto.setUserId(userId);
-		roomService.enterRoom(roomRequestDto);
-		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+	@PostMapping("/session")
+	public ResponseEntity<String> initializeSession(@RequestBody(required = false) Map<String, Object> params)
+		throws OpenViduJavaClientException, OpenViduHttpException {
+		SessionProperties properties = SessionProperties.fromJson(params).build();
+		Session session = openvidu.createSession(properties);
+		return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
+	}
+
+	/**
+	 * @title 세션 연결 (방 입장)
+	 * 특정 세션에 대한 연결 생성
+	 * 각 참가자는 토근을 사용해 하나의 연결을 사용하여 연결
+	 * @param sessionId The Session in which to create the Connection
+	 * @param roomDto   The Connection properties
+	 * @return The Token associated to the Connection
+	 */
+	@PostMapping("/connection/{sessionId}/{host}")
+	public ResponseEntity<String> createConnection(@RequestHeader String userId,
+		@PathVariable String sessionId, @PathVariable(required = false) String host,
+		@RequestBody(required = false) RoomDto roomDto)
+		throws OpenViduJavaClientException, OpenViduHttpException {
+
+		if (host != null) {
+			// 방장이 방 생성 할 때
+			roomDto.setUserId(userId);
+			roomDto.setSessionId(sessionId);
+			roomService.createRoom(roomDto);
+		} else if (roomDto.getPassword() != null && !roomDto.getPassword()
+			.equals(roomService.findRoomBySessionId(sessionId).getPassword())) {
+			// 비공개 방인데 비밀번호가 일치하지 않을 때
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		} else {
+			// 방 입장
+			roomService.enterRoom(new RoomRequestDto(sessionId, userId));
+		}
+
+		// openvidu
+		Session session = openvidu.getActiveSession(sessionId);
+		if (session == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		ConnectionProperties properties = ConnectionProperties.fromJson(null).build();
+		Connection connection = session.createConnection(properties);
+
+		return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
 	}
 
 	/**
 	 * @title 방 퇴장
-	 * @param roomRequestDto
+	 * @param sessionId
 	 * @return
 	 */
-	@ApiOperation(
-		value = "방 퇴장",
-		notes = "세션 ID를 통해 해당 세션의 노래방에서 퇴장한다."
-	)
-	@ApiResponses({
-		@ApiResponse(code = 200, message = "성공"),
-		@ApiResponse(code = 401, message = "인증 실패"),
-		@ApiResponse(code = 404, message = "정보 없음"),
-		@ApiResponse(code = 500, message = "서버 오류")
-	})
-	@PutMapping("/out")
-	ResponseEntity<? extends BaseResponseBody> leaveRoom(@RequestHeader String userId, @RequestBody RoomRequestDto roomRequestDto) {
-		roomRequestDto.setUserId(userId);
+	@PutMapping("/out/{sessionId}")
+	ResponseEntity<? extends BaseResponseBody> leaveRoom(@RequestHeader String userId, @PathVariable String sessionId) {
+		RoomRequestDto roomRequestDto = new RoomRequestDto(sessionId, userId);
 		roomService.leaveRoom(roomRequestDto);
+		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+	}
+
+	/**
+	 * @title 방 수정
+	 * @param sessionId
+	 * @return
+	 */
+	@PutMapping("/{sessionId}")
+	ResponseEntity<? extends BaseResponseBody> updateRoom(@PathVariable String sessionId, @RequestBody RoomDto roomDto) {
+		roomDto.setSessionId(sessionId);
+		roomService.updateRoom(roomDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 
@@ -124,20 +156,6 @@ public class RoomController {
 	 * @param sessionId
 	 * @return
 	 */
-	@ApiOperation(
-		value = "방 삭제",
-		notes = "세션 ID를 통해 해당 세션의 노래방을 삭제한다."
-	)
-	@ApiImplicitParam(
-		name = "sessionId",
-		value = "세션 PK"
-	)
-	@ApiResponses({
-		@ApiResponse(code = 200, message = "성공"),
-		@ApiResponse(code = 401, message = "인증 실패"),
-		@ApiResponse(code = 404, message = "정보 없음"),
-		@ApiResponse(code = 500, message = "서버 오류")
-	})
 	@DeleteMapping("/{sessionId}")
 	ResponseEntity<? extends BaseResponseBody> deleteRoom(@PathVariable String sessionId) {
 		roomService.deleteRoom(sessionId);
