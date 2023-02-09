@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8f2cc1c-3cb4-44b4-8335-ea21fe4e5a96" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ssarijileo/Dockerfile_Business" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ssarijileo-auth/src/main/java/com/ssafy/ssarijileo/api/auth/service/OAuth2SuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/ssarijileo-auth/src/main/java/com/ssafy/ssarijileo/api/auth/service/OAuth2SuccessHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ssarijileo-auth/src/main/java/com/ssafy/ssarijileo/api/user/client/UserProfileClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/ssarijileo-auth/src/main/java/com/ssafy/ssarijileo/api/user/client/UserProfileClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +47,7 @@
       <updated>1674742586310</updated>
       <workItem from="1674742589495" duration="5000" />
       <workItem from="1675486964800" duration="94000" />
+      <workItem from="1675910285353" duration="104000" />
     </task>
     <servers />
   </component>

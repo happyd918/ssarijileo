@@ -34,7 +34,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final TokenProvider tokenProvider;
     private final UserRequestMapper userRequestMapper;
     private final UserProfileClient userProfileClient;
-    private String redirectUrl = "http://localhost:3000/login";
+    private String redirectUrl = "https://front-beryl.vercel.app/login";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
@@ -89,7 +89,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         }
 
         // 프로필 DB에 저장
-        // userProfileClient.insertSinging(profileDto);
+        userProfileClient.insertSinging(profileDto);
 
         String targetUrl;
         targetUrl = UriComponentsBuilder.fromUriString(redirectUrl)

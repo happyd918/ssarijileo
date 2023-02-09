@@ -30,11 +30,16 @@ public class SongDetailDto {
 	// 앨범이미지
 	String image;
 
+	// 노래 파일
+	String file;
+
 	// 발매일자
 	String releaseDate;
 
-	List<LyricsDto> lyricsList = new ArrayList<>();
+	// 시간음정
+	String note;
 
-	List<PitchDto> pitchList = new ArrayList<>();
+	// 가사 목록
+	List<LyricsDto> lyricsList = new ArrayList<>();
 }
 

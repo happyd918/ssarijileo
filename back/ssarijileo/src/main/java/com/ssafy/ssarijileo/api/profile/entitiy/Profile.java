@@ -41,4 +41,9 @@ public class Profile {
 		this.nickname = profileDto.getNickname();
 		this.image = profileDto.getImage();
 	}
+
+	// Entity to Dto
+	public ProfileDto toDto() {
+		return new ProfileDto(profileId, nickname, image);
+	}
 }
