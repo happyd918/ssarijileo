@@ -29,15 +29,12 @@ spring:
         use_sql_comments: true
         show_sql: true
   #redis
+  cache:
+    type: redis
   redis:
-    cluster:
-      nodes:
-        - 172.20.0.2:6379
-        - 172.20.0.3:6389
-        - 172.20.0.4:6399
-  #    cluster:
-#      nodes:
-#        - localhost:6389
+    host: localhost
+    port: 6379
+    url: redis://localhost:6379
   # swagger
   mvc:
     pathmatch:

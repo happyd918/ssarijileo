@@ -1,4 +1,4 @@
-version: "1"
+version: "3.8"
 
 services:
   # mysql
@@ -46,99 +46,8 @@ services:
       - 4443:4443
 
   # redis
-  redis-session:
-    container_name: redis-session
+  redis:
+    container_name: redis
     image: redis
-    command: redis-server /etc/redis/redis.conf
-    volumes:
-      - ./redis/redis-session.conf:/etc/redis/redis.conf
-    ports:
-      - 6379:6379
-    networks:
-      redis-cluster:
-        ipv4_address: 172.20.0.2
-
-  redis-business:
-    container_name: redis-business
-    image: redis
-    command: redis-server /etc/redis/redis.conf
-    volumes:
-      - ./redis/redis-business.conf:/etc/redis/redis.conf
-    ports:
-      - 6389:6389
-    networks:
-      redis-cluster:
-        ipv4_address: 172.20.0.3
-
-  redis-auth:
-    container_name: redis-auth
-    image: redis
-    command: redis-server /etc/redis/redis.conf
-    volumes:
-      - ./redis/redis-auth.conf:/etc/redis/redis.conf
-    ports:
-      - 6399:6399
-    networks:
-      redis-cluster:
-        ipv4_address: 172.20.0.4
-
-  redis-session-slave:
-    container_name: redis-session-slave
-    image: redis
-    command: redis-server /etc/redis/redis.conf
-    volumes:
-      - ./redis/redis-session-slave.conf:/etc/redis/redis.conf
-    ports:
-      - 6479:6479
-    networks:
-      redis-cluster:
-        ipv4_address: 172.20.0.5
-
-  redis-business-slave:
-    container_name: redis-business-slave
-    image: redis
-    command: redis-server /etc/redis/redis.conf
-    volumes:
-      - ./redis/redis-business-slave.conf:/etc/redis/redis.conf
-    ports:
-      - 6489:6489
-    networks:
-      redis-cluster:
-        ipv4_address: 172.20.0.6
-
-  redis-auth-slave:
-    container_name: redis-auth-slave
-    image: redis
-    command: redis-server /etc/redis/redis.conf
-    volumes:
-      - ./redis/redis-auth-slave.conf:/etc/redis/redis.conf
-    ports:
-      - 6499:6499
-    networks:
-      redis-cluster:
-        ipv4_address: 172.20.0.7
-
-  redis-cluster:
-    container_name: redis-cluster
-    image: redis
-    command:
-      - redis-server
-      # - redis-cli --cluster create redis-session:6379 redis-business:6389 redis-auth:6399 redis-auth-slave:6499 redis-session-slave:6479 redis-business-slave:6489 --cluster-yes --cluster-replicas 1
-    networks:
-      redis-cluster:
-        ipv4_address: 172.20.0.8
-    depends_on:
-      - redis-session
-      - redis-business
-      - redis-auth
-      - redis-session-slave
-      - redis-business-slave
-      - redis-auth-slave
-
-networks:
-  redis-cluster:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.20.0.0/16
+    command: redis-server --port 6379
+    hostname: redis

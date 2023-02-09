@@ -1,5 +1,6 @@
 package com.ssafy.ssarijileo.api.room.dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoomDto {
+public class RoomDto implements Serializable {
 
 	// 세션PK
 	String sessionId;

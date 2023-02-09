@@ -19,12 +19,16 @@ public class RoomServiceImpl implements RoomService{
 
 	@Override
 	public List<RoomResponseDto> findAllRoom() {
+		// return roomRedisRepository.getList();
 		return null;
 	}
 
+
 	@Override
 	public void createRoom(RoomDto roomDto) {
-
+		roomRedisRepository.set(roomDto.getSessionId(), roomDto);
+		roomRedisRepository.remove(roomDto.getSessionId());
+		System.out.println(roomRedisRepository.get(roomDto.getSessionId()).orElse(new RoomDto()).getTitle());
 	}
 
 	@Override
