@@ -20,6 +20,9 @@ public interface RoomClient {
 	@GetMapping
 	List<RoomResponseDto> findAllRoom();
 
+	@GetMapping("/{sessionId}")
+	RoomDto findRoomBySessionId(@PathVariable String sessionId);
+
 	@PostMapping
 	void createRoom(@RequestBody RoomDto roomDto);
 
@@ -28,6 +31,9 @@ public interface RoomClient {
 
 	@PutMapping("/out")
 	void leaveRoom(@RequestBody RoomRequestDto roomRequestDto);
+
+	@PutMapping
+	void updateRoom(@RequestBody RoomDto roomDto);
 
 	@DeleteMapping("/{sessionId}")
 	void deleteRoom(@PathVariable String sessionId);

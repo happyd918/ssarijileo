@@ -1,10 +1,12 @@
 package com.ssafy.ssarijileo.api.reservation.repository;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
+import com.ssafy.ssarijileo.api.reservation.dto.ReservationDto;
 import com.ssafy.ssarijileo.api.room.dto.RoomDto;
 import com.ssafy.ssarijileo.common.redis.RedisBase;
 
@@ -22,11 +24,11 @@ public class ReservationRepository {
 
 	private Class classType = ReservationDto.class;
 
-	public Optional<RoomDto> get(String key) {
-		return redisBase.get(getKey(key), RoomDto.class);
+	public Optional<List<ReservationDto>> get(String key) {
+		return redisBase.get(getKey(key), classType);
 	}
 
-	public void set(String key, RoomDto value) {
+	public void set(String key, List<ReservationDto> value) {
 		redisBase.set(getKey(key), value, TTL);
 	}
 
