@@ -5,6 +5,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.ssarijileo.api.profile.dto.ProfileDto;
+import com.ssafy.ssarijileo.api.profile.dto.ProfileInfoDto;
 import com.ssafy.ssarijileo.api.profile.entitiy.Profile;
 import com.ssafy.ssarijileo.api.profile.repository.ProfileJpaRepository;
 import com.ssafy.ssarijileo.api.songsetting.entity.SongSetting;
@@ -36,7 +37,25 @@ public class ProfileServiceImpl implements ProfileService{
 	}
 
 	@Override
-	public ProfileDto findProfileById(String userId) {
-		return profileJpaRepository.findById(userId).orElseThrow(NotFoundException::new).toDto();
+	public ProfileInfoDto findProfileById(String userId) {
+		return  profileJpaRepository.findById(userId).orElseThrow(NotFoundException::new).toDto();
+	}
+
+	@Override
+	public void updateProfile(ProfileInfoDto profileInfoDto) {
+		Profile profile = profileJpaRepository.findById(profileInfoDto.getProfileId()).orElseThrow(NotFoundException::new);
+		profile.updateNickname(profileInfoDto.getNickname());
+		profileJpaRepository.save(profile);
+
+		SongSetting songSetting = songSettingJpaRepository.findById(profileInfoDto.getProfileId()).orElseThrow(NotFoundException::new);
+		songSetting.updateSetting(profileInfoDto.getEco(), profileInfoDto.getVolume());
+		songSettingJpaRepository.save(songSetting);
+	}
+
+	@Override
+	public void updateImage(ProfileDto profileDto) {
+		Profile profile = profileJpaRepository.findById(profileDto.getProfileId()).orElseThrow(NotFoundException::new);
+		profile.updateImage(profile.getImage());
+		profileJpaRepository.save(profile);
 	}
 }

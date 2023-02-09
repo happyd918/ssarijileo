@@ -42,19 +42,18 @@ dependencies {
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 
     // eureka
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
     // feign
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
     // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.springframework.session:spring-session-data-redis'
-
-    // logging
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '2.7.7'
     
 //    implementation 'org.springframework.session:spring-session-data-redis'
+
+    // logging
+//    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '2.7.7'
 }
 
 tasks.named('test') {

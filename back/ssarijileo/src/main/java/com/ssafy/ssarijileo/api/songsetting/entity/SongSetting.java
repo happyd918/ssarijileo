@@ -33,6 +33,11 @@ public class SongSetting {
 	// 음량
 	private int volume;
 
+	// 프로필
+	@OneToOne
+	@JoinColumn(name = "song_setting_id")
+	Profile profile;
+
 	// to Entity
 	@Builder
 	public SongSetting(String userId) {

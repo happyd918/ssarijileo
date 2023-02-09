@@ -72,7 +72,7 @@ public class TokenProvider implements InitializingBean {
     }
 
     public String createToken(String userId, String role, TokenKey tokenKey) {
-        // access : 30 min, refresh : 1 month
+        // access : 1 hour, refresh : 1 month
         long period = getExpiration(tokenKey);
 
         Claims claims = Jwts.claims().setSubject(userId);
