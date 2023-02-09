@@ -22,14 +22,10 @@ dependencies {
 
 	// redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-	implementation 'org.springframework.session:spring-session-data-redis'
 
 	// feign client
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 	implementation group: 'io.github.openfeign', name: 'feign-core', version: '12.1'
-
-	// logging
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '2.7.7'
 }
 
 tasks.named('test') {
