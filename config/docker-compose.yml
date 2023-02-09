@@ -1,4 +1,4 @@
-version: "1"
+version: "3.8"
 
 services:
   # mysql
@@ -35,14 +35,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
-  # redis
-  redis:
-    container_name: redis
-    image: redis
-    command: redis-server --port 6379
-    ports:
-      - 6379:6379
-
   # openvidu
   openvidu:
     container_name: openvidu
@@ -52,3 +44,10 @@ services:
       - OPENVIDU_SECRET=ssafy
     ports:
       - 4443:4443
+
+  # redis
+  redis:
+    container_name: redis
+    image: redis
+    command: redis-server --port 6379
+    hostname: redis

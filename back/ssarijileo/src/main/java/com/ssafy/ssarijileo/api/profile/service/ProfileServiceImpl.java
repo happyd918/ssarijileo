@@ -10,6 +10,7 @@ import com.ssafy.ssarijileo.api.profile.repository.ProfileJpaRepository;
 import com.ssafy.ssarijileo.api.songsetting.entity.SongSetting;
 import com.ssafy.ssarijileo.api.songsetting.repository.SongSettingJpaRepository;
 import com.ssafy.ssarijileo.api.songsetting.service.SongSettingService;
+import com.ssafy.ssarijileo.common.exception.NotFoundException;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,4 +35,8 @@ public class ProfileServiceImpl implements ProfileService{
 		songSettingJpaRepository.save(songSetting);
 	}
 
+	@Override
+	public ProfileDto findProfileById(String userId) {
+		return profileJpaRepository.findById(userId).orElseThrow(NotFoundException::new).toDto();
+	}
 }
