@@ -21,12 +21,14 @@ public class RoomRedisRepository {
 
 	private String category = "room_";
 
+	private Class classType = RoomDto.class;
+
 	public List<RoomDto> getList() {
-		return redisBase.getList(category, RoomDto.class);
+		return redisBase.getList(category, classType);
 	}
 
 	public Optional<RoomDto> get(String key) {
-		return redisBase.get(getKey(key), RoomDto.class);
+		return redisBase.get(getKey(key), classType);
 	}
 
 	public void set(String key, RoomDto value) {

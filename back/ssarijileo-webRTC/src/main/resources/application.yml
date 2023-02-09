@@ -13,3 +13,8 @@ logging:
     root: info
     com:
       ssafy: debug
+
+# feign
+feign:
+  hystrix:
+    enabled: true

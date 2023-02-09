@@ -15,4 +15,6 @@ public interface RoomService {
 	void enterRoom(RoomRequestDto roomEntryDto);
 
 	void leaveRoom(RoomRequestDto roomEntryDto);
+
+	void deleteRoom(String sessionId);
 }

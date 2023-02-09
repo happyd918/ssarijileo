@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -69,8 +70,8 @@ public class SingingContestController {
 		@ApiResponse(code = 404, message = "노래자랑 없음"),
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
-	@GetMapping("/my/{userId}")
-	ResponseEntity<List<SingingContestResponseDto>> findSingingContestByUserId(@PathVariable String userId) {
+	@GetMapping("/my")
+	ResponseEntity<List<SingingContestResponseDto>> findSingingContestByUserId(@RequestHeader String userId) {
 		return ResponseEntity.status(200).body(singingContestService.findSingingContestByUserId(userId));
 	}
 

@@ -28,10 +28,10 @@ public class SongSetting {
 	private String songSettingId;
 
 	// 에코
-	private int eco;
+	private double eco;
 
 	// 음량
-	private int volume;
+	private double volume;
 
 	// 프로필
 	@OneToOne
@@ -42,8 +42,8 @@ public class SongSetting {
 	@Builder
 	public SongSetting(String userId) {
 		this.songSettingId = userId;
-		this.eco = 50;
-		this.volume = 50;
+		this.eco = 0.5;
+		this.volume = 0.5;
 	}
 
 	// Entity to Dto
@@ -51,7 +51,7 @@ public class SongSetting {
 		return new SongSettingDto(songSettingId, eco, volume);
 	}
 
-	public void updateSetting(int eco, int volume) {
+	public void updateSetting(double eco, double volume) {
 		this.eco = eco;
 		this.volume = volume;
 	}

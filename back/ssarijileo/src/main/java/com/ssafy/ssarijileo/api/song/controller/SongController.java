@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssarijileo.api.song.dto.FavoriteSongDto;
@@ -108,8 +110,8 @@ public class SongController {
 		@ApiResponse(code = 404, message = "노래 없음"),
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
-	@GetMapping("/my/{userId}")
-	public ResponseEntity<List<SongDto>> findSongByUserId(@PathVariable String userId) {
+	@GetMapping("/my")
+	public ResponseEntity<List<SongDto>> findSongByUserId(@RequestHeader String userId) {
 		return ResponseEntity.status(200).body(songService.findSongByUserId(userId));
 	}
 
@@ -128,7 +130,8 @@ public class SongController {
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@PostMapping("/my")
-	public ResponseEntity<? extends BaseResponseBody> setFavoriteSong(@RequestBody FavoriteSongDto favoriteSongDto) {
+	public ResponseEntity<? extends BaseResponseBody> setFavoriteSong(@RequestHeader String userId, @RequestBody FavoriteSongDto favoriteSongDto) {
+		favoriteSongDto.setUserId(userId);
 		songService.setFavoriteSong(favoriteSongDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
