@@ -1,7 +1,5 @@
 server:
-  port: 8080
-  ssl:
-    enabled: false
+  port: 8050
 
 spring:
   # API id for MSA
@@ -10,7 +8,7 @@ spring:
   # MySQL
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/ssarijileo?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
+    #    url: jdbc:mysql://localhost:3306/ssarijileo?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
     url: jdbc:mysql://i8b302.p.ssafy.io:3306/ssarijileo?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
     username: ssafy
     password: ssafy
@@ -29,16 +27,9 @@ spring:
         use_sql_comments: true
         show_sql: true
   #redis
-  cache:
-    type: redis
   redis:
     host: localhost
     port: 6379
-    url: redis://localhost:6379
-  # swagger
-  mvc:
-    pathmatch:
-      matching-strategy: ANT_PATH_MATCHER
 
 # log level setting
 logging:
@@ -46,12 +37,6 @@ logging:
     root: info
     com:
       ssafy: debug
-
-## eureka setting
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: http://localhost:8761/eureka/
 
 # feign
 feign:

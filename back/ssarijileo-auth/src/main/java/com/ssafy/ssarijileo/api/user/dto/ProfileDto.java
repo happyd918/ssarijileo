@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserInfoDto {
-	private String userId;
+public class ProfileDto {
+	private String profileId;
 	private String nickname;
 	private String image;
 
-	public void updateUserId(String userId) {
-		this.userId = userId;
+	public void updateUserId(String profileId) {
+		this.profileId = profileId;
 	}
 
 }

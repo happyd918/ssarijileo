@@ -2,8 +2,9 @@ package com.ssafy.ssarijileo.api.profile.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.ServletServerHttpRequest;
-import org.springframework.web.bind.annotation.GetMapping;
+ 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +20,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Api(tags = "프로필 API")
 @RestController
 @RequestMapping("/api/v1/profile")
 @RequiredArgsConstructor
+@Slf4j
 public class ProfileController {
 
 	private final ProfileService profileService;
@@ -42,6 +45,7 @@ public class ProfileController {
 		@ApiResponse(code = 404, message = "정보 없음"),
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
+
 	@PostMapping
 	public ResponseEntity<? extends BaseResponseBody> insertProfile(@RequestBody ProfileDto profileDto) {
 		profileService.insertProfile(profileDto);

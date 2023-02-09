@@ -2,6 +2,7 @@ package com.ssafy.ssarijileo.config;
 
 import com.ssafy.ssarijileo.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -33,10 +34,10 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
             String token = exchange.getRequest().getHeaders().get("Authorization").get(0).substring(7);   // 헤더의 토큰 파싱 (Bearer 제거)
-//            Map<String, Object> userInfo = jwtUtil.getUserParseInfo(token);   // 파싱된 토큰의 claim을 추출해 아이디 값을 가져온다.
-            String userId = jwtUtil.getUid(token);
-            addAuthorizationHeaders(exchange.getRequest(), userId);
 
+            String userId = jwtUtil.getUid(token);
+
+            addAuthorizationHeaders(exchange.getRequest(), userId);
             return chain.filter(exchange);
         };
     }
@@ -44,7 +45,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     // 성공적으로 검증이 되었기 때문에 인증된 헤더로 요청을 변경해준다. 서비스는 해당 헤더에서 아이디를 가져와 사용한다.
     private void addAuthorizationHeaders(ServerHttpRequest request, String userId) {
         request.mutate()
-                .header("user-id", userId)
+                .header("userId", userId)
                 .build();
     }
 

@@ -24,10 +24,10 @@ spring:
           predicates:
             - Path=/api/v1/user/**
         - id: ssarijileo-service
-          uri: lb://ssarijileo-service
+#          uri: lb://ssarijileo-service
+          uri: http://localhost:8080
           predicates:
-#            - Path=/friend/**, /songsetting/**, /favoritesong/**, /singingcontest/**, /recording/**, /singing/**, /song/**
-            - Path=/api/v1/**
+            - Path=/api/v1/song/**, /api/v1/songsetting/**, /api/v1/singingcontest/**, /api/v1/recording/**, /api/v1/singing/**, /api/v1/friend/**
         - id: webrtc-service
           uri: lb://webrtc-service
           predicates:
@@ -45,12 +45,12 @@ logging:
     org.springframework.cloud.gateway: debug
     reactor.netty.http.client: debug
 
-# eureka setting
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    prefer-ip-address: true
+## eureka setting
+#eureka:
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#  instance:
+#    prefer-ip-address: true
