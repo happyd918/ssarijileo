@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.ssarijileo.api.friend.client.FriendClient;
 import com.ssafy.ssarijileo.api.friend.dto.FriendInviteDto;
 import com.ssafy.ssarijileo.api.profile.entitiy.Profile;
 import com.ssafy.ssarijileo.api.profile.repository.ProfileJpaRepository;
@@ -29,22 +30,22 @@ public class FriendServiceImpl implements FriendService {
 	private final FriendRepository friendRepository;
 	private final ProfileJpaRepository profileJpaRepository;
 
-	@Override
-	public List<FriendDto> findAllFriend() {
-		return friendJpaRepository.findAll().stream().map(Friend::toDto).collect(Collectors.toList());
-	}
+	private final FriendClient friendClient;
 
 	@Override
-	public List<MyFriendDto> findFriendByUserId(String userId) {
-		return friendRepository.findFriendByUserId(userId).orElseThrow(NotFoundException::new);
+	public List<MyFriendDto> findFriendByNickname(String nickname) {
+		return friendRepository.findFriendByNickname(nickname).orElseThrow(NotFoundException::new);
 	}
 
 	@Override
 	public void requestFriend(FriendDto friendDto) {
-		Profile fromProfile = profileJpaRepository.findById(friendDto.getFromUserId()).orElseThrow(NotFoundException::new);
-		Profile toProfile = profileJpaRepository.findById(friendDto.getFromUserId()).orElseThrow(NotFoundException::new);
+		Profile fromProfile = profileJpaRepository.findByNickname(friendDto.getFromUserNickname()).orElseThrow(NotFoundException::new);
+		Profile toProfile = profileJpaRepository.findByNickname(friendDto.getToUserNickname()).orElseThrow(NotFoundException::new);
 		Friend friend = Friend.builder().friendDto(friendDto).fromProfile(fromProfile).toProfile(toProfile).build();
 		friendJpaRepository.save(friend);
+
+		// 친구 요청 알림
+		friendClient.requestFriend(friendDto);
 
 		// Profile profile = friendRequestEvent.findById(friend.getFromUserId()).orElseThrow(NotFoundException::new);
 
@@ -65,6 +66,9 @@ public class FriendServiceImpl implements FriendService {
 
 	@Override
 	public void inviteFriend(FriendInviteDto friendInviteDto) {
+		// 친구 초대 알림
+		friendClient.inviteFriend(friendInviteDto);
+
 		// Profile profile = profileJpaRepository.findById(friendInviteDto.getFromUserId()).orElseThrow(NotFoundException::new);
 
 		// 친구 초대 알림

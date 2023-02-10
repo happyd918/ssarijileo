@@ -9,9 +9,7 @@ import com.ssafy.ssarijileo.api.friend.dto.MyFriendDto;
 
 public interface FriendService {
 
-	List<FriendDto> findAllFriend();
-
-	List<MyFriendDto> findFriendByUserId(String userId);
+	List<MyFriendDto> findFriendByNickname(String nickname);
 
 	void requestFriend(FriendDto friendDto);
 

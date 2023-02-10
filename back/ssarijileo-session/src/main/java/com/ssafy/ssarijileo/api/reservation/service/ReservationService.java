@@ -8,7 +8,7 @@ public interface ReservationService {
 
 	List<ReservationDto> findReservationBySessionId(String sessionId);
 
-	void createReservaion(String sessionId);
+	void createReservation(String sessionId);
 
 	void insertReservation(ReservationDto reservationDto);
 
