@@ -1,5 +1,6 @@
 package com.ssafy.ssarijileo.api.profile.entitiy;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -30,6 +31,7 @@ public class Profile {
 	private String profileId;
 
 	// 닉네임
+	@Column(name = "nickname")
 	private String nickname;
 
 	// 프로필이미지

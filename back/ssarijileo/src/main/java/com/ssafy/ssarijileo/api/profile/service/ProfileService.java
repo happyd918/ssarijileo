@@ -12,4 +12,6 @@ public interface ProfileService {
 	void updateProfile(ProfileInfoDto profileInfoDto);
 
 	void updateImage(ProfileDto profileDto);
+
+	boolean checkNickname(String nickname);
 }

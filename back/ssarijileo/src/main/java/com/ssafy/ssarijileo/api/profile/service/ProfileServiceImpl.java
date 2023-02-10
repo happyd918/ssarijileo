@@ -58,4 +58,14 @@ public class ProfileServiceImpl implements ProfileService{
 		profile.updateImage(profile.getImage());
 		profileJpaRepository.save(profile);
 	}
+
+	@Override
+	public boolean checkNickname(String nickname) {
+		Profile profile = new Profile();
+		// 비었다면 이름 변경 가능 -> true
+		Profile profile2 = profileJpaRepository.findByNickname(nickname).orElse(profile);
+		log.info("profile equals = {}", profile.equals(profile2));
+		log.info("profile equals = {}", profile2.getNickname());
+		return profile.equals(profile2);
+	}
 }

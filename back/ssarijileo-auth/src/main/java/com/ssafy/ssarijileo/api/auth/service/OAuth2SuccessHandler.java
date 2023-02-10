@@ -37,7 +37,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final UserRequestMapper userRequestMapper;
     private final UserProfileClient userProfileClient;
     // private String redirectUrl = "https://front-beryl.vercel.app/login";
-    private String redirectUrl = "https:localhost:3000";
+    private String redirectUrl = "http://localhost:3000/login";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
@@ -48,7 +48,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         log.info("[!] attributes = {}",oAuth2User.getAttributes());
 
         UserDto userDto = UserDto.builder()
-            .socialId(String.valueOf(oAuth2User.getAttributes().get("id")))
+            .socialId(String.valueOf(attributes.get("id")))
             .build();
 
         ProfileDto profileDto;
@@ -70,11 +70,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
             profileDto = new ProfileDto(
                 String.valueOf(user.getUserId())
-                , String.valueOf(attributes.get("nickname"))
+                , attributes.get("nickname") + "#" + userDto.getSocialId().substring(2, 6)
                 , String.valueOf(attributes.get("image"))
             );
-
-            // profileDto.updateProfileId(String.valueOf(user.getUserId()));
 
             // 토큰 발행
             tokens = tokenProvider.generateToken(profileDto.getProfileId(), Role.USER.getKey());
@@ -94,8 +92,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                 , String.valueOf(attributes.get("image"))
             );
 
-            // profileDto.updateProfileId(String.valueOf(user.getUserId()));
-
             String access = tokenProvider.generateAccess(profileDto.getProfileId(), Role.USER.getKey());
 
             // 리프레시 토큰 유효하면 그대로 사용, 아니면 재발행
@@ -107,6 +103,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                 tokens = tokenProvider.generateToken(profileDto.getProfileId(), Role.USER.getKey());
             }
             log.info("profileDto ={}", profileDto);
+
             userProfileClient.updateImage(profileDto);
         }
 

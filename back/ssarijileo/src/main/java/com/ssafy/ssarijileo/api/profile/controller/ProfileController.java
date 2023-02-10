@@ -84,8 +84,11 @@ public class ProfileController {
 		profileService.updateProfile(profileInfoDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
-
-	@PostMapping(value = "/image")
+	@GetMapping("/nickname")
+	public ResponseEntity<Boolean> checkNickname(@RequestBody String nickname) {
+		return ResponseEntity.status(200).body(profileService.checkNickname(nickname));
+	}
+	@PostMapping("/image")
 	public ResponseEntity<? extends BaseResponseBody> updateImage(@RequestBody ProfileDto profileDto) {
 		log.info("image={}", profileDto.getImage());
 		profileService.updateImage(profileDto);
