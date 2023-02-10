@@ -6,9 +6,12 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.ssafy.ssarijileo.api.friend.client.FriendClient;
 import com.ssafy.ssarijileo.api.friend.dto.FriendInviteDto;
+import com.ssafy.ssarijileo.api.friend.dto.FriendInviteEvent;
+import com.ssafy.ssarijileo.api.friend.dto.FriendRequestEvent;
 import com.ssafy.ssarijileo.api.profile.entitiy.Profile;
 import com.ssafy.ssarijileo.api.profile.repository.ProfileJpaRepository;
 import com.ssafy.ssarijileo.common.exception.NotFoundException;
@@ -18,6 +21,7 @@ import com.ssafy.ssarijileo.api.friend.dto.MyFriendDto;
 import com.ssafy.ssarijileo.api.friend.entity.Friend;
 import com.ssafy.ssarijileo.api.friend.repository.FriendJpaRepository;
 import com.ssafy.ssarijileo.api.friend.repository.FriendRepository;
+import com.ssafy.ssarijileo.common.model.AlarmUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -44,18 +48,11 @@ public class FriendServiceImpl implements FriendService {
 		Friend friend = Friend.builder().friendDto(friendDto).fromProfile(fromProfile).toProfile(toProfile).build();
 		friendJpaRepository.save(friend);
 
+		System.out.println("friendId : " + friend.getFriendId());
 		// 친구 요청 알림
-		friendClient.requestFriend(friendDto);
-
-		// Profile profile = friendRequestEvent.findById(friend.getFromUserId()).orElseThrow(NotFoundException::new);
-
-		// 친구 요청 알림
-		// FriendRequestEvent friendRequestEvent = FriendRequestEvent.builder()
-		// 	.user(AlarmUser.builder().fromUserId(String.valueOf(friend.getFromUserId())).toUserId(String.valueOf(friend.getToUserId())).build())
-		// 	.from_user_nickname(profile.getNickname())
-		// 	.friendId(friend.getFriendId())
-		// 	.build();
-		// friendRequestProducer.send(friendRequestEvent);
+		AlarmUser user = new AlarmUser(fromProfile.getProfileId(), toProfile.getProfileId());
+		FriendRequestEvent friendRequestEvent = new FriendRequestEvent(user, fromProfile.getNickname(), friend.getFriendId());
+		friendClient.requestFriend(friendRequestEvent);
 	}
 
 	@Override
@@ -66,17 +63,12 @@ public class FriendServiceImpl implements FriendService {
 
 	@Override
 	public void inviteFriend(FriendInviteDto friendInviteDto) {
-		// 친구 초대 알림
-		friendClient.inviteFriend(friendInviteDto);
-
-		// Profile profile = profileJpaRepository.findById(friendInviteDto.getFromUserId()).orElseThrow(NotFoundException::new);
+		Profile fromProfile = profileJpaRepository.findByNickname(friendInviteDto.getFromUserNickname()).orElseThrow(NotFoundException::new);
+		Profile toProfile = profileJpaRepository.findByNickname(friendInviteDto.getToUserNickname()).orElseThrow(NotFoundException::new);
 
 		// 친구 초대 알림
-		// FriendInviteEvent friendInviteEvent = FriendInviteEvent.builder()
-		// 	.user(AlarmUser.builder().fromUserId(friendInviteDto.getFromUserId()).toUserId(friendInviteDto.getToUserId()).build())
-		// 	.from_user_nickname(profile.getNickname())
-		// 	.link(friendInviteDto.getLink())
-		// 	.build();
-		// friendInviteProducer.send(friendInviteEvent);
+		AlarmUser user = new AlarmUser(fromProfile.getProfileId(), toProfile.getProfileId());
+		FriendInviteEvent friendInviteEvent = new FriendInviteEvent(user, fromProfile.getNickname(), friendInviteDto.getSessionId());
+		friendClient.inviteFriend(friendInviteEvent);
 	}
 }

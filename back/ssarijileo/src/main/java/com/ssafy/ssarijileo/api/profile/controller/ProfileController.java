@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.ssafy.ssarijileo.api.profile.dto.ProfileDto;
 import com.ssafy.ssarijileo.api.profile.dto.ProfileInfoDto;
@@ -36,6 +37,25 @@ public class ProfileController {
 	private final ProfileService profileService;
 
 	/**
+	 * @title SSE 연결
+	 * @param userId
+	 */
+	@ApiOperation(
+		value = "SSE 연결",
+		notes = "알림 전송을 위해 SSE 연결한다."
+	)
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "성공"),
+		@ApiResponse(code = 401, message = "인증 실패"),
+		@ApiResponse(code = 404, message = "정보 없음"),
+		@ApiResponse(code = 500, message = "서버 오류")
+	})
+	@GetMapping(value = "/sse", produces = "text/event-stream")
+	public SseEmitter insertProfile(@RequestHeader String userId) {
+		return profileService.connection(userId);
+	}
+
+	/**
 	 * @title 프로필 등록
 	 * @param profileDto
 	 */
@@ -49,7 +69,6 @@ public class ProfileController {
 		@ApiResponse(code = 404, message = "정보 없음"),
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
-
 	@PostMapping
 	public ResponseEntity<? extends BaseResponseBody> insertProfile(@RequestBody ProfileDto profileDto) {
 		profileService.insertProfile(profileDto);
