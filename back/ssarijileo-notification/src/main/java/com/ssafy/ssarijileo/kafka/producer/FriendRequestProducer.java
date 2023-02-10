@@ -15,7 +15,7 @@ public class FriendRequestProducer {
 
 	private final KafkaTemplate<String, Object> kafkaTemplate;
 
-	private String topic = "friend request";
+	private String topic = "alarm";
 
 	public void send(FriendRequestEvent event) {
 		// (Topic, key, data)

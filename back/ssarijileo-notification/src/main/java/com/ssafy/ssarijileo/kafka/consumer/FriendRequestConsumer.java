@@ -17,7 +17,7 @@ public class FriendRequestConsumer {
 
 	private final SseService sseService;
 
-	@KafkaListener(topics = "friend request")
+	@KafkaListener(topics = "alarm")
 	public void consumeAlarmEvent(FriendRequestEvent event, Acknowledgment ack) {
 		log.info("Friend Request Alarm consumed from kafka topic: {}", event);
 		sseService.sendFriendRequest(event);
