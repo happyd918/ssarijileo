@@ -22,10 +22,10 @@ public class ProfileInfoDto {
 	String image;
 
 	// 볼륨
-	int volume;
+	double volume;
 
 	// 에코
-	int eco;
+	double eco;
 
 	// @Builder
 	// ProfileInfoDto(ProfileDto profileDto, SongSettingDto songSettingDto) {

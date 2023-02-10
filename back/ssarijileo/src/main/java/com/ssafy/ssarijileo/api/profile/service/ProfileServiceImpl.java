@@ -4,6 +4,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.ssarijileo.api.profile.client.ProfileClient;
 import com.ssafy.ssarijileo.api.profile.dto.ProfileDto;
 import com.ssafy.ssarijileo.api.profile.dto.ProfileInfoDto;
 import com.ssafy.ssarijileo.api.profile.entitiy.Profile;
@@ -25,6 +26,8 @@ public class ProfileServiceImpl implements ProfileService{
 	private final ProfileJpaRepository profileJpaRepository;
 	private final SongSettingJpaRepository songSettingJpaRepository;
 
+	private final ProfileClient profileClient;
+
 	@Override
 	public void insertProfile(ProfileDto profileDto) {
 		log.info("profileDto id = {}",profileDto.getProfileId());
@@ -34,6 +37,9 @@ public class ProfileServiceImpl implements ProfileService{
 
 		SongSetting songSetting = SongSetting.builder().userId(profileDto.getProfileId()).build();
 		songSettingJpaRepository.save(songSetting);
+
+		// 알림을 위한 SSE 연결
+		profileClient.connection(profileDto.getProfileId());
 	}
 
 	@Override

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.ssarijileo.api.friend.dto.FriendDto;
 import com.ssafy.ssarijileo.api.friend.dto.MyFriendDto;
+import com.ssafy.ssarijileo.api.friend.entity.Friend;
 import com.ssafy.ssarijileo.api.friend.entity.QFriend;
 import com.ssafy.ssarijileo.api.profile.entitiy.QProfile;
 
@@ -23,28 +25,27 @@ public class FriendRepositoryImpl implements FriendRepository {
 	QProfile profile = QProfile.profile;
 
 	@Override
-	public Optional<List<MyFriendDto>> findFriendByUserId(String userId) {
+	public Optional<List<MyFriendDto>> findFriendByNickname(String nickname) {
 		List<MyFriendDto> friendList = jpaQueryFactory
 			.select(Projections.fields(MyFriendDto.class,
 				friend.friendId,
-				friend.fromProfile.profileId
-					.when(userId).then(friend.toProfile.profileId)
-					.otherwise(friend.fromProfile.profileId)
-					.as("userId"),
-				profile.nickname,
+				friend.fromProfile.nickname
+					.when(nickname).then(friend.toProfile.nickname)
+					.otherwise(friend.fromProfile.nickname)
+					.as("nickname"),
 				profile.image,
 				friend.status))
 			.from(friend)
 			.leftJoin(profile)
-			.on(friend.fromProfile.profileId
-				.when(userId).then(friend.toProfile.profileId)
-				.otherwise(friend.fromProfile.profileId).eq(profile.profileId))
+			.on(friend.fromProfile.nickname
+				.when(nickname).then(friend.toProfile.nickname)
+				.otherwise(friend.fromProfile.nickname).eq(profile.nickname))
 			.where(
 				friend.status.ne("X")
 					.and(
-						(friend.fromProfile.profileId.eq(userId)
+						(friend.fromProfile.nickname.eq(nickname)
 							.and(friend.status.eq("A")))
-							.or(friend.toProfile.profileId.eq(userId))
+							.or(friend.toProfile.nickname.eq(nickname))
 					)
 			)
 			.orderBy(friend.status.desc())

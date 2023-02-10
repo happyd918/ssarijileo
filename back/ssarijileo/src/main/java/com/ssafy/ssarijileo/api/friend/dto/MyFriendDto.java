@@ -12,9 +12,6 @@ public class MyFriendDto {
 	// PK (AUTO_INCREMENT)
 	Long friendId;
 
-	// 친구 사용자PK
-	String userId;
-
 	// 친구 닉네임
 	String nickname;
 

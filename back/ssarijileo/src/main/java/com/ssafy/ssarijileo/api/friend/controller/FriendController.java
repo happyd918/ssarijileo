@@ -36,16 +36,16 @@ public class FriendController {
 
 	/**
 	 * @title 내 친구 목록
-	 * @param userId
+	 * @param nickname
 	 * @return
 	 */
 	@ApiOperation(
 		value = "내 친구 목록",
-		notes = "사용자 ID를 통해 해당 사용자의 친구 목록을 조회한다."
+		notes = "사용자 닉네임을 통해 해당 사용자의 친구 목록을 조회한다."
 	)
 	@ApiImplicitParam(
-		name = "userId",
-		value = "사용자 PK"
+		name = "nickname",
+		value = "사용자 닉네임"
 	)
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "성공"),
@@ -53,9 +53,9 @@ public class FriendController {
 		@ApiResponse(code = 404, message = "친구 없음"),
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
-	@GetMapping("/my")
-	public ResponseEntity<List<MyFriendDto>> findFriendByUserId(@RequestHeader String userId) {
-		return ResponseEntity.status(200).body(friendService.findFriendByUserId(userId));
+	@GetMapping("/my/{nickname}")
+	public ResponseEntity<List<MyFriendDto>> findFriendByNickname(@PathVariable String nickname) {
+		return ResponseEntity.status(200).body(friendService.findFriendByNickname(nickname));
 	}
 
 	/**
@@ -73,8 +73,7 @@ public class FriendController {
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@PostMapping
-	public ResponseEntity<? extends BaseResponseBody> requestFriend(@RequestHeader String userId, @RequestBody FriendDto friendDto) {
-		friendDto.setFromUserId(userId);
+	public ResponseEntity<? extends BaseResponseBody> requestFriend(@RequestBody FriendDto friendDto) {
 		friendService.requestFriend(friendDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
@@ -114,8 +113,7 @@ public class FriendController {
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@PostMapping("/invite")
-	public ResponseEntity<? extends BaseResponseBody> inviteFriend(@RequestHeader String userId, @RequestBody FriendInviteDto friendInviteDto) {
-		friendInviteDto.setFromUserId(userId);
+	public ResponseEntity<? extends BaseResponseBody> inviteFriend(@RequestBody FriendInviteDto friendInviteDto) {
 		friendService.inviteFriend(friendInviteDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}

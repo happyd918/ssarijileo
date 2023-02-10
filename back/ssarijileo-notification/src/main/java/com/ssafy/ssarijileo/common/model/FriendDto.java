@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.api.friend.dto;
+package com.ssafy.ssarijileo.common.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
