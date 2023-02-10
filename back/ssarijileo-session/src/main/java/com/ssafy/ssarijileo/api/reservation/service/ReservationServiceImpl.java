@@ -23,7 +23,7 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public void createReservaion(String sessionId) {
+	public void createReservation(String sessionId) {
 		reservationRepository.set(sessionId, new ArrayList<ReservationDto>());
 	}
 

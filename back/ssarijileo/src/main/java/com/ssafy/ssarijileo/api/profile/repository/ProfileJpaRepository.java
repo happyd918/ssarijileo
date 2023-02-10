@@ -9,5 +9,6 @@ import com.ssafy.ssarijileo.api.profile.entitiy.Profile;
 
 @Repository
 public interface ProfileJpaRepository extends JpaRepository<Profile, String> {
+
 	Optional<Profile> findByNickname(String nickname);
 }

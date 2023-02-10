@@ -1,3 +1,8 @@
+server:
+  port: 8060
+  ssl:
+    enabled: false
+
 spring:
   # kafka
   kafka:
@@ -22,3 +27,8 @@ logging:
     root: info
     com:
       ssafy: debug
+
+# feign
+feign:
+  hystrix:
+    enabled: true

@@ -44,7 +44,7 @@ public class RoomController {
 	@PostMapping
 	void createRoom(@RequestBody RoomDto roomDto) {
 		roomService.createRoom(roomDto);
-		reservationService.createReservaion(roomDto.getSessionId());
+		reservationService.createReservation(roomDto.getSessionId());
 	}
 
 
