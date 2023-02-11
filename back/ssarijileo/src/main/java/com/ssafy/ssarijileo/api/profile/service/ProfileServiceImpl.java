@@ -40,6 +40,14 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 
 	@Override
+	public String findIdByNickname(String nickname) {
+		System.out.println("findIdByNickname : " + nickname);
+		Profile profile = profileJpaRepository.findByNickname(nickname).orElseThrow(NotFoundException::new);
+		System.out.println("result userId : " + profile.getProfileId());
+		return profile.getProfileId();
+	}
+
+	@Override
 	public void insertProfile(ProfileDto profileDto) {
 		log.info("profileDto id = {}", profileDto.getProfileId());
 		Profile profile = Profile.builder().profileDto(profileDto).build();

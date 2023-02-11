@@ -15,6 +15,7 @@ import com.ssafy.ssarijileo.kafka.event.FriendInviteEvent;
 import com.ssafy.ssarijileo.kafka.event.FriendRequestEvent;
 import com.ssafy.ssarijileo.kafka.producer.FriendInviteProducer;
 import com.ssafy.ssarijileo.kafka.producer.FriendRequestProducer;
+import com.ssafy.ssarijileo.sse.client.SseClient;
 import com.ssafy.ssarijileo.sse.service.SseService;
 import lombok.RequiredArgsConstructor;
 
@@ -28,14 +29,20 @@ public class SseController {
 	private final FriendRequestProducer friendRequestProducer;
 	private final FriendInviteProducer friendInviteProducer;
 
+	private final SseClient sseClient;
+
 	/**
 	 * @title 로그인 한 사용자 SSE 연결
-	 * @param userId
+	 * @param nickname
 	 * @return
 	 */
-	@GetMapping(value = "/{userId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-	public SseEmitter connection(@PathVariable String userId) {
-		System.out.println("sse : " + userId);
+	@GetMapping(value = "/{nickname}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	public SseEmitter connection(@PathVariable String nickname) {
+		System.out.println("sse nickname : " + nickname);
+
+		String userId = sseClient.findIdByNickname(nickname);
+
+		System.out.println("sse userId : " + userId);
 		return sseService.connection(userId);
 	}
 

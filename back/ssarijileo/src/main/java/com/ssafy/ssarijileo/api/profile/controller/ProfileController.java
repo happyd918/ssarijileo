@@ -37,13 +37,38 @@ public class ProfileController {
 
 	private final ProfileService profileService;
 
+	// /**
+	//  * @title SSE 연결
+	//  * @param userId
+	//  */
+	// @ApiOperation(
+	// 	value = "SSE 연결",
+	// 	notes = "알림 전송을 위해 SSE 연결한다."
+	// )
+	// @ApiResponses({
+	// 	@ApiResponse(code = 200, message = "성공"),
+	// 	@ApiResponse(code = 401, message = "인증 실패"),
+	// 	@ApiResponse(code = 404, message = "정보 없음"),
+	// 	@ApiResponse(code = 500, message = "서버 오류")
+	// })
+	// // @GetMapping("/sse")
+	// @GetMapping(value = "/sse", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	// public SseEmitter insertProfile(@RequestHeader String userId) {
+	// 	return profileService.connection(userId);
+	// }
+
 	/**
-	 * @title SSE 연결
-	 * @param userId
+	 * @title PK 조회
+	 * @param nickname
+	 * @return
 	 */
 	@ApiOperation(
-		value = "SSE 연결",
-		notes = "알림 전송을 위해 SSE 연결한다."
+		value = "PK 조회",
+		notes = "닉네임을 통해 사용자 ID를 조회한다."
+	)
+	@ApiImplicitParam(
+		name = "nickname",
+		value = "사용자 닉네임"
 	)
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "성공"),
@@ -51,10 +76,10 @@ public class ProfileController {
 		@ApiResponse(code = 404, message = "정보 없음"),
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
-	// @GetMapping("/sse")
-	@GetMapping(value = "/sse", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-	public SseEmitter insertProfile(@RequestHeader String userId) {
-		return profileService.connection(userId);
+	@GetMapping("/{nickname}")
+	public ResponseEntity<String> findIdByNickname(@PathVariable String nickname) {
+		System.out.println("in ctl");
+		return ResponseEntity.status(200).body(profileService.findIdByNickname(nickname));
 	}
 
 	/**
