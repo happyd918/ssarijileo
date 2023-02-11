@@ -34,7 +34,9 @@ public class ProfileServiceImpl implements ProfileService {
 	public SseEmitter connection(String userId) {
 		// 알림을 위한 SSE 연결
 		System.out.println("rep : " + userId);
-		return profileClient.connection(userId);
+		System.out.println(profileClient.connection(userId));
+		return null;
+		// return profileClient.connection(userId);
 	}
 
 	@Override

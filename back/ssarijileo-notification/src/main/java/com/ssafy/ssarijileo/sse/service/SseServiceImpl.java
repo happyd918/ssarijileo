@@ -40,6 +40,7 @@ public class SseServiceImpl implements SseService {
 			throw new AlarmException();
 		}
 
+		System.out.println(emitter);
 		return emitter;
 	}
 

@@ -51,6 +51,7 @@ public class ProfileController {
 		@ApiResponse(code = 404, message = "정보 없음"),
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
+	// @GetMapping("/sse")
 	@GetMapping(value = "/sse", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public SseEmitter insertProfile(@RequestHeader String userId) {
 		return profileService.connection(userId);
