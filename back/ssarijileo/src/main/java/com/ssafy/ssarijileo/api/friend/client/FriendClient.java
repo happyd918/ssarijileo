@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.ssafy.ssarijileo.api.friend.dto.FriendInviteEvent;
 import com.ssafy.ssarijileo.api.friend.dto.FriendRequestEvent;
 
-@FeignClient(name = "friend-client", url = "notification:8060/api/v1/sse")
+@FeignClient(name = "friend-client", url = "i8b302.p.ssafy.io:8060/api/v1/sse")
 public interface FriendClient {
 
 	@PostMapping
