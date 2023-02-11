@@ -1,12 +1,15 @@
-package com.ssafy.ssarijileo.kafka.event;
+package com.ssafy.ssarijileo.api.friend.dto;
 
 import com.ssafy.ssarijileo.common.model.AlarmUser;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
-@Builder
+@Setter
+@AllArgsConstructor
 public class FriendInviteEvent {
 
 	AlarmUser user;

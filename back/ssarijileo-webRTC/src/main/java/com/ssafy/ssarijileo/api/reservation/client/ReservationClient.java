@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ssafy.ssarijileo.api.reservation.dto.ReservationDto;
 
-@FeignClient(name = "reservation-client", url = "localhost:8070/api/v1/reservation")
+@FeignClient(name = "reservation-client", url = "session:8070/api/v1/reservation")
 public interface ReservationClient {
 
 	@GetMapping("/{sessionId}")
