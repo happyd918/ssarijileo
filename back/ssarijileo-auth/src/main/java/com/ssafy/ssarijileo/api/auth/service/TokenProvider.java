@@ -27,7 +27,7 @@ import java.util.Date;
 @Slf4j
 public class TokenProvider implements InitializingBean {
     private final String secret;
-    private final long tokenValidityInMilliseconds;     // 30 min
+    private final long tokenValidityInMilliseconds;     // 1 hour
     private final RedisService redisService;
     private Key key;
 

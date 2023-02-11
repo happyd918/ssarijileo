@@ -1,9 +1,6 @@
 package com.ssafy.ssarijileo.api.singing.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -26,6 +23,17 @@ public class SingingDto {
 	// // 점수
 	// int score;
 
-	// 총부른시간
-	String totalSingingTime;
+	// 부른시간
+	String SingingTime;
+
+	// 예약, 취소 구분
+	String state;
+
+	@Builder
+	public SingingDto(String userId, Long songId, String state){
+		this.userId = userId;
+		this.songId = songId;
+		this.state = state;
+	}
+
 }

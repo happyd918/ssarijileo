@@ -1,5 +1,6 @@
 package com.ssafy.ssarijileo.api.singing.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.ssarijileo.api.profile.entitiy.Profile;
@@ -13,6 +14,7 @@ import com.ssafy.ssarijileo.api.song.repository.SongJpaRepository;
 
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SingingServiceImpl implements SingingService{
@@ -25,6 +27,7 @@ public class SingingServiceImpl implements SingingService{
 	public void insertSinging(SingingDto singingDto) {
 		Profile profile = profileJpaRepository.findById(singingDto.getUserId()).orElseThrow(NotFoundException::new);
 		Song song = songJpaRepository.findById(singingDto.getSongId()).orElseThrow(NotFoundException::new);
+		singingDto.setSingingTime(songJpaRepository.findTimeBySongId(singingDto.getSongId()));
 		Singing singing = Singing.builder().singingDto(singingDto).profile(profile).song(song).build();
 		singingJpaRepository.save(singing);
 	}

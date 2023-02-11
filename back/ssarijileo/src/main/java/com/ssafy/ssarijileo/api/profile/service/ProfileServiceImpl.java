@@ -68,10 +68,8 @@ public class ProfileServiceImpl implements ProfileService{
 	@Override
 	public boolean checkNickname(String nickname) {
 		Profile profile = new Profile();
-		// 비었다면 이름 변경 가능 -> true
+		// 빈 프로필과 동일하다면 이름이 중복되지 않았음 -> true
 		Profile profile2 = profileJpaRepository.findByNickname(nickname).orElse(profile);
-		log.info("profile equals = {}", profile.equals(profile2));
-		log.info("profile equals = {}", profile2.getNickname());
 		return profile.equals(profile2);
 	}
 }

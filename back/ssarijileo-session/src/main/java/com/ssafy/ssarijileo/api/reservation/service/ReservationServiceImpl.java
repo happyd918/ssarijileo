@@ -3,6 +3,8 @@ package com.ssafy.ssarijileo.api.reservation.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ssafy.ssarijileo.api.singing.client.SingingClient;
+import com.ssafy.ssarijileo.api.singing.dto.SingingDto;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.ssarijileo.api.reservation.dto.ReservationDto;
@@ -16,6 +18,7 @@ import lombok.AllArgsConstructor;
 public class ReservationServiceImpl implements ReservationService {
 
 	private final ReservationRepository reservationRepository;
+	private final SingingClient singingClient;
 
 	@Override
 	public List<ReservationDto> findReservationBySessionId(String sessionId) {
@@ -33,6 +36,9 @@ public class ReservationServiceImpl implements ReservationService {
 			NotFoundException::new);
 		list.add(reservationDto);
 		reservationRepository.set(reservationDto.getSessionId(), list);
+
+		SingingDto singingDto = SingingDto.builder().userId(reservationDto.getUserId()).songId(reservationDto.getSongId()).state("I").build();
+		singingClient.insertSinging(singingDto);
 	}
 
 	@Override
@@ -41,5 +47,8 @@ public class ReservationServiceImpl implements ReservationService {
 			NotFoundException::new);
 		list.add(reservationDto);
 		reservationRepository.set(reservationDto.getSessionId(), list);
+
+		SingingDto singingDto = SingingDto.builder().userId(reservationDto.getUserId()).songId(reservationDto.getSongId()).state("C").build();
+		singingClient.insertSinging(singingDto);
 	}
 }

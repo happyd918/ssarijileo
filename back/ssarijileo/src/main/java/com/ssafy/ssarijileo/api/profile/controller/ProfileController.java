@@ -3,15 +3,7 @@ package com.ssafy.ssarijileo.api.profile.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.ServletServerHttpRequest;
 
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ssafy.ssarijileo.api.profile.dto.ProfileDto;
 import com.ssafy.ssarijileo.api.profile.dto.ProfileInfoDto;
@@ -84,8 +76,8 @@ public class ProfileController {
 		profileService.updateProfile(profileInfoDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
-	@GetMapping("/nickname")
-	public ResponseEntity<Boolean> checkNickname(@RequestBody String nickname) {
+	@GetMapping("/check/{nickname:.+}")
+	public ResponseEntity<Boolean> checkNickname(@PathVariable String nickname) {
 		return ResponseEntity.status(200).body(profileService.checkNickname(nickname));
 	}
 	@PostMapping("/image")

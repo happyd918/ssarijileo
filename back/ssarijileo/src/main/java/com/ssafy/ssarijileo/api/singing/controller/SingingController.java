@@ -40,8 +40,7 @@ public class SingingController {
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@PostMapping
-	public ResponseEntity<? extends BaseResponseBody> insertSinging(@RequestHeader String userId, @RequestBody SingingDto singingDto) {
-		singingDto.setUserId(userId);
+	public ResponseEntity<? extends BaseResponseBody> insertSinging(@RequestBody SingingDto singingDto) {
 		singingService.insertSinging(singingDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
