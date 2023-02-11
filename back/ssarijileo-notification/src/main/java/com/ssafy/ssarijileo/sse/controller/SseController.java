@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/v1/sse", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+@RequestMapping( "/api/v1/sse")
 public class SseController {
 
 	private final SseService sseService;
@@ -33,7 +33,7 @@ public class SseController {
 	 * @param userId
 	 * @return
 	 */
-	@GetMapping("/{userId}")
+	@GetMapping(value = "/{userId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public SseEmitter connection(@PathVariable String userId) {
 		System.out.println("sse : " + userId);
 		return sseService.connection(userId);
