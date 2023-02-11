@@ -9,6 +9,8 @@ public interface ProfileService {
 
 	SseEmitter connection(String userId);
 
+	String findIdByNickname(String nickname);
+
 	void insertProfile(ProfileDto profileDto);
 
 	ProfileInfoDto findProfileById(String userId);
