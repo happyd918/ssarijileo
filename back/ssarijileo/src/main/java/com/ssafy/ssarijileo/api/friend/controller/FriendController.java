@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssarijileo.api.friend.dto.FriendDto;
 import com.ssafy.ssarijileo.api.friend.dto.FriendInviteDto;
+import com.ssafy.ssarijileo.api.friend.dto.FriendResponseDto;
 import com.ssafy.ssarijileo.api.friend.dto.FriendUpdateDto;
 import com.ssafy.ssarijileo.api.friend.dto.MyFriendDto;
 import com.ssafy.ssarijileo.api.friend.service.FriendService;
@@ -33,6 +34,30 @@ import lombok.RequiredArgsConstructor;
 public class FriendController {
 
 	private final FriendService friendService;
+
+	/**
+	 * @title 친구 찾기 목록
+	 * @param nickname
+	 * @return
+	 */
+	@ApiOperation(
+		value = "친구 찾기 목록",
+		notes = "사용자 닉네임을 통해 친구가 아닌 사용자들의 목록을 조회한다."
+	)
+	@ApiImplicitParam(
+		name = "nickname",
+		value = "사용자 닉네임"
+	)
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "성공"),
+		@ApiResponse(code = 401, message = "인증 실패"),
+		@ApiResponse(code = 404, message = "친구 없음"),
+		@ApiResponse(code = 500, message = "서버 오류")
+	})
+	@GetMapping("/{nickname}")
+	public ResponseEntity<List<FriendResponseDto>> findAllFriend(@PathVariable String nickname) {
+		return ResponseEntity.status(200).body(friendService.findAllFriend(nickname));
+	}
 
 	/**
 	 * @title 내 친구 목록

@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/v1/sse", produces = "text/event-stream")
+@RequestMapping(value = "/api/v1/sse", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 public class SseController {
 
 	private final SseService sseService;

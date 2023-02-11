@@ -12,6 +12,7 @@ import com.ssafy.ssarijileo.api.friend.client.FriendClient;
 import com.ssafy.ssarijileo.api.friend.dto.FriendInviteDto;
 import com.ssafy.ssarijileo.api.friend.dto.FriendInviteEvent;
 import com.ssafy.ssarijileo.api.friend.dto.FriendRequestEvent;
+import com.ssafy.ssarijileo.api.friend.dto.FriendResponseDto;
 import com.ssafy.ssarijileo.api.profile.entitiy.Profile;
 import com.ssafy.ssarijileo.api.profile.repository.ProfileJpaRepository;
 import com.ssafy.ssarijileo.common.exception.NotFoundException;
@@ -35,6 +36,11 @@ public class FriendServiceImpl implements FriendService {
 	private final ProfileJpaRepository profileJpaRepository;
 
 	private final FriendClient friendClient;
+
+	@Override
+	public List<FriendResponseDto> findAllFriend(String nickname) {
+		return friendRepository.findAllFriend(nickname).orElseThrow(NotFoundException::new);
+	}
 
 	@Override
 	public List<MyFriendDto> findFriendByNickname(String nickname) {
