@@ -1,5 +1,6 @@
 package com.ssafy.ssarijileo.api.profile.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.ServletServerHttpRequest;
 
@@ -50,7 +51,7 @@ public class ProfileController {
 		@ApiResponse(code = 404, message = "정보 없음"),
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
-	@GetMapping(value = "/sse", produces = "text/event-stream")
+	@GetMapping(value = "/sse", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public SseEmitter insertProfile(@RequestHeader String userId) {
 		return profileService.connection(userId);
 	}

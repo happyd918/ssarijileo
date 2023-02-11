@@ -10,6 +10,6 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @FeignClient(name = "profile-client", url = "notification:8060/api/v1/sse")
 public interface ProfileClient {
 
-	@GetMapping(value = "/{userId}", produces = "text/event-stream")
+	@GetMapping(value = "/{userId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	SseEmitter connection(@PathVariable String userId);
 }
