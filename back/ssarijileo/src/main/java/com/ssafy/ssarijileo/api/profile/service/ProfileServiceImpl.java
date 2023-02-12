@@ -3,19 +3,15 @@ package com.ssafy.ssarijileo.api.profile.service;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import com.ssafy.ssarijileo.api.profile.client.ProfileClient;
 import com.ssafy.ssarijileo.api.profile.dto.ProfileDto;
 import com.ssafy.ssarijileo.api.profile.dto.ProfileInfoDto;
 import com.ssafy.ssarijileo.api.profile.entitiy.Profile;
 import com.ssafy.ssarijileo.api.profile.repository.ProfileJpaRepository;
 import com.ssafy.ssarijileo.api.songsetting.entity.SongSetting;
 import com.ssafy.ssarijileo.api.songsetting.repository.SongSettingJpaRepository;
-import com.ssafy.ssarijileo.api.songsetting.service.SongSettingService;
 import com.ssafy.ssarijileo.common.exception.NotFoundException;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,17 +23,6 @@ public class ProfileServiceImpl implements ProfileService {
 
 	private final ProfileJpaRepository profileJpaRepository;
 	private final SongSettingJpaRepository songSettingJpaRepository;
-
-	private final ProfileClient profileClient;
-
-	@Override
-	public SseEmitter connection(String userId) {
-		// 알림을 위한 SSE 연결
-		System.out.println("rep : " + userId);
-		System.out.println(profileClient.connection(userId));
-		return null;
-		// return profileClient.connection(userId);
-	}
 
 	@Override
 	public String findIdByNickname(String nickname) {
@@ -87,8 +72,10 @@ public class ProfileServiceImpl implements ProfileService {
 	@Override
 	public boolean checkNickname(String nickname) {
 		Profile profile = new Profile();
-		// 빈 프로필과 동일하다면 이름이 중복되지 않았음 -> true
+		// 비었다면 이름 변경 가능 -> true
 		Profile profile2 = profileJpaRepository.findByNickname(nickname).orElse(profile);
+		log.info("profile equals = {}", profile.equals(profile2));
+		log.info("profile equals = {}", profile2.getNickname());
 		return profile.equals(profile2);
 	}
 }

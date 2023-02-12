@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.kafka.event;
+package com.ssafy.ssarijileo.api.friend.dto;
 
 import com.ssafy.ssarijileo.common.model.AlarmUser;
 

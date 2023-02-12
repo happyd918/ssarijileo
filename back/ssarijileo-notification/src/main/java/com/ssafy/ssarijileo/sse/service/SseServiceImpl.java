@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.ssafy.ssarijileo.common.exception.AlarmException;
-import com.ssafy.ssarijileo.kafka.event.FriendInviteEvent;
-import com.ssafy.ssarijileo.kafka.event.FriendRequestEvent;
+import com.ssafy.ssarijileo.api.friend.dto.FriendInviteEvent;
+import com.ssafy.ssarijileo.api.friend.dto.FriendRequestEvent;
 import com.ssafy.ssarijileo.sse.repository.SseRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -17,8 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class SseServiceImpl implements SseService {
-
-	private final static String ALARM_NAME = "alarm";
 
 	private final SseRepository sseRepository;
 
@@ -34,7 +32,7 @@ public class SseServiceImpl implements SseService {
 		try {
 			log.info(System.currentTimeMillis() + " send to " + userId);
 			emitter.send(SseEmitter.event()
-				.name(ALARM_NAME)
+				.name("sse connection")
 				.data("connect completed"));
 		} catch (IOException exception) {
 			throw new AlarmException();
