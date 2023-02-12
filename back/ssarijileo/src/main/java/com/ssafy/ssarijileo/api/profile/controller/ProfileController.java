@@ -107,8 +107,8 @@ public class ProfileController {
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 
-	@GetMapping("/nickname")
-	public ResponseEntity<Boolean> checkNickname(@RequestBody String nickname) {
+	@GetMapping("/check/{nickname}")
+	public ResponseEntity<Boolean> checkNickname(@PathVariable String nickname) {
 		return ResponseEntity.status(200).body(profileService.checkNickname(nickname));
 	}
 

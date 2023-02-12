@@ -70,7 +70,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
             profileDto = new ProfileDto(
                 String.valueOf(user.getUserId())
-                , attributes.get("nickname") + "#" + userDto.getSocialId().substring(2, 6)
+                , attributes.get("nickname") + "_" + userDto.getSocialId().substring(2, 6)
                 , String.valueOf(attributes.get("image"))
             );
 
