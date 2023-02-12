@@ -27,11 +27,11 @@ public class SseController {
 	 */
 	@GetMapping(value = "/{nickname}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public SseEmitter connection(@PathVariable String nickname) {
-		System.out.println("sse nickname : " + nickname);
+		System.out.println("sse connect nickname : " + nickname);
 
 		String userId = friendClient.findIdByNickname(nickname);
 
-		System.out.println("sse userId : " + userId);
+		System.out.println("sse connect userId : " + userId);
 		return sseService.connection(userId);
 	}
 }

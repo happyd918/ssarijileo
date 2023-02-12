@@ -25,7 +25,6 @@ public class FriendController {
 	 */
 	@PostMapping("/request")
 	public ResponseEntity<? extends BaseResponseBody> requestFriend(@RequestBody FriendDto friendDto) {
-		System.out.println("request");
 		friendService.requestFriend(friendDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
@@ -36,7 +35,6 @@ public class FriendController {
 	 */
 	@PostMapping("/invite")
 	public ResponseEntity<? extends BaseResponseBody> inviteFriend(@RequestBody FriendDto friendDto) {
-		System.out.println("invite");
 		friendService.inviteFriend(friendDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}

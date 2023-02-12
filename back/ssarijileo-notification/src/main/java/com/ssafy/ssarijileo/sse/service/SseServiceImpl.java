@@ -1,6 +1,8 @@
 package com.ssafy.ssarijileo.sse.service;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -29,36 +31,40 @@ public class SseServiceImpl implements SseService {
 		emitter.onCompletion(() -> sseRepository.remove(userId));
 		emitter.onTimeout(() -> sseRepository.remove(userId));
 
+		System.out.println(userId + "님의 emitter" + emitter);
 		try {
 			log.info(System.currentTimeMillis() + " send to " + userId);
 			emitter.send(SseEmitter.event()
-				.id(userId)
-				.name("sse connection")
+				// .id(userId)
+				// .name("sse connection")
 				.data("connect completed"));
+			System.out.println("sse send 완료");
 		} catch (IOException exception) {
+			System.out.println("sse error : " + exception.getMessage());
 			throw new AlarmException();
 		}
 
-		System.out.println(userId + "님의 emitter" + emitter);
 		return emitter;
 	}
 
 	@Override
 	public void sendFriendRequest(FriendRequestEvent event) {
 		System.out.println(event.getUser().getFromUserId()+"님이 "+event.getUser().getToUserId()+"님에게 친구 요청");
+
 		sseRepository.get(event.getUser().getToUserId()).ifPresentOrElse(it -> {
 				try {
-					System.out.println("친구 요청 in try");
 					it.send(SseEmitter.event()
-						.id(event.getUser().getToUserId())
-						.name("friend request")
+						// .id(event.getUser().getToUserId())
+						// .name("friend request")
 						.data(event));
+					System.out.println("request send 완료");
 				} catch (IOException exception) {
+					System.out.println("request exception : " + exception.getMessage());
 					sseRepository.remove(event.getUser().getToUserId());
 					throw new AlarmException("친구요청 알림 전송 중 오류가 발생했습니다.");
 				}
 			},
-			() -> log.info("No friend invite emitter founded")
+			() -> log.info("No friend request emitter founded")
 		);
 	}
 
@@ -67,17 +73,18 @@ public class SseServiceImpl implements SseService {
 		System.out.println(event.getUser().getFromUserId()+"님이 "+event.getUser().getToUserId()+"님에게 친구 초대");
 		sseRepository.get(event.getUser().getToUserId()).ifPresentOrElse(it -> {
 				try {
-					System.out.println("친구 초대 in try");
 					it.send(SseEmitter.event()
-						.id(event.getUser().getToUserId())
-						.name("friend invite")
+						// .id(event.getUser().getToUserId())
+						// .name("friend invite")
 						.data(event));
+					System.out.println("invite send 완료");
 				} catch (IOException exception) {
+					System.out.println("invite exception : " + exception.getMessage());
 					sseRepository.remove(event.getUser().getToUserId());
 					throw new AlarmException("친구초대 알림 전송 중 오류가 발생했습니다.");
 				}
 			},
-			() -> log.info("No friend request emitter founded")
+			() -> log.info("No friend invite emitter founded")
 		);
 	}
 }

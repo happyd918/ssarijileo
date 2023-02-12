@@ -28,7 +28,6 @@ public class FriendServiceImpl implements FriendService{
 			.user(user).fromUserNickname(friendDto.getFromUserNickname())
 			.friendId(friendDto.getFriendId()).build();
 
-		System.out.println("req : " + user.getToUserId());
 		sseService.sendFriendRequest(event);
 	}
 
@@ -41,7 +40,6 @@ public class FriendServiceImpl implements FriendService{
 			.user(user).fromUserNickname(friendDto.getFromUserNickname())
 			.sessionId(friendDto.getSessionId()).build();
 
-		System.out.println("inv : " + user.getToUserId());
 		sseService.sendFriendInvite(event);
 	}
 }
