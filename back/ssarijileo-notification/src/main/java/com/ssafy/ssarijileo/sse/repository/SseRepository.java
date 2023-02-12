@@ -17,17 +17,20 @@ public class SseRepository {
 
 	public SseEmitter save(String id, SseEmitter emitter) {
 		emitterMap.put(id, emitter);
+		System.out.println("repository save : "+emitterMap.size());
 		log.info("EmitterRepository save : {}", id);
 		return emitter;
 	}
 
 	public Optional<SseEmitter> get(String id) {
 		log.info("EmitterRepository get : {}", id);
+		System.out.println("repository get : "+emitterMap.size());
 		return Optional.ofNullable(emitterMap.get(id));
 	}
 
 	public void remove(String id) {
 		log.info("EmitterRepository remove : {}", id);
+		System.out.println("repository remove : "+emitterMap.size());
 		emitterMap.remove(id);
 	}
 }

@@ -32,20 +32,23 @@ public class SseServiceImpl implements SseService {
 		try {
 			log.info(System.currentTimeMillis() + " send to " + userId);
 			emitter.send(SseEmitter.event()
+				.id(userId)
 				.name("sse connection")
 				.data("connect completed"));
 		} catch (IOException exception) {
 			throw new AlarmException();
 		}
 
-		System.out.println(emitter);
+		System.out.println(userId + "님의 emitter" + emitter);
 		return emitter;
 	}
 
 	@Override
 	public void sendFriendRequest(FriendRequestEvent event) {
+		System.out.println(event.getUser().getFromUserId()+"님이 "+event.getUser().getToUserId()+"님에게 친구 요청");
 		sseRepository.get(event.getUser().getToUserId()).ifPresentOrElse(it -> {
 				try {
+					System.out.println("친구 요청 in try");
 					it.send(SseEmitter.event()
 						.id(event.getUser().getToUserId())
 						.name("friend request")
@@ -61,8 +64,10 @@ public class SseServiceImpl implements SseService {
 
 	@Override
 	public void sendFriendInvite(FriendInviteEvent event) {
+		System.out.println(event.getUser().getFromUserId()+"님이 "+event.getUser().getToUserId()+"님에게 친구 초대");
 		sseRepository.get(event.getUser().getToUserId()).ifPresentOrElse(it -> {
 				try {
+					System.out.println("친구 초대 in try");
 					it.send(SseEmitter.event()
 						.id(event.getUser().getToUserId())
 						.name("friend invite")
