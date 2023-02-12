@@ -1,10 +1,6 @@
 package com.ssafy.ssarijileo.api.profile.controller;
 
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.server.ServletServerHttpRequest;
-
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-import org.springframework.web.bind.annotation.*;
 
 import com.ssafy.ssarijileo.api.profile.dto.ProfileDto;
 import com.ssafy.ssarijileo.api.profile.dto.ProfileInfoDto;
@@ -37,26 +31,6 @@ import lombok.extern.slf4j.Slf4j;
 public class ProfileController {
 
 	private final ProfileService profileService;
-
-	// /**
-	//  * @title SSE 연결
-	//  * @param userId
-	//  */
-	// @ApiOperation(
-	// 	value = "SSE 연결",
-	// 	notes = "알림 전송을 위해 SSE 연결한다."
-	// )
-	// @ApiResponses({
-	// 	@ApiResponse(code = 200, message = "성공"),
-	// 	@ApiResponse(code = 401, message = "인증 실패"),
-	// 	@ApiResponse(code = 404, message = "정보 없음"),
-	// 	@ApiResponse(code = 500, message = "서버 오류")
-	// })
-	// // @GetMapping("/sse")
-	// @GetMapping(value = "/sse", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-	// public SseEmitter insertProfile(@RequestHeader String userId) {
-	// 	return profileService.connection(userId);
-	// }
 
 	/**
 	 * @title PK 조회
@@ -126,15 +100,18 @@ public class ProfileController {
 	public ResponseEntity<ProfileInfoDto> findProfileById(@RequestHeader String userId) {
 		return ResponseEntity.status(200).body(profileService.findProfileById(userId));
 	}
+
 	@PutMapping
 	public ResponseEntity<? extends BaseResponseBody> updateProfile(@RequestBody ProfileInfoDto profileInfoDto) {
 		profileService.updateProfile(profileInfoDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
-	@GetMapping("/check/{nickname:.+}")
-	public ResponseEntity<Boolean> checkNickname(@PathVariable String nickname) {
+
+	@GetMapping("/nickname")
+	public ResponseEntity<Boolean> checkNickname(@RequestBody String nickname) {
 		return ResponseEntity.status(200).body(profileService.checkNickname(nickname));
 	}
+
 	@PostMapping("/image")
 	public ResponseEntity<? extends BaseResponseBody> updateImage(@RequestBody ProfileDto profileDto) {
 		log.info("image={}", profileDto.getImage());

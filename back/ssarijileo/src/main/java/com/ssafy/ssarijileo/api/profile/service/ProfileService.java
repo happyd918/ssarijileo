@@ -7,8 +7,6 @@ import com.ssafy.ssarijileo.api.profile.dto.ProfileInfoDto;
 
 public interface ProfileService {
 
-	SseEmitter connection(String userId);
-
 	String findIdByNickname(String nickname);
 
 	void insertProfile(ProfileDto profileDto);

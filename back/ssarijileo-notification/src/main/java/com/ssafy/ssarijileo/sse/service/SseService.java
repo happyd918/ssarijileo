@@ -2,8 +2,8 @@ package com.ssafy.ssarijileo.sse.service;
 
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import com.ssafy.ssarijileo.kafka.event.FriendInviteEvent;
-import com.ssafy.ssarijileo.kafka.event.FriendRequestEvent;
+import com.ssafy.ssarijileo.api.friend.dto.FriendInviteEvent;
+import com.ssafy.ssarijileo.api.friend.dto.FriendRequestEvent;
 
 public interface SseService {
 
