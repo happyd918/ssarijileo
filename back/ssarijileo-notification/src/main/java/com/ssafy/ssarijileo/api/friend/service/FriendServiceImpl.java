@@ -1,5 +1,9 @@
 package com.ssafy.ssarijileo.api.friend.service;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Service;
 
 import com.ssafy.ssarijileo.api.friend.client.FriendClient;
@@ -20,7 +24,7 @@ public class FriendServiceImpl implements FriendService{
 	private final SseService sseService;
 
 	@Override
-	public void requestFriend(FriendDto friendDto) {
+	public void requestFriend(FriendDto friendDto) throws IOException {
 		String fromUserId = friendClient.findIdByNickname(friendDto.getFromUserNickname());
 		String toUserId = friendClient.findIdByNickname(friendDto.getToUserNickname());
 		AlarmUser user = new AlarmUser(fromUserId, toUserId);
@@ -32,7 +36,7 @@ public class FriendServiceImpl implements FriendService{
 	}
 
 	@Override
-	public void inviteFriend(FriendDto friendDto) {
+	public void inviteFriend(FriendDto friendDto) throws IOException {
 		String fromUserId = friendClient.findIdByNickname(friendDto.getFromUserNickname());
 		String toUserId = friendClient.findIdByNickname(friendDto.getToUserNickname());
 		AlarmUser user = new AlarmUser(fromUserId, toUserId);
