@@ -5,6 +5,9 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import com.ssafy.ssarijileo.common.redis.RedisBase;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.ssarijileo.api.recording.entity.Recording;
@@ -20,21 +23,33 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 @Transactional
+@Slf4j
 public class SingingContestServiceImpl implements SingingContestService{
 
 	private final SingingContestJpaRepository singingContestJpaRepository;
 	private final RecordingJpaRepository recordingJpaRepository;
+	private final LikeService likeService;
 
 	@Override
 	public List<SingingContestResponseDto> findAllSingingContest() {
-		return singingContestJpaRepository.findByStatus("V").orElseThrow(NumberFormatException::new)
-			.stream().map(SingingContest::toDto).collect(Collectors.toList());
+		List<SingingContestResponseDto> list = singingContestJpaRepository.findByStatus("V").orElseThrow(NumberFormatException::new)
+				.stream().map(SingingContest::toDto).collect(Collectors.toList());
+
+		for (SingingContestResponseDto dto : list) {
+			dto.setLikeCount(likeService.getLikeCount(dto.getSingingContestId()));
+		}
+		return list;
 	}
 
 	@Override
 	public List<SingingContestResponseDto> findSingingContestByUserId(String userId) {
-		return singingContestJpaRepository.findByRecording_Profile_ProfileIdAndStatus(userId, "V").orElseThrow(NumberFormatException::new)
-			.stream().map(SingingContest::toDto).collect(Collectors.toList());
+		List<SingingContestResponseDto> list = singingContestJpaRepository.findByRecording_Profile_ProfileIdAndStatus(userId, "V").orElseThrow(NumberFormatException::new)
+				.stream().map(SingingContest::toDto).collect(Collectors.toList());
+
+		for (SingingContestResponseDto dto : list) {
+			dto.setLikeCount(likeService.getLikeCount(dto.getSingingContestId()));
+		}
+		return list;
 	}
 
 	@Override

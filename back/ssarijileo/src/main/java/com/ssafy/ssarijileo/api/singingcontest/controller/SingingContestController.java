@@ -2,15 +2,9 @@ package com.ssafy.ssarijileo.api.singingcontest.controller;
 
 import java.util.List;
 
+import com.ssafy.ssarijileo.api.singingcontest.service.LikeService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ssafy.ssarijileo.api.singingcontest.dto.SingingContestResponseDto;
 import com.ssafy.ssarijileo.api.singingcontest.dto.SingingContestUpdateDto;
@@ -31,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class SingingContestController {
 
 	private final SingingContestService singingContestService;
+	private final LikeService likeService;
 
 	/**
 	 * @title 노래자랑 목록
@@ -118,6 +113,38 @@ public class SingingContestController {
 	@PutMapping
 	ResponseEntity<? extends BaseResponseBody> updateSingingContest(@RequestBody SingingContestUpdateDto singingContestUpdateDto) {
 		singingContestService.updateSingingContest(singingContestUpdateDto);
+		return  ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+	}
+
+	@ApiOperation(
+			value = "노래자랑 좋아요",
+			notes = "노래자랑 게시물에 좋아요를 누른다."
+	)
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "정보 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	@PostMapping("/like")
+	ResponseEntity<? extends BaseResponseBody> insertLike(@RequestHeader String userId, Long singingContestId) {
+		likeService.like(userId, singingContestId);
+		return  ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+	}
+
+	@ApiOperation(
+			value = "노래자랑 좋아요 취소",
+			notes = "노래자랑 게시물에 좋아요를 취소한다."
+	)
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "정보 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	@DeleteMapping("/unlike")
+	ResponseEntity<? extends BaseResponseBody> deleteLike(@RequestHeader String userId, Long singingContestId) {
+		likeService.unlike(userId, singingContestId);
 		return  ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 }

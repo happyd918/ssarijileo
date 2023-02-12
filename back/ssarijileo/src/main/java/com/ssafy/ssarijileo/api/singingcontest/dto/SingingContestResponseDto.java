@@ -12,7 +12,9 @@ import com.ssafy.ssarijileo.api.recording.entity.Recording;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,4 +37,7 @@ public class SingingContestResponseDto {
 
 	// 등록 일시
 	String registerDate;
+
+	// 좋아요 갯수
+	Long likeCount;
 }
