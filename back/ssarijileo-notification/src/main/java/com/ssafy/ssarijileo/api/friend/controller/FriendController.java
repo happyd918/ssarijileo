@@ -1,9 +1,5 @@
 package com.ssafy.ssarijileo.api.friend.controller;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,9 +24,9 @@ public class FriendController {
 	 * @param friendDto
 	 */
 	@PostMapping("/request")
-	public void requestFriend(@RequestBody FriendDto friendDto) throws
-		IOException {
+	public ResponseEntity<? extends BaseResponseBody> requestFriend(@RequestBody FriendDto friendDto) {
 		friendService.requestFriend(friendDto);
+		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 
 	/**
@@ -38,8 +34,8 @@ public class FriendController {
 	 * @param friendDto
 	 */
 	@PostMapping("/invite")
-	public void inviteFriend(@RequestBody FriendDto friendDto) throws
-		IOException {
+	public ResponseEntity<? extends BaseResponseBody> inviteFriend(@RequestBody FriendDto friendDto) {
 		friendService.inviteFriend(friendDto);
+		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 }
