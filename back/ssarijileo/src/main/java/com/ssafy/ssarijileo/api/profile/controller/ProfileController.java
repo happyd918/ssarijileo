@@ -102,7 +102,8 @@ public class ProfileController {
 	}
 
 	@PutMapping
-	public ResponseEntity<? extends BaseResponseBody> updateProfile(@RequestBody ProfileInfoDto profileInfoDto) {
+	public ResponseEntity<? extends BaseResponseBody> updateProfile(@RequestHeader String userId, @RequestBody ProfileInfoDto profileInfoDto) {
+		profileInfoDto.setProfileId(userId);
 		profileService.updateProfile(profileInfoDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
@@ -114,7 +115,6 @@ public class ProfileController {
 
 	@PostMapping("/image")
 	public ResponseEntity<? extends BaseResponseBody> updateImage(@RequestBody ProfileDto profileDto) {
-		log.info("image={}", profileDto.getImage());
 		profileService.updateImage(profileDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}

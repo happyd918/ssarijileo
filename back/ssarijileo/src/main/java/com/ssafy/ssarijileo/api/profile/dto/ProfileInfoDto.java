@@ -2,12 +2,10 @@ package com.ssafy.ssarijileo.api.profile.dto;
 
 import com.ssafy.ssarijileo.api.songsetting.dto.SongSettingDto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProfileInfoDto {
