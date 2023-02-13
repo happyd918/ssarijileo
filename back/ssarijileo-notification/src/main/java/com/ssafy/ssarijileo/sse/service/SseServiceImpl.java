@@ -1,12 +1,14 @@
 package com.ssafy.ssarijileo.sse.service;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.io.Writer;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import org.springframework.web.util.ContentCachingResponseWrapper;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.ssarijileo.common.exception.AlarmException;
 import com.ssafy.ssarijileo.api.friend.dto.FriendInviteEvent;
 import com.ssafy.ssarijileo.api.friend.dto.FriendRequestEvent;
@@ -25,41 +27,36 @@ public class SseServiceImpl implements SseService {
 	private static final Long DEFAULT_TIMEOUT = 60L * 1000 * 60;
 
 	@Override
-	public SseEmitter connection(String userId) {
-		SseEmitter emitter = sseRepository.save(userId, new SseEmitter(DEFAULT_TIMEOUT));
+	public void connection(HttpServletResponse response, String userId) throws IOException {
+		System.out.println("connect HttpServletResponse : " + response);
 
-		emitter.onCompletion(() -> sseRepository.remove(userId));
-		emitter.onTimeout(() -> sseRepository.remove(userId));
+		response.setContentType("text/event-stream");
+		response.setCharacterEncoding("UTF-8");
 
-		System.out.println(userId + "님의 emitter" + emitter);
-		try {
-			log.info(System.currentTimeMillis() + " send to " + userId);
-			emitter.send(SseEmitter.event()
-				// .id(userId)
-				// .name("sse connection")
-				.data("connect completed"));
-			System.out.println("sse send 완료");
-		} catch (IOException exception) {
-			System.out.println("sse error : " + exception.getMessage());
-			throw new AlarmException();
-		}
+		sseRepository.save(userId, response);
 
-		return emitter;
+		Writer writer = response.getWriter();
+		writer.write("data: sse connection\n\n");
+		writer.flush();
+		writer.close();
 	}
 
 	@Override
-	public void sendFriendRequest(FriendRequestEvent event) {
-		System.out.println(event.getUser().getFromUserId()+"님이 "+event.getUser().getToUserId()+"님에게 친구 요청");
+	public void sendFriendRequest(FriendRequestEvent event) throws IOException {
+		System.out.println(event.getUser().getFromUserId() + "님이 " + event.getUser().getToUserId() + "님에게 친구 요청");
 
-		sseRepository.get(event.getUser().getToUserId()).ifPresentOrElse(it -> {
+		sseRepository.get(event.getUser().getToUserId()).ifPresentOrElse(response -> {
+				response.setContentType("text/event-stream");
+				response.setCharacterEncoding("UTF-8");
+				Writer writer = null;
 				try {
-					it.send(SseEmitter.event()
-						// .id(event.getUser().getToUserId())
-						// .name("friend request")
-						.data(event));
-					System.out.println("request send 완료");
-				} catch (IOException exception) {
-					System.out.println("request exception : " + exception.getMessage());
+					writer = response.getWriter();
+					ObjectMapper mapper = new ObjectMapper();
+					writer.write(mapper.writeValueAsString(event));
+					writer.flush();
+					writer.close();
+				} catch (IOException e) {
+					System.out.println("request exception : " + e.getMessage());
 					sseRepository.remove(event.getUser().getToUserId());
 					throw new AlarmException("친구요청 알림 전송 중 오류가 발생했습니다.");
 				}
@@ -69,22 +66,26 @@ public class SseServiceImpl implements SseService {
 	}
 
 	@Override
-	public void sendFriendInvite(FriendInviteEvent event) {
-		System.out.println(event.getUser().getFromUserId()+"님이 "+event.getUser().getToUserId()+"님에게 친구 초대");
-		sseRepository.get(event.getUser().getToUserId()).ifPresentOrElse(it -> {
+	public void sendFriendInvite(FriendInviteEvent event) throws IOException {
+		System.out.println(event.getUser().getFromUserId() + "님이 " + event.getUser().getToUserId() + "님에게 친구 초대");
+
+		sseRepository.get(event.getUser().getToUserId()).ifPresentOrElse(response -> {
+				response.setContentType("text/event-stream");
+				response.setCharacterEncoding("UTF-8");
+				Writer writer = null;
 				try {
-					it.send(SseEmitter.event()
-						// .id(event.getUser().getToUserId())
-						// .name("friend invite")
-						.data(event));
-					System.out.println("invite send 완료");
-				} catch (IOException exception) {
-					System.out.println("invite exception : " + exception.getMessage());
+					writer = response.getWriter();
+					ObjectMapper mapper = new ObjectMapper();
+					writer.write(mapper.writeValueAsString(event));
+					writer.flush();
+					writer.close();
+				} catch (IOException e) {
+					System.out.println("invite exception : " + e.getMessage());
 					sseRepository.remove(event.getUser().getToUserId());
-					throw new AlarmException("친구초대 알림 전송 중 오류가 발생했습니다.");
+					throw new AlarmException("친구 초대 알림 전송 중 오류가 발생했습니다.");
 				}
 			},
-			() -> log.info("No friend invite emitter founded")
+			() -> log.info("No invite request emitter founded")
 		);
 	}
 }
