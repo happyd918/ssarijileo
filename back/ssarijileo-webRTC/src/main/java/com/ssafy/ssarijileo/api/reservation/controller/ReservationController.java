@@ -18,10 +18,12 @@ import com.ssafy.ssarijileo.api.singing.dto.SingingDto;
 import com.ssafy.ssarijileo.common.model.BaseResponseBody;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/v1/reservation")
 @RequiredArgsConstructor
+@Slf4j
 public class ReservationController {
 
 	private final ReservationService reservationService;
@@ -64,13 +66,15 @@ public class ReservationController {
 	@PostMapping("/sing")
 	ResponseEntity<? extends BaseResponseBody> insertSing(@RequestHeader String userId, @RequestBody SingingDto singingDto) {
 		singingDto.setUserId(userId);
-
+		log.info("webRTC Insert");
+		log.info("userId={}, songId={}", singingDto.getUserId(), singingDto.getSongId());
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 
 	@DeleteMapping("/sing")
 	ResponseEntity<? extends BaseResponseBody> deleteSing(@RequestHeader String userId, @RequestBody SingingDto singingDto) {
-
+		log.info("webRTC Delete");
+		log.info("userId={}, songId={}, time={}", singingDto.getUserId(), singingDto.getSongId(), singingDto.getTime());
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 }
