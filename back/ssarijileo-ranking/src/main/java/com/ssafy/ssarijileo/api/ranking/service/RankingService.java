@@ -9,11 +9,11 @@ import java.util.List;
 
 public interface RankingService {
 
-    List<RankingDto> findDailyRanking();
+    List<RankingDto> findDailyRanking(String userId);
 
-    List<RankingDto> findWeeklyRanking();
+    List<RankingDto> findWeeklyRanking(String userId);
 
-    List<RankingDto> findMonthlyRanking();
+    List<RankingDto> findMonthlyRanking(String userId);
 
     List<RankingDto> findRanking(RankingType rankingType);
 }

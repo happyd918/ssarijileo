@@ -1,30 +1,36 @@
 package com.ssafy.ssarijileo.api.ranking.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Getter
 @Builder
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class RankingDto {
 
     // 순위
-    private final int ranking;
+    int ranking;
 
     // 노래 ID
-    private final Long songId;
+    Long songId;
 
     // 노래 제목
-    private final String title;
+    String title;
 
     // 가수
-    private final String singer;
+    String singer;
     
     // 앨범 제목
-    private final String album;
+    String album;
     
     // 앨범 이미지
-    private final String image;
+    String image;
+    
+    // 애창곡 여부
+    boolean isFavoriteSong;
+
+    public void updateLike(boolean isFavoriteSong) {
+        this.isFavoriteSong = isFavoriteSong;
+    }
 
 }
