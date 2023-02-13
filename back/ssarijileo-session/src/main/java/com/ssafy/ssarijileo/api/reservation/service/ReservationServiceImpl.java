@@ -51,16 +51,12 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public void insertSing(SingingDto singingDto) {
-		log.info("Session");
-		log.info("userId = {}, songId = {}", singingDto.getUserId(), singingDto.getSongId());
 		singingDto.setState("I");
 		singingClient.insertSinging(singingDto);
 	}
 
 	@Override
 	public void deleteSing(SingingDto singingDto) {
-		log.info("Session");
-		log.info("userId = {}, songId = {}, singingTime = {}", singingDto.getUserId(), singingDto.getSongId(), singingDto.getTime());
 		singingDto.setState("C");
 		LocalTime localTime = LocalTime.ofSecondOfDay(singingDto.getTime());
 		singingDto.setSingingTime(localTime.toString());

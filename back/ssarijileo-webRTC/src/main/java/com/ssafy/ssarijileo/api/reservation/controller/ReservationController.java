@@ -66,8 +66,6 @@ public class ReservationController {
 	@PostMapping("/sing")
 	ResponseEntity<? extends BaseResponseBody> insertSing(@RequestHeader String userId, @RequestBody SingingDto singingDto) {
 		singingDto.setUserId(userId);
-		log.info("webRTC Insert");
-		log.info("userId={}, songId={}", singingDto.getUserId(), singingDto.getSongId());
 		reservationService.insertSing(singingDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
@@ -75,8 +73,6 @@ public class ReservationController {
 	@DeleteMapping("/sing")
 	ResponseEntity<? extends BaseResponseBody> deleteSing(@RequestHeader String userId, @RequestBody SingingDto singingDto) {
 		singingDto.setUserId(userId);
-		log.info("webRTC Delete");
-		log.info("userId={}, songId={}, time={}", singingDto.getUserId(), singingDto.getSongId(), singingDto.getTime());
 		reservationService.deleteSing(singingDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}

@@ -83,14 +83,15 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 
             byte[] bytes = getErrorCode(errorCode).getBytes(StandardCharsets.UTF_8);
             DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
-
-            // if (errorCode == 500)
-            //     return exchange.getResponse().writeWith(Flux.just(buffer));
-            // else {
-            //     exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
-            //     return exchange.getResponse().writeWith(Flux.just(buffer));
-            // }
-            return exchange.getResponse().writeWith(Flux.just(buffer));
+            
+             // 토큰 null or 만료 시에 403 에러 발생
+             if (errorCode == 500)
+                 return exchange.getResponse().writeWith(Flux.just(buffer));
+             else {
+                 exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
+                 return exchange.getResponse().writeWith(Flux.just(buffer));
+             }
+//            return exchange.getResponse().writeWith(Flux.just(buffer));
         }
     }
 }
