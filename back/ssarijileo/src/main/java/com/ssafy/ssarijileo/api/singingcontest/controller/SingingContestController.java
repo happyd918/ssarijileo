@@ -2,6 +2,7 @@ package com.ssafy.ssarijileo.api.singingcontest.controller;
 
 import java.util.List;
 
+import com.ssafy.ssarijileo.api.singingcontest.dto.LikeDto;
 import com.ssafy.ssarijileo.api.singingcontest.service.LikeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,6 @@ import lombok.RequiredArgsConstructor;
 public class SingingContestController {
 
 	private final SingingContestService singingContestService;
-	private final LikeService likeService;
 
 	/**
 	 * @title 노래자랑 목록
@@ -127,24 +127,9 @@ public class SingingContestController {
 			@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@PostMapping("/like")
-	ResponseEntity<? extends BaseResponseBody> insertLike(@RequestHeader String userId, @PathVariable Long singingContestId) {
-		likeService.like(userId, singingContestId);
-		return  ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-	}
-
-	@ApiOperation(
-			value = "노래자랑 좋아요 취소",
-			notes = "노래자랑 게시물에 좋아요를 취소한다."
-	)
-	@ApiResponses({
-			@ApiResponse(code = 200, message = "성공"),
-			@ApiResponse(code = 401, message = "인증 실패"),
-			@ApiResponse(code = 404, message = "정보 없음"),
-			@ApiResponse(code = 500, message = "서버 오류")
-	})
-	@DeleteMapping("/like")
-	ResponseEntity<? extends BaseResponseBody> deleteLike(@RequestHeader String userId, @PathVariable Long singingContestId) {
-		likeService.unlike(userId, singingContestId);
+	ResponseEntity<? extends BaseResponseBody> setLike(@RequestHeader String userId, @RequestBody LikeDto likeDto) {
+		likeDto.setUserId(userId);
+		singingContestService.setLike(likeDto);
 		return  ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 }

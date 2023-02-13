@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import com.ssafy.ssarijileo.api.singingcontest.dto.LikeDto;
 import com.ssafy.ssarijileo.common.redis.RedisBase;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -68,5 +69,13 @@ public class SingingContestServiceImpl implements SingingContestService{
 		SingingContest singingContest = singingContestJpaRepository.findById(
 			singingContestUpdateDto.getSingingContestId()).orElseThrow(NotFoundException::new);
 		singingContest.updateStatus(singingContestUpdateDto.getStatus());
+	}
+
+	@Override
+	public void setLike(LikeDto likeDto) {
+		if (likeDto.getIsLike().equals("Y"))
+			likeService.like(likeDto.getUserId(), likeDto.getSingingContestId());
+		else
+			likeService.unlike(likeDto.getUserId(), likeDto.getSingingContestId());
 	}
 }
