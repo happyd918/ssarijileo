@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssarijileo.api.reservation.dto.ReservationDto;
 import com.ssafy.ssarijileo.api.reservation.service.ReservationService;
+import com.ssafy.ssarijileo.api.singing.dto.SingingDto;
 import com.ssafy.ssarijileo.common.model.BaseResponseBody;
 
 import lombok.RequiredArgsConstructor;
@@ -57,6 +58,19 @@ public class ReservationController {
 	ResponseEntity<? extends BaseResponseBody> deleteReservation(@RequestHeader String userId, @RequestBody ReservationDto reservationDto) {
 		reservationDto.setUserId(userId);
 		reservationService.deleteReservation(reservationDto);
+		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+	}
+
+	@PostMapping
+	ResponseEntity<? extends BaseResponseBody> insertSing(@RequestHeader String userId, @RequestBody SingingDto singingDto) {
+		singingDto.setUserId(userId);
+
+		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+	}
+
+	@DeleteMapping
+	ResponseEntity<? extends BaseResponseBody> deleteSing(@RequestHeader String userId, @RequestBody SingingDto singingDto) {
+
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 }

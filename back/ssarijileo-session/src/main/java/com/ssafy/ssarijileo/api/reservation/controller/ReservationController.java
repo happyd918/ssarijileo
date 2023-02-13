@@ -40,14 +40,12 @@ public class ReservationController {
 	}
 
 	@PostMapping("/sing")
-	void insertSing(@RequestHeader String userId, @RequestBody SingingDto singingDto) {
-		singingDto.setUserId(userId);
+	void insertSing(@RequestBody SingingDto singingDto) {
 		reservationService.insertSing(singingDto);
 	}
 
 	@DeleteMapping("/sing")
-	void deleteSing(@RequestHeader String userId, @RequestBody SingingDto singingDto) {
-		singingDto.setUserId(userId);
+	void deleteSing(@RequestBody SingingDto singingDto) {
 		reservationService.deleteSing(singingDto);
 	}
 }
