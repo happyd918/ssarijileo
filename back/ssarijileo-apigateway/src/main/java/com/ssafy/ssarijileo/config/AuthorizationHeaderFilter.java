@@ -37,11 +37,13 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         return (exchange, chain) -> {
             String token = exchange.getRequest().getHeaders().get("Authorization").get(0).substring(7);   // 헤더의 토큰 파싱 (Bearer 제거)
 
-            System.out.println(token);
+            System.out.println("header : " + exchange.getRequest().getHeaders());
+
+            System.out.println("token : " + token);
 
             String userId = jwtUtil.getUid(token);
 
-            System.out.println(userId);
+            System.out.println("userID : " + userId);
 
             addAuthorizationHeaders(exchange.getRequest(), userId);
             return chain.filter(exchange);
@@ -53,8 +55,8 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         request.mutate()
                 .header("userId", userId)
                 .build();
-        
-        System.out.println(request);
+
+        System.out.println("request : " + request);
     }
 
     // 토큰 검증 요청을 실행하는 도중 예외가 발생했을 때 예외처리하는 핸들러
