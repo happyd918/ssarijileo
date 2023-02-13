@@ -7,7 +7,7 @@ import com.ssafy.ssarijileo.api.singingcontest.dto.SingingContestUpdateDto;
 
 public interface SingingContestService {
 
-	List<SingingContestResponseDto> findAllSingingContest();
+	List<SingingContestResponseDto> findAllSingingContest(String userId);
 
 	List<SingingContestResponseDto> findSingingContestByUserId(String userId);
 

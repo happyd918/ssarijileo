@@ -50,7 +50,10 @@ public class SingingContest {
 
 	// Entity to Dto
 	public SingingContestResponseDto toDto() {
-		return new SingingContestResponseDto(singingContestId, recording.getProfile().getNickname(), recording.getSong().getTitle(), recording.getSong().getSinger(), recording.getFile(), registerDate, 0L);
+		return new SingingContestResponseDto(
+						singingContestId, recording.getProfile().getNickname()
+						, recording.getSong().getTitle(), recording.getSong().getSinger()
+						, recording.getFile(), registerDate, 0L, false);
 	}
 
 	public void updateStatus(String status) {

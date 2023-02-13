@@ -42,8 +42,8 @@ public class SingingContestController {
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@GetMapping
-	ResponseEntity<List<SingingContestResponseDto>> findAllSingingContest() {
-		return ResponseEntity.status(200).body(singingContestService.findAllSingingContest());
+	ResponseEntity<List<SingingContestResponseDto>> findAllSingingContest(@RequestHeader String userId) {
+		return ResponseEntity.status(200).body(singingContestService.findAllSingingContest(userId));
 	}
 
 	/**

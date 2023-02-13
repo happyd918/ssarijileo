@@ -40,4 +40,7 @@ public class SingingContestResponseDto {
 
 	// 좋아요 갯수
 	Long likeCount;
+
+	// 사용자 좋아요 여부
+	boolean isLike;
 }

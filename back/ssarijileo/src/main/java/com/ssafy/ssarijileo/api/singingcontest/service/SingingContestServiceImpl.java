@@ -31,12 +31,14 @@ public class SingingContestServiceImpl implements SingingContestService{
 	private final LikeService likeService;
 
 	@Override
-	public List<SingingContestResponseDto> findAllSingingContest() {
+	public List<SingingContestResponseDto> findAllSingingContest(String userId) {
 		List<SingingContestResponseDto> list = singingContestJpaRepository.findByStatus("V").orElseThrow(NumberFormatException::new)
 				.stream().map(SingingContest::toDto).collect(Collectors.toList());
 
 		for (SingingContestResponseDto dto : list) {
-			dto.setLikeCount(likeService.getLikeCount(dto.getSingingContestId()));
+			Long singingContestId = dto.getSingingContestId();
+			dto.setLikeCount(likeService.getLikeCount(singingContestId));
+			dto.setLike(likeService.hasLiked(userId, singingContestId));
 		}
 		return list;
 	}
@@ -47,7 +49,9 @@ public class SingingContestServiceImpl implements SingingContestService{
 				.stream().map(SingingContest::toDto).collect(Collectors.toList());
 
 		for (SingingContestResponseDto dto : list) {
-			dto.setLikeCount(likeService.getLikeCount(dto.getSingingContestId()));
+			Long singingContestId = dto.getSingingContestId();
+			dto.setLikeCount(likeService.getLikeCount(singingContestId));
+			dto.setLike(likeService.hasLiked(userId, singingContestId));
 		}
 		return list;
 	}
