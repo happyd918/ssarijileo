@@ -1,5 +1,6 @@
 package com.ssafy.ssarijileo.api.reservation.service;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +56,8 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public void deleteSing(SingingDto singingDto) {
 		singingDto.setState("C");
+		LocalTime localTime = LocalTime.ofSecondOfDay(singingDto.getTime());
+		singingDto.setSingingTime(localTime.toString());
 		singingClient.deleteSinging(singingDto);
 	}
 }

@@ -26,6 +26,9 @@ public class SingingDto {
 	// 부른시간
 	String SingingTime;
 
+	// 부른시간 (sec)
+	Long time;
+
 	// 예약, 취소 구분
 	String state;
 
