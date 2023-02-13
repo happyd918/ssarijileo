@@ -9,7 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AlarmUser {
+public class AlarmArgs {
+
+	// 타입
+	private String type;
 
 	// 보낸사람PK
 	private String fromUserId;

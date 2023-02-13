@@ -38,7 +38,7 @@ public class SseServiceImpl implements SseService {
 		try {
 			emitter.send(
 				SseEmitter.event()
-					.data("sse connection\n\n"));
+					.data("{\"args\": {\"type\": \"connection\"}}\n\n"));
 		} catch (Exception ex) {
 			emitter.completeWithError(ex);
 		}
@@ -48,16 +48,16 @@ public class SseServiceImpl implements SseService {
 
 	@Override
 	public void sendFriendRequest(FriendRequestEvent event) {
-		System.out.println(event.getUser().getFromUserId() + "님이 " + event.getUser().getToUserId() + "님에게 친구 요청");
+		System.out.println(event.getArgs().getFromUserId() + "님이 " + event.getArgs().getToUserId() + "님에게 친구 요청");
 
-		sseRepository.get(event.getUser().getToUserId()).ifPresentOrElse(it -> {
+		sseRepository.get(event.getArgs().getToUserId()).ifPresentOrElse(it -> {
 				try {
 					it.send(SseEmitter.event()
 						.data(event));
 					System.out.println("request send 완료");
 				} catch (IOException exception) {
 					System.out.println("request exception : " + exception.getMessage());
-					sseRepository.remove(event.getUser().getToUserId());
+					sseRepository.remove(event.getArgs().getToUserId());
 					throw new AlarmException("친구요청 알림 전송 중 오류가 발생했습니다.");
 				}
 			},
@@ -67,15 +67,15 @@ public class SseServiceImpl implements SseService {
 
 	@Override
 	public void sendFriendInvite(FriendInviteEvent event) {
-		System.out.println(event.getUser().getFromUserId() + "님이 " + event.getUser().getToUserId() + "님에게 친구 초대");
-		sseRepository.get(event.getUser().getToUserId()).ifPresentOrElse(it -> {
+		System.out.println(event.getArgs().getFromUserId() + "님이 " + event.getArgs().getToUserId() + "님에게 친구 초대");
+		sseRepository.get(event.getArgs().getToUserId()).ifPresentOrElse(it -> {
 				try {
 					it.send(SseEmitter.event()
 						.data(event));
 					System.out.println("invite send 완료");
 				} catch (IOException exception) {
 					System.out.println("invite exception : " + exception.getMessage());
-					sseRepository.remove(event.getUser().getToUserId());
+					sseRepository.remove(event.getArgs().getToUserId());
 					throw new AlarmException("친구초대 알림 전송 중 오류가 발생했습니다.");
 				}
 			},

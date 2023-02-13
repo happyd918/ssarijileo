@@ -1,6 +1,6 @@
 package com.ssafy.ssarijileo.api.friend.dto;
 
-import com.ssafy.ssarijileo.common.model.AlarmUser;
+import com.ssafy.ssarijileo.common.model.AlarmArgs;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Getter;
 @Builder
 public class FriendRequestEvent {
 
-	AlarmUser user;
+	AlarmArgs args;
 
 	// 보낸사람 닉네임
 	String fromUserNickname;

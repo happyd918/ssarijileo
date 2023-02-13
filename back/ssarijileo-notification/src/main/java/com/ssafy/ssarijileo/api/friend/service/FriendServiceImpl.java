@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.ssarijileo.api.friend.client.FriendClient;
 import com.ssafy.ssarijileo.api.friend.dto.FriendDto;
-import com.ssafy.ssarijileo.common.model.AlarmUser;
+import com.ssafy.ssarijileo.common.model.AlarmArgs;
 import com.ssafy.ssarijileo.api.friend.dto.FriendInviteEvent;
 import com.ssafy.ssarijileo.api.friend.dto.FriendRequestEvent;
 import com.ssafy.ssarijileo.sse.service.SseService;
@@ -23,9 +23,9 @@ public class FriendServiceImpl implements FriendService{
 	public void requestFriend(FriendDto friendDto) {
 		String fromUserId = friendClient.findIdByNickname(friendDto.getFromUserNickname());
 		String toUserId = friendClient.findIdByNickname(friendDto.getToUserNickname());
-		AlarmUser user = new AlarmUser(fromUserId, toUserId);
+		AlarmArgs args = new AlarmArgs("request", fromUserId, toUserId);
 		FriendRequestEvent event = FriendRequestEvent.builder()
-			.user(user).fromUserNickname(friendDto.getFromUserNickname())
+			.args(args).fromUserNickname(friendDto.getFromUserNickname())
 			.friendId(friendDto.getFriendId()).build();
 
 		sseService.sendFriendRequest(event);
@@ -35,9 +35,9 @@ public class FriendServiceImpl implements FriendService{
 	public void inviteFriend(FriendDto friendDto) {
 		String fromUserId = friendClient.findIdByNickname(friendDto.getFromUserNickname());
 		String toUserId = friendClient.findIdByNickname(friendDto.getToUserNickname());
-		AlarmUser user = new AlarmUser(fromUserId, toUserId);
+		AlarmArgs args = new AlarmArgs("invite", fromUserId, toUserId);
 		FriendInviteEvent event = FriendInviteEvent.builder()
-			.user(user).fromUserNickname(friendDto.getFromUserNickname())
+			.args(args).fromUserNickname(friendDto.getFromUserNickname())
 			.sessionId(friendDto.getSessionId()).build();
 
 		sseService.sendFriendInvite(event);
