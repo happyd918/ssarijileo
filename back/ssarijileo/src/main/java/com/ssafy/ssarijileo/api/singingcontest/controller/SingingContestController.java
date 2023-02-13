@@ -127,9 +127,8 @@ public class SingingContestController {
 			@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@PostMapping("/like")
-	ResponseEntity<? extends BaseResponseBody> setLike(@RequestHeader String userId, @RequestBody LikeDto likeDto) {
+	ResponseEntity<Long> setLike(@RequestHeader String userId, @RequestBody LikeDto likeDto) {
 		likeDto.setUserId(userId);
-		singingContestService.setLike(likeDto);
-		return  ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+		return  ResponseEntity.status(200).body(singingContestService.setLike(likeDto));
 	}
 }

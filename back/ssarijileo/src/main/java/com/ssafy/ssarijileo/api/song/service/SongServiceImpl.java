@@ -27,6 +27,7 @@ public class SongServiceImpl implements SongService {
 	private final SongJpaRepository songJpaRepository;
 	private final SongRepository songRepository;
 	private final FavoriteSongJpaRepository favoriteSongJpaRepository;
+	private final FavoriteSongService favoriteSongService;
 
 	@Override
 	public List<SongDto> findAllSong() {
@@ -53,5 +54,18 @@ public class SongServiceImpl implements SongService {
 		Song song = songJpaRepository.findById(favoriteSongDto.getSongId()).orElseThrow(NotFoundException::new);
 		FavoriteSong favoriteSong = FavoriteSong.builder().favoriteSongDto(favoriteSongDto).song(song).build();
 		favoriteSongJpaRepository.save(favoriteSong);
+
+		// 캐시
+		String userId = favoriteSongDto.getUserId();
+		Long songId = favoriteSongDto.getSongId();
+		String isLike = favoriteSongDto.getIsLike();
+		boolean subscribed = favoriteSongService.hasSubscribed(userId, songId);
+
+		// 교차 검증
+		if (isLike.equals("Y") && !subscribed) {
+			favoriteSongService.subscribe(userId, songId);
+		} else if (isLike.equals("N") && subscribed) {
+			favoriteSongService.unsubscribe(userId, songId);
+		}
 	}
 }
