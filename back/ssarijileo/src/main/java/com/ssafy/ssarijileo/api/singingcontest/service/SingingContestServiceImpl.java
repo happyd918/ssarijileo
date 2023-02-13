@@ -72,10 +72,12 @@ public class SingingContestServiceImpl implements SingingContestService{
 	}
 
 	@Override
-	public void setLike(LikeDto likeDto) {
+	public Long setLike(LikeDto likeDto) {
 		if (likeDto.getIsLike().equals("Y"))
 			likeService.like(likeDto.getUserId(), likeDto.getSingingContestId());
 		else
 			likeService.unlike(likeDto.getUserId(), likeDto.getSingingContestId());
+
+		return likeService.getLikeCount(likeDto.getSingingContestId());
 	}
 }

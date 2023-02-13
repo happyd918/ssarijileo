@@ -16,5 +16,5 @@ public interface SingingContestService {
 
 	void updateSingingContest(SingingContestUpdateDto singingContestUpdateDto);
 
-	void setLike(LikeDto likeDto);
+	Long setLike(LikeDto likeDto);
 }
