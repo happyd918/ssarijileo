@@ -61,14 +61,14 @@ public class ReservationController {
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 
-	@PostMapping
+	@PostMapping("/sing")
 	ResponseEntity<? extends BaseResponseBody> insertSing(@RequestHeader String userId, @RequestBody SingingDto singingDto) {
 		singingDto.setUserId(userId);
 
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/sing")
 	ResponseEntity<? extends BaseResponseBody> deleteSing(@RequestHeader String userId, @RequestBody SingingDto singingDto) {
 
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
