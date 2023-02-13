@@ -13,9 +13,11 @@ import com.ssafy.ssarijileo.api.reservation.repository.ReservationRepository;
 import com.ssafy.ssarijileo.common.exception.NotFoundException;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ReservationServiceImpl implements ReservationService {
 
 	private final ReservationRepository reservationRepository;
@@ -49,12 +51,16 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public void insertSing(SingingDto singingDto) {
+		log.info("Session");
+		log.info("userId = {}, songId = {}", singingDto.getUserId(), singingDto.getSongId());
 		singingDto.setState("I");
 		singingClient.insertSinging(singingDto);
 	}
 
 	@Override
 	public void deleteSing(SingingDto singingDto) {
+		log.info("Session");
+		log.info("userId = {}, songId = {}, singingTime = {}", singingDto.getUserId(), singingDto.getSongId(), singingDto.getTime());
 		singingDto.setState("C");
 		LocalTime localTime = LocalTime.ofSecondOfDay(singingDto.getTime());
 		singingDto.setSingingTime(localTime.toString());
