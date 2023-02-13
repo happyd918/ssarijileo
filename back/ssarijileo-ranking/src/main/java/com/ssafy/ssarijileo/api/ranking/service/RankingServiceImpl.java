@@ -9,16 +9,14 @@ import com.ssafy.ssarijileo.api.song.entity.Song;
 import com.ssafy.ssarijileo.api.song.repository.FavoriteSongJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
@@ -29,20 +27,48 @@ public class RankingServiceImpl implements RankingService {
 
     private final SingingJpaRepository singingJpaRepository;
     private final FavoriteSongJpaRepository favoriteSongJpaRepository;
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Override
-    public List<RankingDto> findDailyRanking() {
-        return findRanking(RankingType.DAY);
+    public List<RankingDto> findDailyRanking(String userId) {
+        List<RankingDto> list = findRanking(RankingType.DAY);
+
+        if (userId.isEmpty())
+            return list;
+
+        for (RankingDto dto : list) {
+            dto.updateLike(redisTemplate.opsForSet().isMember("subscribe:" + dto.getSongId(), userId));
+        }
+
+        return list;
     }
 
     @Override
-    public List<RankingDto> findWeeklyRanking() {
-        return findRanking(RankingType.WEEK);
+    public List<RankingDto> findWeeklyRanking(String userId) {
+        List<RankingDto> list = findRanking(RankingType.WEEK);
+
+        if (userId.isEmpty())
+            return list;
+
+        for (RankingDto dto : list) {
+            dto.updateLike(redisTemplate.opsForSet().isMember("subscribe:" + dto.getSongId(), userId));
+        }
+
+        return list;
     }
 
     @Override
-    public List<RankingDto> findMonthlyRanking() {
-        return findRanking(RankingType.MONTH);
+    public List<RankingDto> findMonthlyRanking(String userId) {
+        List<RankingDto> list = findRanking(RankingType.MONTH);
+
+        if (userId.isEmpty())
+            return list;
+
+        for (RankingDto dto : list) {
+            dto.updateLike(redisTemplate.opsForSet().isMember("subscribe:" + dto.getSongId(), userId));
+        }
+
+        return list;
     }
 
     @Override
@@ -62,8 +88,8 @@ public class RankingServiceImpl implements RankingService {
                 endDate = LocalDate.now().minusDays(1).format(dateFormat) + endTime;
                 break;
             case WEEK:
-                startDate = LocalDateTime.now().with(TemporalAdjusters.previous(DayOfWeek.MONDAY)).format(dateFormat) + startTime;
-                endDate = LocalDateTime.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY)).format(dateFormat) + endTime;
+                startDate = LocalDateTime.now().with(TemporalAdjusters.previous(DayOfWeek.SUNDAY)).minusDays(6).format(dateFormat) + startTime;
+                endDate = LocalDateTime.now().with(TemporalAdjusters.previous(DayOfWeek.SUNDAY)).format(dateFormat) + endTime;
                 break;
             case MONTH:
                 startDate = LocalDateTime.now().minusMonths(1).with(TemporalAdjusters.firstDayOfMonth()).format(dateFormat) + startTime;
