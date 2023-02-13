@@ -36,9 +36,6 @@ public class ReservationServiceImpl implements ReservationService {
 			NotFoundException::new);
 		list.add(reservationDto);
 		reservationRepository.set(reservationDto.getSessionId(), list);
-
-		SingingDto singingDto = SingingDto.builder().userId(reservationDto.getUserId()).songId(reservationDto.getSongId()).state("I").build();
-		singingClient.insertSinging(singingDto);
 	}
 
 	@Override
@@ -47,8 +44,17 @@ public class ReservationServiceImpl implements ReservationService {
 			NotFoundException::new);
 		list.add(reservationDto);
 		reservationRepository.set(reservationDto.getSessionId(), list);
+	}
 
-		SingingDto singingDto = SingingDto.builder().userId(reservationDto.getUserId()).songId(reservationDto.getSongId()).state("C").build();
+	@Override
+	public void insertSing(SingingDto singingDto) {
+		singingDto.setState("I");
 		singingClient.insertSinging(singingDto);
+	}
+
+	@Override
+	public void deleteSing(SingingDto singingDto) {
+		singingDto.setState("C");
+		singingClient.deleteSinging(singingDto);
 	}
 }

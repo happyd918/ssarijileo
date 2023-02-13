@@ -127,7 +127,7 @@ public class SingingContestController {
 			@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@PostMapping("/like")
-	ResponseEntity<? extends BaseResponseBody> insertLike(@RequestHeader String userId, Long singingContestId) {
+	ResponseEntity<? extends BaseResponseBody> insertLike(@RequestHeader String userId, @PathVariable Long singingContestId) {
 		likeService.like(userId, singingContestId);
 		return  ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
@@ -142,8 +142,8 @@ public class SingingContestController {
 			@ApiResponse(code = 404, message = "정보 없음"),
 			@ApiResponse(code = 500, message = "서버 오류")
 	})
-	@DeleteMapping("/unlike")
-	ResponseEntity<? extends BaseResponseBody> deleteLike(@RequestHeader String userId, Long singingContestId) {
+	@DeleteMapping("/like")
+	ResponseEntity<? extends BaseResponseBody> deleteLike(@RequestHeader String userId, @PathVariable Long singingContestId) {
 		likeService.unlike(userId, singingContestId);
 		return  ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}

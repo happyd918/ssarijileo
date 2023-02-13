@@ -1,6 +1,7 @@
 package com.ssafy.ssarijileo.api.singing.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -42,6 +43,11 @@ public class SingingController {
 	@PostMapping
 	public ResponseEntity<? extends BaseResponseBody> insertSinging(@RequestBody SingingDto singingDto) {
 		singingService.insertSinging(singingDto);
+		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+	}
+	@DeleteMapping
+	public ResponseEntity<? extends BaseResponseBody> deleteSinging(@RequestBody SingingDto singingDto) {
+		singingService.deleteSinging(singingDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 }

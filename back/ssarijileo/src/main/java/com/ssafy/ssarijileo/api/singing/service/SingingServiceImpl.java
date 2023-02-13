@@ -31,4 +31,12 @@ public class SingingServiceImpl implements SingingService{
 		Singing singing = Singing.builder().singingDto(singingDto).profile(profile).song(song).build();
 		singingJpaRepository.save(singing);
 	}
+
+	@Override
+	public void deleteSinging(SingingDto singingDto) {
+		Profile profile = profileJpaRepository.findById(singingDto.getUserId()).orElseThrow(NotFoundException::new);
+		Song song = songJpaRepository.findById(singingDto.getSongId()).orElseThrow(NotFoundException::new);
+		Singing singing = Singing.builder().singingDto(singingDto).profile(profile).song(song).build();
+		singingJpaRepository.save(singing);
+	}
 }
