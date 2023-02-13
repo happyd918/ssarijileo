@@ -8,8 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-//@FeignClient(name = "user-profile-client", url = "192.168.49.2:31000/api/v1/profile")
-@FeignClient(name = "user-profile-client", url = "localhost:8080/api/v1/profile")
+@FeignClient(name = "user-profile-client", url = "192.168.49.2:31000/api/v1/profile")
 public interface UserProfileClient {
     @PostMapping(produces = "application/json")
     ResponseEntity<? extends BaseResponseBody> insertProfile(@RequestBody ProfileDto profileDto);
