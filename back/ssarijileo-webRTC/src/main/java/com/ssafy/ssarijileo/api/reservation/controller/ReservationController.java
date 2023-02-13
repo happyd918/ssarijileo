@@ -74,6 +74,7 @@ public class ReservationController {
 
 	@DeleteMapping("/sing")
 	ResponseEntity<? extends BaseResponseBody> deleteSing(@RequestHeader String userId, @RequestBody SingingDto singingDto) {
+		singingDto.setUserId(userId);
 		log.info("webRTC Delete");
 		log.info("userId={}, songId={}, time={}", singingDto.getUserId(), singingDto.getSongId(), singingDto.getTime());
 		reservationService.deleteSing(singingDto);
