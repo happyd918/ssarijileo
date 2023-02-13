@@ -16,24 +16,27 @@ spring:
     name: gateway-service
   cloud:
     gateway:
-      default-filters:
-        - AuthorizationHeaderFilter
+#      default-filters:
+#        - AuthorizationHeaderFilter
       routes:
         - id: auth-service
-#          uri: lb://auth-service
           uri: http://localhost:8090
           predicates:
             - Path=/api/v1/user/**
+          filters:
+            - AuthorizationHeaderFilter
         - id: ssarijileo-service
-#          uri: lb://ssarijileo-service
           uri: http://localhost:8080
           predicates:
             - Path=/api/v1/song/**, /api/v1/songsetting/**, /api/v1/singing-contest/**, /api/v1/recording/**, /api/v1/singing/**, /api/v1/friend/**, /api/v1/profile/**
+          filters:
+            - AuthorizationHeaderFilter
         - id: webrtc-service
-#          uri: lb://webrtc-service
           uri: http://localhost:5000
           predicates:
             - Path=/api/v1/room/**, /api/v1/reservation/**
+          filters:
+            - AuthorizationHeaderFilter
         - id: ranking-service
           uri: http://localhost:8050
           predicates:
@@ -46,13 +49,3 @@ logging:
     com.ssafy: debug
     org.springframework.cloud.gateway: debug
     reactor.netty.http.client: debug
-
-## eureka setting
-#eureka:
-#  client:
-#    register-with-eureka: true
-#    fetch-registry: true
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka/
-#  instance:
-#    prefer-ip-address: true
