@@ -67,7 +67,7 @@ public class SongServiceImpl implements SongService {
 			case "N" : favoriteSongService.unsubscribe(favoriteSongDto.getUserId(), favoriteSongDto.getSongId()); break;
 			default : break;
 		}
-		return favoriteSongService.hasKey(favoriteSongDto.getUserId()).toString();
+		return favoriteSongService.getUsersFavoriteSong(favoriteSongDto.getUserId()).toString();
 	}
 
 	// 매일 3시 저장
