@@ -25,8 +25,9 @@ public class RankingFilter extends AbstractGatewayFilterFactory<RankingFilter.Co
 	public GatewayFilter apply(RankingFilter.Config config) {
 		return (exchange, chain) -> {
 
-			if (exchange.getRequest().getHeaders().get("Authorization").get(0).isEmpty())
+			if (!exchange.getRequest().getHeaders().containsKey("Authorization")) {
 				return chain.filter(exchange);
+			}
 
 			String token = exchange.getRequest().getHeaders().get("Authorization").get(0).substring(7);   // 헤더의 토큰 파싱 (Bearer 제거)
 

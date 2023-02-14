@@ -41,8 +41,8 @@ spring:
           uri: http://localhost:8050
           predicates:
             - Path=/api/v1/ranking/**
-#          filters:
-#            - RankingFilter
+          filters:
+            - RankingFilter
 
 # log level setting
 logging:
