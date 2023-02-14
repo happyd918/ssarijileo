@@ -144,30 +144,30 @@ public class RankingServiceImpl implements RankingService {
             songMap.put(key, song);
         }
 
-        // 날짜간 애창곡 지정 횟수 계산
-        for (FavoriteSong favoriteSong : favoriteSongList) {
-            // 현재 노래 정보
-            Song song = favoriteSong.getSong();
-            // songId
-            Long key = song.getSongId();
-            // 애창곡으로 지정된 횟수 * 가중치
-            Double val = 1 * 10.0;
-
-            if (favoriteSong.getIsLike().equals("Y")) {
-                if (map.containsKey(key)) {
-                    val += map.get(key);
-                }
-            } else {
-                if (map.containsKey(key)) {
-                    val = map.get(key) - val;
-                }
-            }
-            // 노래 랭킹점수 저장
-            map.put(key, val);
-
-            // 노래 정보 저장
-            songMap.put(key, song);
-        }
+//        // 날짜간 애창곡 지정 횟수 계산
+//        for (FavoriteSong favoriteSong : favoriteSongList) {
+//            // 현재 노래 정보
+//            Song song = favoriteSong.getSong();
+//            // songId
+//            Long key = song.getSongId();
+//            // 애창곡으로 지정된 횟수 * 가중치
+//            Double val = 1 * 10.0;
+//
+//            if (favoriteSong.getIsLike().equals("Y")) {
+//                if (map.containsKey(key)) {
+//                    val += map.get(key);
+//                }
+//            } else {
+//                if (map.containsKey(key)) {
+//                    val = map.get(key) - val;
+//                }
+//            }
+//            // 노래 랭킹점수 저장
+//            map.put(key, val);
+//
+//            // 노래 정보 저장
+//            songMap.put(key, song);
+//        }
 
         // 점수 순으로 정렬
         List<Long> keySet = new ArrayList<>(map.keySet());

@@ -29,7 +29,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     }
 
     public static class Config {
-        // application.yml 파일에서 지정한 filer의 Argument값을 받는 부분
+        // application.yml 파일에서 지정한 filter의 Argument값을 받는 부분
     }
 
     @Override
@@ -66,6 +66,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         @Override
         public Mono<Void> handle(
                 ServerWebExchange exchange, Throwable ex) {
+
             int errorCode = 500;
             if (ex.getClass() == NullPointerException.class) {
                 errorCode = 100;
@@ -75,7 +76,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 
             byte[] bytes = getErrorCode(errorCode).getBytes(StandardCharsets.UTF_8);
             DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
-            
+
              // 토큰 값 null 일 시에 401 or 만료 시에 403 에러 발생
              if (errorCode == 100) {
                  exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
@@ -86,6 +87,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
                  return exchange.getResponse().writeWith(Flux.just(buffer));
              }
              else {
+                 exchange.getResponse().setStatusCode(HttpStatus.BAD_REQUEST);
                  return exchange.getResponse().writeWith(Flux.just(buffer));
              }
         }
