@@ -87,7 +87,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
                  return exchange.getResponse().writeWith(Flux.just(buffer));
              }
              else {
-                 exchange.getResponse().setStatusCode(HttpStatus.BAD_REQUEST);
+                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                  return exchange.getResponse().writeWith(Flux.just(buffer));
              }
         }
