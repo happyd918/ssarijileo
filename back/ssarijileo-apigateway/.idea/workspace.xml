@@ -4,28 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5eb449b-fcaf-4652-9a04-8656333d50bf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jpa-buddy.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ssarijileo-webRTC/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ssarijileo-webRTC/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ssarijileo-webRTC/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ssarijileo-webRTC/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ssarijileo-webRTC/.idea/jpa-buddy.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ssarijileo-webRTC/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ssarijileo-webRTC/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ssarijileo/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ssarijileo/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ssarijileo/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ssarijileo/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ssarijileo/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ssarijileo/.idea/jpa-buddy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ssarijileo/.idea/jpa-buddy.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ssarijileo/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ssarijileo/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ssarijileo/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ssarijileo/src/main/java/com/ssafy/ssarijileo/api/songsetting/controller/SongSettingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ssarijileo/src/main/java/com/ssafy/ssarijileo/api/songsetting/controller/SongSettingController.java" afterDir="false" />
-    </list>
+    <list default="true" id="c5eb449b-fcaf-4652-9a04-8656333d50bf" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,6 +25,10 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -70,7 +53,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1676386490988</updated>
-      <workItem from="1676386492665" duration="773000" />
+      <workItem from="1676386492665" duration="1057000" />
     </task>
     <servers />
   </component>
