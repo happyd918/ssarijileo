@@ -88,7 +88,6 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
              else {
                  return exchange.getResponse().writeWith(Flux.just(buffer));
              }
-//            return exchange.getResponse().writeWith(Flux.just(buffer));
         }
     }
 }
