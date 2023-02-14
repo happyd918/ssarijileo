@@ -171,4 +171,7 @@ gradle-app.setting
 application-oauth.yml
 application-jwt.yml
 
+# AWS Setting
+application-aws.yml
+
 # End of https://www.toptal.com/developers/gitignore/api/intellij,gradle,java
