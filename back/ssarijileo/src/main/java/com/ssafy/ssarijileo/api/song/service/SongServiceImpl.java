@@ -61,12 +61,13 @@ public class SongServiceImpl implements SongService {
 	}
 
 	@Override
-	public void setFavoriteSong(FavoriteSongDto favoriteSongDto) {
+	public String setFavoriteSong(FavoriteSongDto favoriteSongDto) {
 		switch(favoriteSongDto.getIsLike()) {
 			case "Y" : favoriteSongService.subscribe(favoriteSongDto.getUserId(), favoriteSongDto.getSongId()); break;
 			case "N" : favoriteSongService.unsubscribe(favoriteSongDto.getUserId(), favoriteSongDto.getSongId()); break;
 			default : break;
 		}
+		return favoriteSongService.hasKey(favoriteSongDto.getUserId()).toString();
 	}
 
 	// 매일 3시 저장

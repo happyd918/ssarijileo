@@ -132,7 +132,7 @@ public class SongController {
 	@PostMapping("/my")
 	public ResponseEntity<? extends BaseResponseBody> setFavoriteSong(@RequestHeader String userId, @RequestBody FavoriteSongDto favoriteSongDto) {
 		favoriteSongDto.setUserId(userId);
-		songService.setFavoriteSong(favoriteSongDto);
-		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+//		songService.setFavoriteSong(favoriteSongDto);
+		return ResponseEntity.status(200).body(BaseResponseBody.of(200, songService.setFavoriteSong(favoriteSongDto)));
 	}
 }

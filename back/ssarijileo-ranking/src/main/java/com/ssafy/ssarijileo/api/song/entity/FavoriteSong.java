@@ -22,9 +22,7 @@ public class FavoriteSong {
     private String userId;
 
     // 노래PK
-    @ManyToOne
-    @JoinColumn(name = "song_id")
-    private Song song;
+    private String songId;
 
     // 등록 날짜
     private String registerDate;
