@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.api.song.dto;
+package com.ssafy.ssarijileo.api.favoritesong.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +20,7 @@ public class FavoriteSongDto {
 
 	// 노래PK
 	Long songId;
-
-	// 좋아요여부(Y:좋아요,N:좋아요취소)
+	
+	// 좋아요 여부
 	String isLike;
 }

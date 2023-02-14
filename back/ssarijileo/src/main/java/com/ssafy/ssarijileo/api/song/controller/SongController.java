@@ -9,13 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.ssarijileo.api.song.dto.FavoriteSongDto;
+import com.ssafy.ssarijileo.api.favoritesong.dto.FavoriteSongDto;
 import com.ssafy.ssarijileo.api.song.dto.SongDetailDto;
 import com.ssafy.ssarijileo.api.song.dto.SongDto;
-import com.ssafy.ssarijileo.api.song.entity.FavoriteSong;
 import com.ssafy.ssarijileo.api.song.service.SongService;
 import com.ssafy.ssarijileo.common.model.BaseResponseBody;
 

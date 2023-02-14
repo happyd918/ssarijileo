@@ -1,15 +1,17 @@
 package com.ssafy.ssarijileo.api.ranking.service;
 
+import com.ssafy.ssarijileo.api.ranking.client.RankingClient;
 import com.ssafy.ssarijileo.api.ranking.dto.RankingDto;
 import com.ssafy.ssarijileo.api.ranking.dto.RankingType;
 import com.ssafy.ssarijileo.api.singing.entity.Singing;
 import com.ssafy.ssarijileo.api.singing.repsoitory.SingingJpaRepository;
+import com.ssafy.ssarijileo.api.song.client.FavoriteSongClient;
 import com.ssafy.ssarijileo.api.song.entity.FavoriteSong;
 import com.ssafy.ssarijileo.api.song.entity.Song;
 import com.ssafy.ssarijileo.api.song.repository.FavoriteSongJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
@@ -27,52 +29,44 @@ public class RankingServiceImpl implements RankingService {
 
     private final SingingJpaRepository singingJpaRepository;
     private final FavoriteSongJpaRepository favoriteSongJpaRepository;
-    private final RedisTemplate<String, String> redisTemplate;
+    private final FavoriteSongClient favoriteSongClient;
+    private final RankingClient rankingClient;
 
     @Override
-    public List<RankingDto> findDailyRanking(String userId) {
-        List<RankingDto> list = findRanking(RankingType.DAY);
+    public List<RankingDto> findRanking(String userId, RankingType rankingType) {
 
-        if (userId.isEmpty())
-            return list;
+//        List<RankingDto> list = getRanking(rankingType);
 
-        for (RankingDto dto : list) {
-            dto.updateLike(redisTemplate.opsForSet().isMember("subscribe:" + userId, String.valueOf(dto.getSongId())));
-        }
+        List<RankingDto> list = rankingClient.getRanking(rankingType);
+
+        if (list == null) { list = getRanking(rankingType); }
+
+        if (userId.isEmpty()) { return list; }
+
+        for (RankingDto dto : list) { dto.updateFavoriteSong(favoriteSongClient.isFavoriteSong(userId, dto.getSongId())); }
 
         return list;
     }
 
-    @Override
-    public List<RankingDto> findWeeklyRanking(String userId) {
-        List<RankingDto> list = findRanking(RankingType.WEEK);
-
-        if (userId.isEmpty())
-            return list;
-
-        for (RankingDto dto : list) {
-            dto.updateLike(redisTemplate.opsForSet().isMember("subscribe:" + userId, String.valueOf(dto.getSongId())));
-        }
-
-        return list;
+    // 매일 새벽 3시 30분에 일간랭킹 연산 후 캐시 저장
+    @Scheduled(cron = "0 30 3 * * *")
+    public void dailyGetRanking() {
+        rankingClient.setRanking(RankingType.DAY, getRanking(RankingType.DAY));
     }
 
-    @Override
-    public List<RankingDto> findMonthlyRanking(String userId) {
-        List<RankingDto> list = findRanking(RankingType.MONTH);
-
-        if (userId.isEmpty())
-            return list;
-
-        for (RankingDto dto : list) {
-            dto.updateLike(redisTemplate.opsForSet().isMember("subscribe:" + userId, String.valueOf(dto.getSongId())));
-        }
-
-        return list;
+    // 매주 월요일 새벽 3시 40분
+    @Scheduled(cron = "0 40 3 * * 1")
+    public void weeklyGetRanking() {
+        rankingClient.setRanking(RankingType.WEEK, getRanking(RankingType.WEEK));
     }
 
+    // 매월 1일 새벽 4시
+    @Scheduled(cron = "0 0 4 1 * *")
+    public void monthlyGetRanking() {
+        rankingClient.setRanking(RankingType.MONTH, getRanking(RankingType.MONTH));
+    }
     @Override
-    public List<RankingDto> findRanking(RankingType rankingType) {
+    public List<RankingDto> getRanking(RankingType rankingType) {
 
         /////// 날짜 구분
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -144,30 +138,20 @@ public class RankingServiceImpl implements RankingService {
             songMap.put(key, song);
         }
 
-//        // 날짜간 애창곡 지정 횟수 계산
-//        for (FavoriteSong favoriteSong : favoriteSongList) {
-//            // 현재 노래 정보
-//            Song song = favoriteSong.getSong();
-//            // songId
-//            Long key = song.getSongId();
-//            // 애창곡으로 지정된 횟수 * 가중치
-//            Double val = 1 * 10.0;
-//
-//            if (favoriteSong.getIsLike().equals("Y")) {
-//                if (map.containsKey(key)) {
-//                    val += map.get(key);
-//                }
-//            } else {
-//                if (map.containsKey(key)) {
-//                    val = map.get(key) - val;
-//                }
-//            }
-//            // 노래 랭킹점수 저장
-//            map.put(key, val);
-//
-//            // 노래 정보 저장
-//            songMap.put(key, song);
-//        }
+        // 기간 내에 활동한 유저의 애창곡
+        for (FavoriteSong favoriteSong : favoriteSongList) {
+            String[] songs = favoriteSong.getSongId().split(" ");
+
+            // 애창곡 리스트
+            for (String songId : songs) {
+                Long key = Long.parseLong(songId);
+
+                // 기간 내에 부른 이력이 있는 노래에 대해서만
+                if (songMap.containsKey(key)) {
+                    map.put(key, map.get(key) + 10);
+                }
+            }
+        }
 
         // 점수 순으로 정렬
         List<Long> keySet = new ArrayList<>(map.keySet());

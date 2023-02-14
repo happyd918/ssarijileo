@@ -5,17 +5,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.types.Projections;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.ssarijileo.api.song.dto.SongDto;
-import com.ssafy.ssarijileo.api.song.entity.QFavoriteSong;
+import com.ssafy.ssarijileo.api.favoritesong.entity.QFavoriteSong;
 import com.ssafy.ssarijileo.api.song.entity.QSong;
-import com.ssafy.ssarijileo.api.song.service.FavoriteSongService;
-import com.ssafy.ssarijileo.api.song.service.FavoriteSongServiceImpl;
+import com.ssafy.ssarijileo.api.favoritesong.service.FavoriteSongService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
