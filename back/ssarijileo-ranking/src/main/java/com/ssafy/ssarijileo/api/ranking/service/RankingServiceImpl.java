@@ -37,7 +37,7 @@ public class RankingServiceImpl implements RankingService {
             return list;
 
         for (RankingDto dto : list) {
-            dto.updateLike(redisTemplate.opsForSet().isMember("subscribe:" + userId, dto.getSongId()));
+            dto.updateLike(redisTemplate.opsForSet().isMember("subscribe:" + userId, String.valueOf(dto.getSongId())));
         }
 
         return list;
@@ -51,7 +51,7 @@ public class RankingServiceImpl implements RankingService {
             return list;
 
         for (RankingDto dto : list) {
-            dto.updateLike(redisTemplate.opsForSet().isMember("subscribe:" + userId, dto.getSongId()));
+            dto.updateLike(redisTemplate.opsForSet().isMember("subscribe:" + userId, String.valueOf(dto.getSongId())));
         }
 
         return list;
@@ -65,7 +65,7 @@ public class RankingServiceImpl implements RankingService {
             return list;
 
         for (RankingDto dto : list) {
-            dto.updateLike(redisTemplate.opsForSet().isMember("subscribe:" + userId, dto.getSongId()));
+            dto.updateLike(redisTemplate.opsForSet().isMember("subscribe:" + userId, String.valueOf(dto.getSongId())));
         }
 
         return list;
