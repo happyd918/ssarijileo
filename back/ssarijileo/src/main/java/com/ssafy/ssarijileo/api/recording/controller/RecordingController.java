@@ -51,7 +51,7 @@ public class  RecordingController {
 		@ApiResponse(code = 404, message = "녹화 없음"),
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
-	@GetMapping("/my/{userId}")
+	@GetMapping("/my")
 	public ResponseEntity<List<RecordingResponseDto>> findRecordingByUserId(@RequestHeader  String userId) {
 		return ResponseEntity.status(200).body(recordingService.findRecordingByUserId(userId));
 	}
