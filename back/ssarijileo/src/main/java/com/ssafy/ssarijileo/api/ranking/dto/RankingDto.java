@@ -1,6 +1,9 @@
 package com.ssafy.ssarijileo.api.ranking.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
@@ -19,13 +22,13 @@ public class RankingDto {
 
     // 가수
     String singer;
-    
+
     // 앨범 제목
     String album;
-    
+
     // 앨범 이미지
     String image;
-    
+
     // 애창곡 여부
     boolean isFavoriteSong;
 

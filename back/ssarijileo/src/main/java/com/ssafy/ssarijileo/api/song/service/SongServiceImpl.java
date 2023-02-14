@@ -6,13 +6,14 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import com.ssafy.ssarijileo.api.favoritesong.service.FavoriteSongService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.ssarijileo.api.song.dto.FavoriteSongDto;
+import com.ssafy.ssarijileo.api.favoritesong.dto.FavoriteSongDto;
 import com.ssafy.ssarijileo.api.song.dto.SongDto;
-import com.ssafy.ssarijileo.api.song.entity.FavoriteSong;
-import com.ssafy.ssarijileo.api.song.repository.FavoriteSongJpaRepository;
+import com.ssafy.ssarijileo.api.favoritesong.entity.FavoriteSong;
+import com.ssafy.ssarijileo.api.favoritesong.repository.FavoriteSongJpaRepository;
 import com.ssafy.ssarijileo.api.song.repository.SongRepository;
 import com.ssafy.ssarijileo.common.exception.NotFoundException;
 import com.ssafy.ssarijileo.api.song.dto.SongDetailDto;
@@ -68,24 +69,5 @@ public class SongServiceImpl implements SongService {
 			default : break;
 		}
 		return favoriteSongService.getUsersFavoriteSong(favoriteSongDto.getUserId()).toString();
-	}
-
-	// 매일 3시 저장
-	@Override
-	@Scheduled(cron = "0 0 3 * * *")
-	public void saveFavoriteSong() {
-		Set<String> keys = favoriteSongService.getKeys();
-
-		for (String key : keys) {
-			StringBuffer sb = new StringBuffer();
-			String userId = key.split(":")[1];
-
-			Set<String> values = favoriteSongService.getUsersFavoriteSong(key);
-			for (String value : values) {
-				sb.append(value).append(" ");
-			}
-			FavoriteSong favoriteSong = FavoriteSong.builder().userId(userId).songId(sb.toString()).build();
-			favoriteSongJpaRepository.save(favoriteSong);
-		}
 	}
 }

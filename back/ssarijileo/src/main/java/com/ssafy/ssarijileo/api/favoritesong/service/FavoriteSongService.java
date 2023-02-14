@@ -1,4 +1,4 @@
-package com.ssafy.ssarijileo.api.song.service;
+package com.ssafy.ssarijileo.api.favoritesong.service;
 
 import java.util.Set;
 
@@ -10,4 +10,5 @@ public interface FavoriteSongService {
     Set<String> getKeys();
     Boolean hasKey(String userId);
     void removeAll(String userId);
+    void saveFavoriteSong();
 }

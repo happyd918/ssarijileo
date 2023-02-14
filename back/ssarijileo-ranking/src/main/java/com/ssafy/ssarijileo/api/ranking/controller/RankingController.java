@@ -1,7 +1,9 @@
 package com.ssafy.ssarijileo.api.ranking.controller;
 
 import com.ssafy.ssarijileo.api.ranking.dto.RankingDto;
+import com.ssafy.ssarijileo.api.ranking.dto.RankingType;
 import com.ssafy.ssarijileo.api.ranking.service.RankingService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,14 +23,14 @@ public class RankingController {
 
     @GetMapping("/daily")
     public ResponseEntity<List<RankingDto>> findDailyRanking(@RequestHeader Optional<String> userId) {
-        return ResponseEntity.status(200).body(rankingService.findDailyRanking(userId.orElse(new String())));
+        return ResponseEntity.status(200).body(rankingService.findRanking(userId.orElse(new String()), RankingType.DAY));
     }
     @GetMapping("/weekly")
     public ResponseEntity<List<RankingDto>> findWeeklyRanking(@RequestHeader Optional<String> userId) {
-        return ResponseEntity.status(200).body(rankingService.findWeeklyRanking(userId.orElse(new String())));
+        return ResponseEntity.status(200).body(rankingService.findRanking(userId.orElse(new String()), RankingType.WEEK));
     }
     @GetMapping("/monthly")
     public ResponseEntity<List<RankingDto>> findMonthlyRanking(@RequestHeader Optional<String> userId) {
-        return ResponseEntity.status(200).body(rankingService.findMonthlyRanking(userId.orElse(new String())));
+        return ResponseEntity.status(200).body(rankingService.findRanking(userId.orElse(new String()), RankingType.MONTH));
     }
 }
