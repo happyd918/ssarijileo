@@ -26,9 +26,6 @@ public class FavoriteSong {
     @JoinColumn(name = "song_id")
     private Song song;
 
-    // 좋아요 여부(Y:좋아요,N:좋아요취소)
-    private String isLike;
-
     // 등록 날짜
     private String registerDate;
 
