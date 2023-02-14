@@ -29,9 +29,6 @@ public class SingingServiceImpl implements SingingService{
 		Song song = songJpaRepository.findById(singingDto.getSongId()).orElseThrow(NotFoundException::new);
 		singingDto.setSingingTime(songJpaRepository.findTimeBySongId(singingDto.getSongId()));
 		Singing singing = Singing.builder().singingDto(singingDto).profile(profile).song(song).build();
-		log.info("business");
-		log.info("={}", singing.getSingingTime());
-		log.info("={}", singing.getProfile().getProfileId());
 		singingJpaRepository.save(singing);
 	}
 
@@ -40,9 +37,6 @@ public class SingingServiceImpl implements SingingService{
 		Profile profile = profileJpaRepository.findById(singingDto.getUserId()).orElseThrow(NotFoundException::new);
 		Song song = songJpaRepository.findById(singingDto.getSongId()).orElseThrow(NotFoundException::new);
 		Singing singing = Singing.builder().singingDto(singingDto).profile(profile).song(song).build();
-		log.info("business");
-		log.info("={}", singing.getSingingTime());
-		log.info("={}", singing.getProfile().getProfileId());
 		singingJpaRepository.save(singing);
 	}
 }

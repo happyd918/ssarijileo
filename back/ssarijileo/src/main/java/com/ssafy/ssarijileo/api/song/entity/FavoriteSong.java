@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class FavoriteSong {
@@ -31,24 +32,9 @@ public class FavoriteSong {
 	private String userId;
 
 	// 노래PK
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "song_id")
-	private Song song;
+	private String songId;
 
-	// 좋아요여부(Y:좋아요,N:좋아요취소)
-	private String isLike;
+	// 등록일자
+	private String registerDate;
 
-	// Dto to Entity
-	@Builder
-	public FavoriteSong(FavoriteSongDto favoriteSongDto, Song song) {
-		this.favoriteSongId = favoriteSongDto.getFavoriteSongId();
-		this.userId = favoriteSongDto.getUserId();
-		this.song = song;
-		this.isLike = favoriteSongDto.getIsLike();
-	}
-
-	// Entity to Dto
-	public SongDto toDto() {
-		return new SongDto(song.getSongId(), song.getTitle(), song.getSinger(), song.getAlbum(), song.getImage(), song.getReleaseDate());
-	}
 }

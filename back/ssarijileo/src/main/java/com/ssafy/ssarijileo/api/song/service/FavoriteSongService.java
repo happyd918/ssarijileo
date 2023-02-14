@@ -6,4 +6,8 @@ public interface FavoriteSongService {
     void subscribe(String userId, Long songId);
     void unsubscribe(String userId, Long songId);
     Boolean hasSubscribed(String userId, Long songId);
+    Set<String> getUsersFavoriteSong(String userId);
+    Set<String> getKeys();
+    Boolean hasKey(String userId);
+    void removeAll(String userId);
 }

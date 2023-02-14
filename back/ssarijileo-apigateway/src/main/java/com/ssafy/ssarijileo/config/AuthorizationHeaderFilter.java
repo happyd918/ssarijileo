@@ -37,13 +37,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         return (exchange, chain) -> {
             String token = exchange.getRequest().getHeaders().get("Authorization").get(0).substring(7);   // 헤더의 토큰 파싱 (Bearer 제거)
 
-            System.out.println("header : " + exchange.getRequest().getHeaders());
-
-            System.out.println("token : " + token);
-
             String userId = jwtUtil.getUid(token);
-
-            System.out.println("userID : " + userId);
 
             addAuthorizationHeaders(exchange.getRequest(), userId);
             return chain.filter(exchange);
@@ -55,8 +49,6 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         request.mutate()
                 .header("userId", userId)
                 .build();
-
-        System.out.println("request : " + request);
     }
 
     // 토큰 검증 요청을 실행하는 도중 예외가 발생했을 때 예외처리하는 핸들러
@@ -84,11 +76,16 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
             byte[] bytes = getErrorCode(errorCode).getBytes(StandardCharsets.UTF_8);
             DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
             
-             // 토큰 null or 만료 시에 403 에러 발생
-             if (errorCode == 500)
+             // 토큰 값 null 일 시에 401 or 만료 시에 403 에러 발생
+             if (errorCode == 100) {
+                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                  return exchange.getResponse().writeWith(Flux.just(buffer));
-             else {
+             }
+             else if (errorCode == 200) {
                  exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
+                 return exchange.getResponse().writeWith(Flux.just(buffer));
+             }
+             else {
                  return exchange.getResponse().writeWith(Flux.just(buffer));
              }
 //            return exchange.getResponse().writeWith(Flux.just(buffer));

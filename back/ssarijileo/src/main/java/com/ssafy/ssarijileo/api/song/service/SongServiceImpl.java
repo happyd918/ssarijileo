@@ -1,10 +1,12 @@
 package com.ssafy.ssarijileo.api.song.service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.ssarijileo.api.song.dto.FavoriteSongDto;
@@ -18,7 +20,9 @@ import com.ssafy.ssarijileo.api.song.entity.Song;
 import com.ssafy.ssarijileo.api.song.repository.SongJpaRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -46,26 +50,41 @@ public class SongServiceImpl implements SongService {
 
 	@Override
 	public List<SongDto> findSongByUserId(String userId) {
+		// 캐시에 유저 애창곡 정보가 없을 경우 DB에서 받아옴
+		if (!favoriteSongService.hasKey(userId)) {
+			String[] favoriteSong = favoriteSongJpaRepository.findLatestSongIdByUserId(userId)[0].split(" ");
+			for (String songId : favoriteSong) {
+				favoriteSongService.subscribe(userId, Long.parseLong(songId));
+			}
+		}
 		return songRepository.findFavoriteSongByUserId(userId).orElseThrow(NotFoundException::new);
 	}
 
 	@Override
 	public void setFavoriteSong(FavoriteSongDto favoriteSongDto) {
-		Song song = songJpaRepository.findById(favoriteSongDto.getSongId()).orElseThrow(NotFoundException::new);
-		FavoriteSong favoriteSong = FavoriteSong.builder().favoriteSongDto(favoriteSongDto).song(song).build();
-		favoriteSongJpaRepository.save(favoriteSong);
+		switch(favoriteSongDto.getIsLike()) {
+			case "Y" : favoriteSongService.subscribe(favoriteSongDto.getUserId(), favoriteSongDto.getSongId()); break;
+			case "N" : favoriteSongService.unsubscribe(favoriteSongDto.getUserId(), favoriteSongDto.getSongId()); break;
+			default : break;
+		}
+	}
 
-		// 캐시
-		String userId = favoriteSongDto.getUserId();
-		Long songId = favoriteSongDto.getSongId();
-		String isLike = favoriteSongDto.getIsLike();
-		boolean subscribed = favoriteSongService.hasSubscribed(userId, songId);
+	// 매일 3시 저장
+	@Override
+	@Scheduled(cron = "0 0 3 * * *")
+	public void saveFavoriteSong() {
+		Set<String> keys = favoriteSongService.getKeys();
 
-		// 교차 검증
-		if (isLike.equals("Y") && !subscribed) {
-			favoriteSongService.subscribe(userId, songId);
-		} else if (isLike.equals("N") && subscribed) {
-			favoriteSongService.unsubscribe(userId, songId);
+		for (String key : keys) {
+			StringBuffer sb = new StringBuffer();
+			String userId = key.split(":")[1];
+
+			Set<String> values = favoriteSongService.getUsersFavoriteSong(key);
+			for (String value : values) {
+				sb.append(value).append(" ");
+			}
+			FavoriteSong favoriteSong = FavoriteSong.builder().userId(userId).songId(sb.toString()).build();
+			favoriteSongJpaRepository.save(favoriteSong);
 		}
 	}
 }

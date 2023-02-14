@@ -17,4 +17,6 @@ public interface SongService {
 	List<SongDto> findSongByUserId(String userId);
 
 	void setFavoriteSong(FavoriteSongDto favoriteSongDto);
+
+	void saveFavoriteSong();
 }
