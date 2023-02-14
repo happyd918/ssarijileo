@@ -99,6 +99,7 @@ CREATE TABLE IF NOT EXISTS `singing` (
     `mode` CHAR(1) NOT NULL DEFAULT 'N' COMMENT '모드(N:일반,P:퍼펙트스코어,O:가사순서맞추기,R:이어부르기)',
     `score` INT COMMENT '점수',
     `total_singing_time` TIME NOT NULL COMMENT '총부른시간',
+    `state` CHAR(1) NOT NULL DEFAULT 'I' COMMENT '상태(I:추가,C:취소)',
     `singing_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '노래일시',
     PRIMARY KEY (`singing_id`),
 	CONSTRAINT `fk_profile_singing`
@@ -119,15 +120,12 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `favorite_song` (
 	`favorite_song_id` INT AUTO_INCREMENT COMMENT 'PK',
 	`user_id` VARCHAR(36) NOT NULL COMMENT '사용자PK',
-    `song_id` INT NOT NULL COMMENT '노래PK',
-    `is_like` CHAR(1) NOT NULL DEFAULT 'Y' COMMENT '좋아요여부(Y:좋아요,N:좋아요취소)',
+    `song_id` TEXT NOT NULL COMMENT '노래PK',
+    `register_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일시',
     PRIMARY KEY (`favorite_song_id`),
 	CONSTRAINT `fk_profile_favorite_song`
 		FOREIGN KEY (`user_id`)
-        REFERENCES `profile` (`profile_id`) ON DELETE CASCADE,
-	CONSTRAINT `fk_song_favorite_song`
-		FOREIGN KEY (`song_id`)
-        REFERENCES `song` (`song_id`) ON DELETE CASCADE
+        REFERENCES `profile` (`profile_id`) ON DELETE CASCADE
 )
 ENGINE = InnoDB;
 
@@ -135,8 +133,8 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `song_setting` (
 	`song_setting_id` VARCHAR(36) COMMENT 'PK(사용자PK)',
-    `eco` DECIMAL(2, 1) NOT NULL DEFAULT 50 COMMENT '에코',
-    `volume` DECIMAL(2, 1) NOT NULL DEFAULT 50 COMMENT '음량',
+    `eco` DECIMAL(2, 1) NOT NULL DEFAULT 0.5 COMMENT '에코',
+    `volume` DECIMAL(2, 1) NOT NULL DEFAULT 0.5 COMMENT '음량',
     PRIMARY KEY (`song_setting_id`),
 	CONSTRAINT `fk_profile_song_setting`
 		FOREIGN KEY (`song_setting_id`)
@@ -179,4 +177,3 @@ CREATE TABLE IF NOT EXISTS `singing_contest` (
         REFERENCES `recording` (`recording_id`) ON DELETE CASCADE
 )
 ENGINE = InnoDB;
-
