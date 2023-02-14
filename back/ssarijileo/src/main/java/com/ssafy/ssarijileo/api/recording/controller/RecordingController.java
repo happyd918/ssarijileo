@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.ssarijileo.api.recording.dto.RecordingDto;
 import com.ssafy.ssarijileo.api.recording.dto.RecordingResponseDto;
@@ -58,6 +59,7 @@ public class  RecordingController {
 	/**
 	 * @title 녹화 저장
 	 * @param recordingDto
+	 * @param file
 	 */
 	@ApiOperation(
 		value = "녹화 저장",
@@ -70,9 +72,10 @@ public class  RecordingController {
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@PostMapping
-	public ResponseEntity<? extends BaseResponseBody> insertRecording(@RequestHeader String userId, @RequestBody RecordingDto recordingDto){
+	public ResponseEntity<? extends BaseResponseBody> insertRecording(@RequestHeader String userId, @RequestBody RecordingDto recordingDto, @RequestBody
+		MultipartFile file){
 		recordingDto.setUserId(userId);
-		recordingService.insertRecording(recordingDto);
+		recordingService.insertRecording(recordingDto, file);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 
