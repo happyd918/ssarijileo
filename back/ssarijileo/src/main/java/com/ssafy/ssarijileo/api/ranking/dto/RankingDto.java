@@ -1,5 +1,7 @@
 package com.ssafy.ssarijileo.api.ranking.dto;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RankingDto {
+public class RankingDto implements Serializable {
 
     // 순위
     int ranking;

@@ -35,11 +35,9 @@ public class RankingServiceImpl implements RankingService {
     @Override
     public List<RankingDto> findRanking(String userId, RankingType rankingType) {
 
-//        List<RankingDto> list = getRanking(rankingType);
-
         List<RankingDto> list = rankingClient.getRanking(rankingType);
 
-        if (list == null) { list = getRanking(rankingType); }
+        if (list.isEmpty()) { list = getRanking(rankingType); }
 
         if (userId.isEmpty()) { return list; }
 
@@ -51,20 +49,21 @@ public class RankingServiceImpl implements RankingService {
     // 매일 새벽 3시 30분에 일간랭킹 연산 후 캐시 저장
     @Scheduled(cron = "0 30 3 * * *")
     public void dailyGetRanking() {
-        rankingClient.setRanking(RankingType.DAY, getRanking(RankingType.DAY));
+        getRanking(RankingType.DAY);
     }
 
     // 매주 월요일 새벽 3시 40분
     @Scheduled(cron = "0 40 3 * * 1")
     public void weeklyGetRanking() {
-        rankingClient.setRanking(RankingType.WEEK, getRanking(RankingType.WEEK));
+        getRanking(RankingType.WEEK);
     }
 
     // 매월 1일 새벽 4시
     @Scheduled(cron = "0 0 4 1 * *")
     public void monthlyGetRanking() {
-        rankingClient.setRanking(RankingType.MONTH, getRanking(RankingType.MONTH));
+        getRanking(RankingType.MONTH);
     }
+
     @Override
     public List<RankingDto> getRanking(RankingType rankingType) {
 
@@ -176,6 +175,8 @@ public class RankingServiceImpl implements RankingService {
             // Top 100 까지만
             if (ranking > 100) break;
         }
+
+        rankingClient.setRanking(rankingType, rankingList);
         return rankingList;
     }
 }
