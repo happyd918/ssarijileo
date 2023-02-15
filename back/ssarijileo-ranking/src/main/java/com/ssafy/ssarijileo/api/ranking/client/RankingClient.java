@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-// @FeignClient(name = "ranking-client", url = "192.168.49.2:31000/api/v1/ranking")
-@FeignClient(name = "ranking-client", url = "localhost:8080/api/v1/ranking")
+@FeignClient(name = "ranking-client", url = "192.168.49.2:31000/api/v1/ranking")
 public interface RankingClient {
 
     @GetMapping("/{rankingType}")
