@@ -35,7 +35,7 @@ public class S3UploadController {
 
 	@PostMapping("/video")
 	public String videoUpload(MultipartFile multipartFile) throws IOException{
-		return s3UploaderService.upload(multipartFile, "1-source", "video")
+		return s3UploaderService.upload(multipartFile, "1-source", "video");
 	}
 
 
