@@ -60,6 +60,7 @@ public class SingingContestServiceImpl implements SingingContestService{
 	@Override
 	public void insertSingingContest(Long recordingId) {
 		Recording recording = recordingJpaRepository.findById(recordingId).orElseThrow(NotFoundException::new);
+		recording.updateStatus("S");
 		SingingContest singingContest = SingingContest.builder().recording(recording).build();
 		singingContestJpaRepository.save(singingContest);
 	}
@@ -69,6 +70,12 @@ public class SingingContestServiceImpl implements SingingContestService{
 		SingingContest singingContest = singingContestJpaRepository.findById(
 			singingContestUpdateDto.getSingingContestId()).orElseThrow(NotFoundException::new);
 		singingContest.updateStatus(singingContestUpdateDto.getStatus());
+
+		if(singingContestUpdateDto.getStatus().equals("D")) {
+			// 노래자랑 삭제 시
+			Recording recording = recordingJpaRepository.findById(singingContest.getRecording().getRecordingId()).orElseThrow(NotFoundException::new);
+			recording.updateStatus("V");
+		}
 	}
 
 	@Override
