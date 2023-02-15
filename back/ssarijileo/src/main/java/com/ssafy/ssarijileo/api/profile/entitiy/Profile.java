@@ -1,5 +1,7 @@
 package com.ssafy.ssarijileo.api.profile.entitiy;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,7 +26,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Profile {
+public class Profile implements Serializable {
 
 	// PK
 	@Id
