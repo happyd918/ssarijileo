@@ -20,6 +20,7 @@ services:
     restart: on-failure
     environment:
       - OPENVIDU_SECRET=ssafy
+      - openvidu.publicurl=http://i8b302.p.ssafy.io:4443/
     ports:
       - 4443:4443
 
