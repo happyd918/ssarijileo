@@ -4,6 +4,7 @@ import com.ssafy.ssarijileo.api.favoritesong.service.FavoriteSongService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,8 +17,8 @@ public class FavoriteSongController {
 
     private final FavoriteSongService favoriteSongService;
 
-    @GetMapping
-    Boolean isFavoriteSong(String userId, Long songId) {
+    @GetMapping("/{userId}/{songId}")
+    Boolean isFavoriteSong(@RequestParam("userId") String userId, @RequestParam("songId") Long songId) {
         return favoriteSongService.hasSubscribed(userId, songId);
     }
 }
