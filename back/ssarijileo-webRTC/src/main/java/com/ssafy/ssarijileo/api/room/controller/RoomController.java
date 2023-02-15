@@ -96,25 +96,43 @@ public class RoomController {
 	 * @param roomDto   The Connection properties
 	 * @return The Token associated to the Connection
 	 */
-	@PostMapping("/connection/{sessionId}/{host}")
+	@PostMapping("/connection/{sessionId}/host")
 	public ResponseEntity<String> createConnection(@RequestHeader String userId,
-		@PathVariable String sessionId, @PathVariable(required = false) String host,
-		@RequestBody(required = false) RoomDto roomDto)
+		@PathVariable String sessionId, @RequestBody RoomDto roomDto)
 		throws OpenViduJavaClientException, OpenViduHttpException {
 
-		if (host != null) {
-			// 방장이 방 생성 할 때
-			roomDto.setUserId(userId);
-			roomDto.setSessionId(sessionId);
-			roomService.createRoom(roomDto);
-		} else if (roomDto.getPassword() != null && !roomDto.getPassword()
-			.equals(roomService.findRoomBySessionId(sessionId).getPassword())) {
-			// 비공개 방인데 비밀번호가 일치하지 않을 때
-			return new ResponseEntity<>(null, HttpStatus.OK);
-		} else {
-			// 방 입장
-			roomService.enterRoom(new RoomRequestDto(sessionId, userId));
+		// 방장이 방 생성
+		roomDto.setUserId(userId);
+		roomDto.setSessionId(sessionId);
+		roomService.createRoom(roomDto);
+
+		// 방 입장
+		roomService.enterRoom(new RoomRequestDto(sessionId, userId));
+
+		// openvidu
+		Session session = openvidu.getActiveSession(sessionId);
+		if (session == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+		ConnectionProperties properties = ConnectionProperties.fromJson(null).build();
+		Connection connection = session.createConnection(properties);
+
+		return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
+	}
+
+	/**
+	 * @title 방 입장
+	 * 각 참가자는 토근을 사용해 하나의 연결을 사용하여 연결
+	 * @param sessionId The Session in which to create the Connection
+	 * @return The Token associated to the Connection
+	 */
+	@PostMapping("/connection/{sessionId}")
+	public ResponseEntity<String> enterConnection(@RequestHeader String userId,
+		@PathVariable String sessionId)
+		throws OpenViduJavaClientException, OpenViduHttpException {
+
+		// 방 입장
+		roomService.enterRoom(new RoomRequestDto(sessionId, userId));
 
 		// openvidu
 		Session session = openvidu.getActiveSession(sessionId);
