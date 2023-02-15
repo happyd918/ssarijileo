@@ -24,7 +24,7 @@ import com.ssafy.ssarijileo.api.room.service.RoomService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(value = "/api/v1/room", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping("/api/v1/room")
 @RequiredArgsConstructor
 public class RoomController {
 

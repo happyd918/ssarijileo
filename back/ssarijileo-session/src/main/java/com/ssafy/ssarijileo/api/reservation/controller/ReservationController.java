@@ -19,7 +19,7 @@ import com.ssafy.ssarijileo.api.singing.dto.SingingDto;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(value = "/api/v1/reservation", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/reservation")
 @RequiredArgsConstructor
 public class ReservationController {
 

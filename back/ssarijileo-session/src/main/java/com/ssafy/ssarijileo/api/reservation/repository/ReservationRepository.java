@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import com.ssafy.ssarijileo.api.reservation.dto.ReservationDto;
-import com.ssafy.ssarijileo.api.room.dto.RoomDto;
 import com.ssafy.ssarijileo.common.redis.RedisBase;
 
 import lombok.RequiredArgsConstructor;
@@ -22,10 +21,8 @@ public class ReservationRepository {
 
 	private String category = "reservation_";
 
-	private Class classType = ReservationDto.class;
-
-	public Optional<List<ReservationDto>> get(String key) {
-		return redisBase.get(getKey(key), classType);
+	public Optional<List> get(String key) {
+		return redisBase.get(getKey(key), List.class);
 	}
 
 	public void set(String key, List<ReservationDto> value) {
