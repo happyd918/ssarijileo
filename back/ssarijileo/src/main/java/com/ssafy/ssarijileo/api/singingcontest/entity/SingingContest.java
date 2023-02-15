@@ -52,8 +52,9 @@ public class SingingContest {
 	public SingingContestResponseDto toDto() {
 		return new SingingContestResponseDto(
 						singingContestId, recording.getProfile().getNickname()
-						, recording.getSong().getTitle(), recording.getSong().getSinger()
-						, recording.getFile(), registerDate, 0L, false);
+						, recording.getProfile().getImage(), recording.getSong().getTitle()
+						, recording.getSong().getSinger(), recording.getFile()
+						, registerDate, 0L, false);
 	}
 
 	public void updateStatus(String status) {

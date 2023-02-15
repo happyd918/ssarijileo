@@ -26,6 +26,9 @@ public class SingingContestResponseDto {
 	// 사용자 닉네임
 	String nickname;
 
+	// 사용자 프로필 이미지
+	String image;
+
 	// 제목
 	String title;
 
