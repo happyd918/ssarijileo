@@ -64,7 +64,7 @@ public class Recording {
 
 	// Entity to Dto
 	public RecordingResponseDto toDto(){
-		return new RecordingResponseDto(recordingId, song.getTitle(), song.getSinger(), file, registerDate);
+		return new RecordingResponseDto(recordingId, song.getTitle(), song.getSinger(), file, registerDate, status);
 	}
 
 	public void updateStatus(String status) {
