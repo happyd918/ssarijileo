@@ -4,10 +4,12 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.ssarijileo.api.favoritesong.service.FavoriteSongService;
 import com.ssafy.ssarijileo.api.profile.dto.ProfileDto;
 import com.ssafy.ssarijileo.api.profile.dto.ProfileInfoDto;
 import com.ssafy.ssarijileo.api.profile.entitiy.Profile;
 import com.ssafy.ssarijileo.api.profile.repository.ProfileJpaRepository;
+import com.ssafy.ssarijileo.api.song.service.SongService;
 import com.ssafy.ssarijileo.api.songsetting.entity.SongSetting;
 import com.ssafy.ssarijileo.api.songsetting.repository.SongSettingJpaRepository;
 import com.ssafy.ssarijileo.common.exception.NotFoundException;
@@ -23,29 +25,27 @@ public class ProfileServiceImpl implements ProfileService {
 
 	private final ProfileJpaRepository profileJpaRepository;
 	private final SongSettingJpaRepository songSettingJpaRepository;
+	private final FavoriteSongService favoriteSongService;
 
 	@Override
 	public String findIdByNickname(String nickname) {
-		System.out.println("findIdByNickname : " + nickname);
 		Profile profile = profileJpaRepository.findByNickname(nickname).orElseThrow(NotFoundException::new);
-		System.out.println("result userId : " + profile.getProfileId());
 		return profile.getProfileId();
 	}
 
 	@Override
 	public void insertProfile(ProfileDto profileDto) {
-		log.info("profileDto id = {}", profileDto.getProfileId());
 		Profile profile = Profile.builder().profileDto(profileDto).build();
-		log.info("profile id = {}", profile.getProfileId());
 		profileJpaRepository.save(profile);
 
 		SongSetting songSetting = SongSetting.builder().userId(profileDto.getProfileId()).build();
 		songSettingJpaRepository.save(songSetting);
-
 	}
 
 	@Override
 	public ProfileInfoDto findProfileById(String userId) {
+		// Redis에 애창곡 정보 warm up
+		favoriteSongService.getFavoriteSongFromDB(userId);
 		return profileJpaRepository.findById(userId).orElseThrow(NotFoundException::new).toDto();
 	}
 
@@ -74,8 +74,6 @@ public class ProfileServiceImpl implements ProfileService {
 		Profile profile = new Profile();
 		// 비었다면 이름 변경 가능 -> true
 		Profile profile2 = profileJpaRepository.findByNickname(nickname).orElse(profile);
-		log.info("profile equals = {}", profile.equals(profile2));
-		log.info("profile equals = {}", profile2.getNickname());
 		return profile.equals(profile2);
 	}
 }

@@ -3,6 +3,8 @@ package com.ssafy.ssarijileo.api.favoritesong.service;
 import com.ssafy.ssarijileo.api.favoritesong.entity.FavoriteSong;
 import com.ssafy.ssarijileo.api.favoritesong.repository.FavoriteSongJpaRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -56,10 +59,27 @@ public class FavoriteSongServiceImpl implements FavoriteSongService {
             redisTemplate.opsForSet().remove("subscribe:" + userId, String.valueOf(i));
     }
 
+    @Override
+    public void getFavoriteSongFromDB(String userId) {
+        // 캐시에 유저 애창곡 정보가 없을 경우 DB에서 받아옴
+        if (!hasKey(userId)) {
+        	try {
+        		String[] favoriteSong = favoriteSongJpaRepository.findLatestSongIdByUserId(userId)[0].split(" ");
+        		for (String songId : favoriteSong) {
+        			subscribe(userId, Long.parseLong(songId));
+        		}
+                // 캐시에서 불러온 구분
+                subscribe(userId, 0L);
+        	} catch (Exception e) {
+                log.info("Exception={}", e);
+        	}
+        }
+    }
+
     // 매일 3시 저장
     @Override
     @Scheduled(cron = "0 0 3 * * *")
-    public void saveFavoriteSong() {
+    public void saveFavoriteSongToDB() {
         Set<String> keys = getKeys();
 
         for (String key : keys) {
@@ -68,6 +88,7 @@ public class FavoriteSongServiceImpl implements FavoriteSongService {
 
             Set<String> values = getUsersFavoriteSong(key);
             for (String value : values) {
+                if (value.equals("0")) continue;
                 sb.append(value).append(" ");
             }
             FavoriteSong favoriteSong = FavoriteSong.builder().userId(userId).songId(sb.toString()).build();

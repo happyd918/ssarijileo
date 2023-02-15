@@ -30,10 +30,6 @@ public class RankingController {
 
     @PostMapping("/{rankingType}")
     public void setRanking(@RequestParam RankingType rankingType, @RequestBody List<RankingDto> list) {
-        log.info("size={}", list.size());
-        for (RankingDto dto : list) {
-            log.info("title={}", dto.getTitle());
-        }
         rankingService.setRanking(rankingType, list);
     }
 

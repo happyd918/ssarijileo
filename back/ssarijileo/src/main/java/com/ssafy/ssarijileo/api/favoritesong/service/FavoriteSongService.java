@@ -10,5 +10,6 @@ public interface FavoriteSongService {
     Set<String> getKeys();
     Boolean hasKey(String userId);
     void removeAll(String userId);
-    void saveFavoriteSong();
+    void saveFavoriteSongToDB();
+    void getFavoriteSongFromDB(String userId);
 }

@@ -53,7 +53,6 @@ public class ProfileController {
 	})
 	@GetMapping("/{nickname}")
 	public ResponseEntity<String> findIdByNickname(@PathVariable String nickname) {
-		System.out.println("in ctl");
 		return ResponseEntity.status(200).body(profileService.findIdByNickname(nickname));
 	}
 
