@@ -53,9 +53,13 @@ public class SongServiceImpl implements SongService {
 	public List<SongDto> findSongByUserId(String userId) {
 		// 캐시에 유저 애창곡 정보가 없을 경우 DB에서 받아옴
 		if (!favoriteSongService.hasKey(userId)) {
-			String[] favoriteSong = favoriteSongJpaRepository.findLatestSongIdByUserId(userId)[0].split(" ");
-			for (String songId : favoriteSong) {
-				favoriteSongService.subscribe(userId, Long.parseLong(songId));
+			try {
+				String[] favoriteSong = favoriteSongJpaRepository.findLatestSongIdByUserId(userId)[0].split(" ");
+				for (String songId : favoriteSong) {
+					favoriteSongService.subscribe(userId, Long.parseLong(songId));
+				}
+			}catch (Exception e) {
+				return null;
 			}
 		}
 		return songRepository.findFavoriteSongByUserId(userId).orElseThrow(NotFoundException::new);
