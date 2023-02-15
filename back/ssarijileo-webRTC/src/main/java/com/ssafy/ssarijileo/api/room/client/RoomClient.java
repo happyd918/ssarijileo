@@ -14,7 +14,8 @@ import com.ssafy.ssarijileo.api.room.dto.RoomDto;
 import com.ssafy.ssarijileo.api.room.dto.RoomRequestDto;
 import com.ssafy.ssarijileo.api.room.dto.RoomResponseDto;
 
-@FeignClient(name = "room-client", url = "session:8070/api/v1/room")
+@FeignClient(name = "room-client", url = "localhost:8070/api/v1/room")
+// @FeignClient(name = "room-client", url = "session:8070/api/v1/room")
 public interface RoomClient {
 
 	@GetMapping
