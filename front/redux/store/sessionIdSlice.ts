@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   sessionId: '',
+  token: '',
 };
 
 const sessionIdSlice = createSlice({
@@ -11,9 +12,12 @@ const sessionIdSlice = createSlice({
     setSessionId(state, action) {
       state.sessionId = action.payload;
     },
+    setToken(state, action) {
+      state.token = action.payload;
+    },
   },
 });
 
-export const { setSessionId } = sessionIdSlice.actions;
+export const { setSessionId, setToken } = sessionIdSlice.actions;
 
 export default sessionIdSlice;

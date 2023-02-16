@@ -29,11 +29,17 @@ function Index() {
   // sessionId (Redux 값받아오기)
   const [sessionVal, setSessionVal] = useState<string>('');
   const [roomInfo, setRoomInfo] = useState<any>();
-  const [isHost, setIsHost] = useState(false);
+  // const [isHost, setIsHost] = useState(false);
+  const isHost = false;
   const storeSessionId = useSelector((state: RootState) => state.sessionId);
-
   useEffect(() => {
     setSessionVal(storeSessionId.sessionId);
+  }, [storeSessionId]);
+
+  // token (Redux 값 받아오기)
+  const [sessiontoken, setSessionToken] = useState<string>('');
+  useEffect(() => {
+    setSessionToken(storeSessionId.token);
   }, [storeSessionId]);
 
   // OV
@@ -57,52 +63,64 @@ function Index() {
   }, [storeTheme]);
 
   // api
-  async function getToken() {
-    let host;
-    let data;
+  // async function getToken() {
+  //   let host;
+  //   let data;
 
-    if (isHost) {
-      host = '/host';
-      data = roomInfo;
-    } else {
-      const roomDetail = await axios({
-        method: 'GET',
-        url: `api/v1/room/${sessionVal}`,
-        headers: {
-          Authorization: `${getCookie('Authorization')}`,
-          refreshToken: `${getCookie('refreshToken')}`,
-        },
-      });
-      setRoomInfo(roomDetail.data);
-      host = '';
-      data = null;
-    }
+  //   if (isHost) {
+  //     host = '/host';
+  //     data = roomInfo;
+  //   } else {
+  //     const roomDetail = await axios({
+  //       method: 'GET',
+  //       url: `api/v1/room/${sessionVal}`,
+  //       headers: {
+  //         Authorization: `${getCookie('Authorization')}`,
+  //         refreshToken: `${getCookie('refreshToken')}`,
+  //       },
+  //     });
+  //     setRoomInfo(roomDetail.data);
+  //     host = '';
+  //     data = null;
+  //   }
 
-    console.log(data);
-    const token = await axios({
-      method: 'POST',
-      url: `api/v1/room/connection/${sessionVal}${host}`,
-      data,
+  //   console.log(data);
+  //   const token = await axios({
+  //     method: 'POST',
+  //     url: `api/v1/room/connection/${sessionVal}${host}`,
+  //     data,
+  //     headers: {
+  //       Authorization: `${getCookie('Authorization')}`,
+  //       refreshToken: `${getCookie('refreshToken')}`,
+  //     },
+  //   });
+  //   console.log('token1 입니다', token.data);
+  //   return token.data;
+  // }
+
+  async function getRoomDetail() {
+    const roomDetail = await axios({
+      method: 'GET',
+      url: `api/v1/room/${sessionVal}`,
       headers: {
         Authorization: `${getCookie('Authorization')}`,
         refreshToken: `${getCookie('refreshToken')}`,
       },
     });
-    console.log('token1 입니다', token.data);
-    return token.data;
+    setRoomInfo(roomDetail.data);
   }
 
   // api screen
   async function getToken2() {
-    const token = await axios.post(
+    const response2 = await axios.post(
       `https://i8b302.p.ssafy.io/openvidu/api/sessions/${sessionVal}/connection`,
       {},
       {
         headers: { Authorization: 'Basic T1BFTlZJRFVBUFA6c3NhZnk=' },
       },
     );
-    console.log(token.data.token);
-    return token.data.token;
+    console.log(response2.data.token);
+    return response2.data.token;
   }
 
   // singer 화면 위치 바꾸기
@@ -260,8 +278,9 @@ function Index() {
 
     // 내 캠 connect
     console.log('1. 내캠 커넥트');
-    getToken().then((token: any) => {
-      mySession.connect(token, { clientdata: myUserName }).then(async () => {
+    mySession
+      .connect(sessiontoken, { clientdata: myUserName })
+      .then(async () => {
         const newpublisher = await newOV.initPublisherAsync(undefined, {
           audioSource: undefined,
           videoSource: undefined,
@@ -277,7 +296,6 @@ function Index() {
         publisher.push(newpublisher);
         setPublisher([...publisher]);
       });
-    });
 
     // 화면 공유 connect
     console.log('2. 화면 공유 커넥트');
@@ -287,44 +305,17 @@ function Index() {
     });
   };
 
-  // room 생성시 정보 수신
-  const getRoomInfo = (e: any) => {
-    if (isHost === false) {
-      setIsHost(true);
-      console.log('방정보 받은거', e.data);
-      const myRoomInfo = e.data;
-      axios
-        .post(
-          'api/v1/room/session',
-          {},
-          {
-            headers: {
-              Authorization: `${getCookie('Authorization')}`,
-              refreshToken: `${getCookie('refreshToken')}`,
-            },
-          },
-        )
-        .then(res => {
-          myRoomInfo.sessionId = res.data;
-          setRoomInfo(myRoomInfo);
-          dispatch(setSessionId(res.data));
-        });
-    }
-  };
-
-  // 페이지 입장 후 로딩시작,
-  useEffect(() => {
-    window.addEventListener('message', getRoomInfo, true);
-    setTimeout(() => {
-      window.opener.postMessage('open!!', '*');
-    }, 1000);
-  }, []);
-
   // 세션 아이디 얻으면 연결 시작
   useEffect(() => {
-    console.log('현재 세션아이디', sessionVal);
-    if (sessionVal !== '') {
+    if (sessiontoken !== '') {
       joinSession();
+    }
+  }, [sessiontoken]);
+
+  // 세션 id 얻으면 방 정보 받아오기
+  useEffect(() => {
+    if (sessionVal !== '') {
+      getRoomDetail();
     }
   }, [sessionVal]);
 
