@@ -16,8 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
-import static com.ssafy.ssarijileo.config.AwsS3DirectoryName.SONG_PATH;
-// import static com.ssafy.ssarijileo.config.AwsS3DirectoryName.DEFAULT_BANNER;
+import static com.ssafy.ssarijileo.config.AwsS3DirectoryName.RECORDING_PATH;
 
 @Slf4j
 @Service
@@ -62,7 +61,7 @@ public class FileServiceImpl implements FileService{
 			String storeFileName = UUID.randomUUID().toString() + "." + ext;
 
 			// key : S3에 파일이 저장될 위치이다.
-			String key = SONG_PATH + storeFileName;
+			String key = RECORDING_PATH + storeFileName;
 
 			System.out.println(bucket);
 
