@@ -2,6 +2,7 @@ package com.ssafy.ssarijileo.api.recording.controller;
 
 import java.util.List;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -30,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/v1/recording")
 @RequiredArgsConstructor
-public class  RecordingController {
+public class RecordingController {
 
 	private final RecordingService recordingService;
 
@@ -54,7 +56,7 @@ public class  RecordingController {
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@GetMapping("/my")
-	public ResponseEntity<List<RecordingResponseDto>> findRecordingByUserId(@RequestHeader  String userId) {
+	public ResponseEntity<List<RecordingResponseDto>> findRecordingByUserId(@RequestHeader String userId) {
 		return ResponseEntity.status(200).body(recordingService.findRecordingByUserId(userId));
 	}
 
@@ -73,13 +75,11 @@ public class  RecordingController {
 		@ApiResponse(code = 404, message = "정보 없음"),
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
-	@PostMapping
-	// public ResponseEntity<? extends BaseResponseBody> insertRecording(@RequestHeader String userId, @RequestBody RecordingDto recordingDto, @RequestBody
-	public ResponseEntity<? extends BaseResponseBody> insertRecording(@RequestHeader String userId, MultipartHttpServletRequest file){
-		MultipartFile recordFile = file.getFile("blob");
-		recordingService.insertRecording(null, recordFile);
-		// recordingDto.setUserId(userId);
-		// recordingService.insertRecording(recordingDto, file);
+	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
+	public ResponseEntity<? extends BaseResponseBody> insertRecording(@RequestHeader String userId,
+		@RequestPart RecordingDto recordingDto, @RequestPart MultipartFile  file) {
+		recordingDto.setUserId(userId);
+		recordingService.insertRecording(recordingDto, file);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 
