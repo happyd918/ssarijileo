@@ -35,9 +35,11 @@ public class RankingServiceImpl implements RankingService {
     @Override
     public List<RankingDto> findRanking(String userId, RankingType rankingType) {
 
-        List<RankingDto> list = rankingClient.getRanking(rankingType);
+//        List<RankingDto> list = rankingClient.getRanking(rankingType);
+//
+//        if (list.isEmpty()) { list = getRanking(rankingType); }
 
-        if (list.isEmpty()) { list = getRanking(rankingType); }
+        List<RankingDto> list = getRanking(rankingType);
 
         if (userId.isEmpty()) { return list; }
 
@@ -46,6 +48,7 @@ public class RankingServiceImpl implements RankingService {
         return list;
     }
 
+    /*
     // 매일 새벽 3시 30분에 일간랭킹 연산 후 캐시 저장
     @Scheduled(cron = "0 30 3 * * *")
     public void dailyGetRanking() {
@@ -63,6 +66,7 @@ public class RankingServiceImpl implements RankingService {
     public void monthlyGetRanking() {
         getRanking(RankingType.MONTH);
     }
+    */
 
     @Override
     public List<RankingDto> getRanking(RankingType rankingType) {
@@ -137,20 +141,20 @@ public class RankingServiceImpl implements RankingService {
             songMap.put(key, song);
         }
 
-        // 기간 내에 활동한 유저의 애창곡
-        for (FavoriteSong favoriteSong : favoriteSongList) {
-            String[] songs = favoriteSong.getSongId().split(" ");
-
-            // 애창곡 리스트
-            for (String songId : songs) {
-                Long key = Long.parseLong(songId);
-
-                // 기간 내에 부른 이력이 있는 노래에 대해서만
-                if (songMap.containsKey(key)) {
-                    map.put(key, map.get(key) + 10);
-                }
-            }
-        }
+//        // 기간 내에 활동한 유저의 애창곡
+//        for (FavoriteSong favoriteSong : favoriteSongList) {
+//            String[] songs = favoriteSong.getSongId().split(" ");
+//
+//            // 애창곡 리스트
+//            for (String songId : songs) {
+//                Long key = Long.parseLong(songId);
+//
+//                // 기간 내에 부른 이력이 있는 노래에 대해서만
+//                if (songMap.containsKey(key)) {
+//                    map.put(key, map.get(key) + 10);
+//                }
+//            }
+//        }
 
         // 점수 순으로 정렬
         List<Long> keySet = new ArrayList<>(map.keySet());
