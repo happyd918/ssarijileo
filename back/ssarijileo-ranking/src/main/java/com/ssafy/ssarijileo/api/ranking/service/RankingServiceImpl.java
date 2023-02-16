@@ -35,11 +35,9 @@ public class RankingServiceImpl implements RankingService {
     @Override
     public List<RankingDto> findRanking(String userId, RankingType rankingType) {
 
-        // List<RankingDto> list = rankingClient.getRanking(rankingType);
-        //
-        // if (list.isEmpty()) { list = getRanking(rankingType); }
+        List<RankingDto> list = rankingClient.getRanking(rankingType);
 
-        List<RankingDto> list = getRanking(rankingType);
+        if (list.isEmpty()) { list = getRanking(rankingType); }
 
         if (userId.isEmpty()) { return list; }
 
