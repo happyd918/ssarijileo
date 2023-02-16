@@ -73,10 +73,11 @@ public class  RecordingController {
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@PostMapping
-	public ResponseEntity<? extends BaseResponseBody> insertRecording(@RequestHeader String userId, @RequestBody RecordingDto recordingDto, @RequestBody
-		MultipartFile file){
-		recordingDto.setUserId(userId);
-		recordingService.insertRecording(recordingDto, file);
+	// public ResponseEntity<? extends BaseResponseBody> insertRecording(@RequestHeader String userId, @RequestBody RecordingDto recordingDto, @RequestBody
+	public ResponseEntity<? extends BaseResponseBody> insertRecording(@RequestHeader String userId, MultipartFile file){
+		recordingService.insertRecording(null, file);
+		// recordingDto.setUserId(userId);
+		// recordingService.insertRecording(recordingDto, file);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 
