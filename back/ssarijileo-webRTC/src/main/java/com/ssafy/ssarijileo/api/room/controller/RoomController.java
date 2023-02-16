@@ -107,9 +107,15 @@ public class RoomController {
 		roomService.createRoom(roomDto);
 
 		// openvidu
-		SessionProperties properties = SessionProperties.fromJson(null).build();
-		Session session = openvidu.createSession(properties);
-		return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
+		Session session = openvidu.getActiveSession(sessionId);
+		if (session == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		ConnectionProperties properties = ConnectionProperties.fromJson(null).build();
+		Connection connection = session.createConnection(properties);
+
+		return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
+
 	}
 
 	/**
