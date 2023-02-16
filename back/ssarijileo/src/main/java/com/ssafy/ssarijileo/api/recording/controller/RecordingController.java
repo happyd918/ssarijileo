@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ssafy.ssarijileo.api.recording.dto.RecordingDto;
 import com.ssafy.ssarijileo.api.recording.dto.RecordingResponseDto;
@@ -74,8 +75,9 @@ public class  RecordingController {
 	})
 	@PostMapping
 	// public ResponseEntity<? extends BaseResponseBody> insertRecording(@RequestHeader String userId, @RequestBody RecordingDto recordingDto, @RequestBody
-	public ResponseEntity<? extends BaseResponseBody> insertRecording(@RequestHeader String userId, MultipartFile file){
-		recordingService.insertRecording(null, file);
+	public ResponseEntity<? extends BaseResponseBody> insertRecording(@RequestHeader String userId, MultipartHttpServletRequest file){
+		MultipartFile recordFile = file.getFile("blob");
+		recordingService.insertRecording(null, recordFile);
 		// recordingDto.setUserId(userId);
 		// recordingService.insertRecording(recordingDto, file);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
