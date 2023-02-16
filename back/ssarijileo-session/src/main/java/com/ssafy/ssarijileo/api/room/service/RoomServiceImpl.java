@@ -31,6 +31,8 @@ public class RoomServiceImpl implements RoomService{
 
 	@Override
 	public void createRoom(RoomDto roomDto) {
+		// 방장 정보를 사용자 목록에 추가
+		roomDto.getUserList().add(roomDto.getUserId());
 		roomRedisRepository.set(roomDto.getSessionId(), roomDto);
 	}
 

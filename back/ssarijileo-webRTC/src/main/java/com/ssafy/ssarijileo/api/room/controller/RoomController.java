@@ -115,7 +115,6 @@ public class RoomController {
 		Connection connection = session.createConnection(properties);
 
 		return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
-
 	}
 
 	/**
