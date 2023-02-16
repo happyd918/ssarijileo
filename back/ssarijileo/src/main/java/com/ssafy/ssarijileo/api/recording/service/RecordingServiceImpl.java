@@ -47,10 +47,10 @@ public class RecordingServiceImpl implements RecordingService {
 		// S3 파일 업로드
 		recordingDto.setFile(fileService.fileUpload(file));
 
-		// Profile profile = profileJpaRepository.findById(recordingDto.getUserId()).orElseThrow(NotFoundException::new);
-		// Song song = songJpaRepository.findById(recordingDto.getSongId()).orElseThrow(NotFoundException::new);
-		// Recording recording = Recording.builder().recordingDto(recordingDto).profile(profile).song(song).build();
-		// recordingJpaRepository.save(recording);
+		Profile profile = profileJpaRepository.findById(recordingDto.getUserId()).orElseThrow(NotFoundException::new);
+		Song song = songJpaRepository.findById(recordingDto.getSongId()).orElseThrow(NotFoundException::new);
+		Recording recording = Recording.builder().recordingDto(recordingDto).profile(profile).song(song).build();
+		recordingJpaRepository.save(recording);
 	}
 
 	@Override
