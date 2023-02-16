@@ -3,6 +3,7 @@ package com.ssafy.ssarijileo.api.recording.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -98,8 +99,8 @@ public class  RecordingController {
 		@ApiResponse(code = 404, message = "정보 없음"),
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
-	@GetMapping("/{recordingId}")
-	public ResponseEntity<? extends BaseResponseBody> findRecordingByUserId(@PathVariable Long recordingId) {
+	@DeleteMapping("/{recordingId}")
+	public ResponseEntity<? extends BaseResponseBody> deleteRecording(@PathVariable Long recordingId) {
 		recordingService.deleteRecording(recordingId);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
