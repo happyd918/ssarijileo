@@ -27,7 +27,7 @@ import java.util.Date;
 @Slf4j
 public class TokenProvider implements InitializingBean {
     private final String secret;
-    private final long tokenValidityInMilliseconds;     // 30 min
+    private final long tokenValidityInMilliseconds;     // 1 hour
     private final RedisService redisService;
     private Key key;
 
@@ -72,7 +72,7 @@ public class TokenProvider implements InitializingBean {
     }
 
     public String createToken(String userId, String role, TokenKey tokenKey) {
-        // access : 30 min, refresh : 1 month
+        // access : 1 hour, refresh : 1 month
         long period = getExpiration(tokenKey);
 
         Claims claims = Jwts.claims().setSubject(userId);

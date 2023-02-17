@@ -2,14 +2,10 @@ package com.ssafy.ssarijileo.api.singingcontest.controller;
 
 import java.util.List;
 
+import com.ssafy.ssarijileo.api.singingcontest.dto.LikeDto;
+import com.ssafy.ssarijileo.api.singingcontest.service.LikeService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ssafy.ssarijileo.api.singingcontest.dto.SingingContestResponseDto;
 import com.ssafy.ssarijileo.api.singingcontest.dto.SingingContestUpdateDto;
@@ -46,8 +42,8 @@ public class SingingContestController {
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@GetMapping
-	ResponseEntity<List<SingingContestResponseDto>> findAllSingingContest() {
-		return ResponseEntity.status(200).body(singingContestService.findAllSingingContest());
+	ResponseEntity<List<SingingContestResponseDto>> findAllSingingContest(@RequestHeader String userId) {
+		return ResponseEntity.status(200).body(singingContestService.findAllSingingContest(userId));
 	}
 
 	/**
@@ -69,8 +65,8 @@ public class SingingContestController {
 		@ApiResponse(code = 404, message = "노래자랑 없음"),
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
-	@GetMapping("/my/{userId}")
-	ResponseEntity<List<SingingContestResponseDto>> findSingingContestByUserId(@PathVariable String userId) {
+	@GetMapping("/my")
+	ResponseEntity<List<SingingContestResponseDto>> findSingingContestByUserId(@RequestHeader String userId) {
 		return ResponseEntity.status(200).body(singingContestService.findSingingContestByUserId(userId));
 	}
 
@@ -118,5 +114,21 @@ public class SingingContestController {
 	ResponseEntity<? extends BaseResponseBody> updateSingingContest(@RequestBody SingingContestUpdateDto singingContestUpdateDto) {
 		singingContestService.updateSingingContest(singingContestUpdateDto);
 		return  ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+	}
+
+	@ApiOperation(
+			value = "노래자랑 좋아요",
+			notes = "노래자랑 게시물에 좋아요를 누른다."
+	)
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "정보 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	@PostMapping("/like")
+	ResponseEntity<Long> setLike(@RequestHeader String userId, @RequestBody LikeDto likeDto) {
+		likeDto.setUserId(userId);
+		return  ResponseEntity.status(200).body(singingContestService.setLike(likeDto));
 	}
 }

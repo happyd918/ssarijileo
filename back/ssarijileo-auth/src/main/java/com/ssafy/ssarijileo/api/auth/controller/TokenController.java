@@ -1,9 +1,11 @@
 package com.ssafy.ssarijileo.api.auth.controller;
 
+import com.ssafy.ssarijileo.api.auth.dto.JwtCode;
 import com.ssafy.ssarijileo.api.auth.service.TokenProvider;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,6 +57,4 @@ public class TokenController {
     //     }
     //     throw new RuntimeException();
     // }
-
-
 }

@@ -42,10 +42,16 @@ dependencies {
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 
     // eureka
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
     // feign
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    
+    // s3
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.281'
 }
 
 tasks.named('test') {

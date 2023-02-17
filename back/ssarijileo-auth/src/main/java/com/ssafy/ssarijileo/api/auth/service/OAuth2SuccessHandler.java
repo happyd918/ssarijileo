@@ -14,6 +14,7 @@ import com.ssafy.ssarijileo.api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import java.io.IOException;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -34,20 +36,22 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final TokenProvider tokenProvider;
     private final UserRequestMapper userRequestMapper;
     private final UserProfileClient userProfileClient;
-    private String redirectUrl = "http://localhost:3000";
+    // private String redirectUrl = "https://front-beryl.vercel.app/login";
+    private String redirectUrl = "http://localhost:3000/login";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
         throws IOException {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
+        Map<String, Object> attributes = oAuth2User.getAttributes();
         log.info("[!] oAuth2User = {}",oAuth2User);
         log.info("[!] attributes = {}",oAuth2User.getAttributes());
 
         UserDto userDto = UserDto.builder()
-            .socialId(String.valueOf(oAuth2User.getAttributes().get("id")))
+            .socialId(String.valueOf(attributes.get("id")))
             .build();
 
-        ProfileDto profileDto = userRequestMapper.toDto(oAuth2User);
+        ProfileDto profileDto;
 
         User guest = new User();
 
@@ -64,17 +68,29 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             // 저장된 회원 정보 불러옴 -> userId 사용
             user = userRepository.findBySocialId(userDto.getSocialId()).orElseThrow(NotFoundException::new);
 
-            profileDto.updateUserId(String.valueOf(user.getUserId()));
+            profileDto = new ProfileDto(
+                String.valueOf(user.getUserId())
+                , attributes.get("nickname") + "_" + userDto.getSocialId().substring(2, 6)
+                , String.valueOf(attributes.get("image"))
+            );
 
             // 토큰 발행
             tokens = tokenProvider.generateToken(profileDto.getProfileId(), Role.USER.getKey());
             
             // 리프레시 토큰 캐시 저장
-            tokenProvider.setSaveRefresh(String.valueOf(user.getUserId()),
-                tokens.getRefreshToken(), tokenProvider.getExpiration(TokenKey.REFRESH));
+            tokenProvider.setSaveRefresh(
+                String.valueOf(user.getUserId())
+                , tokens.getRefreshToken()
+                , tokenProvider.getExpiration(TokenKey.REFRESH)
+            );
 
+            // 프로필 DB에 저장
+            userProfileClient.insertProfile(profileDto);
         } else {
-            profileDto.updateUserId(String.valueOf(user.getUserId()));
+            profileDto = new ProfileDto(
+                String.valueOf(user.getUserId())
+                , String.valueOf(attributes.get("image"))
+            );
 
             String access = tokenProvider.generateAccess(profileDto.getProfileId(), Role.USER.getKey());
 
@@ -86,10 +102,10 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             } else {
                 tokens = tokenProvider.generateToken(profileDto.getProfileId(), Role.USER.getKey());
             }
-        }
+            log.info("profileDto ={}", profileDto);
 
-        // 프로필 DB에 저장
-        userProfileClient.insertSinging(profileDto);
+            userProfileClient.updateImage(profileDto);
+        }
 
         String targetUrl;
         targetUrl = UriComponentsBuilder.fromUriString(redirectUrl)

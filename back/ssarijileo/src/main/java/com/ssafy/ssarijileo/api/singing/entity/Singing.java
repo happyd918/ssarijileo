@@ -44,8 +44,11 @@ public class Singing {
 	// 점수
 	private int score;
 
-	// 총부른시간
-	private String totalSingingTime;
+	// 부른시간
+	private String singingTime;
+
+	// 예약 추가, 취소 구분(I:추가, C:취소)
+	String state;
 
 	// Dto to Entity
 	@Builder
@@ -53,8 +56,9 @@ public class Singing {
 		this.singingId = singingDto.getSingingId();
 		this.profile = profile;
 		this.song = song;
-		this.mode = singingDto.getMode();
-		this.score = singingDto.getScore();
-		this.totalSingingTime = singingDto.getTotalSingingTime();
+//		this.mode = singingDto.getMode();
+//		this.score = singingDto.getScore();
+		this.singingTime = singingDto.getSingingTime();
+		this.state = singingDto.getState();
 	}
 }

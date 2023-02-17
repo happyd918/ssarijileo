@@ -2,12 +2,15 @@ package com.ssafy.ssarijileo.config;
 
 import com.ssafy.ssarijileo.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -26,17 +29,17 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     }
 
     public static class Config {
-        // application.yml 파일에서 지정한 filer의 Argument값을 받는 부분
+        // application.yml 파일에서 지정한 filter의 Argument값을 받는 부분
     }
 
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
             String token = exchange.getRequest().getHeaders().get("Authorization").get(0).substring(7);   // 헤더의 토큰 파싱 (Bearer 제거)
-//            Map<String, Object> userInfo = jwtUtil.getUserParseInfo(token);   // 파싱된 토큰의 claim을 추출해 아이디 값을 가져온다.
-            String userId = jwtUtil.getUid(token);
-            addAuthorizationHeaders(exchange.getRequest(), userId);
 
+            String userId = jwtUtil.getUid(token);
+
+            addAuthorizationHeaders(exchange.getRequest(), userId);
             return chain.filter(exchange);
         };
     }
@@ -44,7 +47,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     // 성공적으로 검증이 되었기 때문에 인증된 헤더로 요청을 변경해준다. 서비스는 해당 헤더에서 아이디를 가져와 사용한다.
     private void addAuthorizationHeaders(ServerHttpRequest request, String userId) {
         request.mutate()
-                .header("user-id", userId)
+                .header("userId", userId)
                 .build();
     }
 
@@ -63,6 +66,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         @Override
         public Mono<Void> handle(
                 ServerWebExchange exchange, Throwable ex) {
+
             int errorCode = 500;
             if (ex.getClass() == NullPointerException.class) {
                 errorCode = 100;
@@ -72,7 +76,20 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 
             byte[] bytes = getErrorCode(errorCode).getBytes(StandardCharsets.UTF_8);
             DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
-            return exchange.getResponse().writeWith(Flux.just(buffer));
+
+             // 토큰 값 null 일 시에 401 or 만료 시에 403 에러 발생
+             if (errorCode == 100) {
+                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                 return exchange.getResponse().writeWith(Flux.just(buffer));
+             }
+             else if (errorCode == 200) {
+                 exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
+                 return exchange.getResponse().writeWith(Flux.just(buffer));
+             }
+             else {
+                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                 return exchange.getResponse().writeWith(Flux.just(buffer));
+             }
         }
     }
 }

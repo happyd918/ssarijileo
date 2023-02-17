@@ -38,3 +38,5 @@ out/
 
 ### security
 application-oauth.yml
+
+.idea/

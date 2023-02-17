@@ -3,8 +3,10 @@ package com.ssafy.ssarijileo.api.songsetting.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class SongSettingDto {
@@ -13,8 +15,8 @@ public class SongSettingDto {
 	private String songSettingId;
 
 	// 에코
-	private int eco;
+	private double eco;
 
 	// 음량
-	private int volume;
+	private double volume;
 }

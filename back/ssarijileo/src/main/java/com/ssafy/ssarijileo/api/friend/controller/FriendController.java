@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssarijileo.api.friend.dto.FriendDto;
-import com.ssafy.ssarijileo.api.friend.dto.FriendInviteDto;
+import com.ssafy.ssarijileo.api.friend.dto.FriendResponseDto;
 import com.ssafy.ssarijileo.api.friend.dto.FriendUpdateDto;
 import com.ssafy.ssarijileo.api.friend.dto.MyFriendDto;
 import com.ssafy.ssarijileo.api.friend.service.FriendService;
@@ -34,17 +34,17 @@ public class FriendController {
 	private final FriendService friendService;
 
 	/**
-	 * @title 내 친구 목록
-	 * @param userId
+	 * @title 친구 찾기 목록
+	 * @param nickname
 	 * @return
 	 */
 	@ApiOperation(
-		value = "내 친구 목록",
-		notes = "사용자 ID를 통해 해당 사용자의 친구 목록을 조회한다."
+		value = "친구 찾기 목록",
+		notes = "사용자 닉네임을 통해 친구가 아닌 사용자들의 목록을 조회한다."
 	)
 	@ApiImplicitParam(
-		name = "userId",
-		value = "사용자 PK"
+		name = "nickname",
+		value = "사용자 닉네임"
 	)
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "성공"),
@@ -52,9 +52,33 @@ public class FriendController {
 		@ApiResponse(code = 404, message = "친구 없음"),
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
-	@GetMapping("/my/{userId}")
-	public ResponseEntity<List<MyFriendDto>> findFriendByUserId(@PathVariable  String userId) {
-		return ResponseEntity.status(200).body(friendService.findFriendByUserId(userId));
+	@GetMapping("/{nickname}")
+	public ResponseEntity<List<FriendResponseDto>> findAllFriend(@PathVariable String nickname) {
+		return ResponseEntity.status(200).body(friendService.findAllFriend(nickname));
+	}
+
+	/**
+	 * @title 내 친구 목록
+	 * @param nickname
+	 * @return
+	 */
+	@ApiOperation(
+		value = "내 친구 목록",
+		notes = "사용자 닉네임을 통해 해당 사용자의 친구 목록을 조회한다."
+	)
+	@ApiImplicitParam(
+		name = "nickname",
+		value = "사용자 닉네임"
+	)
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "성공"),
+		@ApiResponse(code = 401, message = "인증 실패"),
+		@ApiResponse(code = 404, message = "친구 없음"),
+		@ApiResponse(code = 500, message = "서버 오류")
+	})
+	@GetMapping("/my/{nickname}")
+	public ResponseEntity<List<MyFriendDto>> findFriendByNickname(@PathVariable String nickname) {
+		return ResponseEntity.status(200).body(friendService.findFriendByNickname(nickname));
 	}
 
 	/**
@@ -72,9 +96,8 @@ public class FriendController {
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
 	@PostMapping
-	public ResponseEntity<? extends BaseResponseBody> requestFriend(@RequestBody FriendDto friendDto) {
-		friendService.requestFriend(friendDto);
-		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+	public ResponseEntity<Long> requestFriend(@RequestBody FriendDto friendDto) {
+		return ResponseEntity.status(200).body(friendService.requestFriend(friendDto));
 	}
 
 	/**
@@ -94,26 +117,6 @@ public class FriendController {
 	@PutMapping
 	public ResponseEntity<? extends BaseResponseBody> updateFriend(@RequestBody FriendUpdateDto friendUpdateDto) {
 		friendService.updateFriend(friendUpdateDto);
-		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-	}
-
-	/**
-	 * @title 친구 초대
-	 * @param friendInviteDto
-	 */
-	@ApiOperation(
-		value = "친구 초대",
-		notes = "노래방에 친구를 초대한다."
-	)
-	@ApiResponses({
-		@ApiResponse(code = 200, message = "성공"),
-		@ApiResponse(code = 401, message = "인증 실패"),
-		@ApiResponse(code = 404, message = "정보 없음"),
-		@ApiResponse(code = 500, message = "서버 오류")
-	})
-	@PostMapping("/invite")
-	public ResponseEntity<? extends BaseResponseBody> inviteFriend(@RequestBody FriendInviteDto friendInviteDto) {
-		friendService.inviteFriend(friendInviteDto);
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 }

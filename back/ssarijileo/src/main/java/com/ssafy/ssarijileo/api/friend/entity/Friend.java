@@ -1,5 +1,7 @@
 package com.ssafy.ssarijileo.api.friend.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,14 +31,14 @@ public class Friend {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long friendId;
 
-	// 보낸 사용자PK
+	// 보낸 사용자 닉네임
 	@ManyToOne
-	@JoinColumn(name = "from_user_id")
+	@JoinColumn(name = "from_user_nickname", referencedColumnName = "nickname")
 	private Profile fromProfile;
 
-	// 받는 사용자PK
+	// 받는 사용자 닉네임
 	@ManyToOne
-	@JoinColumn(name = "to_user_id")
+	@JoinColumn(name = "to_user_nickname", referencedColumnName = "nickname")
 	private Profile toProfile;
 
 	// 상태(W:대기,A:수락,X:취소)
@@ -53,7 +55,7 @@ public class Friend {
 
 	// Entity to Dto
 	public FriendDto toDto() {
-		return new FriendDto(friendId, fromProfile.getProfileId(), toProfile.getProfileId(), status);
+		return new FriendDto(friendId, fromProfile.getNickname(), toProfile.getNickname(), status);
 	}
 
 	public void updateFriend(String status) {
