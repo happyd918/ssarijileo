@@ -110,6 +110,7 @@ public class RankingServiceImpl implements RankingService {
         // 노래 목록 랭킹 리스트업
         for (Song song : songList) {
             map.put(song.getSongId(), 0.001);
+            songMap.put(song.getSongId(), song);
         }
 
         // 날짜간 부른 횟수 계산
