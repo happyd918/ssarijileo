@@ -31,6 +31,7 @@ public class RankingController {
         return ResponseEntity.status(200).body(rankingService.findRanking(userId.orElse(new String()), RankingType.MONTH));
     }
 
+    // Redis 안거치고 DB 정보로 바로 업데이트 테스트코드
     @GetMapping("/db")
     public ResponseEntity<List<RankingDto>> findRankingDB(@RequestParam String type, @RequestHeader Optional<String> userId) {
         switch(type) {
