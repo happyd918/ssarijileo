@@ -61,6 +61,10 @@ public class ReservationServiceImpl implements ReservationService {
 		singingDto.setState("C");
 		LocalTime localTime = LocalTime.ofSecondOfDay(singingDto.getTime());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:mm:ss");
+
+		log.info("time(sec) = {}", singingDto.getTime());
+		log.info("time(format) = {}", localTime.format(formatter));
+
 		singingDto.setSingingTime(localTime.format(formatter));
 		singingClient.deleteSinging(singingDto);
 	}
