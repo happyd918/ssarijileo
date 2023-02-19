@@ -179,4 +179,16 @@ public class RankingServiceImpl implements RankingService {
         rankingClient.setRanking(rankingType, rankingList);
         return rankingList;
     }
+
+    @Override
+    public List<RankingDto> findRankingDB(String userId, RankingType rankingType) {
+
+        List<RankingDto> list = rankingClient.getRanking(rankingType);
+
+        if (userId.isEmpty()) { return list; }
+
+        for (RankingDto dto : list) { dto.updateFavoriteSong(favoriteSongClient.isFavoriteSong(userId, dto.getSongId())); }
+
+        return list;
+    }
 }
