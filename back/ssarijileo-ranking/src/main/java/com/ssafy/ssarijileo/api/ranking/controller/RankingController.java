@@ -35,12 +35,12 @@ public class RankingController {
     public ResponseEntity<List<RankingDto>> findRankingDB(@RequestParam String type, @RequestHeader Optional<String> userId) {
         switch(type) {
             case "DAY" :
-                return ResponseEntity.status(200).body(rankingService.findRanking(userId.orElse(new String()), RankingType.DAY));
+                return ResponseEntity.status(200).body(rankingService.findRankingDB(userId.orElse(new String()), RankingType.DAY));
             case "WEEK" :
-                return ResponseEntity.status(200).body(rankingService.findRanking(userId.orElse(new String()), RankingType.WEEK));
+                return ResponseEntity.status(200).body(rankingService.findRankingDB(userId.orElse(new String()), RankingType.WEEK));
             case "MONTH" :
-                return ResponseEntity.status(200).body(rankingService.findRanking(userId.orElse(new String()), RankingType.MONTH));
+                return ResponseEntity.status(200).body(rankingService.findRankingDB(userId.orElse(new String()), RankingType.MONTH));
         }
-        return ResponseEntity.status(200).body(rankingService.findRanking(userId.orElse(new String()), RankingType.DAY));
+        return ResponseEntity.status(200).body(rankingService.findRankingDB(userId.orElse(new String()), RankingType.DAY));
     }
 }
