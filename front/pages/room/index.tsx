@@ -184,7 +184,6 @@ function Index() {
     } else {
       await asyncOut();
     }
-    window.close();
   };
 
   document.onkeydown = (e: KeyboardEvent) => {
@@ -197,9 +196,9 @@ function Index() {
   const bodyElt = document.querySelector('body');
   bodyElt?.setAttribute('oncontextmenu', 'return false;');
 
-  // window.addEventListener('beforeunload', () => {
-  //   leaveSession();
-  // });
+  window.addEventListener('beforeunload', async e => {
+    await leaveSession();
+  });
 
   // connect 진행!!!!
   const joinSession = () => {

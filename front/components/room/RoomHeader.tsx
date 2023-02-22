@@ -23,7 +23,9 @@ function RoomHeader({ leaveRoom, session }: any) {
         height={38}
         alt="close"
         className={styles.closeIcon}
-        onClick={leaveRoom}
+        onClick={() => {
+          window.close();
+        }}
       />
     </div>
   );
