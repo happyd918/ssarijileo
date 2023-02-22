@@ -196,7 +196,7 @@ function Index() {
   const bodyElt = document.querySelector('body');
   bodyElt?.setAttribute('oncontextmenu', 'return false;');
 
-  window.addEventListener('beforeunload', async e => {
+  window.addEventListener('beforeunload', async () => {
     await leaveSession();
   });
 
@@ -290,7 +290,7 @@ function Index() {
   return (
     <div className={styles.container}>
       {/* <RoomController /> */}
-      <RoomHeader leaveRoom={leaveSession} session={session} />
+      <RoomHeader session={session} />
       <div className={styles.screen}>
         <div className={styles.mainScreen}>
           {/* {singer.map(person => {

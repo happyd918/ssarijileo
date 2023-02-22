@@ -4,7 +4,7 @@ import ReservList from './ReservList';
 
 import styles from '@/styles/room/RoomHeader.module.scss';
 
-function RoomHeader({ leaveRoom, session }: any) {
+function RoomHeader({ session }: any) {
   return (
     <div className={styles.container}>
       <div className={styles.reservList}>
